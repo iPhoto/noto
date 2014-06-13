@@ -12,6 +12,8 @@
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet UITextView *text;
 @property (weak, nonatomic) NSString *message;
+
+- (NSString *)getSettingsValue:(NSString *) key;
 @end
 
 @implementation ViewController
@@ -25,21 +27,34 @@
 }
 
 - (IBAction)swipeRight:(UISwipeGestureRecognizer *)sender {
-    if (sender.direction == UISwipeGestureRecognizerDirectionRight) {
+    // Set local default
+    //    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    //    [defaults setValue:@"danielsuo@gmail.com" forKey:@"swipeRightEmail"];
+    NSString *email = [self getSettingsValue:@"swipeRightEmail"];
+    if (email) {
         NSArray *lines = [self.message componentsSeparatedByString:@"\n"];
-        NSString *subject = lines[0];
-        NSString *body = [[lines subarrayWithRange:NSMakeRange(1, [lines count] - 1)] componentsJoinedByString:@"\n"];
-        
-        Mailgun *mailgun = [Mailgun clientWithDomain:@"the-leather-apron-club.mailgun.org"
-                                              apiKey:@"key-2w1t601cqh-c32-dc45lqmv0fqspphk7"];
-        
-        [mailgun sendMessageTo:@"Daniel Suo <danielsuo@gmail.com>"
-                          from:@"Excited User <someone@sample.org>"
-                       subject:subject
-                          body:body];
-        
-        NSLog(@"You got the right guy.");
+        NSUInteger count = [lines count];
+        if (count > 0) {
+            NSString *subject = lines[0];
+            NSString *body = count > 1 ? [[lines subarrayWithRange:NSMakeRange(1, [lines count] - 1)] componentsJoinedByString:@"\n"] : @" ";
+            
+            Mailgun *mailgun = [Mailgun clientWithDomain:@"the-leather-apron-club.mailgun.org"
+                                                  apiKey:@"key-2w1t601cqh-c32-dc45lqmv0fqspphk7"];
+            
+            [mailgun sendMessageTo:email
+                              from:@"Excited User <someone@sample.org>"
+                           subject:subject
+                              body:body];
+            
+            NSLog(@"You got the right guy.");
+        }
+    } else {
+        NSLog(@"Fail");
     }
+}
+
+- (NSString *)getSettingsValue:(NSString *) key {
+    return [[NSUserDefaults standardUserDefaults] valueForKey:key];
 }
 
 

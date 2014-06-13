@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F865790194AA1440058C5BC /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4F86578F194AA1440058C5BC /* Settings.bundle */; };
 		4F9693FF194A8F7700B057EF /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 4F9693FE194A8F7700B057EF /* README.md */; };
 		4FF8741D194A83F600787DE0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF8741C194A83F600787DE0 /* main.m */; };
 		4FF87420194A83F600787DE0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF8741F194A83F600787DE0 /* AppDelegate.m */; };
@@ -29,6 +30,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4F86578F194AA1440058C5BC /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		4F9693FE194A8F7700B057EF /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		4FF87417194A83F600787DE0 /* Selfie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Selfie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FF8741B194A83F600787DE0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 			children = (
 				4FF87424194A83F600787DE0 /* ViewController.h */,
 				4FF87425194A83F600787DE0 /* ViewController.m */,
+				4F86578F194AA1440058C5BC /* Settings.bundle */,
 				4FF87427194A83F600787DE0 /* Main.storyboard */,
 				4F9693FE194A8F7700B057EF /* README.md */,
 				4FF8742A194A83F600787DE0 /* Images.xcassets */,
@@ -219,6 +222,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FF87429194A83F600787DE0 /* Main.storyboard in Resources */,
+				4F865790194AA1440058C5BC /* Settings.bundle in Resources */,
 				4FF8742B194A83F600787DE0 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
