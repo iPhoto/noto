@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6154.17" systemVersion="14A238x" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6154.17" systemVersion="14A238x" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="0mz-KT-xTI">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.11"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--View Controller - New Note-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
@@ -16,8 +16,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textView appearanceType="aqua" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H6S-yK-O1V">
-                                <rect key="frame" x="20" y="20" width="440" height="440"/>
+                            <textView appearanceType="aqua" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H6S-yK-O1V">
+                                <rect key="frame" x="20" y="64" width="440" height="396"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -30,11 +30,24 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="H6S-yK-O1V" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="3vy-cY-CW5"/>
+                            <constraint firstAttribute="bottom" secondItem="H6S-yK-O1V" secondAttribute="bottom" constant="20" symbolic="YES" id="dfl-84-ElB"/>
+                            <constraint firstAttribute="trailing" secondItem="H6S-yK-O1V" secondAttribute="trailing" constant="20" symbolic="YES" id="kVM-f9-DUc"/>
+                            <constraint firstItem="H6S-yK-O1V" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" symbolic="YES" id="suu-ro-ph9"/>
+                        </constraints>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="uB2-1h-oQt" appends="YES" id="lt1-xP-fzN"/>
                         </connections>
                     </view>
+                    <navigationItem key="navigationItem" title="New Note" id="QlS-Wp-MjW">
+                        <barButtonItem key="rightBarButtonItem" title="Settings" id="dmr-EG-7lQ">
+                            <connections>
+                                <segue destination="q0f-Xa-Ndy" kind="show" identifier="mainToSettingsSegue" id="3u0-2g-Dac"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="text" destination="H6S-yK-O1V" id="xUd-ah-iBp"/>
                     </connections>
@@ -53,6 +66,44 @@
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
+        </scene>
+        <!--Settings View Controller - Settings-->
+        <scene sceneID="gJa-nv-S5y">
+            <objects>
+                <viewController id="q0f-Xa-Ndy" customClass="SettingsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="6be-S9-f6u"/>
+                        <viewControllerLayoutGuide type="bottom" id="P8H-nk-nlY"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="eur-Ba-mds">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Settings" id="6Bg-uM-ycl"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="c3v-YY-nXi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="864" y="261"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="ehH-gE-x01">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0mz-KT-xTI" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="s6T-4B-I1h">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="sMS-Iz-zrI"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AHP-wp-Qt8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-292" y="261"/>
         </scene>
     </scenes>
 </document>

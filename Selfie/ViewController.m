@@ -13,6 +13,7 @@
 @property (strong, nonatomic) IBOutlet UITextView *text;
 @property (strong, nonatomic) NSString *message;
 @property (strong, nonatomic) Mailgun *mailgun;
+@property (strong, nonatomic) IBOutlet UINavigationItem *navBarTitle;
 
 - (NSString *)getSettingsValue:(NSString *) key;
 @end
@@ -77,6 +78,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [self.text becomeFirstResponder];
+    self.text.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
 }
 
 
