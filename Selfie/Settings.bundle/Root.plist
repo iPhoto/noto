@@ -48,6 +48,20 @@
 			<key>Key</key>
 			<string>swipeRightFrom</string>
 		</dict>
+        <dict>
+            <key>Type</key>
+            <string>PSGroupSpecifier</string>
+            <key>Title</key>
+            <string>Other Settings</string>
+        </dict>
+        <dict>
+            <key>Type</key>
+            <string>PSTextFieldSpecifier</string>
+            <key>Title</key>
+            <string>Signature</string>
+            <key>Key</key>
+            <string>signature</string>
+        </dict>
 	</array>
 	<key>StringsTable</key>
 	<string>Root</string>

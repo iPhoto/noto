@@ -61,7 +61,20 @@
         NSUInteger count = [lines count];
         if (count > 0) {
             NSString *subject = lines[0];
-            NSString *body = count > 1 ? [[lines subarrayWithRange:NSMakeRange(1, [lines count] - 1)] componentsJoinedByString:@"\n"] : @" ";
+            NSMutableString *body;
+            NSString *signature = [self getSettingsValue:@"signature"];
+            
+            // Build body
+            if (count > 1) {
+                body = [[NSMutableString alloc] initWithString:[[lines subarrayWithRange:NSMakeRange(1, [lines count] - 1)] componentsJoinedByString:@"\n"] ];
+            } else {
+                body = [[NSMutableString alloc] initWithString:@" "];
+            }
+            
+            if (signature) {
+                [body appendString:@"\n\n"];
+                [body appendString: signature];
+            }
             
             [self.mailgun sendMessageTo:toEmail
                               from:fromEmail
