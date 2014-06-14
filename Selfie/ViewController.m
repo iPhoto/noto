@@ -10,8 +10,9 @@
 #import "Mailgun.h"
 
 @interface ViewController ()
-@property (weak, nonatomic) IBOutlet UITextView *text;
-@property (weak, nonatomic) NSString *message;
+@property (strong, nonatomic) IBOutlet UITextView *text;
+@property (strong, nonatomic) NSString *message;
+@property (strong, nonatomic) Mailgun *mailgun;
 
 - (NSString *)getSettingsValue:(NSString *) key;
 @end
@@ -26,11 +27,25 @@
     return _message;
 }
 
-- (IBAction)swipeRight:(UISwipeGestureRecognizer *)sender {
-    // Set local default
-    //    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    //    [defaults setValue:@"danielsuo@gmail.com" forKey:@"swipeRightEmail"];
-    NSString *email = [self getSettingsValue:@"swipeRightEmail"];
+- (Mailgun *) mailgun {
+    if (!_mailgun) {
+        _mailgun = [Mailgun clientWithDomain:@"the-leather-apron-club.mailgun.org"
+                                      apiKey:@"key-2w1t601cqh-c32-dc45lqmv0fqspphk7"];
+    }
+    return _mailgun;
+}
+
+- (IBAction)processSwipe:(UISwipeGestureRecognizer *)sender {
+
+    NSString *directionEmail;
+    
+    if (sender.direction == UISwipeGestureRecognizerDirectionRight) {
+        directionEmail = @"swipeRightEmail";
+    } else {
+        directionEmail = @"swipeLeftEmail";
+    }
+
+    NSString *email = [self getSettingsValue:directionEmail];
     if (email) {
         NSArray *lines = [self.message componentsSeparatedByString:@"\n"];
         NSUInteger count = [lines count];
@@ -38,23 +53,30 @@
             NSString *subject = lines[0];
             NSString *body = count > 1 ? [[lines subarrayWithRange:NSMakeRange(1, [lines count] - 1)] componentsJoinedByString:@"\n"] : @" ";
             
-            Mailgun *mailgun = [Mailgun clientWithDomain:@"the-leather-apron-club.mailgun.org"
-                                                  apiKey:@"key-2w1t601cqh-c32-dc45lqmv0fqspphk7"];
-            
-            [mailgun sendMessageTo:email
-                              from:@"Excited User <someone@sample.org>"
+            [self.mailgun sendMessageTo:email
+                              from:email
                            subject:subject
                               body:body];
             
-            NSLog(@"You got the right guy.");
+            self.text.text = nil;
+            self.message = nil;
         }
     } else {
         NSLog(@"Fail");
     }
 }
 
+- (void)setSettingsValue:(NSString *)value forKey:(NSString *)key {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setValue:value forKey:key];
+}
+
 - (NSString *)getSettingsValue:(NSString *) key {
     return [[NSUserDefaults standardUserDefaults] valueForKey:key];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [self.text becomeFirstResponder];
 }
 
 

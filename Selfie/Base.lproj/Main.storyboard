@@ -16,11 +16,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textView appearanceType="aqua" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Testing!" translatesAutoresizingMaskIntoConstraints="NO" id="H6S-yK-O1V">
+                            <textView appearanceType="aqua" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H6S-yK-O1V">
                                 <rect key="frame" x="20" y="20" width="440" height="440"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <gestureRecognizers/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardAppearance="alert" enablesReturnKeyAutomatically="YES"/>
+                                <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="k2g-Fl-nAb" appends="YES" id="PLw-uE-Qol"/>
+                                </connections>
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -37,7 +42,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
                 <swipeGestureRecognizer direction="right" id="uB2-1h-oQt">
                     <connections>
-                        <action selector="swipeRight:" destination="vXZ-lx-hvc" id="3GT-A1-UVJ"/>
+                        <action selector="processSwipe:" destination="vXZ-lx-hvc" id="oLn-kS-6kG"/>
+                        <outlet property="delegate" destination="H6S-yK-O1V" id="oSr-n9-MSu"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="left" id="k2g-Fl-nAb">
+                    <connections>
+                        <action selector="processSwipe:" destination="vXZ-lx-hvc" id="3Aa-3F-x6a"/>
+                        <outlet property="delegate" destination="H6S-yK-O1V" id="CDE-bd-ZmL"/>
                     </connections>
                 </swipeGestureRecognizer>
             </objects>

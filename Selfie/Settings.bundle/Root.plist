@@ -8,7 +8,15 @@
 			<key>Type</key>
 			<string>PSTextFieldSpecifier</string>
 			<key>Title</key>
-			<string>Swipe right email</string>
+			<string>Left</string>
+			<key>Key</key>
+			<string>swipeLeftEmail</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Right</string>
 			<key>Key</key>
 			<string>swipeRightEmail</string>
 		</dict>
