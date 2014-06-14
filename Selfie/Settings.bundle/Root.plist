@@ -8,23 +8,45 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
-			<string>Email Settings</string>
+			<string>To Emails</string>
 		</dict>
 		<dict>
 			<key>Type</key>
 			<string>PSTextFieldSpecifier</string>
 			<key>Title</key>
-			<string>Left</string>
+			<string>Left to</string>
 			<key>Key</key>
-			<string>swipeLeftEmail</string>
+			<string>swipeLeftTo</string>
 		</dict>
 		<dict>
 			<key>Type</key>
 			<string>PSTextFieldSpecifier</string>
 			<key>Title</key>
-			<string>Right</string>
+			<string>Right to</string>
 			<key>Key</key>
-			<string>swipeRightEmail</string>
+			<string>swipeRightTo</string>
+		</dict>
+        <dict>
+            <key>Type</key>
+            <string>PSGroupSpecifier</string>
+            <key>Title</key>
+            <string>From Emails (default: To Emails)</string>
+        </dict>
+        <dict>
+            <key>Type</key>
+            <string>PSTextFieldSpecifier</string>
+            <key>Title</key>
+            <string>Left from</string>
+            <key>Key</key>
+            <string>swipeLeftFrom</string>
+        </dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Right from</string>
+			<key>Key</key>
+			<string>swipeRightFrom</string>
 		</dict>
 	</array>
 	<key>StringsTable</key>

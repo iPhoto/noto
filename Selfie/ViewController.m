@@ -38,24 +38,33 @@
 
 - (IBAction)processSwipe:(UISwipeGestureRecognizer *)sender {
 
-    NSString *directionEmail;
+    NSString *emailTo;
+    NSString *emailFrom;
     
     if (sender.direction == UISwipeGestureRecognizerDirectionRight) {
-        directionEmail = @"swipeRightEmail";
+        emailTo = @"swipeRightTo";
+        emailFrom = @"swipeRightFrom";
     } else {
-        directionEmail = @"swipeLeftEmail";
+        emailTo = @"swipeLeftTo";
+        emailFrom = @"swipeLeftFrom";
     }
 
-    NSString *email = [self getSettingsValue:directionEmail];
-    if (email) {
+    NSString *toEmail = [self getSettingsValue:emailTo];
+    NSString *fromEmail = [self getSettingsValue:emailFrom];
+    
+    if (toEmail) {
+        if (!fromEmail) {
+            fromEmail = toEmail;
+        }
+        
         NSArray *lines = [self.message componentsSeparatedByString:@"\n"];
         NSUInteger count = [lines count];
         if (count > 0) {
             NSString *subject = lines[0];
             NSString *body = count > 1 ? [[lines subarrayWithRange:NSMakeRange(1, [lines count] - 1)] componentsJoinedByString:@"\n"] : @" ";
             
-            [self.mailgun sendMessageTo:email
-                              from:email
+            [self.mailgun sendMessageTo:toEmail
+                              from:fromEmail
                            subject:subject
                               body:body];
             
