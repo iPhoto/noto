@@ -103,5 +103,8 @@
     self.text.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
 }
 
+- (void)textViewDidChange:(UITextView *)textView {
+    NSLog(@"hello!");
+}
 
 @end
