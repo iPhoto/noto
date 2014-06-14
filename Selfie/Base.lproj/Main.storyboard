@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6154.17" systemVersion="14A238x" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="0mz-KT-xTI">
     <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.11"/>
     </dependencies>
     <scenes>
@@ -44,7 +45,7 @@
                     <navigationItem key="navigationItem" title="New Note" id="QlS-Wp-MjW">
                         <barButtonItem key="rightBarButtonItem" title="Settings" id="dmr-EG-7lQ">
                             <connections>
-                                <segue destination="q0f-Xa-Ndy" kind="show" identifier="mainToSettingsSegue" id="3u0-2g-Dac"/>
+                                <segue destination="xw0-um-NU6" kind="show" id="cZo-9D-aFX"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -66,26 +67,34 @@
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
+            <point key="canvasLocation" x="274" y="261"/>
         </scene>
-        <!--Settings View Controller - Settings-->
-        <scene sceneID="gJa-nv-S5y">
+        <!--App Settings View Controller-->
+        <scene sceneID="E9S-vv-Zpn">
             <objects>
-                <viewController id="q0f-Xa-Ndy" customClass="SettingsViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="6be-S9-f6u"/>
-                        <viewControllerLayoutGuide type="bottom" id="P8H-nk-nlY"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="eur-Ba-mds">
+                <tableViewController id="xw0-um-NU6" customClass="IASKAppSettingsViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="aN4-Bd-SDR">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Settings" id="6Bg-uM-ycl"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="c3v-YY-nXi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" ambiguous="YES" selectionStyle="default" indentationWidth="10" id="Shu-yE-mGq">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Shu-yE-mGq" id="2lb-Wi-z5G">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="xw0-um-NU6" id="oET-fa-a0f"/>
+                            <outlet property="delegate" destination="xw0-um-NU6" id="8cA-r8-hdZ"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tSo-nW-4JT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="864" y="261"/>
+            <point key="canvasLocation" x="830" y="261"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ehH-gE-x01">

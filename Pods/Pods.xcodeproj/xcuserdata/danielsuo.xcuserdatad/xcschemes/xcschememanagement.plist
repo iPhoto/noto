@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-InAppSettingsKit.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-mailgun.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -22,17 +27,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>45346E28D22A45AB9E873BA3</key>
+		<key>0AD1B336C2304CED8E49DC8C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>54AD147C715149A089E71368</key>
+		<key>27D3094A2A5C411498648994</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EFAA7392E2D9457281FD1341</key>
+		<key>2C85BCBEC41040C29D44BCEE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>51BD6A943750463DB45F4690</key>
 		<dict>
 			<key>primary</key>
 			<true/>
