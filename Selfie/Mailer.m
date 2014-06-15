@@ -43,4 +43,15 @@
     }];
 }
 
++ (void)pollMailQueueWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    [Utilities loopThroughMailQueueAndSave:^(NSMutableArray *queue, NSDictionary *message) {
+        [Mailgun sendMessageTo:[message valueForKey:@"toEmail"]
+                          from:[message valueForKey:@"fromEmail"]
+                   withSubject:[message valueForKey:@"subject"]
+                      withBody:[message valueForKey:@"body"]
+                        withID:[message valueForKey:@"id"]
+         withCompletionHandler:completionHandler];
+    }];
+}
+
 @end;

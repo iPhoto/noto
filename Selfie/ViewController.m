@@ -13,7 +13,6 @@
 @interface ViewController ()
 @property (strong, nonatomic) IBOutlet UITextView *text;
 @property (strong, nonatomic) NSString *message;
-@property (strong, nonatomic) Mailer *mailer;
 @property (strong, nonatomic) IBOutlet UINavigationItem *navBarTitle;
 @end
 
@@ -25,13 +24,6 @@
     }
     
     return _message;
-}
-
-- (Mailer *) mailer {
-    if (!_mailer) {
-        _mailer = [[Mailer alloc] init];
-    }
-    return _mailer;
 }
 
 - (IBAction)processSwipe:(UISwipeGestureRecognizer *)sender {

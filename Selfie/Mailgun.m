@@ -27,6 +27,15 @@ NSString *SMTPPassword = @"0npra6c831w9";
           withSubject:(NSString *)subject
              withBody:(NSString *)body
                withID:(NSString *)mailID {
+    [Mailgun sendMessageTo:toEmail from:fromEmail withSubject:subject withBody:body withID:mailID withCompletionHandler:nil];
+}
+
++ (void)sendMessageTo:(NSString *)toEmail
+                 from:(NSString *)fromEmail
+          withSubject:(NSString *)subject
+             withBody:(NSString *)body
+               withID:(NSString *)mailID
+withCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
     
     MCOSMTPSession *smtpSession = [[MCOSMTPSession alloc] init];
     smtpSession.hostname = SMTPHostname;
@@ -51,10 +60,22 @@ NSString *SMTPPassword = @"0npra6c831w9";
     [sendOperation start:^(NSError *error) {
         if(error) {
             NSLog(@"Error sending email: %@", error);
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"setMinimumBackgroundFetchInterval" object:nil];
+            
+            if (completionHandler) {
+                completionHandler(UIBackgroundFetchResultFailed);
+            }
+            
         } else {
             [Utilities loopThroughMailQueueAndSave:^(NSMutableArray* queue, NSDictionary *message) {
                 if ([[message valueForKey:@"id"] isEqualToString:mailID]) {
                     [queue removeObject:message];
+                }
+                if ([queue count] == 0) {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"stopMinimumBackgroundFetchInterval" object:nil];
+                }
+                if (completionHandler) {
+                    completionHandler(UIBackgroundFetchResultNewData);
                 }
             }];
         }

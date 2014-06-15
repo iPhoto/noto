@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface Mailgun : NSObject
 + (void)sendMessageTo:(NSString *)toEmail
@@ -15,4 +16,10 @@
              withBody:(NSString *)body
                withID:(NSString *)mailID;
 
++ (void)sendMessageTo:(NSString *)toEmail
+                 from:(NSString *)fromEmail
+          withSubject:(NSString *)subject
+             withBody:(NSString *)body
+               withID:(NSString *)mailID
+withCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
 @end

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface Mailer : NSObject
 + (void)enqueueMailTo:(NSString *)toEmail
@@ -15,5 +16,5 @@
              withBody:(NSString *)body;
 
 + (void)pollMailQueue;
-
++ (void)pollMailQueueWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
 @end
