@@ -133,7 +133,7 @@
  @param success A block called when the message is sent successfully called with a parameter `NSString` of the message id.
  @param failure A block called when the underlying HTTP request fails. It will be called with an `NSError` set by the underlying `AFNetworking` client.
  */
-- (void)sendMessage:(MGMessage *)message success:(void (^)(NSString *messageId))success failure:(void (^)(NSError *error))failure;
+- (void)sendMessage:(MGMessage *)message success:(void (^)(NSString *messageId))success failure:(void (^)(NSError *error, MGMessage *))failure;
 
 ///----------------------------------------
 /// @name Sending an Ad-Hoc Mailgun Message
@@ -164,7 +164,7 @@
               subject:(NSString *)subject
                  body:(NSString *)body
               success:(void (^)(NSString *messageId))success
-              failure:(void (^)(NSError *error))failure;
+              failure:(void (^)(NSError *error, MGMessage *))failure;
 
 ///-----------------------------------------
 /// @name Checking Mailing List Subscription

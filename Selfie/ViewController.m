@@ -51,8 +51,8 @@ void (^sendSuccess)(NSString *) = ^(NSString *message) {
     setSettingsValue(@"emailCount", [NSString stringWithFormat:@"%d", count]);
 };
 
-void (^sendFailure)(NSError *) = ^(NSError *error) {
-    NSLog(@"error!");
+void (^sendFailure)(NSError *, MGMessage *) = ^(NSError *error, MGMessage *msg) {
+
 };
 
 - (IBAction)processSwipe:(UISwipeGestureRecognizer *)sender {

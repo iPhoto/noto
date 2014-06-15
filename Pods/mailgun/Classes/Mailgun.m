@@ -78,7 +78,7 @@ NSString * const kMailgunURL = @"https://api.mailgun.net/v2";
 
 - (void)sendMessage:(MGMessage *)message
             success:(void (^)(NSString *messageId))success
-            failure:(void (^)(NSError *error))failure {
+            failure:(void (^)(NSError *error, MGMessage *))failure {
     NSParameterAssert(message);
     AFHTTPRequestOperation *operation = [self HTTPRequestOperationWithRequest:[self createSendRequest:message]
                                                                       success:^(AFHTTPRequestOperation *_operation, id responseObject) {
@@ -89,7 +89,7 @@ NSString * const kMailgunURL = @"https://api.mailgun.net/v2";
                                                                       failure:^(AFHTTPRequestOperation *_operation, NSError *error) {
                                                                           NSLog(@"%@", error);
                                                                           if (failure) {
-                                                                              failure(error);
+                                                                              failure(error, message);
                                                                           }
                                                                       }];
     [self enqueueHTTPRequestOperation:operation];
@@ -100,7 +100,7 @@ NSString * const kMailgunURL = @"https://api.mailgun.net/v2";
               subject:(NSString *)subject
                  body:(NSString *)body
               success:(void (^)(NSString *))success
-              failure:(void (^)(NSError *))failure {
+              failure:(void (^)(NSError *, MGMessage *))failure {
     NSParameterAssert(to);
     NSParameterAssert(from);
     NSParameterAssert(subject);
