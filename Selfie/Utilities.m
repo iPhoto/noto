@@ -31,5 +31,18 @@
 + (NSObject *) getSettingsObject:(NSString *) key {
         return [[NSUserDefaults standardUserDefaults] objectForKey:key];
     };
+
++ (void)loopThroughMailQueueAndSave:(void(^)(NSMutableArray *, NSDictionary *))predicate {
+    NSArray *queue = (NSArray *) [Utilities getSettingsObject:@"emailQueue"];
+    NSMutableArray *mutableQueue = [queue mutableCopy];
+    
+    for (int i = 0; i < [queue count]; i++) {
+        NSDictionary *message = (NSDictionary *) [queue objectAtIndex: i];
+        predicate(mutableQueue, message);
+    }
+    
+    [Utilities setSettingsObject:mutableQueue forKey:@"emailQueue"];
+}
+
 @end;
 

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <MailCore/mailcore.h>
 #import "Mailgun.h"
+#import "Utilities.h"
 
 @interface Mailgun ()
 
@@ -24,7 +25,8 @@ NSString *SMTPPassword = @"0npra6c831w9";
 - (void)sendMessageTo:(NSString *)toEmail
                  from:(NSString *)fromEmail
           withSubject:(NSString *)subject
-             withBody:(NSString *)body {
+             withBody:(NSString *)body
+               withID:(NSString *)mailID {
     
     MCOSMTPSession *smtpSession = [[MCOSMTPSession alloc] init];
     smtpSession.hostname = SMTPHostname;
@@ -50,7 +52,12 @@ NSString *SMTPPassword = @"0npra6c831w9";
         if(error) {
             NSLog(@"Error sending email: %@", error);
         } else {
-            NSLog(@"Successfully sent email!");
+            [Utilities loopThroughMailQueueAndSave:^(NSMutableArray* queue, NSDictionary *message) {
+                if ([[message valueForKey:@"id"] isEqualToString:mailID]) {
+                    [queue removeObject:message];
+                    NSLog([message valueForKey:@"subject"]);
+                }
+            }];
         }
     }];
 }

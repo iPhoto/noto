@@ -74,16 +74,7 @@
                 [body appendString: signature];
             }
             
-            NSArray *keys = [NSArray arrayWithObjects: @"toEmail", @"fromEmail", @"subject", @"body", nil];
-            NSArray *values = [NSArray arrayWithObjects: toEmail, fromEmail, subject, body, nil];
-            NSMutableArray *queue = [[[NSUserDefaults standardUserDefaults] objectForKey:@"emailQueue"] mutableCopy];
-            if (!queue) {
-                queue = [[NSMutableArray alloc] init];
-            }
-            [queue addObject:[NSDictionary dictionaryWithObjects:values forKeys:keys]];
-            [Utilities setSettingsObject:queue forKey:@"emailQueue"];
-
-            [self.mailer pollMailQueue];
+            [self.mailer enqueueMailTo:toEmail from:fromEmail withSubject:subject withBody:body];
             
             self.text.text = nil;
             self.message = nil;
@@ -101,6 +92,7 @@
     self.text.contentInset = UIEdgeInsetsMake(74, 0, 0, 0);
 
     self.navigationController.navigationBar.translucent = NO;
+    [self.mailer pollMailQueue];
 }
 
 - (void)scrollToCaretInTextView:(UITextView *)textView animated:(BOOL)animated

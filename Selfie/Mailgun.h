@@ -12,6 +12,7 @@
 - (void)sendMessageTo:(NSString *)toEmail
                  from:(NSString *)fromEmail
           withSubject:(NSString *)subject
-             withBody:(NSString *)body;
+             withBody:(NSString *)body
+               withID:(NSString *)mailID;
 
 @end

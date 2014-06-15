@@ -27,23 +27,28 @@
                  from:(NSString *)fromEmail
           withSubject:(NSString *)subject
              withBody:(NSString *)body {
+    
+    NSMutableArray *queue = [[Utilities getSettingsObject:@"emailQueue"] mutableCopy];
+    int nextID = [(NSString *)[Utilities getSettingsValue:@"nextID"] intValue];
+    
+    NSArray *keys = [NSArray arrayWithObjects: @"id", @"toEmail", @"fromEmail", @"subject", @"body", nil];
+    NSArray *values = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d", nextID++], toEmail, fromEmail, subject, body, nil];
+    [queue addObject:[NSDictionary dictionaryWithObjects:values forKeys:keys]];
+    
+    [Utilities setSettingsObject:queue forKey:@"emailQueue"];
+    [Utilities setSettingsValue:[NSString stringWithFormat:@"%d", nextID] forKey:@"nextID"];
+    
+    [self pollMailQueue];
 }
 
 - (void)pollMailQueue {
-    NSArray *queue = (NSArray *) [Utilities getSettingsObject:@"emailQueue"];
-    NSMutableArray *mutableQueue = [queue mutableCopy];
-    
-    for (int i = 0; i < [queue count]; i++) {
-        NSDictionary *message = (NSDictionary *) [queue objectAtIndex: i];
+    [Utilities loopThroughMailQueueAndSave:^(NSMutableArray *queue, NSDictionary *message) {
         [self.mailgun sendMessageTo:[message valueForKey:@"toEmail"]
                                from:[message valueForKey:@"fromEmail"]
                         withSubject:[message valueForKey:@"subject"]
-                           withBody:[message valueForKey:@"body"]];
-        [mutableQueue removeObjectAtIndex: 0];
-        NSLog([message valueForKey:@"subject"]);
-    }
-    
-    [Utilities setSettingsObject:mutableQueue forKey:@"emailQueue"];
+                           withBody:[message valueForKey:@"body"]
+                             withID:[message valueForKey:@"id"]];
+    }];
 }
 
 @end;

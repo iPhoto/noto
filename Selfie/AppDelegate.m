@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "Utilities.h"
 
 @interface AppDelegate ()
             
@@ -20,7 +21,19 @@
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    // Set up NSUserDefaults
+    NSArray *queue = (NSArray *)[Utilities getSettingsObject:@"emailQueue"];
+    if (!queue) {
+        queue = [[NSArray alloc] init];
+    }
+    [Utilities setSettingsObject:queue forKey:@"emailQueue"];
+    
+    NSString *nextID = (NSString *)[Utilities getSettingsValue:@"nextID"];
+    if (!nextID) {
+        nextID = [NSString stringWithFormat:@"%d", 1];
+    }
+    [Utilities setSettingsValue:nextID forKey:@"nextID"];
+    
     return YES;
 }
 
