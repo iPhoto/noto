@@ -7,12 +7,13 @@
 //
 
 #import "ViewController.h"
-#import "Mailgun.h"
+#import "Mailer.h"
+#import "Utilities.h"
 
 @interface ViewController ()
 @property (strong, nonatomic) IBOutlet UITextView *text;
 @property (strong, nonatomic) NSString *message;
-@property (strong, nonatomic) Mailgun *mailgun;
+@property (strong, nonatomic) Mailer *mailer;
 @property (strong, nonatomic) IBOutlet UINavigationItem *navBarTitle;
 @end
 
@@ -26,59 +27,12 @@
     return _message;
 }
 
-- (Mailgun *) mailgun {
-    if (!_mailgun) {
-        _mailgun = [[Mailgun alloc] init];
+- (Mailer *) mailer {
+    if (!_mailer) {
+        _mailer = [[Mailer alloc] init];
     }
-    return _mailgun;
+    return _mailer;
 }
-
-void (^setSettingsValue)(NSString *, NSString *) = ^(NSString *key, NSString *value) {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setValue:value forKey:key];
-};
-
-NSString * (^getSettingsValue)(NSString *) = ^(NSString * key) {
-    return [[NSUserDefaults standardUserDefaults] valueForKey:key];
-};
-
-- (void)pollEmailQueue {
-    NSArray *queue = [[NSUserDefaults standardUserDefaults] objectForKey:@"emailQueue"];
-    NSMutableArray *mutableQueue = [queue mutableCopy];
-    
-    for (int i = 0; i < [queue count]; i++) {
-        NSDictionary *message = (NSDictionary *) [queue objectAtIndex: i];
-        [self.mailgun sendMessageTo:[message valueForKey:@"toEmail"]
-                               from:[message valueForKey:@"fromEmail"]
-                            withSubject:[message valueForKey:@"subject"]
-                           withBody:[message valueForKey:@"body"]];
-//                            success:sendSuccess
-//                            failure:sendFailure];
-        [mutableQueue removeObjectAtIndex: 0];
-        NSLog([message valueForKey:@"subject"]);
-    }
-    
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setObject:mutableQueue forKey:@"emailQueue"];
-    [userDefaults synchronize];
-};
-
-//void (^sendSuccess)(NSString *) = ^(NSString *message) {
-//    NSLog(@"success!");
-//};
-//
-//void (^sendFailure)(NSError *, MGMessage *) = ^(NSError *error, MGMessage *msg) {
-//    NSArray *keys = [NSArray arrayWithObjects: @"toEmail", @"fromEmail", @"subject", @"body", nil];
-//    NSArray *values = [NSArray arrayWithObjects: msg.to[0], msg.from, msg.subject, msg.text, nil];
-//    NSMutableArray *queue = [[[NSUserDefaults standardUserDefaults] objectForKey:@"emailQueue"] mutableCopy];
-//    if (!queue) {
-//        queue = [[NSMutableArray alloc] init];
-//    }
-//    [queue addObject:[NSDictionary dictionaryWithObjects:values forKeys:keys]];
-//    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-//    [userDefaults setObject:queue forKey:@"emailQueue"];
-//    [userDefaults synchronize];
-//};
 
 - (IBAction)processSwipe:(UISwipeGestureRecognizer *)sender {
 
@@ -93,8 +47,8 @@ NSString * (^getSettingsValue)(NSString *) = ^(NSString * key) {
         emailFrom = @"swipeLeftFrom";
     }
 
-    NSString *toEmail = getSettingsValue(emailTo);
-    NSString *fromEmail = getSettingsValue(emailFrom);
+    NSString *toEmail = (NSString *)[Utilities getSettingsObject:emailTo];
+    NSString *fromEmail = (NSString *)[Utilities getSettingsObject:emailFrom];
     
     if (toEmail) {
         if (!fromEmail || [[fromEmail stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""]) {
@@ -106,7 +60,7 @@ NSString * (^getSettingsValue)(NSString *) = ^(NSString * key) {
         if (count > 0) {
             NSString *subject = lines[0];
             NSMutableString *body;
-            NSString *signature = getSettingsValue(@"signature");
+            NSString *signature = (NSString *)[Utilities getSettingsObject:@"signature"];
             
             // Build body
             if (count > 1) {
@@ -127,11 +81,9 @@ NSString * (^getSettingsValue)(NSString *) = ^(NSString * key) {
                 queue = [[NSMutableArray alloc] init];
             }
             [queue addObject:[NSDictionary dictionaryWithObjects:values forKeys:keys]];
-            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-            [userDefaults setObject:queue forKey:@"emailQueue"];
-            [userDefaults synchronize];
-            
-            [self pollEmailQueue];
+            [Utilities setSettingsObject:queue forKey:@"emailQueue"];
+
+            [self.mailer pollMailQueue];
             
             self.text.text = nil;
             self.message = nil;
@@ -141,14 +93,12 @@ NSString * (^getSettingsValue)(NSString *) = ^(NSString * key) {
     }
 }
 
-
 - (void)viewDidAppear:(BOOL)animated {
-    self.text.delegate = self;
+    self.text.delegate = (id<UITextViewDelegate>)self;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardIsUp:) name:UIKeyboardDidShowNotification object:nil];
     [self.text becomeFirstResponder];
     self.text.contentInset = UIEdgeInsetsMake(74, 0, 0, 0);
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
     self.navigationController.navigationBar.translucent = NO;
 }
@@ -185,13 +135,5 @@ NSString * (^getSettingsValue)(NSString *) = ^(NSString * key) {
         [self scrollToCaretInTextView:textView animated:NO];
     }
 }
-
-//-(void)observeValueForKeyPath:(NSString *)keyPath
-//                     ofObject:(id)object
-//                       change:(NSDictionary *)change
-//                      context:(void *)context
-//{
-//    NSLog(@"KVO: %@ changed property %@ to value %@", object, keyPath, change);
-//}
 
 @end

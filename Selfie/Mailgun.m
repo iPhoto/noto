@@ -15,11 +15,11 @@
 @end;
 
 @implementation Mailgun
+
 NSString *SMTPHostname = @"smtp.mailgun.org";
 unsigned int SMTPPort = 465;
 NSString *SMTPUsername = @"postmaster@the-leather-apron-club.mailgun.org";
 NSString *SMTPPassword = @"0npra6c831w9";
-
 
 - (void)sendMessageTo:(NSString *)toEmail
                  from:(NSString *)fromEmail
