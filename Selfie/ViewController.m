@@ -13,13 +13,8 @@
 @property (strong, nonatomic) IBOutlet UITextView *text;
 @property (strong, nonatomic) NSString *message;
 @property (strong, nonatomic) Mailgun *mailgun;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *emailCountLabel;
 @property (strong, nonatomic) IBOutlet UINavigationItem *navBarTitle;
-
-//- (void)sendSuccess:(NSString *) message;
-//- (void (^)(NSError *))sendFailure;
-
-- (void)setSettingsValue:(NSString *)value forKey:(NSString *)key;
-- (NSString *)getSettingsValue:(NSString *) key;
 @end
 
 @implementation ViewController
@@ -40,8 +35,20 @@
     return _mailgun;
 }
 
+void (^setSettingsValue)(NSString *, NSString *) = ^(NSString *key, NSString *value) {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setValue:value forKey:key];
+};
+
+NSString * (^getSettingsValue)(NSString *) = ^(NSString * key) {
+    return [[NSUserDefaults standardUserDefaults] valueForKey:key];
+};
+
 void (^sendSuccess)(NSString *) = ^(NSString *message) {
     NSLog(@"success!");
+    int count = [getSettingsValue(@"emailCount") intValue] - 1;
+    count = MAX(0, count);
+    setSettingsValue(@"emailCount", [NSString stringWithFormat:@"%d", count]);
 };
 
 void (^sendFailure)(NSError *) = ^(NSError *error) {
@@ -61,8 +68,8 @@ void (^sendFailure)(NSError *) = ^(NSError *error) {
         emailFrom = @"swipeLeftFrom";
     }
 
-    NSString *toEmail = [self getSettingsValue:emailTo];
-    NSString *fromEmail = [self getSettingsValue:emailFrom];
+    NSString *toEmail = getSettingsValue(emailTo);
+    NSString *fromEmail = getSettingsValue(emailFrom);
     
     if (toEmail) {
         if (!fromEmail) {
@@ -74,7 +81,7 @@ void (^sendFailure)(NSError *) = ^(NSError *error) {
         if (count > 0) {
             NSString *subject = lines[0];
             NSMutableString *body;
-            NSString *signature = [self getSettingsValue:@"signature"];
+            NSString *signature = getSettingsValue(@"signature");
             
             // Build body
             if (count > 1) {
@@ -95,6 +102,9 @@ void (^sendFailure)(NSError *) = ^(NSError *error) {
                            success:sendSuccess
                            failure:sendFailure];
             
+            int count = [getSettingsValue(@"emailCount") intValue] + 1;
+            setSettingsValue(@"emailCount", [NSString stringWithFormat:@"%d", count]);
+            
             self.text.text = nil;
             self.message = nil;
         }
@@ -103,22 +113,32 @@ void (^sendFailure)(NSError *) = ^(NSError *error) {
     }
 }
 
-- (void)setSettingsValue:(NSString *)value forKey:(NSString *)key {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setValue:value forKey:key];
-}
-
-- (NSString *)getSettingsValue:(NSString *) key {
-    return [[NSUserDefaults standardUserDefaults] valueForKey:key];
-}
-
 - (void)viewDidAppear:(BOOL)animated {
     [self.text becomeFirstResponder];
     self.text.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults addObserver:self
+               forKeyPath:@"emailCount"
+                  options:NSKeyValueObservingOptionNew
+                  context:NULL];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults removeObserver:self forKeyPath:@"emailCount"];
 }
 
 - (void)textViewDidChange:(UITextView *)textView {
     NSLog(@"hello!");
+}
+
+-(void)observeValueForKeyPath:(NSString *)keyPath
+                     ofObject:(id)object
+                       change:(NSDictionary *)change
+                      context:(void *)context
+{
+    NSLog(@"KVO: %@ changed property %@ to value %@", object, keyPath, change);
+    self.emailCountLabel.title = [NSString stringWithFormat:@"Count: %d", [getSettingsValue(@"emailCount") intValue]];
 }
 
 @end

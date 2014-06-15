@@ -44,6 +44,9 @@
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" title="New Note" id="QlS-Wp-MjW">
+                        <barButtonItem key="leftBarButtonItem" title="Count: 0" id="VGT-f6-Qhf">
+                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Settings" id="dmr-EG-7lQ">
                             <connections>
                                 <segue destination="xw0-um-NU6" kind="show" id="cZo-9D-aFX"/>
@@ -51,6 +54,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="emailCountLabel" destination="VGT-f6-Qhf" id="Cl7-AB-p3A"/>
                         <outlet property="text" destination="H6S-yK-O1V" id="xUd-ah-iBp"/>
                     </connections>
                 </viewController>
