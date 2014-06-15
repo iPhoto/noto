@@ -1,17 +1,10 @@
 PODS:
-  - AFNetworking (1.1.0)
   - InAppSettingsKit (2.1)
-  - mailgun (1.0.3):
-    - AFNetworking (~> 1.1.0)
 
 DEPENDENCIES:
-  - AFNetworking (~> 1.1.0)
   - InAppSettingsKit (~> 2.1)
-  - mailgun (~> 1.0.3)
 
 SPEC CHECKSUMS:
-  AFNetworking: e1ee63e577c68e1d5004ccedb7367eda41f65943
   InAppSettingsKit: 853cdc9fcc76b87a4694f8d2b930e116463b5a29
-  mailgun: 5f8d1348f443dcf94d2d3984845f873f5bf18a39
 
 COCOAPODS: 0.33.1

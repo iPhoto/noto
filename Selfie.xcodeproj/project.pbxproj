@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		4F865790194AA1440058C5BC /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4F86578F194AA1440058C5BC /* Settings.bundle */; };
+		4FD7A01E194E3F2800906537 /* libMailCore-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FD7A015194E3EDD00906537 /* libMailCore-ios.a */; };
+		4FD7A020194E3F3700906537 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FD7A01F194E3F3700906537 /* CFNetwork.framework */; };
+		4FD7A023194E414D00906537 /* Mailer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD7A022194E414D00906537 /* Mailer.m */; };
+		4FD7A02B194E42E400906537 /* Mailgun.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD7A02A194E42E400906537 /* Mailgun.m */; };
 		4FF8741D194A83F600787DE0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF8741C194A83F600787DE0 /* main.m */; };
 		4FF87420194A83F600787DE0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF8741F194A83F600787DE0 /* AppDelegate.m */; };
 		4FF87423194A83F600787DE0 /* Selfie.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4FF87421194A83F600787DE0 /* Selfie.xcdatamodeld */; };
@@ -19,6 +23,48 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		4FD7A012194E3EDD00906537 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FD7A00A194E3EDD00906537 /* mailcore2.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C64EA537169E772200778456;
+			remoteInfo = "static mailcore2 osx";
+		};
+		4FD7A014194E3EDD00906537 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FD7A00A194E3EDD00906537 /* mailcore2.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C6BA2C191705F4E6003F0E9E;
+			remoteInfo = "static mailcore2 ios";
+		};
+		4FD7A016194E3EDD00906537 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FD7A00A194E3EDD00906537 /* mailcore2.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C64EA78C169F259200778456;
+			remoteInfo = tests;
+		};
+		4FD7A018194E3EDD00906537 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FD7A00A194E3EDD00906537 /* mailcore2.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C6A81B911706840C00882C15;
+			remoteInfo = "test-ios";
+		};
+		4FD7A01A194E3EDD00906537 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FD7A00A194E3EDD00906537 /* mailcore2.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C6BD288D170BD71100A91AC1;
+			remoteInfo = "mailcore osx";
+		};
+		4FD7A01C194E3F0E00906537 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FD7A00A194E3EDD00906537 /* mailcore2.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C6BA2B091705F4E6003F0E9E;
+			remoteInfo = "static mailcore2 ios";
+		};
 		4FF87431194A83F600787DE0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4FF8740F194A83F600787DE0 /* Project object */;
@@ -30,7 +76,12 @@
 
 /* Begin PBXFileReference section */
 		4F86578F194AA1440058C5BC /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
-		4F9693FE194A8F7700B057EF /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
+		4FD7A00A194E3EDD00906537 /* mailcore2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = mailcore2.xcodeproj; path = "Selfie/MailCore2/build-mac/mailcore2.xcodeproj"; sourceTree = "<group>"; };
+		4FD7A01F194E3F3700906537 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		4FD7A021194E414600906537 /* Mailer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mailer.h; sourceTree = "<group>"; };
+		4FD7A022194E414D00906537 /* Mailer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mailer.m; sourceTree = "<group>"; };
+		4FD7A02A194E42E400906537 /* Mailgun.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mailgun.m; sourceTree = "<group>"; };
+		4FD7A02C194E42ED00906537 /* Mailgun.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mailgun.h; sourceTree = "<group>"; };
 		4FF87417194A83F600787DE0 /* Selfie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Selfie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FF8741B194A83F600787DE0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4FF8741C194A83F600787DE0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -53,6 +104,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FD7A020194E3F3700906537 /* CFNetwork.framework in Frameworks */,
+				4FD7A01E194E3F2800906537 /* libMailCore-ios.a in Frameworks */,
 				6CE63EEB8D4349A48F08C6F4 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -70,14 +123,56 @@
 		49A85F4260824FD59E33F5C0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4FD7A01F194E3F3700906537 /* CFNetwork.framework */,
 				6E77200C5C3C411893448E4A /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		4FD7A00B194E3EDD00906537 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4FD7A013194E3EDD00906537 /* libMailCore.a */,
+				4FD7A015194E3EDD00906537 /* libMailCore-ios.a */,
+				4FD7A017194E3EDD00906537 /* tests */,
+				4FD7A019194E3EDD00906537 /* test-ios.app */,
+				4FD7A01B194E3EDD00906537 /* MailCore.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4FD7A024194E416400906537 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4FF87427194A83F600787DE0 /* Main.storyboard */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		4FD7A025194E418200906537 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				4FF87424194A83F600787DE0 /* ViewController.h */,
+				4FF87425194A83F600787DE0 /* ViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		4FD7A026194E418C00906537 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4FD7A021194E414600906537 /* Mailer.h */,
+				4FD7A022194E414D00906537 /* Mailer.m */,
+				4FD7A02C194E42ED00906537 /* Mailgun.h */,
+				4FD7A02A194E42E400906537 /* Mailgun.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		4FF8740E194A83F600787DE0 = {
 			isa = PBXGroup;
 			children = (
+				4FD7A00A194E3EDD00906537 /* mailcore2.xcodeproj */,
 				4FF87419194A83F600787DE0 /* Selfie */,
 				4FF87433194A83F600787DE0 /* SelfieTests */,
 				4FF87418194A83F600787DE0 /* Products */,
@@ -98,13 +193,9 @@
 		4FF87419194A83F600787DE0 /* Selfie */ = {
 			isa = PBXGroup;
 			children = (
-				4FF87424194A83F600787DE0 /* ViewController.h */,
-				4FF87425194A83F600787DE0 /* ViewController.m */,
-				4F86578F194AA1440058C5BC /* Settings.bundle */,
-				4FF87427194A83F600787DE0 /* Main.storyboard */,
-				4F9693FE194A8F7700B057EF /* README.md */,
-				4FF8742A194A83F600787DE0 /* Images.xcassets */,
-				4FF87421194A83F600787DE0 /* Selfie.xcdatamodeld */,
+				4FD7A026194E418C00906537 /* Models */,
+				4FD7A025194E418200906537 /* Controllers */,
+				4FD7A024194E416400906537 /* Views */,
 				4FF8741A194A83F600787DE0 /* Supporting Files */,
 			);
 			path = Selfie;
@@ -113,6 +204,9 @@
 		4FF8741A194A83F600787DE0 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4F86578F194AA1440058C5BC /* Settings.bundle */,
+				4FF8742A194A83F600787DE0 /* Images.xcassets */,
+				4FF87421194A83F600787DE0 /* Selfie.xcdatamodeld */,
 				4FF8741E194A83F600787DE0 /* AppDelegate.h */,
 				4FF8741F194A83F600787DE0 /* AppDelegate.m */,
 				4FF8741B194A83F600787DE0 /* Info.plist */,
@@ -154,6 +248,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				4FD7A01D194E3F0E00906537 /* PBXTargetDependency */,
 			);
 			name = Selfie;
 			productName = Selfie;
@@ -208,6 +303,12 @@
 			mainGroup = 4FF8740E194A83F600787DE0;
 			productRefGroup = 4FF87418194A83F600787DE0 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 4FD7A00B194E3EDD00906537 /* Products */;
+					ProjectRef = 4FD7A00A194E3EDD00906537 /* mailcore2.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				4FF87416194A83F600787DE0 /* Selfie */,
@@ -215,6 +316,44 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		4FD7A013194E3EDD00906537 /* libMailCore.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libMailCore.a;
+			remoteRef = 4FD7A012194E3EDD00906537 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4FD7A015194E3EDD00906537 /* libMailCore-ios.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libMailCore-ios.a";
+			remoteRef = 4FD7A014194E3EDD00906537 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4FD7A017194E3EDD00906537 /* tests */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = tests;
+			remoteRef = 4FD7A016194E3EDD00906537 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4FD7A019194E3EDD00906537 /* test-ios.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "test-ios.app";
+			remoteRef = 4FD7A018194E3EDD00906537 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4FD7A01B194E3EDD00906537 /* MailCore.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = MailCore.framework;
+			remoteRef = 4FD7A01A194E3EDD00906537 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		4FF87415194A83F600787DE0 /* Resources */ = {
@@ -275,9 +414,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FF87423194A83F600787DE0 /* Selfie.xcdatamodeld in Sources */,
+				4FD7A02B194E42E400906537 /* Mailgun.m in Sources */,
 				4FF87420194A83F600787DE0 /* AppDelegate.m in Sources */,
 				4FF87426194A83F600787DE0 /* ViewController.m in Sources */,
 				4FF8741D194A83F600787DE0 /* main.m in Sources */,
+				4FD7A023194E414D00906537 /* Mailer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,6 +433,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		4FD7A01D194E3F0E00906537 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "static mailcore2 ios";
+			targetProxy = 4FD7A01C194E3F0E00906537 /* PBXContainerItemProxy */;
+		};
 		4FF87432194A83F600787DE0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4FF87416194A83F600787DE0 /* Selfie */;
@@ -393,11 +539,35 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Selfie/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"-lctemplate-ios",
+					"-letpan-ios",
+					"-licudata",
+					"-licui18n",
+					"-licuuc",
+					"-lxml2",
+					"-lsasl2",
+					"-liconv",
+					"-ltidy",
+					"-lz",
+					"-licucore",
+					"-lstdc++",
+					"-stdlib=libstdc++",
+					"-ObjC",
+					"-ObjC",
+					"-framework",
+					MessageUI,
+					"-framework",
+					MobileCoreServices,
+					"-framework",
+					SystemConfiguration,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 arm64 arm7s";
@@ -410,11 +580,35 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_CXX_LIBRARY = "libstdc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Selfie/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"-lctemplate-ios",
+					"-letpan-ios",
+					"-licudata",
+					"-licui18n",
+					"-licuuc",
+					"-lxml2",
+					"-lsasl2",
+					"-liconv",
+					"-ltidy",
+					"-lz",
+					"-licucore",
+					"-lstdc++",
+					"-stdlib=libstdc++",
+					"-ObjC",
+					"-ObjC",
+					"-framework",
+					MessageUI,
+					"-framework",
+					MobileCoreServices,
+					"-framework",
+					SystemConfiguration,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 arm64 arm7s";

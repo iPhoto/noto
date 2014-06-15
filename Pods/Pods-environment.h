@@ -6,21 +6,9 @@
 // project.
 
 
-// AFNetworking
-#define COCOAPODS_POD_AVAILABLE_AFNetworking
-#define COCOAPODS_VERSION_MAJOR_AFNetworking 1
-#define COCOAPODS_VERSION_MINOR_AFNetworking 1
-#define COCOAPODS_VERSION_PATCH_AFNetworking 0
-
 // InAppSettingsKit
 #define COCOAPODS_POD_AVAILABLE_InAppSettingsKit
 #define COCOAPODS_VERSION_MAJOR_InAppSettingsKit 2
 #define COCOAPODS_VERSION_MINOR_InAppSettingsKit 1
 #define COCOAPODS_VERSION_PATCH_InAppSettingsKit 0
-
-// mailgun
-#define COCOAPODS_POD_AVAILABLE_mailgun
-#define COCOAPODS_VERSION_MAJOR_mailgun 1
-#define COCOAPODS_VERSION_MINOR_mailgun 0
-#define COCOAPODS_VERSION_PATCH_mailgun 3
 

@@ -28,8 +28,7 @@
 
 - (Mailgun *) mailgun {
     if (!_mailgun) {
-        _mailgun = [Mailgun clientWithDomain:@"the-leather-apron-club.mailgun.org"
-                                      apiKey:@"key-2w1t601cqh-c32-dc45lqmv0fqspphk7"];
+        _mailgun = [[Mailgun alloc] init];
     }
     return _mailgun;
 }
@@ -51,10 +50,10 @@ NSString * (^getSettingsValue)(NSString *) = ^(NSString * key) {
         NSDictionary *message = (NSDictionary *) [queue objectAtIndex: i];
         [self.mailgun sendMessageTo:[message valueForKey:@"toEmail"]
                                from:[message valueForKey:@"fromEmail"]
-                            subject:[message valueForKey:@"subject"]
-                               body:[message valueForKey:@"body"]
-                            success:sendSuccess
-                            failure:sendFailure];
+                            withSubject:[message valueForKey:@"subject"]
+                           withBody:[message valueForKey:@"body"]];
+//                            success:sendSuccess
+//                            failure:sendFailure];
         [mutableQueue removeObjectAtIndex: 0];
         NSLog([message valueForKey:@"subject"]);
     }
@@ -64,22 +63,22 @@ NSString * (^getSettingsValue)(NSString *) = ^(NSString * key) {
     [userDefaults synchronize];
 };
 
-void (^sendSuccess)(NSString *) = ^(NSString *message) {
-    NSLog(@"success!");
-};
-
-void (^sendFailure)(NSError *, MGMessage *) = ^(NSError *error, MGMessage *msg) {
-    NSArray *keys = [NSArray arrayWithObjects: @"toEmail", @"fromEmail", @"subject", @"body", nil];
-    NSArray *values = [NSArray arrayWithObjects: msg.to[0], msg.from, msg.subject, msg.text, nil];
-    NSMutableArray *queue = [[[NSUserDefaults standardUserDefaults] objectForKey:@"emailQueue"] mutableCopy];
-    if (!queue) {
-        queue = [[NSMutableArray alloc] init];
-    }
-    [queue addObject:[NSDictionary dictionaryWithObjects:values forKeys:keys]];
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setObject:queue forKey:@"emailQueue"];
-    [userDefaults synchronize];
-};
+//void (^sendSuccess)(NSString *) = ^(NSString *message) {
+//    NSLog(@"success!");
+//};
+//
+//void (^sendFailure)(NSError *, MGMessage *) = ^(NSError *error, MGMessage *msg) {
+//    NSArray *keys = [NSArray arrayWithObjects: @"toEmail", @"fromEmail", @"subject", @"body", nil];
+//    NSArray *values = [NSArray arrayWithObjects: msg.to[0], msg.from, msg.subject, msg.text, nil];
+//    NSMutableArray *queue = [[[NSUserDefaults standardUserDefaults] objectForKey:@"emailQueue"] mutableCopy];
+//    if (!queue) {
+//        queue = [[NSMutableArray alloc] init];
+//    }
+//    [queue addObject:[NSDictionary dictionaryWithObjects:values forKeys:keys]];
+//    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+//    [userDefaults setObject:queue forKey:@"emailQueue"];
+//    [userDefaults synchronize];
+//};
 
 - (IBAction)processSwipe:(UISwipeGestureRecognizer *)sender {
 
