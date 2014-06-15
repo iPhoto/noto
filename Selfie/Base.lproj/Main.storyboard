@@ -8,7 +8,7 @@
         <!--View Controller - New Note-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
+                <viewController extendedLayoutIncludesOpaqueBars="YES" id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <textView appearanceType="aqua" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H6S-yK-O1V">
-                                <rect key="frame" x="20" y="64" width="440" height="396"/>
+                                <rect key="frame" x="20" y="0.0" width="440" height="460"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -33,10 +33,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="H6S-yK-O1V" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="3vy-cY-CW5"/>
-                            <constraint firstAttribute="bottom" secondItem="H6S-yK-O1V" secondAttribute="bottom" constant="20" symbolic="YES" id="dfl-84-ElB"/>
-                            <constraint firstAttribute="trailing" secondItem="H6S-yK-O1V" secondAttribute="trailing" constant="20" symbolic="YES" id="kVM-f9-DUc"/>
-                            <constraint firstItem="H6S-yK-O1V" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" symbolic="YES" id="suu-ro-ph9"/>
+                            <constraint firstItem="H6S-yK-O1V" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="Dbb-ie-HQL"/>
+                            <constraint firstItem="H6S-yK-O1V" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" symbolic="YES" id="YIB-n5-tpx"/>
+                            <constraint firstAttribute="bottom" secondItem="H6S-yK-O1V" secondAttribute="bottom" constant="20" symbolic="YES" id="f1o-dY-rwb"/>
+                            <constraint firstAttribute="trailing" secondItem="H6S-yK-O1V" secondAttribute="trailing" constant="20" symbolic="YES" id="x17-Vo-aX5"/>
                         </constraints>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                         <connections>

@@ -113,14 +113,19 @@ void (^sendFailure)(NSError *) = ^(NSError *error) {
     }
 }
 
+
 - (void)viewDidAppear:(BOOL)animated {
+    self.text.delegate = self;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardIsUp:) name:UIKeyboardDidShowNotification object:nil];
     [self.text becomeFirstResponder];
-    self.text.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    self.text.contentInset = UIEdgeInsetsMake(74, 0, 0, 0);
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults addObserver:self
                forKeyPath:@"emailCount"
                   options:NSKeyValueObservingOptionNew
                   context:NULL];
+    self.navigationController.navigationBar.translucent = NO;
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -128,8 +133,37 @@ void (^sendFailure)(NSError *) = ^(NSError *error) {
     [defaults removeObserver:self forKeyPath:@"emailCount"];
 }
 
+- (void)scrollToCaretInTextView:(UITextView *)textView animated:(BOOL)animated
+{
+    CGRect rect = [textView caretRectForPosition:textView.selectedTextRange.end];
+    rect.size.height += textView.textContainerInset.bottom;
+    [textView scrollRectToVisible:rect animated:animated];
+}
+
+- (void)keyboardIsUp:(NSNotification *)notification
+{
+    NSDictionary *info = [notification userInfo];
+    CGRect keyboardRect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    keyboardRect = [self.view convertRect:keyboardRect fromView:nil];
+    
+    UIEdgeInsets inset = self.text.contentInset;
+    inset.bottom = keyboardRect.size.height;
+    self.text.contentInset = inset;
+    self.text.scrollIndicatorInsets = inset;
+    
+    [self scrollToCaretInTextView:self.text animated:YES];
+}
+
 - (void)textViewDidChange:(UITextView *)textView {
-    NSLog(@"hello!");
+    if ([textView.text hasSuffix:@"\n"]) {
+        
+        [CATransaction setCompletionBlock:^{
+            [self scrollToCaretInTextView:textView animated:NO];
+        }];
+        
+    } else {
+        [self scrollToCaretInTextView:textView animated:NO];
+    }
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath
