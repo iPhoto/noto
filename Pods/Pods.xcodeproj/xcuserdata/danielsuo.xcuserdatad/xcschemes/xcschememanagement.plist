@@ -4,17 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Pods-AFNetworking.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-InAppSettingsKit.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-mailgun.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -27,22 +17,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0AD1B336C2304CED8E49DC8C</key>
+		<key>976243196BEE4F109B17B946</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>27D3094A2A5C411498648994</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>2C85BCBEC41040C29D44BCEE</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>51BD6A943750463DB45F4690</key>
+		<key>D078688CC6484347AB30167E</key>
 		<dict>
 			<key>primary</key>
 			<true/>

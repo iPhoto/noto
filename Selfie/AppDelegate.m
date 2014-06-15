@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "Mailer.h"
+#import "Utilities.h"
 
 @interface AppDelegate ()
             
@@ -20,8 +22,40 @@
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    // Set up NSUserDefaults
+    NSArray *queue = (NSArray *)[Utilities getSettingsObject:@"emailQueue"];
+    if (!queue) {
+        queue = [[NSArray alloc] init];
+    }
+    [Utilities setSettingsObject:queue forKey:@"emailQueue"];
+    
+    NSString *nextID = (NSString *)[Utilities getSettingsValue:@"nextID"];
+    if (!nextID) {
+        nextID = [NSString stringWithFormat:@"%d", 1];
+    }
+    [Utilities setSettingsValue:nextID forKey:@"nextID"];
+    
+    // Set up Notification observers
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setMinimumBackgroundFetchInterval:) name:@"setMinimumBackgroundFetchInterval" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopMinimumBackgroundFetchInterval:) name:@"stopMinimumBackgroundFetchInterval" object:nil];
+    
+    
     return YES;
+}
+
+- (void)setMinimumBackgroundFetchInterval: (NSNotification *)notification {
+    NSLog(@"set");
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+}
+
+- (void)stopMinimumBackgroundFetchInterval: (NSNotification *)notification {
+    NSLog(@"stop");
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalNever];
+}
+
+- (void)application:(UIApplication *)application
+  performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    [Mailer pollMailQueueWithCompletionHandler:completionHandler];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

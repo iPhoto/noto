@@ -7,13 +7,12 @@
 //
 
 #import "ViewController.h"
-#import "Mailgun.h"
+#import "Mailer.h"
+#import "Utilities.h"
 
 @interface ViewController ()
 @property (strong, nonatomic) IBOutlet UITextView *text;
 @property (strong, nonatomic) NSString *message;
-@property (strong, nonatomic) Mailgun *mailgun;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *emailCountLabel;
 @property (strong, nonatomic) IBOutlet UINavigationItem *navBarTitle;
 @end
 
@@ -26,34 +25,6 @@
     
     return _message;
 }
-
-- (Mailgun *) mailgun {
-    if (!_mailgun) {
-        _mailgun = [Mailgun clientWithDomain:@"the-leather-apron-club.mailgun.org"
-                                      apiKey:@"key-2w1t601cqh-c32-dc45lqmv0fqspphk7"];
-    }
-    return _mailgun;
-}
-
-void (^setSettingsValue)(NSString *, NSString *) = ^(NSString *key, NSString *value) {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setValue:value forKey:key];
-};
-
-NSString * (^getSettingsValue)(NSString *) = ^(NSString * key) {
-    return [[NSUserDefaults standardUserDefaults] valueForKey:key];
-};
-
-void (^sendSuccess)(NSString *) = ^(NSString *message) {
-    NSLog(@"success!");
-    int count = [getSettingsValue(@"emailCount") intValue] - 1;
-    count = MAX(0, count);
-    setSettingsValue(@"emailCount", [NSString stringWithFormat:@"%d", count]);
-};
-
-void (^sendFailure)(NSError *, MGMessage *) = ^(NSError *error, MGMessage *msg) {
-
-};
 
 - (IBAction)processSwipe:(UISwipeGestureRecognizer *)sender {
 
@@ -68,8 +39,8 @@ void (^sendFailure)(NSError *, MGMessage *) = ^(NSError *error, MGMessage *msg) 
         emailFrom = @"swipeLeftFrom";
     }
 
-    NSString *toEmail = getSettingsValue(emailTo);
-    NSString *fromEmail = getSettingsValue(emailFrom);
+    NSString *toEmail = (NSString *)[Utilities getSettingsObject:emailTo];
+    NSString *fromEmail = (NSString *)[Utilities getSettingsObject:emailFrom];
     
     if (toEmail) {
         if (!fromEmail || [[fromEmail stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""]) {
@@ -81,7 +52,7 @@ void (^sendFailure)(NSError *, MGMessage *) = ^(NSError *error, MGMessage *msg) 
         if (count > 0) {
             NSString *subject = lines[0];
             NSMutableString *body;
-            NSString *signature = getSettingsValue(@"signature");
+            NSString *signature = (NSString *)[Utilities getSettingsObject:@"signature"];
             
             // Build body
             if (count > 1) {
@@ -95,15 +66,7 @@ void (^sendFailure)(NSError *, MGMessage *) = ^(NSError *error, MGMessage *msg) 
                 [body appendString: signature];
             }
             
-            [self.mailgun sendMessageTo:toEmail
-                              from:fromEmail
-                           subject:subject
-                              body:body
-                           success:sendSuccess
-                           failure:sendFailure];
-            
-            int count = [getSettingsValue(@"emailCount") intValue] + 1;
-            setSettingsValue(@"emailCount", [NSString stringWithFormat:@"%d", count]);
+            [Mailer enqueueMailTo:toEmail from:fromEmail withSubject:subject withBody:body];
             
             self.text.text = nil;
             self.message = nil;
@@ -113,24 +76,15 @@ void (^sendFailure)(NSError *, MGMessage *) = ^(NSError *error, MGMessage *msg) 
     }
 }
 
-
 - (void)viewDidAppear:(BOOL)animated {
-    self.text.delegate = self;
+    self.text.delegate = (id<UITextViewDelegate>)self;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardIsUp:) name:UIKeyboardDidShowNotification object:nil];
     [self.text becomeFirstResponder];
     self.text.contentInset = UIEdgeInsetsMake(74, 0, 0, 0);
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults addObserver:self
-               forKeyPath:@"emailCount"
-                  options:NSKeyValueObservingOptionNew
-                  context:NULL];
-    self.navigationController.navigationBar.translucent = NO;
-}
 
-- (void)viewDidDisappear:(BOOL)animated {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults removeObserver:self forKeyPath:@"emailCount"];
+    self.navigationController.navigationBar.translucent = NO;
+    [Mailer pollMailQueue];
 }
 
 - (void)scrollToCaretInTextView:(UITextView *)textView animated:(BOOL)animated
@@ -164,15 +118,6 @@ void (^sendFailure)(NSError *, MGMessage *) = ^(NSError *error, MGMessage *msg) 
     } else {
         [self scrollToCaretInTextView:textView animated:NO];
     }
-}
-
--(void)observeValueForKeyPath:(NSString *)keyPath
-                     ofObject:(id)object
-                       change:(NSDictionary *)change
-                      context:(void *)context
-{
-    NSLog(@"KVO: %@ changed property %@ to value %@", object, keyPath, change);
-    self.emailCountLabel.title = [NSString stringWithFormat:@"Count: %d", [getSettingsValue(@"emailCount") intValue]];
 }
 
 @end

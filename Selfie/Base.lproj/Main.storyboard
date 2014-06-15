@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6154.17" systemVersion="14A238x" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="0mz-KT-xTI">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.11"/>
     </dependencies>
     <scenes>
@@ -17,13 +16,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textView appearanceType="aqua" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H6S-yK-O1V">
+                            <textView appearanceType="aqua" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" restorationIdentifier="textViewRestorationID" translatesAutoresizingMaskIntoConstraints="NO" id="H6S-yK-O1V">
                                 <rect key="frame" x="20" y="0.0" width="440" height="460"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardAppearance="alert" enablesReturnKeyAutomatically="YES"/>
-                                <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="qt0-cC-mse"/>
                                     <outletCollection property="gestureRecognizers" destination="k2g-Fl-nAb" appends="YES" id="PLw-uE-Qol"/>
@@ -44,9 +42,6 @@
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" title="New Note" id="QlS-Wp-MjW">
-                        <barButtonItem key="leftBarButtonItem" title="Count: 0" id="VGT-f6-Qhf">
-                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Settings" id="dmr-EG-7lQ">
                             <connections>
                                 <segue destination="xw0-um-NU6" kind="show" id="cZo-9D-aFX"/>
@@ -54,7 +49,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="emailCountLabel" destination="VGT-f6-Qhf" id="Cl7-AB-p3A"/>
                         <outlet property="text" destination="H6S-yK-O1V" id="xUd-ah-iBp"/>
                     </connections>
                 </viewController>
@@ -84,7 +78,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" ambiguous="YES" selectionStyle="default" indentationWidth="10" id="Shu-yE-mGq">
+                            <tableViewCell contentMode="scaleToFill" ambiguous="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="settingsReusableIdentifier" id="Shu-yE-mGq">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Shu-yE-mGq" id="2lb-Wi-z5G">
                                     <autoresizingMask key="autoresizingMask"/>
