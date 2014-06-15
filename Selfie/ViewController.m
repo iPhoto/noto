@@ -15,6 +15,10 @@
 @property (strong, nonatomic) Mailgun *mailgun;
 @property (strong, nonatomic) IBOutlet UINavigationItem *navBarTitle;
 
+//- (void)sendSuccess:(NSString *) message;
+//- (void (^)(NSError *))sendFailure;
+
+- (void)setSettingsValue:(NSString *)value forKey:(NSString *)key;
 - (NSString *)getSettingsValue:(NSString *) key;
 @end
 
@@ -35,6 +39,14 @@
     }
     return _mailgun;
 }
+
+void (^sendSuccess)(NSString *) = ^(NSString *message) {
+    NSLog(@"success!");
+};
+
+void (^sendFailure)(NSError *) = ^(NSError *error) {
+    NSLog(@"error!");
+};
 
 - (IBAction)processSwipe:(UISwipeGestureRecognizer *)sender {
 
@@ -79,7 +91,9 @@
             [self.mailgun sendMessageTo:toEmail
                               from:fromEmail
                            subject:subject
-                              body:body];
+                              body:body
+                           success:sendSuccess
+                           failure:sendFailure];
             
             self.text.text = nil;
             self.message = nil;
