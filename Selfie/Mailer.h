@@ -9,11 +9,11 @@
 #import <Foundation/Foundation.h>
 
 @interface Mailer : NSObject
-- (void)enqueueMailTo:(NSString *)toEmail
++ (void)enqueueMailTo:(NSString *)toEmail
                  from:(NSString *)fromEmail
           withSubject:(NSString *)subject
              withBody:(NSString *)body;
 
-- (void)pollMailQueue;
++ (void)pollMailQueue;
 
 @end

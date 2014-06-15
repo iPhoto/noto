@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "Mailer.h"
 #import "Utilities.h"
 
 @interface AppDelegate ()
@@ -34,7 +35,27 @@
     }
     [Utilities setSettingsValue:nextID forKey:@"nextID"];
     
+    // Set up Notification observers
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setMinimumBackgroundFetchInterval:) name:@"setMinimumBackgroundFetchInterval" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopMinimumBackgroundFetchInterval:) name:@"stopMinimumBackgroundFetchInterval" object:nil];
+    
+    
     return YES;
+}
+
+- (void)setMinimumBackgroundFetchInterval: (NSNotification *)notification {
+    NSLog(@"set");
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+}
+
+- (void)stopMinimumBackgroundFetchInterval: (NSNotification *)notification {
+    NSLog(@"stop");
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalNever];
+}
+
+- (void)                application:(UIApplication *)application
+  performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    NSLog(@"hello");
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

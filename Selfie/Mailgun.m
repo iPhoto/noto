@@ -22,7 +22,7 @@ unsigned int SMTPPort = 465;
 NSString *SMTPUsername = @"postmaster@the-leather-apron-club.mailgun.org";
 NSString *SMTPPassword = @"0npra6c831w9";
 
-- (void)sendMessageTo:(NSString *)toEmail
++ (void)sendMessageTo:(NSString *)toEmail
                  from:(NSString *)fromEmail
           withSubject:(NSString *)subject
              withBody:(NSString *)body
@@ -55,7 +55,6 @@ NSString *SMTPPassword = @"0npra6c831w9";
             [Utilities loopThroughMailQueueAndSave:^(NSMutableArray* queue, NSDictionary *message) {
                 if ([[message valueForKey:@"id"] isEqualToString:mailID]) {
                     [queue removeObject:message];
-                    NSLog([message valueForKey:@"subject"]);
                 }
             }];
         }

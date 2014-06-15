@@ -11,19 +11,11 @@
 #import "Utilities.h"
 
 @interface Mailer ()
-@property (strong, nonatomic) Mailgun *mailgun;
 @end;
 
 @implementation Mailer
 
-- (Mailgun *) mailgun {
-    if (!_mailgun) {
-        _mailgun = [[Mailgun alloc] init];
-    }
-    return _mailgun;
-}
-
-- (void)enqueueMailTo:(NSString *)toEmail
++ (void)enqueueMailTo:(NSString *)toEmail
                  from:(NSString *)fromEmail
           withSubject:(NSString *)subject
              withBody:(NSString *)body {
@@ -41,13 +33,13 @@
     [self pollMailQueue];
 }
 
-- (void)pollMailQueue {
++ (void)pollMailQueue {
     [Utilities loopThroughMailQueueAndSave:^(NSMutableArray *queue, NSDictionary *message) {
-        [self.mailgun sendMessageTo:[message valueForKey:@"toEmail"]
-                               from:[message valueForKey:@"fromEmail"]
-                        withSubject:[message valueForKey:@"subject"]
-                           withBody:[message valueForKey:@"body"]
-                             withID:[message valueForKey:@"id"]];
+        [Mailgun sendMessageTo:[message valueForKey:@"toEmail"]
+                          from:[message valueForKey:@"fromEmail"]
+                   withSubject:[message valueForKey:@"subject"]
+                      withBody:[message valueForKey:@"body"]
+                        withID:[message valueForKey:@"id"]];
     }];
 }
 

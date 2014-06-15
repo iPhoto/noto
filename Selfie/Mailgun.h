@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface Mailgun : NSObject
-- (void)sendMessageTo:(NSString *)toEmail
++ (void)sendMessageTo:(NSString *)toEmail
                  from:(NSString *)fromEmail
           withSubject:(NSString *)subject
              withBody:(NSString *)body

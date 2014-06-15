@@ -74,7 +74,7 @@
                 [body appendString: signature];
             }
             
-            [self.mailer enqueueMailTo:toEmail from:fromEmail withSubject:subject withBody:body];
+            [Mailer enqueueMailTo:toEmail from:fromEmail withSubject:subject withBody:body];
             
             self.text.text = nil;
             self.message = nil;
@@ -92,7 +92,7 @@
     self.text.contentInset = UIEdgeInsetsMake(74, 0, 0, 0);
 
     self.navigationController.navigationBar.translucent = NO;
-    [self.mailer pollMailQueue];
+    [Mailer pollMailQueue];
 }
 
 - (void)scrollToCaretInTextView:(UITextView *)textView animated:(BOOL)animated
