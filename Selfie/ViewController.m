@@ -13,7 +13,6 @@
 @property (strong, nonatomic) IBOutlet UITextView *text;
 @property (strong, nonatomic) NSString *message;
 @property (strong, nonatomic) Mailgun *mailgun;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *emailCountLabel;
 @property (strong, nonatomic) IBOutlet UINavigationItem *navBarTitle;
 @end
 
@@ -44,15 +43,42 @@ NSString * (^getSettingsValue)(NSString *) = ^(NSString * key) {
     return [[NSUserDefaults standardUserDefaults] valueForKey:key];
 };
 
+- (void)pollEmailQueue {
+    NSArray *queue = [[NSUserDefaults standardUserDefaults] objectForKey:@"emailQueue"];
+    NSMutableArray *mutableQueue = [queue mutableCopy];
+    
+    for (int i = 0; i < [queue count]; i++) {
+        NSDictionary *message = (NSDictionary *) [queue objectAtIndex: i];
+        [self.mailgun sendMessageTo:[message valueForKey:@"toEmail"]
+                               from:[message valueForKey:@"fromEmail"]
+                            subject:[message valueForKey:@"subject"]
+                               body:[message valueForKey:@"body"]
+                            success:sendSuccess
+                            failure:sendFailure];
+        [mutableQueue removeObjectAtIndex: 0];
+        NSLog([message valueForKey:@"subject"]);
+    }
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:mutableQueue forKey:@"emailQueue"];
+    [userDefaults synchronize];
+};
+
 void (^sendSuccess)(NSString *) = ^(NSString *message) {
     NSLog(@"success!");
-    int count = [getSettingsValue(@"emailCount") intValue] - 1;
-    count = MAX(0, count);
-    setSettingsValue(@"emailCount", [NSString stringWithFormat:@"%d", count]);
 };
 
 void (^sendFailure)(NSError *, MGMessage *) = ^(NSError *error, MGMessage *msg) {
-
+    NSArray *keys = [NSArray arrayWithObjects: @"toEmail", @"fromEmail", @"subject", @"body", nil];
+    NSArray *values = [NSArray arrayWithObjects: msg.to[0], msg.from, msg.subject, msg.text, nil];
+    NSMutableArray *queue = [[[NSUserDefaults standardUserDefaults] objectForKey:@"emailQueue"] mutableCopy];
+    if (!queue) {
+        queue = [[NSMutableArray alloc] init];
+    }
+    [queue addObject:[NSDictionary dictionaryWithObjects:values forKeys:keys]];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:queue forKey:@"emailQueue"];
+    [userDefaults synchronize];
 };
 
 - (IBAction)processSwipe:(UISwipeGestureRecognizer *)sender {
@@ -95,15 +121,18 @@ void (^sendFailure)(NSError *, MGMessage *) = ^(NSError *error, MGMessage *msg) 
                 [body appendString: signature];
             }
             
-            [self.mailgun sendMessageTo:toEmail
-                              from:fromEmail
-                           subject:subject
-                              body:body
-                           success:sendSuccess
-                           failure:sendFailure];
+            NSArray *keys = [NSArray arrayWithObjects: @"toEmail", @"fromEmail", @"subject", @"body", nil];
+            NSArray *values = [NSArray arrayWithObjects: toEmail, fromEmail, subject, body, nil];
+            NSMutableArray *queue = [[[NSUserDefaults standardUserDefaults] objectForKey:@"emailQueue"] mutableCopy];
+            if (!queue) {
+                queue = [[NSMutableArray alloc] init];
+            }
+            [queue addObject:[NSDictionary dictionaryWithObjects:values forKeys:keys]];
+            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+            [userDefaults setObject:queue forKey:@"emailQueue"];
+            [userDefaults synchronize];
             
-            int count = [getSettingsValue(@"emailCount") intValue] + 1;
-            setSettingsValue(@"emailCount", [NSString stringWithFormat:@"%d", count]);
+            [self pollEmailQueue];
             
             self.text.text = nil;
             self.message = nil;
@@ -121,16 +150,8 @@ void (^sendFailure)(NSError *, MGMessage *) = ^(NSError *error, MGMessage *msg) 
     [self.text becomeFirstResponder];
     self.text.contentInset = UIEdgeInsetsMake(74, 0, 0, 0);
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults addObserver:self
-               forKeyPath:@"emailCount"
-                  options:NSKeyValueObservingOptionNew
-                  context:NULL];
-    self.navigationController.navigationBar.translucent = NO;
-}
 
-- (void)viewDidDisappear:(BOOL)animated {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults removeObserver:self forKeyPath:@"emailCount"];
+    self.navigationController.navigationBar.translucent = NO;
 }
 
 - (void)scrollToCaretInTextView:(UITextView *)textView animated:(BOOL)animated
@@ -166,13 +187,12 @@ void (^sendFailure)(NSError *, MGMessage *) = ^(NSError *error, MGMessage *msg) 
     }
 }
 
--(void)observeValueForKeyPath:(NSString *)keyPath
-                     ofObject:(id)object
-                       change:(NSDictionary *)change
-                      context:(void *)context
-{
-    NSLog(@"KVO: %@ changed property %@ to value %@", object, keyPath, change);
-    self.emailCountLabel.title = [NSString stringWithFormat:@"Count: %d", [getSettingsValue(@"emailCount") intValue]];
-}
+//-(void)observeValueForKeyPath:(NSString *)keyPath
+//                     ofObject:(id)object
+//                       change:(NSDictionary *)change
+//                      context:(void *)context
+//{
+//    NSLog(@"KVO: %@ changed property %@ to value %@", object, keyPath, change);
+//}
 
 @end
