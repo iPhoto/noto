@@ -72,7 +72,7 @@ void (^sendFailure)(NSError *) = ^(NSError *error) {
     NSString *fromEmail = getSettingsValue(emailFrom);
     
     if (toEmail) {
-        if (!fromEmail) {
+        if (!fromEmail || [[fromEmail stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""]) {
             fromEmail = toEmail;
         }
         
