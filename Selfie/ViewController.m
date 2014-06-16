@@ -12,18 +12,14 @@
 
 @interface ViewController ()
 @property (strong, nonatomic) IBOutlet UITextView *text;
-@property (strong, nonatomic) NSString *message;
 @property (strong, nonatomic) IBOutlet UINavigationItem *navBarTitle;
 @end
 
 @implementation ViewController
 
-- (NSString *) message {
-    if (!_message) {
-        _message = self.text.text;
-    }
-    
-    return _message;
+- (void) initNote {
+    self.text.text = nil;
+    self.navBarTitle.title = @"New Note";
 }
 
 - (IBAction)processSwipe:(UISwipeGestureRecognizer *)sender {
@@ -49,7 +45,7 @@
             fromEmail = toEmail;
         }
         
-        NSString *message = [self.message stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *message = [self.text.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         
         if ([message isEqualToString:@""]) {
             return;
@@ -57,6 +53,8 @@
         
         NSArray *lines = [message componentsSeparatedByString:@"\n"];
         NSUInteger count = [lines count];
+        
+        NSLog([NSString stringWithFormat:@"Email line count: %lu", count]);
         
         if (count > 0) {
             NSString *subject = lines[0];
@@ -77,8 +75,7 @@
             
             [Mailer enqueueMailTo:toEmail from:fromEmail withSubject:subject withBody:body];
             
-            self.text.text = nil;
-            self.message = nil;
+            [self initNote];
         }
     } else {
         NSLog(@"Fail");
@@ -93,6 +90,7 @@
     self.text.contentInset = UIEdgeInsetsMake(74, 0, 0, 0);
 
     self.navigationController.navigationBar.translucent = NO;
+    [self initNote];
 }
 
 - (void)scrollToCaretInTextView:(UITextView *)textView animated:(BOOL)animated
@@ -126,6 +124,7 @@
     } else {
         [self scrollToCaretInTextView:textView animated:NO];
     }
+    self.navBarTitle.title = [self.text.text componentsSeparatedByString:@"\n"][0];
 }
 
 @end
