@@ -66,6 +66,8 @@ withCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
                 completionHandler(UIBackgroundFetchResultFailed);
             }
             
+            // TODO: Handle Mailcore error codes here. Send NSNotifications to trigger UI events.
+            
         } else {
             [Utilities loopThroughMailQueueAndSave:^(NSMutableArray* queue, NSDictionary *message) {
                 if ([[message valueForKey:@"id"] isEqualToString:mailID]) {

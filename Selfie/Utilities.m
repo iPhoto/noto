@@ -44,5 +44,31 @@
     [Utilities setSettingsObject:mutableQueue forKey:@"emailQueue"];
 }
 
++ (void) initDB {
+    // Set up NSUserDefaults
+    NSArray *queue = (NSArray *)[Utilities getSettingsObject:@"emailQueue"];
+    if (!queue) {
+        queue = [[NSArray alloc] init];
+    }
+    [Utilities setSettingsObject:queue forKey:@"emailQueue"];
+    
+    NSString *nextID = (NSString *)[Utilities getSettingsValue:@"nextID"];
+    if (!nextID) {
+        nextID = [NSString stringWithFormat:@"%d", 1];
+    }
+    [Utilities setSettingsValue:nextID forKey:@"nextID"];
+}
+
++ (void) clearDB {
+    // Set up NSUserDefaults
+    NSArray *queue = (NSArray *)[Utilities getSettingsObject:@"emailQueue"];
+    queue = [[NSArray alloc] init];
+    [Utilities setSettingsObject:queue forKey:@"emailQueue"];
+    
+    NSString *nextID = (NSString *)[Utilities getSettingsValue:@"nextID"];
+    nextID = [NSString stringWithFormat:@"%d", 1];
+    [Utilities setSettingsValue:nextID forKey:@"nextID"];
+}
+
 @end;
 
