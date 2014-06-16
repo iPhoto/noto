@@ -74,10 +74,11 @@ withCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
                 if ([queue count] == 0) {
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"stopMinimumBackgroundFetchInterval" object:nil];
                 }
-                if (completionHandler) {
-                    completionHandler(UIBackgroundFetchResultNewData);
-                }
             }];
+            
+            if (completionHandler) {
+                completionHandler(UIBackgroundFetchResultNewData);
+            }
         }
     }];
 }
