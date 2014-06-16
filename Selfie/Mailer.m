@@ -40,6 +40,8 @@
                    withSubject:[message valueForKey:@"subject"]
                       withBody:[message valueForKey:@"body"]
                         withID:[message valueForKey:@"id"]];
+        NSLog(@"polling");
+        NSLog([message valueForKey:@"subject"]);
     }];
 }
 
@@ -51,6 +53,8 @@
                       withBody:[message valueForKey:@"body"]
                         withID:[message valueForKey:@"id"]
          withCompletionHandler:completionHandler];
+        NSLog(@"pollingWithCompletionHandler");
+        NSLog([message valueForKey:@"subject"]);
     }];
 }
 

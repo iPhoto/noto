@@ -84,7 +84,6 @@
     self.text.contentInset = UIEdgeInsetsMake(74, 0, 0, 0);
 
     self.navigationController.navigationBar.translucent = NO;
-    [Mailer pollMailQueue];
 }
 
 - (void)scrollToCaretInTextView:(UITextView *)textView animated:(BOOL)animated

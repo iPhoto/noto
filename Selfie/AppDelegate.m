@@ -39,6 +39,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setMinimumBackgroundFetchInterval:) name:@"setMinimumBackgroundFetchInterval" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopMinimumBackgroundFetchInterval:) name:@"stopMinimumBackgroundFetchInterval" object:nil];
     
+    [Mailer pollMailQueue];
     
     return YES;
 }
@@ -74,6 +75,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [Mailer pollMailQueue];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
