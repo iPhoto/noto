@@ -49,8 +49,15 @@
             fromEmail = toEmail;
         }
         
-        NSArray *lines = [self.message componentsSeparatedByString:@"\n"];
+        NSString *message = [self.message stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        
+        if ([message isEqualToString:@""]) {
+            return;
+        }
+        
+        NSArray *lines = [message componentsSeparatedByString:@"\n"];
         NSUInteger count = [lines count];
+        
         if (count > 0) {
             NSString *subject = lines[0];
             NSMutableString *body;
