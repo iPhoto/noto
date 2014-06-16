@@ -34,9 +34,11 @@
     if (sender.direction == UISwipeGestureRecognizerDirectionRight) {
         emailTo = @"swipeRightTo";
         emailFrom = @"swipeRightFrom";
-    } else {
+    } else if (sender.direction == UISwipeGestureRecognizerDirectionLeft) {
         emailTo = @"swipeLeftTo";
         emailFrom = @"swipeLeftFrom";
+    } else {
+        return;
     }
 
     NSString *toEmail = (NSString *)[Utilities getSettingsObject:emailTo];
