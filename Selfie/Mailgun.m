@@ -81,6 +81,7 @@ withCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
                 }
                 if ([queue count] == 0) {
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"stopMinimumBackgroundFetchInterval" object:nil];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"emailQueueEmpty" object:nil];
                 }
             }];
             

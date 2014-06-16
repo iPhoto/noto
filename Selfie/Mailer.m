@@ -29,6 +29,7 @@
     
     [Utilities setSettingsObject:queue forKey:@"emailQueue"];
     [Utilities setSettingsValue:[NSString stringWithFormat:@"%d", nextID] forKey:@"nextID"];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"emailQueueFull" object:nil];
     
     [self pollMailQueue];
 }

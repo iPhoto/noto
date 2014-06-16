@@ -10,8 +10,9 @@
 #import "Mailer.h"
 #import "Utilities.h"
 
-@interface ViewController ()
+@interface ViewController () <UITextViewDelegate>
 @property (strong, nonatomic) IBOutlet UITextView *text;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activitySpinner;
 @property (strong, nonatomic) IBOutlet UINavigationItem *navBarTitle;
 @end
 
@@ -74,7 +75,6 @@
             }
             
             [Mailer enqueueMailTo:toEmail from:fromEmail withSubject:subject withBody:body];
-            
             [self initNote];
         }
     } else {
@@ -83,9 +83,12 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    self.text.delegate = (id<UITextViewDelegate>)self;
+    self.text.delegate = self;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardIsUp:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startAnimating:) name:@"emailQueueFull" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopAnimating:) name:@"emailQueueEmpty" object:nil];
+    
     [self.text becomeFirstResponder];
     self.text.contentInset = UIEdgeInsetsMake(74, 0, 0, 0);
 
@@ -98,6 +101,14 @@
     CGRect rect = [textView caretRectForPosition:textView.selectedTextRange.end];
     rect.size.height += textView.textContainerInset.bottom;
     [textView scrollRectToVisible:rect animated:animated];
+}
+
+- (void)startAnimating:(NSNotification *)notification {
+    [self.activitySpinner startAnimating];
+}
+
+- (void)stopAnimating:(NSNotification *)notification {
+    [self.activitySpinner stopAnimating];
 }
 
 - (void)keyboardIsUp:(NSNotification *)notification
