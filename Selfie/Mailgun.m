@@ -62,6 +62,12 @@ withCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
             NSLog(@"Error sending email: %@", error);
             [[NSNotificationCenter defaultCenter] postNotificationName:@"setMinimumBackgroundFetchInterval" object:nil];
             
+            [Utilities loopThroughMailQueueAndSave:^(NSMutableArray* queue, NSMutableDictionary *message, int i) {
+                if ([[message valueForKey:@"id"] isEqualToString:mailID]) {
+                    [[(NSDictionary *)queue[i] mutableCopy] setValue:@"NO" forKey:@"sending"];
+                }
+            }];
+            
             if (completionHandler) {
                 completionHandler(UIBackgroundFetchResultFailed);
             }
@@ -69,7 +75,7 @@ withCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
             // TODO: Handle Mailcore error codes here. Send NSNotifications to trigger UI events.
             
         } else {
-            [Utilities loopThroughMailQueueAndSave:^(NSMutableArray* queue, NSDictionary *message) {
+            [Utilities loopThroughMailQueueAndSave:^(NSMutableArray* queue, NSMutableDictionary *message, int i) {
                 if ([[message valueForKey:@"id"] isEqualToString:mailID]) {
                     [queue removeObject:message];
                 }

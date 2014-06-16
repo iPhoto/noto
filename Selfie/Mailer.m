@@ -34,27 +34,21 @@
 }
 
 + (void)pollMailQueue {
-    [Utilities loopThroughMailQueueAndSave:^(NSMutableArray *queue, NSDictionary *message) {
-        [Mailgun sendMessageTo:[message valueForKey:@"toEmail"]
-                          from:[message valueForKey:@"fromEmail"]
-                   withSubject:[message valueForKey:@"subject"]
-                      withBody:[message valueForKey:@"body"]
-                        withID:[message valueForKey:@"id"]];
-        NSLog(@"polling");
-        NSLog([message valueForKey:@"subject"]);
-    }];
+    [Mailer pollMailQueueWithCompletionHandler:nil];
 }
 
 + (void)pollMailQueueWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    [Utilities loopThroughMailQueueAndSave:^(NSMutableArray *queue, NSDictionary *message) {
-        [Mailgun sendMessageTo:[message valueForKey:@"toEmail"]
-                          from:[message valueForKey:@"fromEmail"]
-                   withSubject:[message valueForKey:@"subject"]
-                      withBody:[message valueForKey:@"body"]
-                        withID:[message valueForKey:@"id"]
-         withCompletionHandler:completionHandler];
-        NSLog(@"pollingWithCompletionHandler");
-        NSLog([message valueForKey:@"subject"]);
+    [Utilities loopThroughMailQueueAndSave:^(NSMutableArray *queue, NSMutableDictionary *message, int i) {
+        NSString *sending = [queue[i] valueForKey:@"sending"];
+        if (sending == nil || [sending isEqualToString:@"NO"]) {
+            [Mailgun sendMessageTo:[message valueForKey:@"toEmail"]
+                              from:[message valueForKey:@"fromEmail"]
+                       withSubject:[message valueForKey:@"subject"]
+                          withBody:[message valueForKey:@"body"]
+                            withID:[message valueForKey:@"id"]
+             withCompletionHandler:completionHandler];
+            [[(NSDictionary *)queue[i] mutableCopy] setValue:@"YES" forKey:@"sending"];
+        }
     }];
 }
 
