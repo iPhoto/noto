@@ -51,6 +51,7 @@
             [[(NSDictionary *)queue[i] mutableCopy] setValue:@"YES" forKey:@"sending"];
         }
     }];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"emailQueueSent" object:nil];
 }
 
 @end;
