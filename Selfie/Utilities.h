@@ -13,7 +13,11 @@
 + (NSString *) getSettingsValue:(NSString *) key;
 + (void) setSettingsObject:(NSObject *) object forKey:(NSString *) key;
 + (NSObject *) getSettingsObject:(NSString *) key;
+
 + (void)loopThroughMailQueueAndSave:(void(^)(NSMutableArray*, NSMutableDictionary *, int))predicate;
+
 + (void)initDB;
 + (void)clearDB;
+
++ (BOOL) isEmptyString:(NSString *) string;
 @end;

@@ -29,7 +29,6 @@
     
     [Utilities setSettingsObject:queue forKey:@"emailQueue"];
     [Utilities setSettingsValue:[NSString stringWithFormat:@"%d", nextID] forKey:@"nextID"];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"emailQueueFull" object:nil];
     
     [self pollMailQueue];
 }
@@ -39,6 +38,7 @@
 }
 
 + (void)pollMailQueueWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"emailQueueFull" object:nil];
     [Utilities loopThroughMailQueueAndSave:^(NSMutableArray *queue, NSMutableDictionary *message, int i) {
         NSString *sending = [queue[i] valueForKey:@"sending"];
         if (sending == nil || [sending isEqualToString:@"NO"]) {

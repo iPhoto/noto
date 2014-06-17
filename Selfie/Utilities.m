@@ -70,5 +70,9 @@
     [Utilities setSettingsValue:nextID forKey:@"nextID"];
 }
 
++ (BOOL) isEmptyString:(NSString *) string {
+    return string == nil || [[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""];
+}
+
 @end;
 

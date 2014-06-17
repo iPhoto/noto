@@ -23,6 +23,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [Utilities initDB];
+    [Utilities clearDB];
     
     // Set up Notification observers
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setMinimumBackgroundFetchInterval:) name:@"setMinimumBackgroundFetchInterval" object:nil];
