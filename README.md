@@ -12,8 +12,11 @@ pod setup
 cd ~/
 git clone https://github.com/thelac/selfie.git
 cd selfie
+git submodule update --init --recursive
 ```
 - Install Podfile dependencies
 ```
 pod install
 ```
+- Set up Libmailcore by following this YouTube [video](https://www.youtube.com/watch?v=9fAo6oBzlQI)
+- Open Selfie.xcworkspace, NOT Selfie.xcodeproj
