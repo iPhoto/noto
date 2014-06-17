@@ -7,51 +7,70 @@
 //
 
 #import "Mailer.h"
-#import "Mailgun.h"
+#import "sendgrid.h"
 #import "Utilities.h"
 
 @interface Mailer ()
+
 @end;
 
 @implementation Mailer
 
-+ (void)enqueueMailTo:(NSString *)toEmail
+static NSString * const SGUsername = @"danielsuo";
+static NSString * const SGPassword = @"TheLAC41988";
+
+
++ (void)sendMessageTo:(NSString *)toEmail
                  from:(NSString *)fromEmail
           withSubject:(NSString *)subject
-             withBody:(NSString *)body {
-    
-    NSMutableArray *queue = [[Utilities getSettingsObject:@"emailQueue"] mutableCopy];
-    int nextID = [(NSString *)[Utilities getSettingsValue:@"nextID"] intValue];
-    
-    NSArray *keys = [NSArray arrayWithObjects: @"id", @"toEmail", @"fromEmail", @"subject", @"body", nil];
-    NSArray *values = [NSArray arrayWithObjects: [NSString stringWithFormat:@"%d", nextID++], toEmail, fromEmail, subject, body, nil];
-    [queue addObject:[NSDictionary dictionaryWithObjects:values forKeys:keys]];
-    
-    [Utilities setSettingsObject:queue forKey:@"emailQueue"];
-    [Utilities setSettingsValue:[NSString stringWithFormat:@"%d", nextID] forKey:@"nextID"];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"emailQueueFull" object:nil];
-    
-    [self pollMailQueue];
+             withBody:(NSString *)body
+               withID:(NSString *)mailID {
+    [Mailer sendMessageTo:toEmail from:fromEmail withSubject:subject withBody:body withID:mailID withCompletionHandler:nil];
 }
 
-+ (void)pollMailQueue {
-    [Mailer pollMailQueueWithCompletionHandler:nil];
-}
-
-+ (void)pollMailQueueWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    [Utilities loopThroughMailQueueAndSave:^(NSMutableArray *queue, NSMutableDictionary *message, int i) {
-        NSString *sending = [queue[i] valueForKey:@"sending"];
-        if (sending == nil || [sending isEqualToString:@"NO"]) {
-            [Mailgun sendMessageTo:[message valueForKey:@"toEmail"]
-                              from:[message valueForKey:@"fromEmail"]
-                       withSubject:[message valueForKey:@"subject"]
-                          withBody:[message valueForKey:@"body"]
-                            withID:[message valueForKey:@"id"]
-             withCompletionHandler:completionHandler];
-            [[(NSDictionary *)queue[i] mutableCopy] setValue:@"YES" forKey:@"sending"];
++ (void)sendMessageTo:(NSString *)toEmail
+                 from:(NSString *)fromEmail
+          withSubject:(NSString *)subject
+             withBody:(NSString *)body
+               withID:(NSString *)mailID
+withCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
+    
+    sendgrid *msg = [sendgrid user:SGUsername andPass:SGPassword];
+    msg.to = toEmail;
+    msg.from = fromEmail;
+    msg.subject = subject;
+    msg.text = body;
+    
+    [msg sendWithWebUsingSuccessBlock:^(id responseObject) {
+        [Utilities loopThroughMailQueueAndSave:^(NSMutableArray* queue, NSMutableDictionary *message, int i) {
+            if ([[message valueForKey:@"id"] isEqualToString:mailID]) {
+                [queue removeObject:message];
+            }
+            if ([queue count] == 0) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"stopMinimumBackgroundFetchInterval" object:nil];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"emailQueueEmpty" object:nil];
+            }
+        }];
+        
+        if (completionHandler) {
+            completionHandler(UIBackgroundFetchResultNewData);
         }
+    } failureBlock:^(NSError *error) {
+        NSLog(@"Error sending email: %@", error);
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"setMinimumBackgroundFetchInterval" object:nil];
+        
+        [Utilities loopThroughMailQueueAndSave:^(NSMutableArray* queue, NSMutableDictionary *message, int i) {
+            if ([[message valueForKey:@"id"] isEqualToString:mailID]) {
+                [[(NSDictionary *)queue[i] mutableCopy] setValue:@"NO" forKey:@"sending"];
+            }
+        }];
+        
+        if (completionHandler) {
+            completionHandler(UIBackgroundFetchResultFailed);
+        }
+        
+        // TODO: Handle Sendgrid error codes here. Send NSNotifications to trigger UI events.
     }];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"emailQueueSent" object:nil];
 }
 
 @end;

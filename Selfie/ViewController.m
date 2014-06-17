@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "Mailer.h"
+#import "MailQueue.h"
 #import "Utilities.h"
 
 @interface ViewController () <UITextViewDelegate>
@@ -74,7 +74,7 @@
                 [body appendString: signature];
             }
             
-            [Mailer enqueueMailTo:toEmail from:fromEmail withSubject:subject withBody:body];
+            [MailQueue enqueueMailTo:toEmail from:fromEmail withSubject:subject withBody:body];
             [self initNote];
         }
     } else {

@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "Mailer.h"
+#import "MailQueue.h"
 #import "Utilities.h"
 
 @interface AppDelegate ()
@@ -28,7 +28,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setMinimumBackgroundFetchInterval:) name:@"setMinimumBackgroundFetchInterval" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopMinimumBackgroundFetchInterval:) name:@"stopMinimumBackgroundFetchInterval" object:nil];
     
-    [Mailer pollMailQueue];
+    [MailQueue pollMailQueue];
     
     return YES;
 }
@@ -45,7 +45,7 @@
 
 - (void)application:(UIApplication *)application
   performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    [Mailer pollMailQueueWithCompletionHandler:completionHandler];
+    [MailQueue pollMailQueueWithCompletionHandler:completionHandler];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -64,7 +64,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    [Mailer pollMailQueue];
+    [MailQueue pollMailQueue];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
