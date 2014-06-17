@@ -10,11 +10,16 @@
 #import <UIKit/UIKit.h>
 
 @interface Mailer : NSObject
-+ (void)enqueueMailTo:(NSString *)toEmail
++ (void)sendMessageTo:(NSString *)toEmail
                  from:(NSString *)fromEmail
           withSubject:(NSString *)subject
-             withBody:(NSString *)body;
+             withBody:(NSString *)body
+               withID:(NSString *)mailID;
 
-+ (void)pollMailQueue;
-+ (void)pollMailQueueWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
++ (void)sendMessageTo:(NSString *)toEmail
+                 from:(NSString *)fromEmail
+          withSubject:(NSString *)subject
+             withBody:(NSString *)body
+               withID:(NSString *)mailID
+withCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
 @end

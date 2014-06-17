@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "Mailer.h"
+#import "MailQueue.h"
 #import "Utilities.h"
 
 @interface ViewController () <UITextViewDelegate>
@@ -42,7 +42,7 @@
     NSString *fromEmail = (NSString *)[Utilities getSettingsObject:emailFrom];
     
     if (toEmail) {
-        if (!fromEmail || [[fromEmail stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""]) {
+        if ([Utilities isEmptyString:fromEmail]) {
             fromEmail = toEmail;
         }
         
@@ -69,12 +69,12 @@
                 body = [[NSMutableString alloc] initWithString:@" "];
             }
             
-            if (signature) {
+            if (![Utilities isEmptyString:signature]) {
                 [body appendString:@"\n\n"];
                 [body appendString: signature];
             }
             
-            [Mailer enqueueMailTo:toEmail from:fromEmail withSubject:subject withBody:body];
+            [MailQueue enqueueMailTo:toEmail from:fromEmail withSubject:subject withBody:body];
             [self initNote];
         }
     } else {
@@ -86,8 +86,8 @@
     self.text.delegate = self;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardIsUp:) name:UIKeyboardDidShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startAnimating:) name:@"emailQueueSent" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopAnimating:) name:@"emailQueueEmpty" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startAnimating:) name:@"emailQueueFull" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopAnimating:) name:@"emailQueueSent" object:nil];
     
     [self.text becomeFirstResponder];
     self.text.contentInset = UIEdgeInsetsMake(74, 0, 0, 0);
