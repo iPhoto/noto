@@ -12,6 +12,7 @@ pod setup
 cd ~/
 git clone https://github.com/thelac/selfie.git
 cd selfie
+git submodule update --init --recursive
 ```
 - Install Podfile dependencies
 ```
