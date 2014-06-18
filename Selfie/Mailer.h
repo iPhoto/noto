@@ -13,13 +13,11 @@
 + (void)sendMessageTo:(NSString *)toEmail
                  from:(NSString *)fromEmail
           withSubject:(NSString *)subject
-             withBody:(NSString *)body
-               withID:(NSString *)mailID;
+             withBody:(NSString *)body;
 
 + (void)sendMessageTo:(NSString *)toEmail
                  from:(NSString *)fromEmail
           withSubject:(NSString *)subject
              withBody:(NSString *)body
-               withID:(NSString *)mailID
 withCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
 @end

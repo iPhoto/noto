@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "MailQueue.h"
+#import "Mailer.h"
 #import "Utilities.h"
 
 @interface ViewController () <UITextViewDelegate>
@@ -55,8 +55,6 @@
         NSArray *lines = [message componentsSeparatedByString:@"\n"];
         NSUInteger count = [lines count];
         
-        NSLog([NSString stringWithFormat:@"Email line count: %lu", count]);
-        
         if (count > 0) {
             NSString *subject = lines[0];
             NSMutableString *body;
@@ -74,7 +72,7 @@
                 [body appendString: signature];
             }
             
-            [MailQueue enqueueMailTo:toEmail from:fromEmail withSubject:subject withBody:body];
+            [Mailer sendMessageTo:toEmail from:fromEmail withSubject:subject withBody:body];
             [self initNote];
         }
     } else {

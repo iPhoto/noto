@@ -8,6 +8,7 @@
 
 #import "Mailer.h"
 #import "sendgrid.h"
+#import "MailQueue.h"
 #import "Utilities.h"
 
 @interface Mailer ()
@@ -23,16 +24,14 @@ static NSString * const SGPassword = @"TheLAC41988";
 + (void)sendMessageTo:(NSString *)toEmail
                  from:(NSString *)fromEmail
           withSubject:(NSString *)subject
-             withBody:(NSString *)body
-               withID:(NSString *)mailID {
-    [Mailer sendMessageTo:toEmail from:fromEmail withSubject:subject withBody:body withID:mailID withCompletionHandler:nil];
+             withBody:(NSString *)body {
+    [Mailer sendMessageTo:toEmail from:fromEmail withSubject:subject withBody:body withCompletionHandler:nil];
 }
 
 + (void)sendMessageTo:(NSString *)toEmail
                  from:(NSString *)fromEmail
           withSubject:(NSString *)subject
              withBody:(NSString *)body
-               withID:(NSString *)mailID
 withCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
     
     sendgrid *msg = [sendgrid user:SGUsername andPass:SGPassword];
@@ -42,15 +41,7 @@ withCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
     msg.text = body;
     
     [msg sendWithWebUsingSuccessBlock:^(id responseObject) {
-        [Utilities loopThroughMailQueueAndSave:^(NSMutableArray* queue, NSMutableDictionary *message, int i) {
-            if ([[message valueForKey:@"id"] isEqualToString:mailID]) {
-                [queue removeObject:message];
-            }
-            if ([queue count] == 0) {
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"stopMinimumBackgroundFetchInterval" object:nil];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"emailQueueEmpty" object:nil];
-            }
-        }];
+        NSLog(@"Success!: %@", subject);
         
         if (completionHandler) {
             completionHandler(UIBackgroundFetchResultNewData);
@@ -58,12 +49,7 @@ withCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
     } failureBlock:^(NSError *error) {
         NSLog(@"Error sending email: %@", error);
         [[NSNotificationCenter defaultCenter] postNotificationName:@"setMinimumBackgroundFetchInterval" object:nil];
-        
-        [Utilities loopThroughMailQueueAndSave:^(NSMutableArray* queue, NSMutableDictionary *message, int i) {
-            if ([[message valueForKey:@"id"] isEqualToString:mailID]) {
-                [[(NSDictionary *)queue[i] mutableCopy] setValue:@"NO" forKey:@"sending"];
-            }
-        }];
+        [MailQueue enqueueMailTo:toEmail from:fromEmail withSubject:subject withBody:body];
         
         if (completionHandler) {
             completionHandler(UIBackgroundFetchResultFailed);

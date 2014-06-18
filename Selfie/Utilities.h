@@ -14,7 +14,7 @@
 + (void) setSettingsObject:(NSObject *) object forKey:(NSString *) key;
 + (NSObject *) getSettingsObject:(NSString *) key;
 
-+ (void)loopThroughMailQueueAndSave:(void(^)(NSMutableArray*, NSMutableDictionary *, int))predicate;
++ (void)loopThroughMailQueueAndSave:(void(^)(NSMutableArray*, NSMutableDictionary *))predicate;
 
 + (void)initDB;
 + (void)clearDB;
