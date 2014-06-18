@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>EEFB604E-F283-450F-92EF-BA082A8089B9</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Selfie</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>66159C3B-D9D9-4A2C-8036-A149AC79B476</key>
+		<string>https://github.com/MailCore/MailCore2.git</string>
+		<key>9C358B49-199A-4EAC-9B7E-8AC658EAC7C0</key>
+		<string>https://github.com/thelac/selfie.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Selfie.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>66159C3B-D9D9-4A2C-8036-A149AC79B476</key>
+		<string>../Selfie/MailCore2</string>
+		<key>9C358B49-199A-4EAC-9B7E-8AC658EAC7C0</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/thelac/selfie.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>9C358B49-199A-4EAC-9B7E-8AC658EAC7C0</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>66159C3B-D9D9-4A2C-8036-A149AC79B476</string>
+			<key>IDESourceControlWCCName</key>
+			<string>MailCore2</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>9C358B49-199A-4EAC-9B7E-8AC658EAC7C0</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Selfie</string>
+		</dict>
+	</array>
+</dict>
+</plist>
