@@ -135,7 +135,14 @@
     } else {
         [self scrollToCaretInTextView:textView animated:NO];
     }
-    self.navBarTitle.title = [self.text.text componentsSeparatedByString:@"\n"][0];
+    
+    NSString *title = [self.text.text componentsSeparatedByString:@"\n"][0];
+    
+    if ([Utilities isEmptyString:title]) {
+        self.navBarTitle.title = @"New Note";
+    } else {
+        self.navBarTitle.title = [self.text.text componentsSeparatedByString:@"\n"][0];
+    }
 }
 
 @end
