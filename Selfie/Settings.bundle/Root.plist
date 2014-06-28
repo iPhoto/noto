@@ -58,6 +58,14 @@
             <key>Type</key>
             <string>PSTextFieldSpecifier</string>
             <key>Title</key>
+            <string>Subject prefix</string>
+            <key>Key</key>
+            <string>subjectPrefix</string>
+        </dict>
+        <dict>
+            <key>Type</key>
+            <string>PSTextFieldSpecifier</string>
+            <key>Title</key>
             <string>Signature</string>
             <key>Key</key>
             <string>signature</string>

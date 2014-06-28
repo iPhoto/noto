@@ -56,9 +56,10 @@
         NSUInteger count = [lines count];
         
         if (count > 0) {
-            NSString *subject = lines[0];
+            NSMutableString *subject = lines[0];
             NSMutableString *body;
             NSString *signature = (NSString *)[Utilities getSettingsObject:@"signature"];
+            NSString *subjectPrefix = (NSString *)[Utilities getSettingsObject:@"subjectPrefix"];
             
             // Build body
             if (count > 1) {
@@ -70,6 +71,10 @@
             if (![Utilities isEmptyString:signature]) {
                 [body appendString:@"\n\n"];
                 [body appendString: signature];
+            }
+            
+            if (![Utilities isEmptyString:subjectPrefix]) {
+                subject = [[NSString stringWithFormat:@"%@ %@", subjectPrefix, subject] mutableCopy];
             }
             
             [Mailer sendMessageTo:toEmail from:fromEmail withSubject:subject withBody:body];
