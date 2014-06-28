@@ -111,8 +111,8 @@
 			children = (
 				4FD7A021194E414600906537 /* Mailer.h */,
 				4FD7A022194E414D00906537 /* Mailer.m */,
-				4FD5D97D1950B63800812902 /* MailQueue.m */,
 				4FD5D97F1950B63E00812902 /* MailQueue.h */,
+				4FD5D97D1950B63800812902 /* MailQueue.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";

@@ -15,6 +15,7 @@
           withSubject:(NSString *)subject
              withBody:(NSString *)body;
 
++ (NSUInteger)count;
 + (void)pollMailQueue;
 + (void)pollMailQueueWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
 @end

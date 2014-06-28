@@ -27,8 +27,10 @@
     [queue addObject:[NSDictionary dictionaryWithObjects:values forKeys:keys]];
     
     [Utilities setSettingsObject:queue forKey:@"emailQueue"];
-    
-    [self pollMailQueue];
+}
+
++ (NSUInteger)count {
+    return [(NSArray *)[Utilities getSettingsObject:@"emailQueue"] count];
 }
 
 + (void)pollMailQueue {
