@@ -20,4 +20,6 @@
           withSubject:(NSString *)subject
              withBody:(NSString *)body
 withCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
+
++ (void)onComplete;
 @end

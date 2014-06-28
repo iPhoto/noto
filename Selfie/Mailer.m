@@ -40,6 +40,8 @@ withCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
     msg.subject = subject;
     msg.text = body;
     
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    
     [msg sendWithWebUsingSuccessBlock:^(id responseObject) {
         NSLog(@"Success!: %@", subject);
         
@@ -47,7 +49,7 @@ withCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
             completionHandler(UIBackgroundFetchResultNewData);
         }
         
-        [UIApplication sharedApplication].applicationIconBadgeNumber = [MailQueue count];
+        [Mailer onComplete];
     } failureBlock:^(NSError *error) {
         NSLog(@"Error sending email: %@", error);
         [[NSNotificationCenter defaultCenter] postNotificationName:@"setMinimumBackgroundFetchInterval" object:nil];
@@ -57,10 +59,15 @@ withCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
             completionHandler(UIBackgroundFetchResultFailed);
         }
         
-        [UIApplication sharedApplication].applicationIconBadgeNumber = [MailQueue count];
+        [Mailer onComplete];
         
         // TODO: Handle Sendgrid error codes here. Send NSNotifications to trigger UI events.
     }];
+}
+
++ (void)onComplete {
+    [UIApplication sharedApplication].applicationIconBadgeNumber = [MailQueue count];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
 
 @end;
