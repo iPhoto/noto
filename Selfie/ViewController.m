@@ -98,7 +98,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopAnimating:) name:@"emailQueueSent" object:nil];
 
     self.navigationController.navigationBar.translucent = NO;
-    [self initNote];
 }
 
 - (void)scrollToCaretInTextView:(UITextView *)textView animated:(BOOL)animated
