@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6154.17" systemVersion="14A238x" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="0mz-KT-xTI">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0mz-KT-xTI">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6153.11"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
         <!--View Controller - New Note-->
@@ -13,11 +13,11 @@
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <textView appearanceType="aqua" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" restorationIdentifier="textViewRestorationID" translatesAutoresizingMaskIntoConstraints="NO" id="H6S-yK-O1V">
-                                <rect key="frame" x="20" y="0.0" width="440" height="460"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -27,21 +27,18 @@
                                     <outletCollection property="gestureRecognizers" destination="k2g-Fl-nAb" appends="YES" id="PLw-uE-Qol"/>
                                 </connections>
                             </textView>
-                            <activityIndicatorView hidden="YES" appearanceType="aqua" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="G0E-St-o7i">
-                                <rect key="frame" x="230" y="220" width="20" height="20"/>
+                            <activityIndicatorView hidden="YES" appearanceType="aqua" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="G0E-St-o7i">
+                                <rect key="frame" x="150" y="220" width="20" height="20"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="H6S-yK-O1V" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="Dbb-ie-HQL"/>
-                            <constraint firstItem="G0E-St-o7i" firstAttribute="centerY" secondItem="H6S-yK-O1V" secondAttribute="centerY" id="Hx8-o7-EzN"/>
-                            <constraint firstItem="H6S-yK-O1V" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" symbolic="YES" id="YIB-n5-tpx"/>
-                            <constraint firstAttribute="bottom" secondItem="H6S-yK-O1V" secondAttribute="bottom" constant="20" symbolic="YES" id="f1o-dY-rwb"/>
-                            <constraint firstItem="G0E-St-o7i" firstAttribute="centerX" secondItem="H6S-yK-O1V" secondAttribute="centerX" id="t6S-TH-2QM"/>
-                            <constraint firstAttribute="trailing" secondItem="H6S-yK-O1V" secondAttribute="trailing" constant="20" symbolic="YES" id="x17-Vo-aX5"/>
+                            <constraint firstAttribute="trailing" secondItem="H6S-yK-O1V" secondAttribute="trailing" id="BHs-aP-SF1"/>
+                            <constraint firstItem="H6S-yK-O1V" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="CyS-zE-7ZM"/>
+                            <constraint firstItem="H6S-yK-O1V" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="DUj-QX-t0b"/>
+                            <constraint firstAttribute="bottom" secondItem="H6S-yK-O1V" secondAttribute="bottom" id="m8t-6a-o59"/>
                         </constraints>
-                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="uB2-1h-oQt" appends="YES" id="lt1-xP-fzN"/>
                         </connections>
@@ -49,7 +46,7 @@
                     <navigationItem key="navigationItem" title="New Note" id="QlS-Wp-MjW">
                         <barButtonItem key="rightBarButtonItem" title="Settings" id="dmr-EG-7lQ">
                             <connections>
-                                <segue destination="xw0-um-NU6" kind="show" id="cZo-9D-aFX"/>
+                                <segue destination="xw0-um-NU6" kind="push" id="cZo-9D-aFX"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -80,14 +77,15 @@
             <objects>
                 <tableViewController id="xw0-um-NU6" customClass="IASKAppSettingsViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="aN4-Bd-SDR">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" ambiguous="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="settingsReusableIdentifier" id="Shu-yE-mGq">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="settingsReusableIdentifier" id="Shu-yE-mGq">
+                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Shu-yE-mGq" id="2lb-Wi-z5G">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -121,4 +119,9 @@
             <point key="canvasLocation" x="-292" y="261"/>
         </scene>
     </scenes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination"/>
+    </simulatedMetricsContainer>
 </document>

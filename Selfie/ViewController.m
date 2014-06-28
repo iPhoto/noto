@@ -80,15 +80,17 @@
     }
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [self.text becomeFirstResponder];
+    self.text.textContainerInset = UIEdgeInsetsMake(6, 6, 0, 0);
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     self.text.delegate = self;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardIsUp:) name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startAnimating:) name:@"emailQueueFull" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopAnimating:) name:@"emailQueueSent" object:nil];
-    
-    [self.text becomeFirstResponder];
-    self.text.contentInset = UIEdgeInsetsMake(74, 0, 0, 0);
 
     self.navigationController.navigationBar.translucent = NO;
     [self initNote];
