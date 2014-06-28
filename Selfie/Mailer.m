@@ -10,6 +10,7 @@
 #import "sendgrid.h"
 #import "MailQueue.h"
 #import "Utilities.h"
+#import <AudioToolbox/AudioToolbox.h>
 
 @interface Mailer ()
 
@@ -41,6 +42,10 @@ withCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
     msg.text = body;
     
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    
+    // List of all system sounds
+    // https://github.com/TUNER88/iOSSystemSoundsLibrary
+    AudioServicesPlaySystemSound (1001);
     
     [msg sendWithWebUsingSuccessBlock:^(id responseObject) {
         NSLog(@"Success!: %@", subject);

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F531FFD195F3B3600F4ABAE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F531FFC195F3B3600F4ABAE /* AudioToolbox.framework */; };
 		4F865790194AA1440058C5BC /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4F86578F194AA1440058C5BC /* Settings.bundle */; };
 		4F953A94194E7F9E00F67A0A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F953A93194E7F9E00F67A0A /* Foundation.framework */; };
 		4FD5D97E1950B63800812902 /* MailQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD5D97D1950B63800812902 /* MailQueue.m */; };
@@ -33,6 +34,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4F531FFC195F3B3600F4ABAE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		4F86578F194AA1440058C5BC /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		4F953A93194E7F9E00F67A0A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4FD5D97D1950B63800812902 /* MailQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MailQueue.m; sourceTree = "<group>"; };
@@ -64,6 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F531FFD195F3B3600F4ABAE /* AudioToolbox.framework in Frameworks */,
 				4F953A94194E7F9E00F67A0A /* Foundation.framework in Frameworks */,
 				6CE63EEB8D4349A48F08C6F4 /* libPods.a in Frameworks */,
 			);
@@ -82,6 +85,7 @@
 		49A85F4260824FD59E33F5C0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4F531FFC195F3B3600F4ABAE /* AudioToolbox.framework */,
 				4F953A93194E7F9E00F67A0A /* Foundation.framework */,
 				4FD7A01F194E3F3700906537 /* CFNetwork.framework */,
 				6E77200C5C3C411893448E4A /* libPods.a */,
