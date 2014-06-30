@@ -7,8 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "MailQueue.h"
-#import "Utilities.h"
 
 @interface AppDelegate ()
             
