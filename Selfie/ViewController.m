@@ -7,8 +7,6 @@
 //
 
 #import "ViewController.h"
-#import "Mailer.h"
-#import "Utilities.h"
 
 @interface ViewController () <UITextViewDelegate>
 @property (strong, nonatomic) IBOutlet UITextView *text;

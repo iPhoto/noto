@@ -7,10 +7,6 @@
 //
 
 #import "Mailer.h"
-#import "sendgrid.h"
-#import "MailQueue.h"
-#import "Utilities.h"
-#import <AudioToolbox/AudioToolbox.h>
 
 @interface Mailer ()
 

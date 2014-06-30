@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Mailer.h"
+#import "Utilities.h"
 
 @interface ViewController : UIViewController
 

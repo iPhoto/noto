@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "sendgrid.h"
+#import "MailQueue.h"
+#import "Utilities.h"
+#import <AudioToolbox/AudioToolbox.h>
 
 @interface Mailer : NSObject
 + (void)sendMessageTo:(NSString *)toEmail

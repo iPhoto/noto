@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "Mailer.h"
+#import "Utilities.h"
 
 @interface MailQueue : NSObject
 + (void)enqueueMailTo:(NSString *)toEmail

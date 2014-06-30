@@ -7,8 +7,6 @@
 //
 
 #import "MailQueue.h"
-#import "Mailer.h"
-#import "Utilities.h"
 
 @interface MailQueue ()
 @end;
