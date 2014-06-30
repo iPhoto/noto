@@ -10,7 +10,7 @@
 		4F531FFD195F3B3600F4ABAE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F531FFC195F3B3600F4ABAE /* AudioToolbox.framework */; };
 		4F865790194AA1440058C5BC /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4F86578F194AA1440058C5BC /* Settings.bundle */; };
 		4F953A94194E7F9E00F67A0A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F953A93194E7F9E00F67A0A /* Foundation.framework */; };
-		4FB467791962204E00CD8A8E /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB467781962204E00CD8A8E /* Note.m */; };
+		4FB4677C196221A900CD8A8E /* Mail.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB4677B196221A900CD8A8E /* Mail.m */; };
 		4FD5D97E1950B63800812902 /* MailQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD5D97D1950B63800812902 /* MailQueue.m */; };
 		4FD7A023194E414D00906537 /* Mailer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD7A022194E414D00906537 /* Mailer.m */; };
 		4FD7A030194E51B600906537 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD7A02F194E51B600906537 /* Utilities.m */; };
@@ -38,8 +38,8 @@
 		4F531FFC195F3B3600F4ABAE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		4F86578F194AA1440058C5BC /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		4F953A93194E7F9E00F67A0A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		4FB467771962204E00CD8A8E /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
-		4FB467781962204E00CD8A8E /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
+		4FB4677A196221A900CD8A8E /* Mail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mail.h; sourceTree = "<group>"; };
+		4FB4677B196221A900CD8A8E /* Mail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mail.m; sourceTree = "<group>"; };
 		4FD5D97D1950B63800812902 /* MailQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MailQueue.m; sourceTree = "<group>"; };
 		4FD5D97F1950B63E00812902 /* MailQueue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MailQueue.h; sourceTree = "<group>"; };
 		4FD7A01F194E3F3700906537 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -116,12 +116,12 @@
 		4FD7A026194E418C00906537 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				4FB467771962204E00CD8A8E /* Note.h */,
-				4FB467781962204E00CD8A8E /* Note.m */,
 				4FD7A021194E414600906537 /* Mailer.h */,
 				4FD7A022194E414D00906537 /* Mailer.m */,
 				4FD5D97F1950B63E00812902 /* MailQueue.h */,
 				4FD5D97D1950B63800812902 /* MailQueue.m */,
+				4FB4677A196221A900CD8A8E /* Mail.h */,
+				4FB4677B196221A900CD8A8E /* Mail.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -343,10 +343,10 @@
 				4FF87420194A83F600787DE0 /* AppDelegate.m in Sources */,
 				4FF87426194A83F600787DE0 /* ViewController.m in Sources */,
 				4FF8741D194A83F600787DE0 /* main.m in Sources */,
+				4FB4677C196221A900CD8A8E /* Mail.m in Sources */,
 				4FD7A030194E51B600906537 /* Utilities.m in Sources */,
 				4FD5D97E1950B63800812902 /* MailQueue.m in Sources */,
 				4FD7A023194E414D00906537 /* Mailer.m in Sources */,
-				4FB467791962204E00CD8A8E /* Note.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

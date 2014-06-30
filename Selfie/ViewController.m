@@ -10,7 +10,6 @@
 
 @interface ViewController () <UITextViewDelegate>
 @property (strong, nonatomic) IBOutlet UITextView *text;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activitySpinner;
 @property (strong, nonatomic) IBOutlet UINavigationItem *navBarTitle;
 @end
 
@@ -92,8 +91,6 @@
     self.text.delegate = self;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardIsUp:) name:UIKeyboardDidShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startAnimating:) name:@"emailQueueFull" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopAnimating:) name:@"emailQueueSent" object:nil];
 
     self.navigationController.navigationBar.translucent = NO;
 }
@@ -103,14 +100,6 @@
     CGRect rect = [textView caretRectForPosition:textView.selectedTextRange.end];
     rect.size.height += textView.textContainerInset.bottom;
     [textView scrollRectToVisible:rect animated:animated];
-}
-
-- (void)startAnimating:(NSNotification *)notification {
-    [self.activitySpinner startAnimating];
-}
-
-- (void)stopAnimating:(NSNotification *)notification {
-    [self.activitySpinner stopAnimating];
 }
 
 - (void)keyboardIsUp:(NSNotification *)notification
