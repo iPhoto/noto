@@ -27,9 +27,6 @@
                                     <outletCollection property="gestureRecognizers" destination="k2g-Fl-nAb" appends="YES" id="PLw-uE-Qol"/>
                                 </connections>
                             </textView>
-                            <activityIndicatorView hidden="YES" appearanceType="aqua" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="G0E-St-o7i">
-                                <rect key="frame" x="150" y="220" width="20" height="20"/>
-                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -51,7 +48,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="activitySpinner" destination="G0E-St-o7i" id="qEo-g9-cpN"/>
                         <outlet property="navBarTitle" destination="QlS-Wp-MjW" id="5QB-F7-GbM"/>
                         <outlet property="text" destination="H6S-yK-O1V" id="xUd-ah-iBp"/>
                     </connections>

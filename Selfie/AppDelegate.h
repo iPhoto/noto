@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
-#import "MailQueue.h"
+#import "Queue.h"
 #import "Utilities.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>

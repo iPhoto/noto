@@ -22,64 +22,13 @@
 
 - (IBAction)processSwipe:(UISwipeGestureRecognizer *)sender {
 
-    NSString *emailTo;
-    NSString *emailFrom;
+    Note *note = [[Note alloc] initWithString:self.text.text direction:sender.direction];
     
-    if (sender.direction == UISwipeGestureRecognizerDirectionRight) {
-        emailTo = @"swipeRightTo";
-        emailFrom = @"swipeRightFrom";
-    } else if (sender.direction == UISwipeGestureRecognizerDirectionLeft) {
-        emailTo = @"swipeLeftTo";
-        emailFrom = @"swipeLeftFrom";
-    } else {
-        return;
+    if (note) {
+        [note send];
     }
-
-    NSString *toEmail = (NSString *)[Utilities getSettingsObject:emailTo];
-    NSString *fromEmail = (NSString *)[Utilities getSettingsObject:emailFrom];
     
-    if (toEmail) {
-        if ([Utilities isEmptyString:fromEmail]) {
-            fromEmail = toEmail;
-        }
-        
-        NSString *message = [self.text.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        
-        if ([message isEqualToString:@""]) {
-            return;
-        }
-        
-        NSArray *lines = [message componentsSeparatedByString:@"\n"];
-        NSUInteger count = [lines count];
-        
-        if (count > 0) {
-            NSMutableString *subject = lines[0];
-            NSMutableString *body;
-            NSString *signature = (NSString *)[Utilities getSettingsObject:@"signature"];
-            NSString *subjectPrefix = (NSString *)[Utilities getSettingsObject:@"subjectPrefix"];
-            
-            // Build body
-            if (count > 1) {
-                body = [[NSMutableString alloc] initWithString:[[lines subarrayWithRange:NSMakeRange(1, [lines count] - 1)] componentsJoinedByString:@"\n"] ];
-            } else {
-                body = [[NSMutableString alloc] initWithString:@" "];
-            }
-            
-            if (![Utilities isEmptyString:signature]) {
-                [body appendString:@"\n\n"];
-                [body appendString: signature];
-            }
-            
-            if (![Utilities isEmptyString:subjectPrefix]) {
-                subject = [[NSString stringWithFormat:@"%@ %@", subjectPrefix, subject] mutableCopy];
-            }
-            
-            [Mailer sendMessageTo:toEmail from:fromEmail withSubject:subject withBody:body];
-            [self initNote];
-        }
-    } else {
-        NSLog(@"Fail");
-    }
+    [self initNote];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

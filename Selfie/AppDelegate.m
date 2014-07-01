@@ -22,13 +22,13 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [Utilities initDB];
     
-    application.applicationIconBadgeNumber = [MailQueue count];
+    application.applicationIconBadgeNumber = [Queue count];
     
     // Set up Notification observers
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setMinimumBackgroundFetchInterval:) name:@"setMinimumBackgroundFetchInterval" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopMinimumBackgroundFetchInterval:) name:@"stopMinimumBackgroundFetchInterval" object:nil];
     
-    [MailQueue pollMailQueue];
+    [Queue pollQueue];
     
     return YES;
 }
@@ -45,7 +45,7 @@
 
 - (void)application:(UIApplication *)application
   performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    [MailQueue pollMailQueueWithCompletionHandler:completionHandler];
+    [Queue pollQueueWithCompletionHandler:completionHandler];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -64,7 +64,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    [MailQueue pollMailQueue];
+    [Queue pollQueue];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

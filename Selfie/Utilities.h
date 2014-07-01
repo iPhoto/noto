@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Note.h"
+@class Note;
 
 @interface Utilities : NSObject
 + (void) setSettingsValue:(NSString *) value forKey:(NSString *) key;
@@ -14,7 +16,7 @@
 + (void) setSettingsObject:(NSObject *) object forKey:(NSString *) key;
 + (NSObject *) getSettingsObject:(NSString *) key;
 
-+ (void)loopThroughMailQueueAndSave:(void(^)(NSMutableArray*, NSMutableDictionary *))predicate;
++ (void)loopThroughQueueAndSave:(void(^)(NSMutableArray*, Note*))predicate;
 
 + (void)initDB;
 + (void)clearDB;
