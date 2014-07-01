@@ -91,40 +91,49 @@
 - (void)send {
     [self sendWithCompletionHandler:nil];
 }
+
+- (BOOL)validNote {
+    return(self.toEmail && self.fromEmail && self.subject && self.body);
+}
+
 - (void)sendWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    sendgrid *msg = [sendgrid user:SGUsername andPass:SGPassword];
-    msg.to = self.toEmail;
-    msg.from = self.fromEmail;
-    msg.subject = self.subject;
-    msg.text = self.body;
+    if ([self validNote]) {
+        sendgrid *msg = [sendgrid user:SGUsername andPass:SGPassword];
+        msg.to = self.toEmail;
+        msg.from = self.fromEmail;
+        msg.subject = self.subject;
+        msg.text = self.body;
+        
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+        
+        // List of all system sounds
+        // https://github.com/TUNER88/iOSSystemSoundsLibrary
+        AudioServicesPlaySystemSound (1001);
+        
+        [msg sendWithWebUsingSuccessBlock:^(id responseObject) {
+            NSLog(@"Success!: %@", self.subject);
+            
+            if (completionHandler) {
+                completionHandler(UIBackgroundFetchResultNewData);
+            }
+            
+            [self onComplete];
+        } failureBlock:^(NSError *error) {
+            NSLog(@"Error sending email: %@", error);
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"setMinimumBackgroundFetchInterval" object:nil];
+            [Queue enqueue:self];
+            
+            if (completionHandler) {
+                completionHandler(UIBackgroundFetchResultFailed);
+            }
+            
+            [self onComplete];
+            
+            // TODO: Handle Sendgrid error codes here. Send NSNotifications to trigger UI events.
+        }];
+    }
     
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    
-    // List of all system sounds
-    // https://github.com/TUNER88/iOSSystemSoundsLibrary
-    AudioServicesPlaySystemSound (1001);
-    
-    [msg sendWithWebUsingSuccessBlock:^(id responseObject) {
-        NSLog(@"Success!: %@", self.subject);
-        
-        if (completionHandler) {
-            completionHandler(UIBackgroundFetchResultNewData);
-        }
-        
-        [self onComplete];
-    } failureBlock:^(NSError *error) {
-        NSLog(@"Error sending email: %@", error);
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"setMinimumBackgroundFetchInterval" object:nil];
-        [Queue enqueue:self];
-        
-        if (completionHandler) {
-            completionHandler(UIBackgroundFetchResultFailed);
-        }
-        
-        [self onComplete];
-        
-        // TODO: Handle Sendgrid error codes here. Send NSNotifications to trigger UI events.
-    }];
+    // TODO: Handle invalid note
 }
 - (void)onComplete {
     [UIApplication sharedApplication].applicationIconBadgeNumber = [Queue count];

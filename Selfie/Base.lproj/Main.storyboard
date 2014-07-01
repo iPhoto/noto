@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textView appearanceType="aqua" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" restorationIdentifier="textViewRestorationID" translatesAutoresizingMaskIntoConstraints="NO" id="H6S-yK-O1V">
+                            <textView appearanceType="aqua" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" restorationIdentifier="textViewRestorationID" translatesAutoresizingMaskIntoConstraints="NO" id="H6S-yK-O1V" userLabel="Front Text View">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
@@ -48,8 +48,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="frontTextView" destination="H6S-yK-O1V" id="jrl-8B-Y4u"/>
                         <outlet property="navBarTitle" destination="QlS-Wp-MjW" id="5QB-F7-GbM"/>
-                        <outlet property="text" destination="H6S-yK-O1V" id="xUd-ah-iBp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

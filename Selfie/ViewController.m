@@ -9,20 +9,20 @@
 #import "ViewController.h"
 
 @interface ViewController () <UITextViewDelegate>
-@property (strong, nonatomic) IBOutlet UITextView *text;
+@property (strong, nonatomic) IBOutlet UITextView *frontTextView;
 @property (strong, nonatomic) IBOutlet UINavigationItem *navBarTitle;
 @end
 
 @implementation ViewController
 
 - (void) initNote {
-    self.text.text = nil;
+    self.frontTextView.text = nil;
     self.navBarTitle.title = @"New Note";
 }
 
 - (IBAction)processSwipe:(UISwipeGestureRecognizer *)sender {
 
-    Note *note = [[Note alloc] initWithString:self.text.text direction:sender.direction];
+    Note *note = [[Note alloc] initWithString:self.frontTextView.text direction:sender.direction];
     
     if (note) {
         [note send];
@@ -32,12 +32,12 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self.text becomeFirstResponder];
-    self.text.textContainerInset = UIEdgeInsetsMake(6, 6, 0, 0);
+    [self.frontTextView becomeFirstResponder];
+    self.frontTextView.textContainerInset = UIEdgeInsetsMake(6, 6, 0, 0);
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    self.text.delegate = self;
+    self.frontTextView.delegate = self;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardIsUp:) name:UIKeyboardDidShowNotification object:nil];
 
@@ -57,12 +57,12 @@
     CGRect keyboardRect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     keyboardRect = [self.view convertRect:keyboardRect fromView:nil];
     
-    UIEdgeInsets inset = self.text.contentInset;
+    UIEdgeInsets inset = self.frontTextView.contentInset;
     inset.bottom = keyboardRect.size.height;
-    self.text.contentInset = inset;
-    self.text.scrollIndicatorInsets = inset;
+    self.frontTextView.contentInset = inset;
+    self.frontTextView.scrollIndicatorInsets = inset;
     
-    [self scrollToCaretInTextView:self.text animated:YES];
+    [self scrollToCaretInTextView:self.frontTextView animated:YES];
 }
 
 - (void)textViewDidChange:(UITextView *)textView {
@@ -76,12 +76,12 @@
         [self scrollToCaretInTextView:textView animated:NO];
     }
     
-    NSString *title = [self.text.text componentsSeparatedByString:@"\n"][0];
+    NSString *title = [self.frontTextView.text componentsSeparatedByString:@"\n"][0];
     
     if ([Utilities isEmptyString:title]) {
         self.navBarTitle.title = @"New Note";
     } else {
-        self.navBarTitle.title = [self.text.text componentsSeparatedByString:@"\n"][0];
+        self.navBarTitle.title = [self.frontTextView.text componentsSeparatedByString:@"\n"][0];
     }
 }
 
