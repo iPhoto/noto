@@ -24,11 +24,10 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardAppearance="alert" enablesReturnKeyAutomatically="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="qt0-cC-mse"/>
-                                    <outletCollection property="gestureRecognizers" destination="k2g-Fl-nAb" appends="YES" id="PLw-uE-Qol"/>
                                 </connections>
                             </textView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="H6S-yK-O1V" secondAttribute="trailing" id="BHs-aP-SF1"/>
@@ -36,9 +35,6 @@
                             <constraint firstItem="H6S-yK-O1V" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="DUj-QX-t0b"/>
                             <constraint firstAttribute="bottom" secondItem="H6S-yK-O1V" secondAttribute="bottom" id="m8t-6a-o59"/>
                         </constraints>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="uB2-1h-oQt" appends="YES" id="lt1-xP-fzN"/>
-                        </connections>
                     </view>
                     <navigationItem key="navigationItem" title="New Note" id="QlS-Wp-MjW">
                         <barButtonItem key="rightBarButtonItem" title="Settings" id="dmr-EG-7lQ">
@@ -48,23 +44,12 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="backgroundView" destination="kh9-bI-dsS" id="G5M-w3-Je4"/>
                         <outlet property="frontTextView" destination="H6S-yK-O1V" id="jrl-8B-Y4u"/>
                         <outlet property="navBarTitle" destination="QlS-Wp-MjW" id="5QB-F7-GbM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="right" id="uB2-1h-oQt">
-                    <connections>
-                        <action selector="processSwipe:" destination="vXZ-lx-hvc" id="oLn-kS-6kG"/>
-                        <outlet property="delegate" destination="H6S-yK-O1V" id="oSr-n9-MSu"/>
-                    </connections>
-                </swipeGestureRecognizer>
-                <swipeGestureRecognizer direction="left" id="k2g-Fl-nAb">
-                    <connections>
-                        <action selector="processSwipe:" destination="vXZ-lx-hvc" id="3Aa-3F-x6a"/>
-                        <outlet property="delegate" destination="H6S-yK-O1V" id="CDE-bd-ZmL"/>
-                    </connections>
-                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="274" y="261"/>
         </scene>

@@ -8,7 +8,8 @@
 
 #import "ViewController.h"
 
-@interface ViewController () <UITextViewDelegate>
+@interface ViewController () <MDCSwipeToChooseDelegate>
+@property (strong, nonatomic) IBOutlet UIView *backgroundView;
 @property (strong, nonatomic) IBOutlet UITextView *frontTextView;
 @property (strong, nonatomic) IBOutlet UINavigationItem *navBarTitle;
 @end
@@ -20,24 +21,59 @@
     self.navBarTitle.title = @"New Note";
 }
 
-- (IBAction)processSwipe:(UISwipeGestureRecognizer *)sender {
-
-    Note *note = [[Note alloc] initWithString:self.frontTextView.text direction:sender.direction];
+- (void)viewDidLoad {
+    [super viewDidLoad];
     
-    if (note) {
-        [note send];
-    }
+    MDCSwipeOptions *options = [MDCSwipeOptions new];
+    options.delegate = self;
+    options.threshold = 160.0f;
+    options.rotationFactor = 0.01;
+    options.onPan = ^(MDCPanState *state) {
+        if ([Utilities isEmptyString:self.frontTextView.text]) {
+            self.backgroundView.backgroundColor = [UIColor redColor];
+        } else {
+            if (state.thresholdRatio == 1) {
+                self.backgroundView.backgroundColor = [UIColor greenColor];
+            }
+            else {
+                self.backgroundView.backgroundColor = [UIColor lightGrayColor];
+            }
+        }
+    };
     
-    [self initNote];
+    options.onChosen = ^(MDCSwipeResult *state){
+        if (![Utilities isEmptyString:self.frontTextView.text]) {
+            Note *note;
+            switch (state.direction) {
+                case MDCSwipeDirectionLeft:
+                    note = [[Note alloc] initWithString:self.frontTextView.text direction:UISwipeGestureRecognizerDirectionLeft];
+                    break;
+                case MDCSwipeDirectionRight:
+                    note = [[Note alloc] initWithString:self.frontTextView.text direction:UISwipeGestureRecognizerDirectionRight];
+                    break;
+                case MDCSwipeDirectionNone:
+                    break;
+            }
+            
+            if (note) {
+                [note send];
+            }
+            
+            [self initNote];
+        }
+        [self.frontTextView mdc_swipe:state.direction];
+    };
+    [self.frontTextView mdc_swipeToChooseSetup:options];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    self.frontTextView.delegate = self;
+    [self.frontTextView setUserInteractionEnabled:TRUE];
     [self.frontTextView becomeFirstResponder];
     self.frontTextView.textContainerInset = UIEdgeInsetsMake(6, 6, 0, 0);
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    self.frontTextView.delegate = self;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardIsUp:) name:UIKeyboardDidShowNotification object:nil];
 

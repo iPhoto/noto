@@ -106,12 +106,14 @@ const void * const MDCViewStateKey = &MDCViewStateKey;
     UIPanGestureRecognizer *panGestureRecognizer =
     [[UIPanGestureRecognizer alloc] initWithTarget:self
                                             action:action];
+    panGestureRecognizer.cancelsTouchesInView = NO;
     [self addGestureRecognizer:panGestureRecognizer];
 }
 
 #pragma mark Translation
 
 - (void)mdc_finalizePosition {
+    NSLog(@"got here");
     MDCSwipeDirection direction = [self mdc_directionOfExceededThreshold];
     switch (direction) {
         case MDCSwipeDirectionRight:
@@ -232,11 +234,11 @@ const void * const MDCViewStateKey = &MDCViewStateKey;
 
         // If the pan gesture originated at the top half of the view, rotate the view
         // away from the center. Otherwise, rotate towards the center.
-        if ([panGestureRecognizer locationInView:view].y < view.center.y) {
-            self.mdc_viewState.rotationDirection = MDCRotationAwayFromCenter;
-        } else {
-            self.mdc_viewState.rotationDirection = MDCRotationTowardsCenter;
-        }
+//        if ([panGestureRecognizer locationInView:view].y < view.center.y) {
+//            self.mdc_viewState.rotationDirection = MDCRotationAwayFromCenter;
+//        } else {
+//            self.mdc_viewState.rotationDirection = MDCRotationTowardsCenter;
+//        }
     } else if (panGestureRecognizer.state == UIGestureRecognizerStateEnded) {
         // Either move the view back to its original position or move it off screen.
         [self mdc_finalizePosition];
@@ -244,6 +246,7 @@ const void * const MDCViewStateKey = &MDCViewStateKey;
         // Update the position and transform. Then, notify any listeners of
         // the updates via the pan block.
         CGPoint translation = [panGestureRecognizer translationInView:view];
+        translation.y = 0;
         view.center = MDCCGPointAdd(self.mdc_viewState.originalCenter, translation);
         [self mdc_rotateForTranslation:translation
                      rotationDirection:self.mdc_viewState.rotationDirection];
