@@ -26,7 +26,7 @@
     
     MDCSwipeOptions *options = [MDCSwipeOptions new];
     options.delegate = self;
-    options.threshold = 160.0f;
+    options.threshold = 100.0f;
     options.rotationFactor = 0.01;
     options.onPan = ^(MDCPanState *state) {
         if ([Utilities isEmptyString:self.frontTextView.text]) {
