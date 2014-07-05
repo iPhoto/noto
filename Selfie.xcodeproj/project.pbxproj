@@ -9,17 +9,17 @@
 /* Begin PBXBuildFile section */
 		4F531FFD195F3B3600F4ABAE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F531FFC195F3B3600F4ABAE /* AudioToolbox.framework */; };
 		4F6E39D41967BCB700E7A0A8 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F6E39D31967BCB700E7A0A8 /* Crashlytics.framework */; };
-		4F865790194AA1440058C5BC /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4F86578F194AA1440058C5BC /* Settings.bundle */; };
+		4F6E3A2319687F1D00E7A0A8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6E3A0F19687F1D00E7A0A8 /* AppDelegate.m */; };
+		4F6E3A2419687F1D00E7A0A8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6E3A1219687F1D00E7A0A8 /* ViewController.m */; };
+		4F6E3A2519687F1D00E7A0A8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F6E3A1319687F1D00E7A0A8 /* Images.xcassets */; };
+		4F6E3A2719687F1D00E7A0A8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6E3A1519687F1D00E7A0A8 /* main.m */; };
+		4F6E3A2819687F1D00E7A0A8 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6E3A1819687F1D00E7A0A8 /* Note.m */; };
+		4F6E3A2919687F1D00E7A0A8 /* Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6E3A1A19687F1D00E7A0A8 /* Queue.m */; };
+		4F6E3A2A19687F1D00E7A0A8 /* Selfie.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4F6E3A1B19687F1D00E7A0A8 /* Selfie.xcdatamodeld */; };
+		4F6E3A2B19687F1D00E7A0A8 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4F6E3A1D19687F1D00E7A0A8 /* Settings.bundle */; };
+		4F6E3A2C19687F1D00E7A0A8 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6E3A2019687F1D00E7A0A8 /* Utilities.m */; };
+		4F6E3A2D19687F1D00E7A0A8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F6E3A2219687F1D00E7A0A8 /* Main.storyboard */; };
 		4F953A94194E7F9E00F67A0A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F953A93194E7F9E00F67A0A /* Foundation.framework */; };
-		4FB4677F19622F9500CD8A8E /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB4677E19622F9500CD8A8E /* Note.m */; };
-		4FB4678219622FE000CD8A8E /* Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB4678119622FE000CD8A8E /* Queue.m */; };
-		4FD7A030194E51B600906537 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD7A02F194E51B600906537 /* Utilities.m */; };
-		4FF8741D194A83F600787DE0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF8741C194A83F600787DE0 /* main.m */; };
-		4FF87420194A83F600787DE0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF8741F194A83F600787DE0 /* AppDelegate.m */; };
-		4FF87423194A83F600787DE0 /* Selfie.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4FF87421194A83F600787DE0 /* Selfie.xcdatamodeld */; };
-		4FF87426194A83F600787DE0 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF87425194A83F600787DE0 /* ViewController.m */; };
-		4FF87429194A83F600787DE0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FF87427194A83F600787DE0 /* Main.storyboard */; };
-		4FF8742B194A83F600787DE0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FF8742A194A83F600787DE0 /* Images.xcassets */; };
 		4FF87437194A83F600787DE0 /* SelfieTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF87436194A83F600787DE0 /* SelfieTests.m */; };
 		6CE63EEB8D4349A48F08C6F4 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E77200C5C3C411893448E4A /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -37,25 +37,26 @@
 /* Begin PBXFileReference section */
 		4F531FFC195F3B3600F4ABAE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		4F6E39D31967BCB700E7A0A8 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
-		4F86578F194AA1440058C5BC /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		4F6E3A0319687E9000E7A0A8 /* Note.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Note.m; path = Selfie/Models/Note.m; sourceTree = "<group>"; };
+		4F6E3A0E19687F1D00E7A0A8 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		4F6E3A0F19687F1D00E7A0A8 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		4F6E3A1119687F1D00E7A0A8 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		4F6E3A1219687F1D00E7A0A8 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		4F6E3A1319687F1D00E7A0A8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		4F6E3A1419687F1D00E7A0A8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4F6E3A1519687F1D00E7A0A8 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4F6E3A1719687F1D00E7A0A8 /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
+		4F6E3A1819687F1D00E7A0A8 /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
+		4F6E3A1919687F1D00E7A0A8 /* Queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Queue.h; sourceTree = "<group>"; };
+		4F6E3A1A19687F1D00E7A0A8 /* Queue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Queue.m; sourceTree = "<group>"; };
+		4F6E3A1C19687F1D00E7A0A8 /* Selfie.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Selfie.xcdatamodel; sourceTree = "<group>"; };
+		4F6E3A1D19687F1D00E7A0A8 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		4F6E3A1F19687F1D00E7A0A8 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
+		4F6E3A2019687F1D00E7A0A8 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
+		4F6E3A2219687F1D00E7A0A8 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		4F953A93194E7F9E00F67A0A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		4FB4677D19622F9500CD8A8E /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
-		4FB4677E19622F9500CD8A8E /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
-		4FB4678019622FE000CD8A8E /* Queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Queue.h; sourceTree = "<group>"; };
-		4FB4678119622FE000CD8A8E /* Queue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Queue.m; sourceTree = "<group>"; };
 		4FD7A01F194E3F3700906537 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
-		4FD7A02E194E51B000906537 /* Utilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
-		4FD7A02F194E51B600906537 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
 		4FF87417194A83F600787DE0 /* Selfie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Selfie.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		4FF8741B194A83F600787DE0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4FF8741C194A83F600787DE0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		4FF8741E194A83F600787DE0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		4FF8741F194A83F600787DE0 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		4FF87422194A83F600787DE0 /* Selfie.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Selfie.xcdatamodel; sourceTree = "<group>"; };
-		4FF87424194A83F600787DE0 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		4FF87425194A83F600787DE0 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		4FF87428194A83F600787DE0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		4FF8742A194A83F600787DE0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4FF87430194A83F600787DE0 /* SelfieTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SelfieTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FF87435194A83F600787DE0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4FF87436194A83F600787DE0 /* SelfieTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelfieTests.m; sourceTree = "<group>"; };
@@ -88,6 +89,7 @@
 		49A85F4260824FD59E33F5C0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4F6E3A0319687E9000E7A0A8 /* Note.m */,
 				4F6E39D31967BCB700E7A0A8 /* Crashlytics.framework */,
 				4F531FFC195F3B3600F4ABAE /* AudioToolbox.framework */,
 				4F953A93194E7F9E00F67A0A /* Foundation.framework */,
@@ -97,41 +99,41 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		4FD7A024194E416400906537 /* Views */ = {
+		4F6E3A1019687F1D00E7A0A8 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				4FF87427194A83F600787DE0 /* Main.storyboard */,
+				4F6E3A1119687F1D00E7A0A8 /* ViewController.h */,
+				4F6E3A1219687F1D00E7A0A8 /* ViewController.m */,
 			);
-			name = Views;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
-		4FD7A025194E418200906537 /* Controllers */ = {
+		4F6E3A1619687F1D00E7A0A8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				4FF87424194A83F600787DE0 /* ViewController.h */,
-				4FF87425194A83F600787DE0 /* ViewController.m */,
+				4F6E3A1719687F1D00E7A0A8 /* Note.h */,
+				4F6E3A1819687F1D00E7A0A8 /* Note.m */,
+				4F6E3A1919687F1D00E7A0A8 /* Queue.h */,
+				4F6E3A1A19687F1D00E7A0A8 /* Queue.m */,
 			);
-			name = Controllers;
+			path = Models;
 			sourceTree = "<group>";
 		};
-		4FD7A026194E418C00906537 /* Models */ = {
+		4F6E3A1E19687F1D00E7A0A8 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				4FB4678019622FE000CD8A8E /* Queue.h */,
-				4FB4678119622FE000CD8A8E /* Queue.m */,
-				4FB4677D19622F9500CD8A8E /* Note.h */,
-				4FB4677E19622F9500CD8A8E /* Note.m */,
+				4F6E3A1F19687F1D00E7A0A8 /* Utilities.h */,
+				4F6E3A2019687F1D00E7A0A8 /* Utilities.m */,
 			);
-			name = Models;
+			path = Utilities;
 			sourceTree = "<group>";
 		};
-		4FD7A02D194E518000906537 /* Utilities */ = {
+		4F6E3A2119687F1D00E7A0A8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				4FD7A02E194E51B000906537 /* Utilities.h */,
-				4FD7A02F194E51B600906537 /* Utilities.m */,
+				4F6E3A2219687F1D00E7A0A8 /* Main.storyboard */,
 			);
-			name = Utilities;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		4FF8740E194A83F600787DE0 = {
@@ -157,27 +159,19 @@
 		4FF87419194A83F600787DE0 /* Selfie */ = {
 			isa = PBXGroup;
 			children = (
-				4FD7A02D194E518000906537 /* Utilities */,
-				4FD7A026194E418C00906537 /* Models */,
-				4FD7A025194E418200906537 /* Controllers */,
-				4FD7A024194E416400906537 /* Views */,
-				4FF8741A194A83F600787DE0 /* Supporting Files */,
+				4F6E3A1619687F1D00E7A0A8 /* Models */,
+				4F6E3A2119687F1D00E7A0A8 /* Views */,
+				4F6E3A1019687F1D00E7A0A8 /* Controllers */,
+				4F6E3A1E19687F1D00E7A0A8 /* Utilities */,
+				4F6E3A0E19687F1D00E7A0A8 /* AppDelegate.h */,
+				4F6E3A0F19687F1D00E7A0A8 /* AppDelegate.m */,
+				4F6E3A1319687F1D00E7A0A8 /* Images.xcassets */,
+				4F6E3A1419687F1D00E7A0A8 /* Info.plist */,
+				4F6E3A1519687F1D00E7A0A8 /* main.m */,
+				4F6E3A1B19687F1D00E7A0A8 /* Selfie.xcdatamodeld */,
+				4F6E3A1D19687F1D00E7A0A8 /* Settings.bundle */,
 			);
 			path = Selfie;
-			sourceTree = "<group>";
-		};
-		4FF8741A194A83F600787DE0 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				4F86578F194AA1440058C5BC /* Settings.bundle */,
-				4FF8742A194A83F600787DE0 /* Images.xcassets */,
-				4FF87421194A83F600787DE0 /* Selfie.xcdatamodeld */,
-				4FF8741E194A83F600787DE0 /* AppDelegate.h */,
-				4FF8741F194A83F600787DE0 /* AppDelegate.m */,
-				4FF8741B194A83F600787DE0 /* Info.plist */,
-				4FF8741C194A83F600787DE0 /* main.m */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		4FF87433194A83F600787DE0 /* SelfieTests */ = {
@@ -286,9 +280,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4FF87429194A83F600787DE0 /* Main.storyboard in Resources */,
-				4F865790194AA1440058C5BC /* Settings.bundle in Resources */,
-				4FF8742B194A83F600787DE0 /* Images.xcassets in Resources */,
+				4F6E3A2B19687F1D00E7A0A8 /* Settings.bundle in Resources */,
+				4F6E3A2519687F1D00E7A0A8 /* Images.xcassets in Resources */,
+				4F6E3A2D19687F1D00E7A0A8 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,13 +346,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4FF87423194A83F600787DE0 /* Selfie.xcdatamodeld in Sources */,
-				4FF87420194A83F600787DE0 /* AppDelegate.m in Sources */,
-				4FF87426194A83F600787DE0 /* ViewController.m in Sources */,
-				4FF8741D194A83F600787DE0 /* main.m in Sources */,
-				4FD7A030194E51B600906537 /* Utilities.m in Sources */,
-				4FB4677F19622F9500CD8A8E /* Note.m in Sources */,
-				4FB4678219622FE000CD8A8E /* Queue.m in Sources */,
+				4F6E3A2A19687F1D00E7A0A8 /* Selfie.xcdatamodeld in Sources */,
+				4F6E3A2819687F1D00E7A0A8 /* Note.m in Sources */,
+				4F6E3A2C19687F1D00E7A0A8 /* Utilities.m in Sources */,
+				4F6E3A2419687F1D00E7A0A8 /* ViewController.m in Sources */,
+				4F6E3A2319687F1D00E7A0A8 /* AppDelegate.m in Sources */,
+				4F6E3A2919687F1D00E7A0A8 /* Queue.m in Sources */,
+				4F6E3A2719687F1D00E7A0A8 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,17 +373,6 @@
 			targetProxy = 4FF87431194A83F600787DE0 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		4FF87427194A83F600787DE0 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				4FF87428194A83F600787DE0 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		4FF87438194A83F600787DE0 /* Debug */ = {
@@ -591,12 +574,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		4FF87421194A83F600787DE0 /* Selfie.xcdatamodeld */ = {
+		4F6E3A1B19687F1D00E7A0A8 /* Selfie.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				4FF87422194A83F600787DE0 /* Selfie.xcdatamodel */,
+				4F6E3A1C19687F1D00E7A0A8 /* Selfie.xcdatamodel */,
 			);
-			currentVersion = 4FF87422194A83F600787DE0 /* Selfie.xcdatamodel */;
+			currentVersion = 4F6E3A1C19687F1D00E7A0A8 /* Selfie.xcdatamodel */;
 			path = Selfie.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
