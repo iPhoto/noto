@@ -8,6 +8,9 @@
 
 #import "ViewController.h"
 
+NSString *firstLaunchSettingsText = @"Welcome to Selfie! "
+"Please tap the settings button to configure the app for sending emails";
+
 @interface ViewController () <MDCSwipeToChooseDelegate, UITextViewDelegate>
 @property (strong, nonatomic) IBOutlet UIView *backgroundView;
 @property (strong, nonatomic) IBOutlet UITextView *frontTextView;
@@ -71,6 +74,10 @@
     [self.frontTextView setUserInteractionEnabled:TRUE];
     [self.frontTextView becomeFirstResponder];
     self.frontTextView.textContainerInset = UIEdgeInsetsMake(6, 6, 0, 0);
+    
+    if([Utilities isFirstLaunch]) {
+        self.frontTextView.text = firstLaunchSettingsText;
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -118,6 +125,14 @@
         self.navBarTitle.title = @"New Note";
     } else {
         self.navBarTitle.title = [self.frontTextView.text componentsSeparatedByString:@"\n"][0];
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"showSettingsFromNote"]) {
+        if ([self.frontTextView.text isEqualToString:firstLaunchSettingsText]) {
+            self.frontTextView.text = @"";
+        }
     }
 }
 

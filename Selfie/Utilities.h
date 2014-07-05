@@ -22,4 +22,5 @@
 + (void)clearDB;
 
 + (BOOL) isEmptyString:(NSString *) string;
++ (BOOL)isFirstLaunch;
 @end;
