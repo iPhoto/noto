@@ -9,7 +9,7 @@
 #import "ViewController.h"
 
 NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
-                                    "New lines below are in the email body!\n"
+                                    "New lines below are the email body!\n"
                                     "Tap the settings icon to set your emails.\n"
                                     "\n"
                                     "<3\n"
