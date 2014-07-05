@@ -37,9 +37,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="New Note" id="QlS-Wp-MjW">
-                        <barButtonItem key="rightBarButtonItem" title="Settings" id="dmr-EG-7lQ">
+                        <barButtonItem key="rightBarButtonItem" image="settings" id="dmr-EG-7lQ">
                             <connections>
-                                <segue destination="xw0-um-NU6" kind="push" id="cZo-9D-aFX"/>
+                                <segue destination="xw0-um-NU6" kind="push" identifier="showSettingsFromNote" id="cZo-9D-aFX"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -100,6 +100,9 @@
             <point key="canvasLocation" x="-292" y="261"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="settings" width="20" height="20"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

@@ -79,5 +79,11 @@
     [Utilities setSettingsValue:@"Sent with Selfie" forKey:@"signature"];
 }
 
++ (BOOL)isFirstLaunch {
+    if(![Utilities getSettingsValue:kHasLaunchedBeforeKey]) {
+        return YES;
+    }
+    return NO;
+}
 @end;
 
