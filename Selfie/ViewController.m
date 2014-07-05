@@ -54,7 +54,7 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
         self.frontTextView.text = currText;
         
         if ([Utilities isEmptyString:self.frontTextView.text]) {
-            self.backgroundView.backgroundColor = [UIColor redColor];
+            self.backgroundView.backgroundColor = [UIColor lightGrayColor];
         } else {
             if (state.thresholdRatio == 1) {
                 self.backgroundView.backgroundColor = [UIColor greenColor];
