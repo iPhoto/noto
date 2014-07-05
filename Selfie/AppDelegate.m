@@ -22,6 +22,10 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [Crashlytics startWithAPIKey:CrashlyticsAPIKey];
     
+    if ([Utilities isFirstLaunch]) {
+        [Utilities setDefaultSettings];
+    }
+    
     [Utilities initDB];
     
     application.applicationIconBadgeNumber = [Queue count];

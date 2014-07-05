@@ -28,5 +28,6 @@ static NSString * const CrashlyticsAPIKey = @"7052c7c0dfa3dc8a01de1c9fadf87a6abe
 + (void)clearDB;
 
 + (BOOL) isEmptyString:(NSString *) string;
++ (void) setDefaultSettings;
 + (BOOL)isFirstLaunch;
 @end;
