@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
+#import <Crashlytics/Crashlytics.h>
 #import "Queue.h"
 #import "Utilities.h"
 

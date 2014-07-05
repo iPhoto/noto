@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4F531FFD195F3B3600F4ABAE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F531FFC195F3B3600F4ABAE /* AudioToolbox.framework */; };
+		4F6E39D41967BCB700E7A0A8 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F6E39D31967BCB700E7A0A8 /* Crashlytics.framework */; };
 		4F865790194AA1440058C5BC /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4F86578F194AA1440058C5BC /* Settings.bundle */; };
 		4F953A94194E7F9E00F67A0A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F953A93194E7F9E00F67A0A /* Foundation.framework */; };
 		4FB4677F19622F9500CD8A8E /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB4677E19622F9500CD8A8E /* Note.m */; };
@@ -35,6 +36,7 @@
 
 /* Begin PBXFileReference section */
 		4F531FFC195F3B3600F4ABAE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		4F6E39D31967BCB700E7A0A8 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		4F86578F194AA1440058C5BC /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		4F953A93194E7F9E00F67A0A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4FB4677D19622F9500CD8A8E /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 			files = (
 				4F531FFD195F3B3600F4ABAE /* AudioToolbox.framework in Frameworks */,
 				4F953A94194E7F9E00F67A0A /* Foundation.framework in Frameworks */,
+				4F6E39D41967BCB700E7A0A8 /* Crashlytics.framework in Frameworks */,
 				6CE63EEB8D4349A48F08C6F4 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -85,6 +88,7 @@
 		49A85F4260824FD59E33F5C0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4F6E39D31967BCB700E7A0A8 /* Crashlytics.framework */,
 				4F531FFC195F3B3600F4ABAE /* AudioToolbox.framework */,
 				4F953A93194E7F9E00F67A0A /* Foundation.framework */,
 				4FD7A01F194E3F3700906537 /* CFNetwork.framework */,
@@ -205,6 +209,7 @@
 				4FF87414194A83F600787DE0 /* Frameworks */,
 				4FF87415194A83F600787DE0 /* Resources */,
 				4BC2015AA77945C5B2C267ED /* Copy Pods Resources */,
+				4F6E39D11967BC4B00E7A0A8 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -311,6 +316,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		4F6E39D11967BC4B00E7A0A8 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = "./Crashlytics.framework/run 7052c7c0dfa3dc8a01de1c9fadf87a6abec3d33a a7136dc96debcf9af21da096b20cf5f140805651225ddf0634d1c5b97c704a78";
+			shellScript = "";
 		};
 		82945C37F0DD432685CCE0CE /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -459,6 +477,10 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Selfie/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -481,6 +503,10 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Selfie/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
