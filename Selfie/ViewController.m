@@ -8,8 +8,12 @@
 
 #import "ViewController.h"
 
-NSString *firstLaunchSettingsText = @"Welcome to Selfie! "
-"Please tap the settings button to configure the app for sending emails";
+NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
+                                    "New lines below are in the email body!\n"
+                                    "Tap the settings icon to set your emails.\n"
+                                    "\n"
+                                    "<3\n"
+                                    "The ____ Team\n";
 
 @interface ViewController () <MDCSwipeToChooseDelegate, UITextViewDelegate>
 @property (strong, nonatomic) IBOutlet UIView *backgroundView;
