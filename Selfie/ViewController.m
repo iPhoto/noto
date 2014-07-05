@@ -43,6 +43,16 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
     options.threshold = 100.0f;
     options.rotationFactor = 0.01;
     options.onPan = ^(MDCPanState *state) {
+        
+        // Disable autocorrect / autocapitalize on pan
+        self.frontTextView.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        self.frontTextView.autocorrectionType = UITextAutocorrectionTypeNo;
+        
+        // Rewrite the text to complete disable
+        NSString *currText = self.frontTextView.text;
+        self.frontTextView.text = @"";
+        self.frontTextView.text = currText;
+        
         if ([Utilities isEmptyString:self.frontTextView.text]) {
             self.backgroundView.backgroundColor = [UIColor redColor];
         } else {
