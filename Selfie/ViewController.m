@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 
-@interface ViewController () <MDCSwipeToChooseDelegate>
+@interface ViewController () <MDCSwipeToChooseDelegate, UITextViewDelegate>
 @property (strong, nonatomic) IBOutlet UIView *backgroundView;
 @property (strong, nonatomic) IBOutlet UITextView *frontTextView;
 @property (strong, nonatomic) IBOutlet UINavigationItem *navBarTitle;
