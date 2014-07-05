@@ -122,7 +122,7 @@
             
             [self onComplete];
         } failureBlock:^(NSError *error) {
-            NSLog(@"Error sending email: %@", error);https://plus.google.com/photos/albums/pfvrilpd5uveo4379sh99k2iacd5jvlra?pid=6031673586114774098&oid=116311318885564686655
+            NSLog(@"Error sending email: %@", error);
             [[NSNotificationCenter defaultCenter] postNotificationName:@"setMinimumBackgroundFetchInterval" object:nil];
             [Queue enqueue:self];
             

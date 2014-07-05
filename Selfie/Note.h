@@ -14,9 +14,6 @@
 #import "Queue.h"
 #import "Utilities.h"
 
-static NSString * const SGUsername = @"danielsuo";
-static NSString * const SGPassword = @"TheLAC41988";
-
 @interface Note : NSObject
 @property (strong, nonatomic) NSString *toEmail;
 @property (strong, nonatomic) NSString *fromEmail;

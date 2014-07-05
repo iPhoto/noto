@@ -20,7 +20,7 @@
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [Crashlytics startWithAPIKey:@"7052c7c0dfa3dc8a01de1c9fadf87a6abec3d33a"];
+    [Crashlytics startWithAPIKey:CrashlyticsAPIKey];
     
     [Utilities initDB];
     
