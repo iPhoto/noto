@@ -74,5 +74,11 @@
     return string == nil || [[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""];
 }
 
++ (BOOL)isFirstLaunch {
+    if(![Utilities getSettingsValue:kHasLaunchedBeforeKey]) {
+        return YES;
+    }
+    return NO;
+}
 @end;
 

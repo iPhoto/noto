@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "Note.h"
+
+static NSString * const kHasLaunchedBeforeKey = @"selfieHasLaunchedBefore";
+
 @class Note;
 
 @interface Utilities : NSObject
@@ -22,4 +25,5 @@
 + (void)clearDB;
 
 + (BOOL) isEmptyString:(NSString *) string;
++ (BOOL)isFirstLaunch;
 @end;

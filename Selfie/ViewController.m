@@ -8,6 +8,13 @@
 
 #import "ViewController.h"
 
+NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
+                                    "New lines below are in the email body!\n"
+                                    "Tap the settings icon to set your emails.\n"
+                                    "\n"
+                                    "<3\n"
+                                    "The ____ Team\n";
+
 @interface ViewController () <MDCSwipeToChooseDelegate, UITextViewDelegate>
 @property (strong, nonatomic) IBOutlet UIView *backgroundView;
 @property (strong, nonatomic) IBOutlet UITextView *frontTextView;
@@ -23,6 +30,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if([Utilities isFirstLaunch]) {
+        self.frontTextView.text = firstLaunchSettingsText;
+        // Now that we've shown the first launch text,
+        // save that they've launched before
+        [Utilities setSettingsValue:@"notFirstLaunch" forKey:kHasLaunchedBeforeKey];
+    }
     
     MDCSwipeOptions *options = [MDCSwipeOptions new];
     options.delegate = self;
