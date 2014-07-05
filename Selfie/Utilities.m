@@ -8,8 +8,6 @@
 
 #import "Utilities.h"
 
-static NSString * const kHasLaunchedBeforeKey = @"selfieHasLaunchedBefore";
-
 @implementation Utilities
     // Convenience methods to help get / set values / objects
     // in NSUserDefaults
@@ -78,7 +76,6 @@ static NSString * const kHasLaunchedBeforeKey = @"selfieHasLaunchedBefore";
 
 + (BOOL)isFirstLaunch {
     if(![Utilities getSettingsValue:kHasLaunchedBeforeKey]) {
-        [Utilities setSettingsValue:@"notFirstLaunch" forKey:kHasLaunchedBeforeKey];
         return YES;
     }
     return NO;

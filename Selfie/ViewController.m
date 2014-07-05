@@ -31,6 +31,13 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    if([Utilities isFirstLaunch]) {
+        self.frontTextView.text = firstLaunchSettingsText;
+        // Now that we've shown the first launch text,
+        // save that they've launched before
+        [Utilities setSettingsValue:@"notFirstLaunch" forKey:kHasLaunchedBeforeKey];
+    }
+    
     MDCSwipeOptions *options = [MDCSwipeOptions new];
     options.delegate = self;
     options.threshold = 100.0f;
@@ -78,10 +85,6 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
     [self.frontTextView setUserInteractionEnabled:TRUE];
     [self.frontTextView becomeFirstResponder];
     self.frontTextView.textContainerInset = UIEdgeInsetsMake(6, 6, 0, 0);
-    
-    if([Utilities isFirstLaunch]) {
-        self.frontTextView.text = firstLaunchSettingsText;
-    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -129,14 +132,6 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
         self.navBarTitle.title = @"New Note";
     } else {
         self.navBarTitle.title = [self.frontTextView.text componentsSeparatedByString:@"\n"][0];
-    }
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"showSettingsFromNote"]) {
-        if ([self.frontTextView.text isEqualToString:firstLaunchSettingsText]) {
-            self.frontTextView.text = @"";
-        }
     }
 }
 

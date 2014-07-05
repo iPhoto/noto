@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "Note.h"
+
+static NSString * const kHasLaunchedBeforeKey = @"selfieHasLaunchedBefore";
+
 @class Note;
 
 @interface Utilities : NSObject
