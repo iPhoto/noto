@@ -40,12 +40,10 @@
 }
 
 - (void)setMinimumBackgroundFetchInterval: (NSNotification *)notification {
-    NSLog(@"set");
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
 }
 
 - (void)stopMinimumBackgroundFetchInterval: (NSNotification *)notification {
-    NSLog(@"stop");
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalNever];
 }
 

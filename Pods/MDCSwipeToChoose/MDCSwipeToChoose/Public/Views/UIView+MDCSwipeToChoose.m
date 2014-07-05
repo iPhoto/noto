@@ -113,7 +113,6 @@ const void * const MDCViewStateKey = &MDCViewStateKey;
 #pragma mark Translation
 
 - (void)mdc_finalizePosition {
-    NSLog(@"got here");
     MDCSwipeDirection direction = [self mdc_directionOfExceededThreshold];
     switch (direction) {
         case MDCSwipeDirectionRight:
