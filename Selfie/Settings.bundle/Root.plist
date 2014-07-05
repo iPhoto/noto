@@ -14,7 +14,7 @@
 			<key>Type</key>
 			<string>PSTextFieldSpecifier</string>
 			<key>Title</key>
-			<string>Left to</string>
+			<string>Swipe Left</string>
 			<key>Key</key>
 			<string>swipeLeftTo</string>
 		</dict>
@@ -22,54 +22,54 @@
 			<key>Type</key>
 			<string>PSTextFieldSpecifier</string>
 			<key>Title</key>
-			<string>Right to</string>
+			<string>Swipe Right</string>
 			<key>Key</key>
 			<string>swipeRightTo</string>
 		</dict>
-        <dict>
-            <key>Type</key>
-            <string>PSGroupSpecifier</string>
-            <key>Title</key>
-            <string>From Emails (default: To Emails)</string>
-        </dict>
-        <dict>
-            <key>Type</key>
-            <string>PSTextFieldSpecifier</string>
-            <key>Title</key>
-            <string>Left from</string>
-            <key>Key</key>
-            <string>swipeLeftFrom</string>
-        </dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>From Emails (default: To Emails)</string>
+		</dict>
 		<dict>
 			<key>Type</key>
 			<string>PSTextFieldSpecifier</string>
 			<key>Title</key>
-			<string>Right from</string>
+			<string>Swipe Left</string>
+			<key>Key</key>
+			<string>swipeLeftFrom</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Swipe Right</string>
 			<key>Key</key>
 			<string>swipeRightFrom</string>
 		</dict>
-        <dict>
-            <key>Type</key>
-            <string>PSGroupSpecifier</string>
-            <key>Title</key>
-            <string>Other Settings</string>
-        </dict>
-        <dict>
-            <key>Type</key>
-            <string>PSTextFieldSpecifier</string>
-            <key>Title</key>
-            <string>Subject prefix</string>
-            <key>Key</key>
-            <string>subjectPrefix</string>
-        </dict>
-        <dict>
-            <key>Type</key>
-            <string>PSTextFieldSpecifier</string>
-            <key>Title</key>
-            <string>Signature</string>
-            <key>Key</key>
-            <string>signature</string>
-        </dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Other Settings</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Subject Prefix</string>
+			<key>Key</key>
+			<string>subjectPrefix</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Signature</string>
+			<key>Key</key>
+			<string>signature</string>
+		</dict>
 	</array>
 	<key>StringsTable</key>
 	<string>Root</string>

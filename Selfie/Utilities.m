@@ -74,5 +74,10 @@
     return string == nil || [[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""];
 }
 
++ (void) setDefaultSettings {
+    [Utilities setSettingsValue:@"[Selfie]" forKey:@"subjectPrefix"];
+    [Utilities setSettingsValue:@"Sent with Selfie" forKey:@"signature"];
+}
+
 @end;
 
