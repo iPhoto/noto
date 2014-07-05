@@ -25,5 +25,6 @@ static NSString * const kHasLaunchedBeforeKey = @"selfieHasLaunchedBefore";
 + (void)clearDB;
 
 + (BOOL) isEmptyString:(NSString *) string;
++ (void) setDefaultSettings;
 + (BOOL)isFirstLaunch;
 @end;

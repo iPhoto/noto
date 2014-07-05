@@ -490,7 +490,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				VALID_ARCHS = "armv7 arm64 arm7s";
+				VALID_ARCHS = "armv7 arm64 arm7s armv7s";
 			};
 			name = Debug;
 		};
@@ -516,7 +516,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				VALID_ARCHS = "armv7 arm64 arm7s";
+				VALID_ARCHS = "armv7 arm64 arm7s armv7s";
 			};
 			name = Release;
 		};
