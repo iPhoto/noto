@@ -10,10 +10,10 @@
 
 NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
                                     "New lines below are the email body!\n"
-                                    "Tap the settings icon to set your emails.\n"
+                                    "Tap the settings icon in the top right to set your emails.\n"
                                     "\n"
                                     "<3\n"
-                                    "The ____ Team\n";
+                                    "The Noto Team";
 
 @interface ViewController () <MDCSwipeToChooseDelegate, UITextViewDelegate>
 @property (strong, nonatomic) IBOutlet UIView *backgroundView;
