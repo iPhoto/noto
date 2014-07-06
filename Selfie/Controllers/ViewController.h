@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Note.h"
+#import "NoteView.h"
 #import "Utilities.h"
 
 @interface ViewController : UIViewController

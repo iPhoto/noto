@@ -8,34 +8,6 @@
         <scene sceneID="ufC-wZ-h7g">
             <objects>
                 <viewController extendedLayoutIncludesOpaqueBars="YES" id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
-                        <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <textView appearanceType="aqua" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" restorationIdentifier="textViewRestorationID" translatesAutoresizingMaskIntoConstraints="NO" id="H6S-yK-O1V" userLabel="Front Text View">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <gestureRecognizers/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardType="alphabet" enablesReturnKeyAutomatically="YES"/>
-                                <connections>
-                                    <outlet property="delegate" destination="vXZ-lx-hvc" id="qt0-cC-mse"/>
-                                </connections>
-                            </textView>
-                        </subviews>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                        <gestureRecognizers/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="H6S-yK-O1V" secondAttribute="trailing" id="BHs-aP-SF1"/>
-                            <constraint firstItem="H6S-yK-O1V" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="CyS-zE-7ZM"/>
-                            <constraint firstItem="H6S-yK-O1V" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="DUj-QX-t0b"/>
-                            <constraint firstAttribute="bottom" secondItem="H6S-yK-O1V" secondAttribute="bottom" id="m8t-6a-o59"/>
-                        </constraints>
-                    </view>
                     <navigationItem key="navigationItem" title="New Note" id="QlS-Wp-MjW">
                         <barButtonItem key="rightBarButtonItem" image="settings" id="dmr-EG-7lQ">
                             <connections>
@@ -44,7 +16,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="frontTextView" destination="H6S-yK-O1V" id="jrl-8B-Y4u"/>
                         <outlet property="navBarTitle" destination="QlS-Wp-MjW" id="5QB-F7-GbM"/>
                     </connections>
                 </viewController>

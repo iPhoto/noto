@@ -17,26 +17,36 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
 
 @interface ViewController () <UITextViewDelegate>
 //@property (strong, nonatomic) IBOutlet UIView *backgroundView;
-@property (strong, nonatomic) IBOutlet UITextView *frontTextView;
+@property (strong, nonatomic) NoteView *noteView;
 @property (strong, nonatomic) IBOutlet UINavigationItem *navBarTitle;
 @end
 
 @implementation ViewController
 
 - (void) initNote {
-    self.frontTextView.text = nil;
+    self.noteView.text = nil;
     self.navBarTitle.title = @"New Note";
+}
+
+- (NoteView *)noteView {
+    if (!_noteView) {
+        _noteView = [[NoteView alloc] initWithFrame:self.view.frame];
+    }
+    
+    return _noteView;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     if([Utilities isFirstLaunch]) {
-        self.frontTextView.text = firstLaunchSettingsText;
+        self.noteView.text = firstLaunchSettingsText;
         // Now that we've shown the first launch text,
         // save that they've launched before
         [Utilities setSettingsValue:@"notFirstLaunch" forKey:kHasLaunchedBeforeKey];
     }
+    
+    [self.view addSubview:self.noteView];
     
 //    MDCSwipeOptions *options = [MDCSwipeOptions new];
 //    options.delegate = self;
@@ -45,15 +55,15 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
 //    options.onPan = ^(MDCPanState *state) {
 //        
 //        // Disable autocorrect / autocapitalize on pan
-//        self.frontTextView.autocapitalizationType = UITextAutocapitalizationTypeNone;
-//        self.frontTextView.autocorrectionType = UITextAutocorrectionTypeNo;
+//        self.noteView.autocapitalizationType = UITextAutocapitalizationTypeNone;
+//        self.noteView.autocorrectionType = UITextAutocorrectionTypeNo;
 //        
 //        // Rewrite the text to complete disable
-//        NSString *currText = self.frontTextView.text;
-//        self.frontTextView.text = @"";
-//        self.frontTextView.text = currText;
+//        NSString *currText = self.noteView.text;
+//        self.noteView.text = @"";
+//        self.noteView.text = currText;
 //        
-//        if ([Utilities isEmptyString:self.frontTextView.text]) {
+//        if ([Utilities isEmptyString:self.noteView.text]) {
 //            self.backgroundView.backgroundColor = [UIColor lightGrayColor];
 //        } else {
 //            if (state.thresholdRatio == 1) {
@@ -66,14 +76,14 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
 //    };
 //    
 //    options.onChosen = ^(MDCSwipeResult *state){
-//        if (![Utilities isEmptyString:self.frontTextView.text]) {
+//        if (![Utilities isEmptyString:self.noteView.text]) {
 //            Note *note;
 //            switch (state.direction) {
 //                case MDCSwipeDirectionLeft:
-//                    note = [[Note alloc] initWithString:self.frontTextView.text direction:UISwipeGestureRecognizerDirectionLeft];
+//                    note = [[Note alloc] initWithString:self.noteView.text direction:UISwipeGestureRecognizerDirectionLeft];
 //                    break;
 //                case MDCSwipeDirectionRight:
-//                    note = [[Note alloc] initWithString:self.frontTextView.text direction:UISwipeGestureRecognizerDirectionRight];
+//                    note = [[Note alloc] initWithString:self.noteView.text direction:UISwipeGestureRecognizerDirectionRight];
 //                    break;
 //                case MDCSwipeDirectionNone:
 //                    break;
@@ -85,16 +95,16 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
 //            
 //            [self initNote];
 //        }
-//        [self.frontTextView mdc_swipe:state.direction];
+//        [self.noteView mdc_swipe:state.direction];
 //    };
-//    [self.frontTextView mdc_swipeToChooseSetup:options];
+//    [self.noteView mdc_swipeToChooseSetup:options];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    self.frontTextView.delegate = self;
-    [self.frontTextView setUserInteractionEnabled:TRUE];
-    [self.frontTextView becomeFirstResponder];
-    self.frontTextView.textContainerInset = UIEdgeInsetsMake(6, 6, 0, 0);
+    self.noteView.delegate = self;
+    [self.noteView setUserInteractionEnabled:TRUE];
+    [self.noteView becomeFirstResponder];
+    self.noteView.textContainerInset = UIEdgeInsetsMake(6, 6, 0, 0);
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -117,12 +127,12 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
     CGRect keyboardRect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     keyboardRect = [self.view convertRect:keyboardRect fromView:nil];
     
-    UIEdgeInsets inset = self.frontTextView.contentInset;
+    UIEdgeInsets inset = self.noteView.contentInset;
     inset.bottom = keyboardRect.size.height;
-    self.frontTextView.contentInset = inset;
-    self.frontTextView.scrollIndicatorInsets = inset;
+    self.noteView.contentInset = inset;
+    self.noteView.scrollIndicatorInsets = inset;
     
-    [self scrollToCaretInTextView:self.frontTextView animated:YES];
+    [self scrollToCaretInTextView:self.noteView animated:YES];
 }
 
 - (void)textViewDidChange:(UITextView *)textView {
@@ -136,12 +146,12 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
         [self scrollToCaretInTextView:textView animated:NO];
     }
     
-    NSString *title = [self.frontTextView.text componentsSeparatedByString:@"\n"][0];
+    NSString *title = [self.noteView.text componentsSeparatedByString:@"\n"][0];
     
     if ([Utilities isEmptyString:title]) {
         self.navBarTitle.title = @"New Note";
     } else {
-        self.navBarTitle.title = [self.frontTextView.text componentsSeparatedByString:@"\n"][0];
+        self.navBarTitle.title = [self.noteView.text componentsSeparatedByString:@"\n"][0];
     }
 }
 
