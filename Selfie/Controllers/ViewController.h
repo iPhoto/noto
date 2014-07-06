@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <MDCSwipeToChoose/MDCSwipeToChoose.h>
 #import "Note.h"
 #import "Utilities.h"
 

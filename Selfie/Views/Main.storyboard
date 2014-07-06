@@ -44,7 +44,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="backgroundView" destination="kh9-bI-dsS" id="G5M-w3-Je4"/>
                         <outlet property="frontTextView" destination="H6S-yK-O1V" id="jrl-8B-Y4u"/>
                         <outlet property="navBarTitle" destination="QlS-Wp-MjW" id="5QB-F7-GbM"/>
                     </connections>

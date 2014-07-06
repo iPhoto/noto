@@ -15,8 +15,8 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
                                     "<3\n"
                                     "The ____ Team\n";
 
-@interface ViewController () <MDCSwipeToChooseDelegate, UITextViewDelegate>
-@property (strong, nonatomic) IBOutlet UIView *backgroundView;
+@interface ViewController () <UITextViewDelegate>
+//@property (strong, nonatomic) IBOutlet UIView *backgroundView;
 @property (strong, nonatomic) IBOutlet UITextView *frontTextView;
 @property (strong, nonatomic) IBOutlet UINavigationItem *navBarTitle;
 @end
@@ -38,56 +38,56 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
         [Utilities setSettingsValue:@"notFirstLaunch" forKey:kHasLaunchedBeforeKey];
     }
     
-    MDCSwipeOptions *options = [MDCSwipeOptions new];
-    options.delegate = self;
-    options.threshold = 100.0f;
-    options.rotationFactor = 0.01;
-    options.onPan = ^(MDCPanState *state) {
-        
-        // Disable autocorrect / autocapitalize on pan
-        self.frontTextView.autocapitalizationType = UITextAutocapitalizationTypeNone;
-        self.frontTextView.autocorrectionType = UITextAutocorrectionTypeNo;
-        
-        // Rewrite the text to complete disable
-        NSString *currText = self.frontTextView.text;
-        self.frontTextView.text = @"";
-        self.frontTextView.text = currText;
-        
-        if ([Utilities isEmptyString:self.frontTextView.text]) {
-            self.backgroundView.backgroundColor = [UIColor lightGrayColor];
-        } else {
-            if (state.thresholdRatio == 1) {
-                self.backgroundView.backgroundColor = [UIColor greenColor];
-            }
-            else {
-                self.backgroundView.backgroundColor = [UIColor lightGrayColor];
-            }
-        }
-    };
-    
-    options.onChosen = ^(MDCSwipeResult *state){
-        if (![Utilities isEmptyString:self.frontTextView.text]) {
-            Note *note;
-            switch (state.direction) {
-                case MDCSwipeDirectionLeft:
-                    note = [[Note alloc] initWithString:self.frontTextView.text direction:UISwipeGestureRecognizerDirectionLeft];
-                    break;
-                case MDCSwipeDirectionRight:
-                    note = [[Note alloc] initWithString:self.frontTextView.text direction:UISwipeGestureRecognizerDirectionRight];
-                    break;
-                case MDCSwipeDirectionNone:
-                    break;
-            }
-            
-            if (note) {
-                [note send];
-            }
-            
-            [self initNote];
-        }
-        [self.frontTextView mdc_swipe:state.direction];
-    };
-    [self.frontTextView mdc_swipeToChooseSetup:options];
+//    MDCSwipeOptions *options = [MDCSwipeOptions new];
+//    options.delegate = self;
+//    options.threshold = 100.0f;
+//    options.rotationFactor = 0.01;
+//    options.onPan = ^(MDCPanState *state) {
+//        
+//        // Disable autocorrect / autocapitalize on pan
+//        self.frontTextView.autocapitalizationType = UITextAutocapitalizationTypeNone;
+//        self.frontTextView.autocorrectionType = UITextAutocorrectionTypeNo;
+//        
+//        // Rewrite the text to complete disable
+//        NSString *currText = self.frontTextView.text;
+//        self.frontTextView.text = @"";
+//        self.frontTextView.text = currText;
+//        
+//        if ([Utilities isEmptyString:self.frontTextView.text]) {
+//            self.backgroundView.backgroundColor = [UIColor lightGrayColor];
+//        } else {
+//            if (state.thresholdRatio == 1) {
+//                self.backgroundView.backgroundColor = [UIColor greenColor];
+//            }
+//            else {
+//                self.backgroundView.backgroundColor = [UIColor lightGrayColor];
+//            }
+//        }
+//    };
+//    
+//    options.onChosen = ^(MDCSwipeResult *state){
+//        if (![Utilities isEmptyString:self.frontTextView.text]) {
+//            Note *note;
+//            switch (state.direction) {
+//                case MDCSwipeDirectionLeft:
+//                    note = [[Note alloc] initWithString:self.frontTextView.text direction:UISwipeGestureRecognizerDirectionLeft];
+//                    break;
+//                case MDCSwipeDirectionRight:
+//                    note = [[Note alloc] initWithString:self.frontTextView.text direction:UISwipeGestureRecognizerDirectionRight];
+//                    break;
+//                case MDCSwipeDirectionNone:
+//                    break;
+//            }
+//            
+//            if (note) {
+//                [note send];
+//            }
+//            
+//            [self initNote];
+//        }
+//        [self.frontTextView mdc_swipe:state.direction];
+//    };
+//    [self.frontTextView mdc_swipeToChooseSetup:options];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
