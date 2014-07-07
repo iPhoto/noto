@@ -14,7 +14,15 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor redColor];
+//        UIView *squareView =
+//        [[UIView alloc] initWithFrame:
+//         CGRectMake(0.0f, 0.0f, 80.0f, 80.0f)];
+//        
+//        squareView.backgroundColor = [UIColor redColor];
+//        
+//        [self addSubview:squareView];
+        
+        self.backgroundColor = [UIColor blueColor];
     }
     return self;
 }
