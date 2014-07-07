@@ -116,4 +116,9 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
     [self initNote];
 }
 
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
+    self.noteView.leftNoteActionView.frame = CGRectMake(self.view.frame.size.width, 40, 1000, 40);
+    self.noteView.leftNoteActionViewOriginalCenter = self.noteView.leftNoteActionView.center;
+}
+
 @end

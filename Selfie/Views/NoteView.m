@@ -9,7 +9,7 @@
 #import "NoteView.h"
 
 @interface NoteView ()
-@property (nonatomic) CGPoint leftNoteActionViewOriginalCenter;
+
 @end
 
 @implementation NoteView
@@ -21,7 +21,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self setFont:[UIFont systemFontOfSize:18]];
-        self.autoresizesSubviews = YES;
+//        self.autoresizesSubviews = YES;
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         
         UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
@@ -34,10 +34,19 @@
             self.swipeThreshold = 100;
         }
 
-        self.leftNoteActionView = [[NoteActionView alloc] initWithFrame:CGRectMake(-1000, (self.frame.size.height - 216) / 2 - 20, 1000, 40)];
+        // Swipe left
+        self.leftNoteActionView = [[NoteActionView alloc] initWithFrame:CGRectMake(self.frame.size.width, 40, 1000, 40)];
         [self addSubview:self.leftNoteActionView];
         
         self.leftNoteActionViewOriginalCenter = self.leftNoteActionView.center;
+        
+        // Swipe right
+        self.rightNoteActionView = [[NoteActionView alloc] initWithFrame:CGRectMake(-1000, 40, 1000, 40)];
+        [self addSubview:self.rightNoteActionView];
+        
+        self.rightNoteActionViewOriginalCenter = self.rightNoteActionView.center;
+        
+        
     }
     return self;
 }
@@ -55,9 +64,9 @@
     } else if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
         if (abs(translation.x) > abs(translation.y)) {
             if (translation.x > self.swipeThreshold) {
-//                [noteViewDelegate didPanInDirection:UISwipeGestureRecognizerDirectionRight];
+                [noteViewDelegate didPanInDirection:UISwipeGestureRecognizerDirectionRight];
             } else if (translation.x < -self.swipeThreshold) {
-//                [noteViewDelegate didPanInDirection:UISwipeGestureRecognizerDirectionLeft];
+                [noteViewDelegate didPanInDirection:UISwipeGestureRecognizerDirectionLeft];
             }
         }
         
@@ -66,14 +75,30 @@
         } completion:^(BOOL finished){
             NSLog(@"finished!");
         }];
+        
+        [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            self.rightNoteActionView.center = self.rightNoteActionViewOriginalCenter;
+        } completion:^(BOOL finished){
+            NSLog(@"finished!");
+        }];
     } else {
-        if (translation.x > self.swipeThreshold) {
+        if (translation.x < -self.swipeThreshold) {
             self.leftNoteActionView.backgroundColor = [UIColor redColor];
         } else {
             self.leftNoteActionView.backgroundColor = [UIColor blueColor];
         }
-        CGPoint newCenter = CGPointMake(self.leftNoteActionViewOriginalCenter.x + translation.x, self.leftNoteActionViewOriginalCenter.y);
-        [self.leftNoteActionView setCenter:(newCenter)];
+        
+        CGPoint newLeftCenter = CGPointMake(self.leftNoteActionViewOriginalCenter.x + translation.x, self.leftNoteActionViewOriginalCenter.y);
+        [self.leftNoteActionView setCenter:(newLeftCenter)];
+        
+        if (translation.x > self.swipeThreshold) {
+            self.rightNoteActionView.backgroundColor = [UIColor redColor];
+        } else {
+            self.rightNoteActionView.backgroundColor = [UIColor blueColor];
+        }
+        CGPoint newRightCenter = CGPointMake(self.rightNoteActionViewOriginalCenter.x + translation.x, self.rightNoteActionViewOriginalCenter.y);
+        [self.rightNoteActionView setCenter:(newRightCenter)];
+        
 //        CGPoint location = [gestureRecognizer locationInView:noteView];
 //        [self.leftNoteActionView setCenter:location];
 //        NSLog(@"x: %f, y: %f", translation.x, translation.y);
