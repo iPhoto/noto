@@ -19,6 +19,10 @@
         [self setFont:[UIFont systemFontOfSize:18]];
         self.autoresizesSubviews = YES;
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        
+        self.panGestureRecognizer.enabled = NO;
+        
+        
     }
     return self;
 }

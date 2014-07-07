@@ -10,7 +10,7 @@
 
 @class NoteView;
 
-@protocol NoteViewDelegate <NSObject>
+@protocol NoteViewDelegate <UITextViewDelegate>
 @required
 - (void) test;
 @end

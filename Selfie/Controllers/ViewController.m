@@ -15,7 +15,7 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
                                     "<3\n"
                                     "The ____ Team\n";
 
-@interface ViewController () <UITextViewDelegate>
+@interface ViewController () <NoteViewDelegate>
 //@property (strong, nonatomic) IBOutlet UIView *backgroundView;
 @property (strong, nonatomic) NoteView *noteView;
 @property (strong, nonatomic) IBOutlet UINavigationItem *navBarTitle;
@@ -47,6 +47,7 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
     }
     
     [self.view addSubview:self.noteView];
+
     
 //    MDCSwipeOptions *options = [MDCSwipeOptions new];
 //    options.delegate = self;
@@ -153,6 +154,10 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
     } else {
         self.navBarTitle.title = [self.noteView.text componentsSeparatedByString:@"\n"][0];
     }
+}
+
+- (void) test {
+    
 }
 
 @end
