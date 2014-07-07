@@ -20,20 +20,48 @@
         self.autoresizesSubviews = YES;
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         
-        self.panGestureRecognizer.enabled = NO;
+        UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
+        pan.delegate = self;
         
+        NSArray *gestureRecognizers = [self.gestureRecognizers arrayByAddingObject:pan];
+        self.gestureRecognizers = gestureRecognizers;
         
+        if (!self.swipeThreshold) {
+            self.swipeThreshold = 100;
+        }
     }
     return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
-    // Drawing code
+    return YES;
 }
-*/
+
+- (void)handlePanGesture: (UIPanGestureRecognizer *)gestureRecognizer {
+    NoteView *noteView = (NoteView *)gestureRecognizer.view;
+    CGPoint translation = [gestureRecognizer translationInView:noteView];
+    
+    if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+    } else if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
+        if (abs(translation.x) > abs(translation.y)) {
+            if (translation.x > self.swipeThreshold) {
+                [noteViewDelegate didPanInDirection:UISwipeGestureRecognizerDirectionRight];
+            } else if (translation.x < -self.swipeThreshold) {
+                [noteViewDelegate didPanInDirection:UISwipeGestureRecognizerDirectionLeft];
+            }
+        }
+    } else {
+//        NSLog(@"x: %f, y: %f", translation.x, translation.y);
+        // Update the position and transform. Then, notify any listeners of
+        // the updates via the pan block.
+        // CGPoint translation = [panGestureRecognizer translationInView:view];
+        // translation.y = 0;
+        // view.center = MDCCGPointAdd(self.mdc_viewState.originalCenter, translation);
+        // [self mdc_rotateForTranslation:translation
+        //      rotationDirection:self.mdc_viewState.rotationDirection];
+        // [self mdc_executeOnPanBlockForTranslation:translation];
+    }
+}
 
 @end

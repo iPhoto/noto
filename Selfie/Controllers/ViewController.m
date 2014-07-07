@@ -16,7 +16,6 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
                                     "The ____ Team\n";
 
 @interface ViewController () <NoteViewDelegate>
-//@property (strong, nonatomic) IBOutlet UIView *backgroundView;
 @property (strong, nonatomic) NoteView *noteView;
 @property (strong, nonatomic) IBOutlet UINavigationItem *navBarTitle;
 @end
@@ -41,68 +40,18 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
     
     if([Utilities isFirstLaunch]) {
         self.noteView.text = firstLaunchSettingsText;
+        
         // Now that we've shown the first launch text,
         // save that they've launched before
         [Utilities setSettingsValue:@"notFirstLaunch" forKey:kHasLaunchedBeforeKey];
     }
     
     [self.view addSubview:self.noteView];
-
-    
-//    MDCSwipeOptions *options = [MDCSwipeOptions new];
-//    options.delegate = self;
-//    options.threshold = 100.0f;
-//    options.rotationFactor = 0.01;
-//    options.onPan = ^(MDCPanState *state) {
-//        
-//        // Disable autocorrect / autocapitalize on pan
-//        self.noteView.autocapitalizationType = UITextAutocapitalizationTypeNone;
-//        self.noteView.autocorrectionType = UITextAutocorrectionTypeNo;
-//        
-//        // Rewrite the text to complete disable
-//        NSString *currText = self.noteView.text;
-//        self.noteView.text = @"";
-//        self.noteView.text = currText;
-//        
-//        if ([Utilities isEmptyString:self.noteView.text]) {
-//            self.backgroundView.backgroundColor = [UIColor lightGrayColor];
-//        } else {
-//            if (state.thresholdRatio == 1) {
-//                self.backgroundView.backgroundColor = [UIColor greenColor];
-//            }
-//            else {
-//                self.backgroundView.backgroundColor = [UIColor lightGrayColor];
-//            }
-//        }
-//    };
-//    
-//    options.onChosen = ^(MDCSwipeResult *state){
-//        if (![Utilities isEmptyString:self.noteView.text]) {
-//            Note *note;
-//            switch (state.direction) {
-//                case MDCSwipeDirectionLeft:
-//                    note = [[Note alloc] initWithString:self.noteView.text direction:UISwipeGestureRecognizerDirectionLeft];
-//                    break;
-//                case MDCSwipeDirectionRight:
-//                    note = [[Note alloc] initWithString:self.noteView.text direction:UISwipeGestureRecognizerDirectionRight];
-//                    break;
-//                case MDCSwipeDirectionNone:
-//                    break;
-//            }
-//            
-//            if (note) {
-//                [note send];
-//            }
-//            
-//            [self initNote];
-//        }
-//        [self.noteView mdc_swipe:state.direction];
-//    };
-//    [self.noteView mdc_swipeToChooseSetup:options];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     self.noteView.delegate = self;
+    self.noteView.noteViewDelegate = self;
     [self.noteView setUserInteractionEnabled:TRUE];
     [self.noteView becomeFirstResponder];
     self.noteView.textContainerInset = UIEdgeInsetsMake(6, 6, 0, 0);
@@ -156,8 +105,14 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
     }
 }
 
-- (void) test {
+- (void) didPanInDirection:(UISwipeGestureRecognizerDirection)direction {
+    Note *note = [[Note alloc] initWithString:self.noteView.text direction:direction];
     
+    if (note) {
+        [note send];
+    }
+    
+    [self initNote];
 }
 
 @end
