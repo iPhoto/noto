@@ -54,12 +54,6 @@
 #define COCOAPODS_VERSION_MINOR_InAppSettingsKit 1
 #define COCOAPODS_VERSION_PATCH_InAppSettingsKit 0
 
-// MDCSwipeToChoose
-#define COCOAPODS_POD_AVAILABLE_MDCSwipeToChoose
-#define COCOAPODS_VERSION_MAJOR_MDCSwipeToChoose 0
-#define COCOAPODS_VERSION_MINOR_MDCSwipeToChoose 2
-#define COCOAPODS_VERSION_PATCH_MDCSwipeToChoose 1
-
 // sendgrid
 #define COCOAPODS_POD_AVAILABLE_sendgrid
 #define COCOAPODS_VERSION_MAJOR_sendgrid 0
