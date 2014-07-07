@@ -11,7 +11,7 @@
 #import "NoteView.h"
 #import "Utilities.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <NoteViewDelegate>
 
 
 @end

@@ -15,7 +15,7 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
                                     "<3\n"
                                     "The ____ Team\n";
 
-@interface ViewController () <NoteViewDelegate>
+@interface ViewController ()
 @property (strong, nonatomic) NoteView *noteView;
 @property (strong, nonatomic) IBOutlet UINavigationItem *navBarTitle;
 @end

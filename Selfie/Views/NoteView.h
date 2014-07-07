@@ -7,16 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NoteActionView.h"
+
 @class NoteView;
 
 @protocol NoteViewDelegate <UITextViewDelegate>
-
 @required
 - (void) didPanInDirection:(UISwipeGestureRecognizerDirection)direction;
-
 @end
 
 @interface NoteView : UITextView <UIGestureRecognizerDelegate>
 @property (nonatomic, assign) id <NoteViewDelegate> noteViewDelegate;
-@property (nonatomic) NSUInteger swipeThreshold;
+@property (nonatomic) NSInteger swipeThreshold;
+@property (nonatomic, strong) UIView *leftNoteActionView;
 @end
