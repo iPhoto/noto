@@ -19,7 +19,6 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
 @interface ViewController ()
 @property (strong, nonatomic) NoteView *noteView;
 @property (strong, nonatomic) IBOutlet UINavigationItem *navBarTitle;
-@property (nonatomic, strong) UIDynamicAnimator *animator;
 @end
 
 @implementation ViewController
@@ -57,6 +56,11 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
     [self.noteView setUserInteractionEnabled:TRUE];
     [self.noteView becomeFirstResponder];
     self.noteView.textContainerInset = UIEdgeInsetsMake(6, 6, 0, 0);
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -117,9 +121,25 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
     [self initNote];
 }
 
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration {
-    self.noteView.leftNoteActionView.frame = CGRectMake(self.view.frame.size.width, 40, 1000, 40);
+- (void)keyboardWillShow:(NSNotification *)notification {
+    NSDictionary *info = [notification userInfo];
+    CGRect keyboardRect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    keyboardRect = [self.view convertRect:keyboardRect fromView:nil];
+    
+    CGFloat actionViewHeight = self.view.frame.size.height -
+        [UIApplication sharedApplication].statusBarFrame.size.height -
+        keyboardRect.size.height -
+        self.navigationController.navigationBar.frame.size.height -
+        80;
+    
+    self.noteView.leftNoteActionView.frame = CGRectMake(keyboardRect.size.width, actionViewHeight, 1000, 80);
+    self.noteView.rightNoteActionView.frame = CGRectMake(-1000, actionViewHeight, 1000, 80);
+    
     self.noteView.leftNoteActionViewOriginalCenter = self.noteView.leftNoteActionView.center;
+    self.noteView.rightNoteActionViewOriginalCenter = self.noteView.rightNoteActionView.center;
+    
+    NSLog(@"keyboard: %f %f", keyboardRect.size.width, keyboardRect.size.height);
+    NSLog(@"screen: %f %f", self.view.frame.size.width, self.view.frame.size.height);
 }
 
 @end

@@ -21,7 +21,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self setFont:[UIFont systemFontOfSize:18]];
-//        self.autoresizesSubviews = YES;
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         
         UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
@@ -35,13 +34,13 @@
         }
 
         // Swipe left
-        self.leftNoteActionView = [[NoteActionView alloc] initWithFrame:CGRectMake(self.frame.size.width, 40, 1000, 40)];
+        self.leftNoteActionView = [[NoteActionView alloc] init];
         [self addSubview:self.leftNoteActionView];
         
         self.leftNoteActionViewOriginalCenter = self.leftNoteActionView.center;
         
         // Swipe right
-        self.rightNoteActionView = [[NoteActionView alloc] initWithFrame:CGRectMake(-1000, 40, 1000, 40)];
+        self.rightNoteActionView = [[NoteActionView alloc] init];
         [self addSubview:self.rightNoteActionView];
         
         self.rightNoteActionViewOriginalCenter = self.rightNoteActionView.center;
@@ -98,18 +97,6 @@
         }
         CGPoint newRightCenter = CGPointMake(self.rightNoteActionViewOriginalCenter.x + translation.x, self.rightNoteActionViewOriginalCenter.y);
         [self.rightNoteActionView setCenter:(newRightCenter)];
-        
-//        CGPoint location = [gestureRecognizer locationInView:noteView];
-//        [self.leftNoteActionView setCenter:location];
-//        NSLog(@"x: %f, y: %f", translation.x, translation.y);
-        // Update the position and transform. Then, notify any listeners of
-        // the updates via the pan block.
-        // CGPoint translation = [panGestureRecognizer translationInView:view];
-        // translation.y = 0;
-        // view.center = MDCCGPointAdd(self.mdc_viewState.originalCenter, translation);
-        // [self mdc_rotateForTranslation:translation
-        //      rotationDirection:self.mdc_viewState.rotationDirection];
-        // [self mdc_executeOnPanBlockForTranslation:translation];
     }
 }
 
