@@ -47,6 +47,12 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
         [Utilities setSettingsValue:@"notFirstLaunch" forKey:kHasLaunchedBeforeKey];
     }
     
+    self.noteView.leftNoteActionView.textView.text = [Utilities getSettingsValue:@"swipeLeftTo"];
+    self.noteView.rightNoteActionView.textView.text = [Utilities getSettingsValue:@"swipeRightTo"];
+    
+    [self.noteView.leftNoteActionView.textView addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
+    [self.noteView.rightNoteActionView.textView addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
+    
     [self.view addSubview:self.noteView];
 }
 
@@ -75,20 +81,6 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
     CGRect rect = [textView caretRectForPosition:textView.selectedTextRange.end];
     rect.size.height += textView.textContainerInset.bottom;
     [textView scrollRectToVisible:rect animated:animated];
-}
-
-- (void)keyboardIsUp:(NSNotification *)notification
-{
-    NSDictionary *info = [notification userInfo];
-    CGRect keyboardRect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    keyboardRect = [self.view convertRect:keyboardRect fromView:nil];
-    
-    UIEdgeInsets inset = self.noteView.contentInset;
-    inset.bottom = keyboardRect.size.height;
-    self.noteView.contentInset = inset;
-    self.noteView.scrollIndicatorInsets = inset;
-    
-    [self scrollToCaretInTextView:self.noteView animated:YES];
 }
 
 - (void)textViewDidChange:(UITextView *)textView {
@@ -121,25 +113,52 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
     [self initNote];
 }
 
+- (void)keyboardIsUp:(NSNotification *)notification
+{
+    NSDictionary *info = [notification userInfo];
+    CGRect keyboardRect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    keyboardRect = [self.view convertRect:keyboardRect fromView:nil];
+    
+    UIEdgeInsets inset = self.noteView.contentInset;
+    inset.bottom = keyboardRect.size.height;
+    self.noteView.contentInset = inset;
+    self.noteView.scrollIndicatorInsets = inset;
+    
+    [self scrollToCaretInTextView:self.noteView animated:YES];
+}
+
 - (void)keyboardWillShow:(NSNotification *)notification {
     NSDictionary *info = [notification userInfo];
     CGRect keyboardRect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     keyboardRect = [self.view convertRect:keyboardRect fromView:nil];
     
+    // TODO: Move magic numbers into NoteView constants
     CGFloat actionViewHeight = self.view.frame.size.height -
         [UIApplication sharedApplication].statusBarFrame.size.height -
         keyboardRect.size.height -
         self.navigationController.navigationBar.frame.size.height -
         80;
     
+    // TODO: Change rectangle widths to be frame widths
     self.noteView.leftNoteActionView.frame = CGRectMake(keyboardRect.size.width, actionViewHeight, 1000, 80);
     self.noteView.rightNoteActionView.frame = CGRectMake(-1000, actionViewHeight, 1000, 80);
+    
+    // TODO: Subviews can be moved into initialization
+    self.noteView.leftNoteActionView.textView.frame = CGRectMake(0, 20, 1000, 40);
+    self.noteView.rightNoteActionView.textView.frame = CGRectMake(0, 20, 1000, 40);
     
     self.noteView.leftNoteActionViewOriginalCenter = self.noteView.leftNoteActionView.center;
     self.noteView.rightNoteActionViewOriginalCenter = self.noteView.rightNoteActionView.center;
     
     NSLog(@"keyboard: %f %f", keyboardRect.size.width, keyboardRect.size.height);
     NSLog(@"screen: %f %f", self.view.frame.size.width, self.view.frame.size.height);
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    UITextView *tv = object;
+    CGFloat topCorrect = ([tv bounds].size.height - [tv contentSize].height * [tv zoomScale])/2.0;
+    topCorrect = ( topCorrect < 0.0 ? 0.0 : topCorrect );
+    tv.contentOffset = (CGPoint){.x = 0, .y = -topCorrect};
 }
 
 @end

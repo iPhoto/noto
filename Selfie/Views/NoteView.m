@@ -35,12 +35,16 @@
 
         // Swipe left
         self.leftNoteActionView = [[NoteActionView alloc] init];
+        self.leftNoteActionView.textView.textAlignment = NSTextAlignmentLeft;
+        self.leftNoteActionView.direction = UISwipeGestureRecognizerDirectionLeft;
         [self addSubview:self.leftNoteActionView];
         
         self.leftNoteActionViewOriginalCenter = self.leftNoteActionView.center;
         
         // Swipe right
         self.rightNoteActionView = [[NoteActionView alloc] init];
+        self.rightNoteActionView.textView.textAlignment = NSTextAlignmentRight;
+        self.rightNoteActionView.direction = UISwipeGestureRecognizerDirectionRight;
         [self addSubview:self.rightNoteActionView];
         
         self.rightNoteActionViewOriginalCenter = self.rightNoteActionView.center;
@@ -60,11 +64,14 @@
     CGPoint translation = [gestureRecognizer translationInView:noteView];
     
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        self.leftNoteActionView.textView.text = [self.leftNoteActionView getActionText:noteView.text];
+        self.rightNoteActionView.textView.text = [self.rightNoteActionView getActionText:noteView.text];
     } else if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
         if (abs(translation.x) > abs(translation.y)) {
-            if (translation.x > self.swipeThreshold) {
+            // TODO: Refactor into state class
+            if (translation.x > self.swipeThreshold && ![Utilities isEmptyString:self.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeRightTo"]]) {
                 [noteViewDelegate didPanInDirection:UISwipeGestureRecognizerDirectionRight];
-            } else if (translation.x < -self.swipeThreshold) {
+            } else if (translation.x < -self.swipeThreshold && ![Utilities isEmptyString:self.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeLeftTo"]]) {
                 [noteViewDelegate didPanInDirection:UISwipeGestureRecognizerDirectionLeft];
             }
         }
@@ -81,7 +88,8 @@
 
         }];
     } else {
-        if (translation.x < -self.swipeThreshold) {
+        // TODO: Refactor into state class
+        if (translation.x < -self.swipeThreshold && ![Utilities isEmptyString:self.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeLeftTo"]]) {
             self.leftNoteActionView.backgroundColor = [UIColor blueColor];
         } else {
             self.leftNoteActionView.backgroundColor = [UIColor redColor];
@@ -90,7 +98,8 @@
         CGPoint newLeftCenter = CGPointMake(self.leftNoteActionViewOriginalCenter.x + translation.x, self.leftNoteActionViewOriginalCenter.y);
         [self.leftNoteActionView setCenter:(newLeftCenter)];
         
-        if (translation.x > self.swipeThreshold) {
+        // TODO: Refactor into state class
+        if (translation.x > self.swipeThreshold && ![Utilities isEmptyString:self.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeRightTo"]]) {
             self.rightNoteActionView.backgroundColor = [UIColor blueColor];
         } else {
             self.rightNoteActionView.backgroundColor = [UIColor redColor];

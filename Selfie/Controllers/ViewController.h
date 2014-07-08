@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Reachability.h"
 #import "Note.h"
 #import "NoteView.h"
 #import "Utilities.h"
