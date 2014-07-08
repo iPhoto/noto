@@ -20,6 +20,8 @@
 @property (strong, nonatomic) NSString *subject;
 @property (strong, nonatomic) NSString *body;
 
+- (instancetype)initFromDictionary:(NSDictionary *)dict;
+
 - (instancetype)initWithToEmail:(NSString *)toEmail
                       fromEmail:(NSString *)fromEmail
                         subject:(NSString *)subject
@@ -27,6 +29,8 @@
 
 - (instancetype)initWithString:(NSString *)string
                      direction:(NSUInteger) direction;
+
+- (NSDictionary *)toDictionary;
 
 - (void)send;
 - (void)sendWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;

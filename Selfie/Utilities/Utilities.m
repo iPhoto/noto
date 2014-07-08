@@ -37,7 +37,7 @@
     NSMutableArray *mutableQueue = [queue mutableCopy];
     
     for (int i = 0; i < [queue count]; i++) {
-        Note *note = (Note *) [queue objectAtIndex: i];
+        Note *note = [[Note alloc] initFromDictionary:(NSDictionary *)[queue objectAtIndex: i]];
         predicate(mutableQueue, note);
     }
     

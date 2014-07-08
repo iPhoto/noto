@@ -73,13 +73,13 @@
         [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
             self.leftNoteActionView.center = self.leftNoteActionViewOriginalCenter;
         } completion:^(BOOL finished){
-            NSLog(@"finished!");
+
         }];
         
         [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
             self.rightNoteActionView.center = self.rightNoteActionViewOriginalCenter;
         } completion:^(BOOL finished){
-            NSLog(@"finished!");
+
         }];
     } else {
         if (translation.x < -self.swipeThreshold) {

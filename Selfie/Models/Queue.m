@@ -14,9 +14,8 @@
 @implementation Queue
 
 + (void)enqueue:(Note *) note {
-    
     NSMutableArray *queue = [[Utilities getSettingsObject:@"emailQueue"] mutableCopy];
-    [queue addObject:note];
+    [queue addObject:[note toDictionary]];
     [Utilities setSettingsObject:queue forKey:@"emailQueue"];
 }
 
@@ -33,7 +32,6 @@
     [Utilities loopThroughQueueAndSave:^(NSMutableArray *queue, Note *note) {
         [note sendWithCompletionHandler:completionHandler];
         [queue removeObject:note];
-        NSLog(note.subject);
     }];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"stopMinimumBackgroundFetchInterval" object:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"emailQueueSent" object:nil];

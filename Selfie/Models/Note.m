@@ -10,6 +10,11 @@
 
 @implementation Note
 
+- (instancetype)initFromDictionary:(NSDictionary *)dict {
+    Note *note = [self initWithToEmail:[dict valueForKey:@"toEmail"] fromEmail:[dict valueForKey:@"fromEmail"] subject:[dict valueForKey:@"subject"] body:[dict valueForKey:@"body"]];
+    return note;
+}
+
 - (instancetype)initWithToEmail:(NSString *)toEmail
                       fromEmail:(NSString *)fromEmail
                         subject:(NSString *)subject
@@ -95,8 +100,7 @@
 - (BOOL)validNote {
     return ![Utilities isEmptyString:self.toEmail] &&
     ![Utilities isEmptyString:self.fromEmail] &&
-    ![Utilities isEmptyString:self.subject] &&
-    ![Utilities isEmptyString:self.body];
+    ![Utilities isEmptyString:self.subject];
 }
 
 - (void)sendWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
@@ -138,6 +142,14 @@
         // TODO: Handle invalid note
     }
 }
+
+- (NSDictionary *)toDictionary {
+    NSDictionary *dict = [[NSDictionary alloc]
+                          initWithObjects:@[self.toEmail, self.fromEmail, self.subject, self.body]
+                          forKeys:@[@"toEmail", @"fromEmail", @"subject", @"body"]];
+    return dict;
+}
+
 - (void)onComplete {
     [UIApplication sharedApplication].applicationIconBadgeNumber = [Queue count];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
