@@ -11,9 +11,10 @@
 NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
                                     "New lines below are the email body!\n"
                                     "Tap the settings icon in the top right to set your emails.\n"
+                                    "Swipe left or right to send to the corresponding email.\n"
                                     "\n"
                                     "<3\n"
-                                    "The Noto Team";
+                                    "The Selfie Team";
 
 @interface ViewController ()
 @property (strong, nonatomic) NoteView *noteView;
