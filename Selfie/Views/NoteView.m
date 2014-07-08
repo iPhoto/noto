@@ -83,18 +83,18 @@
         }];
     } else {
         if (translation.x < -self.swipeThreshold) {
-            self.leftNoteActionView.backgroundColor = [UIColor redColor];
-        } else {
             self.leftNoteActionView.backgroundColor = [UIColor blueColor];
+        } else {
+            self.leftNoteActionView.backgroundColor = [UIColor redColor];
         }
         
         CGPoint newLeftCenter = CGPointMake(self.leftNoteActionViewOriginalCenter.x + translation.x, self.leftNoteActionViewOriginalCenter.y);
         [self.leftNoteActionView setCenter:(newLeftCenter)];
         
         if (translation.x > self.swipeThreshold) {
-            self.rightNoteActionView.backgroundColor = [UIColor redColor];
-        } else {
             self.rightNoteActionView.backgroundColor = [UIColor blueColor];
+        } else {
+            self.rightNoteActionView.backgroundColor = [UIColor redColor];
         }
         CGPoint newRightCenter = CGPointMake(self.rightNoteActionViewOriginalCenter.x + translation.x, self.rightNoteActionViewOriginalCenter.y);
         [self.rightNoteActionView setCenter:(newRightCenter)];
