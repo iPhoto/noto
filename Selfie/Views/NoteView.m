@@ -60,6 +60,7 @@
 }
 
 - (void)handlePanGesture: (UIPanGestureRecognizer *)gestureRecognizer {
+    // TODO: Refactor and delegate to viewcontroller
     NoteView *noteView = (NoteView *)gestureRecognizer.view;
     CGPoint translation = [gestureRecognizer translationInView:noteView];
     

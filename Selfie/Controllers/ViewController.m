@@ -132,9 +132,12 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
     CGRect keyboardRect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     keyboardRect = [self.view convertRect:keyboardRect fromView:nil];
     
+    CGRect statusBarFrame = [self.view.window convertRect:UIApplication.sharedApplication.statusBarFrame toView:self.view];
+    CGFloat statusBarHeight = statusBarFrame.size.height;
+    
     // TODO: Move magic numbers into NoteView constants
     CGFloat actionViewHeight = self.view.frame.size.height -
-        [UIApplication sharedApplication].statusBarFrame.size.height -
+        statusBarHeight -
         keyboardRect.size.height -
         self.navigationController.navigationBar.frame.size.height -
         80;
@@ -150,8 +153,14 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
     self.noteView.leftNoteActionViewOriginalCenter = self.noteView.leftNoteActionView.center;
     self.noteView.rightNoteActionViewOriginalCenter = self.noteView.rightNoteActionView.center;
     
+    NSLog(@"actionViewHeight: %f", actionViewHeight);
+    NSLog(@"view frame height: %f", self.view.frame.size.height);
+    NSLog(@"status bar height: %f", statusBarHeight);
+    NSLog(@"keyboard height: %f", keyboardRect.size.height);
+    NSLog(@"nav bar height: %f", self.navigationController.navigationBar.frame.size.height);
     NSLog(@"keyboard: %f %f", keyboardRect.size.width, keyboardRect.size.height);
     NSLog(@"screen: %f %f", self.view.frame.size.width, self.view.frame.size.height);
+    NSLog(@"\n\n");
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
