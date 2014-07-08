@@ -132,6 +132,8 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
     CGRect keyboardRect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     keyboardRect = [self.view convertRect:keyboardRect fromView:nil];
     
+    self.noteView.panGestureRecognizer.enabled = NO;
+    
     CGRect statusBarFrame = [self.view.window convertRect:UIApplication.sharedApplication.statusBarFrame toView:self.view];
     CGFloat statusBarHeight = statusBarFrame.size.height;
     

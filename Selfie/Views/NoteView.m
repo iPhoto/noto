@@ -68,7 +68,7 @@
         self.leftNoteActionView.textView.text = [self.leftNoteActionView getActionText:noteView.text];
         self.rightNoteActionView.textView.text = [self.rightNoteActionView getActionText:noteView.text];
     } else if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
-        // TODO: This needs improvement; causes problems when move y a bit and then x
+        // TODO: make sure send gesture and view gesture are identical; don't want users to be confused
         if (abs(translation.x) > abs(translation.y)) {
             // TODO: Refactor into state class
             if (translation.x > self.swipeThreshold && ![Utilities isEmptyString:self.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeRightTo"]]) {
@@ -90,6 +90,7 @@
 
         }];
     } else {
+        // TODO: This needs improvement; causes problems when move y a bit and then x
         if (abs(translation.x) > abs(translation.y)) {
             // TODO: Refactor into state class
             if (translation.x < -self.swipeThreshold && ![Utilities isEmptyString:self.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeLeftTo"]]) {
