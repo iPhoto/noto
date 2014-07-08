@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 #import <Crashlytics/Crashlytics.h>
-#import "Models/Queue.h"
+#import "Queue.h"
+#import "ReachabilityManager.h"
 #import "Utilities.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>

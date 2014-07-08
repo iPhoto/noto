@@ -22,6 +22,15 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [Crashlytics startWithAPIKey:CrashlyticsAPIKey];
     
+    [ReachabilityManager reachabilityManager];
+    [ReachabilityManager setReachableBlock:^(Reachability *reachableBlock) {
+        [Queue pollQueue];
+        NSLog(@"Polling");
+    }];
+    [ReachabilityManager setUnreachableBlock:^(Reachability *unreachableBlock) {
+        NSLog(@"Unreachable");
+    }];
+    
     if ([Utilities isFirstLaunch]) {
         [Utilities setDefaultSettings];
     }
