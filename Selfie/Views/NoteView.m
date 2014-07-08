@@ -68,6 +68,7 @@
         self.leftNoteActionView.textView.text = [self.leftNoteActionView getActionText:noteView.text];
         self.rightNoteActionView.textView.text = [self.rightNoteActionView getActionText:noteView.text];
     } else if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
+        // TODO: This needs improvement; causes problems when move y a bit and then x
         if (abs(translation.x) > abs(translation.y)) {
             // TODO: Refactor into state class
             if (translation.x > self.swipeThreshold && ![Utilities isEmptyString:self.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeRightTo"]]) {
@@ -89,24 +90,26 @@
 
         }];
     } else {
-        // TODO: Refactor into state class
-        if (translation.x < -self.swipeThreshold && ![Utilities isEmptyString:self.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeLeftTo"]]) {
-            self.leftNoteActionView.backgroundColor = [UIColor blueColor];
-        } else {
-            self.leftNoteActionView.backgroundColor = [UIColor redColor];
+        if (abs(translation.x) > abs(translation.y)) {
+            // TODO: Refactor into state class
+            if (translation.x < -self.swipeThreshold && ![Utilities isEmptyString:self.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeLeftTo"]]) {
+                self.leftNoteActionView.backgroundColor = [UIColor blueColor];
+            } else {
+                self.leftNoteActionView.backgroundColor = [UIColor redColor];
+            }
+            
+            CGPoint newLeftCenter = CGPointMake(self.leftNoteActionViewOriginalCenter.x + translation.x, self.leftNoteActionViewOriginalCenter.y);
+            [self.leftNoteActionView setCenter:(newLeftCenter)];
+            
+            // TODO: Refactor into state class
+            if (translation.x > self.swipeThreshold && ![Utilities isEmptyString:self.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeRightTo"]]) {
+                self.rightNoteActionView.backgroundColor = [UIColor blueColor];
+            } else {
+                self.rightNoteActionView.backgroundColor = [UIColor redColor];
+            }
+            CGPoint newRightCenter = CGPointMake(self.rightNoteActionViewOriginalCenter.x + translation.x, self.rightNoteActionViewOriginalCenter.y);
+            [self.rightNoteActionView setCenter:(newRightCenter)];
         }
-        
-        CGPoint newLeftCenter = CGPointMake(self.leftNoteActionViewOriginalCenter.x + translation.x, self.leftNoteActionViewOriginalCenter.y);
-        [self.leftNoteActionView setCenter:(newLeftCenter)];
-        
-        // TODO: Refactor into state class
-        if (translation.x > self.swipeThreshold && ![Utilities isEmptyString:self.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeRightTo"]]) {
-            self.rightNoteActionView.backgroundColor = [UIColor blueColor];
-        } else {
-            self.rightNoteActionView.backgroundColor = [UIColor redColor];
-        }
-        CGPoint newRightCenter = CGPointMake(self.rightNoteActionViewOriginalCenter.x + translation.x, self.rightNoteActionViewOriginalCenter.y);
-        [self.rightNoteActionView setCenter:(newRightCenter)];
     }
 }
 
