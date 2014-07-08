@@ -29,9 +29,9 @@
 
 + (void)pollQueueWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"emailQueueFull" object:nil];
-    [Utilities loopThroughQueueAndSave:^(NSMutableArray *queue, Note *note) {
-        [note sendWithCompletionHandler:completionHandler];
-        [queue removeObject:note];
+    [Utilities loopThroughQueueAndSave:^(NSMutableArray *queue, NSDictionary *dict) {
+        [[[Note alloc] initFromDictionary:dict] sendWithCompletionHandler:completionHandler];
+        [queue removeObject:dict];
     }];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"stopMinimumBackgroundFetchInterval" object:nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"emailQueueSent" object:nil];

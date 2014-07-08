@@ -22,7 +22,7 @@ static NSString * const CrashlyticsAPIKey = @"7052c7c0dfa3dc8a01de1c9fadf87a6abe
 + (void) setSettingsObject:(NSObject *) object forKey:(NSString *) key;
 + (NSObject *) getSettingsObject:(NSString *) key;
 
-+ (void)loopThroughQueueAndSave:(void(^)(NSMutableArray*, Note*))predicate;
++ (void)loopThroughQueueAndSave:(void(^)(NSMutableArray*, NSDictionary*))predicate;
 
 + (void)initDB;
 + (void)clearDB;

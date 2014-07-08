@@ -32,13 +32,12 @@
         return [[NSUserDefaults standardUserDefaults] objectForKey:key];
     };
 
-+ (void)loopThroughQueueAndSave:(void(^)(NSMutableArray *, Note *))predicate {
++ (void)loopThroughQueueAndSave:(void(^)(NSMutableArray *, NSDictionary *))predicate {
     NSArray *queue = (NSArray *) [Utilities getSettingsObject:@"emailQueue"];
     NSMutableArray *mutableQueue = [queue mutableCopy];
     
     for (int i = 0; i < [queue count]; i++) {
-        Note *note = [[Note alloc] initFromDictionary:(NSDictionary *)[queue objectAtIndex: i]];
-        predicate(mutableQueue, note);
+        predicate(mutableQueue, (NSDictionary *)[queue objectAtIndex: i]);
     }
     
     [Utilities setSettingsObject:mutableQueue forKey:@"emailQueue"];
