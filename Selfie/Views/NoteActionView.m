@@ -20,7 +20,10 @@
         
         [self.textView setFont:[UIFont systemFontOfSize:kGlobalFontSize]];
         [self.textView setTextColor:[UIColor whiteColor]];
-        self.textView.textContainerInset = UIEdgeInsetsMake((kNoteActionViewHeight - kGlobalFontSize) / 2, 6, (kNoteActionViewHeight - kGlobalFontSize) / 2, 6);
+        self.textView.textContainerInset = UIEdgeInsetsMake((kNoteActionViewHeight - kGlobalFontSize) / 2 - 2, kNoteActionViewHeight / 2 - 6, 0, kNoteActionViewHeight / 2 - 6);
+        
+        self.clipsToBounds = YES;
+        self.layer.cornerRadius = kNoteActionViewHeight / 2;
         
         [self addSubview:self.textView];
         
