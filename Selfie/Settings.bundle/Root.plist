@@ -8,15 +8,7 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
-			<string>TO: Send emails to when swiping</string>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSTextFieldSpecifier</string>
-			<key>Title</key>
-			<string>Left:</string>
-			<key>Key</key>
-			<string>swipeLeftTo</string>
+			<string>Send to when swiping</string>
 		</dict>
 		<dict>
 			<key>Type</key>
@@ -26,39 +18,25 @@
 			<key>Key</key>
 			<string>swipeRightTo</string>
 		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-			<key>Title</key>
-			<string>FROM: Send emails from when swiping</string>
-		</dict>
-		<dict>
+        <dict>
 			<key>Type</key>
 			<string>PSTextFieldSpecifier</string>
 			<key>Title</key>
 			<string>Left:</string>
 			<key>Key</key>
-			<string>swipeLeftFrom</string>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSTextFieldSpecifier</string>
-			<key>Title</key>
-			<string>Right:</string>
-			<key>Key</key>
-			<string>swipeRightFrom</string>
+			<string>swipeLeftTo</string>
 		</dict>
 		<dict>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
-			<string>Other Settings</string>
+			<string>Other settings</string>
 		</dict>
 		<dict>
 			<key>Type</key>
 			<string>PSTextFieldSpecifier</string>
 			<key>Title</key>
-			<string>Subj Prefix</string>
+			<string>Subj. Prefix:</string>
 			<key>Key</key>
 			<string>subjectPrefix</string>
 		</dict>
@@ -66,7 +44,7 @@
 			<key>Type</key>
 			<string>PSTextFieldSpecifier</string>
 			<key>Title</key>
-			<string>Signature</string>
+			<string>Signature:</string>
 			<key>Key</key>
 			<string>signature</string>
 		</dict>

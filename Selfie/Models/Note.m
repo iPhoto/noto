@@ -35,6 +35,7 @@
     NSString *emailTo;
     NSString *emailFrom;
     
+    // TODO: remove swipeFrom emails and set fromEmail to toEmail automatically?
     if (direction == UISwipeGestureRecognizerDirectionRight) {
         emailTo = @"swipeRightTo";
         emailFrom = @"swipeRightFrom";
