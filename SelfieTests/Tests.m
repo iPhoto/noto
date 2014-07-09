@@ -8,11 +8,11 @@
 
 #import <XCTest/XCTest.h>
 
-@interface SelfieTests : XCTestCase
+@interface Tests : XCTestCase
 
 @end
 
-@implementation SelfieTests
+@implementation Tests
 
 - (void)setUp {
     [super setUp];
@@ -31,9 +31,9 @@
 
 - (void)testPerformanceExample {
     // This is an example of a performance test case.
-//    [self measureBlock:^{
-//        // Put the code you want to measure the time of here.
-//    }];
+    //    [self measureBlock:^{
+    //        // Put the code you want to measure the time of here.
+    //    }];
 }
 
 @end
