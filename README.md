@@ -1,7 +1,7 @@
-[![Build Status](https://travis-ci.org/thelac/selfie.svg?branch=dev)](https://travis-ci.org/thelac/selfie)
-
 # Selfie
 Emailing yourself.
+
+[![Build Status](https://travis-ci.org/thelac/selfie.svg?branch=dev)](https://travis-ci.org/thelac/selfie)
 
 # Getting started
 - Install Cocoapods
