@@ -22,7 +22,7 @@ TF_NOTIFY=True
 TF_REPLACE=True
 
 # Build directory
-BUILD_DIR="/Users/travis/build/release"
+BUILD_DIR="$PWD/build/release"
 
 # Release date
 RELEASE_DATE=`date -u '+%Y-%m-%d %H:%M:%S %Z'`
