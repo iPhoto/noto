@@ -22,7 +22,7 @@ TF_NOTIFY=True
 TF_REPLACE=True
 
 # Build directory
-BUILD_DIR="$PWD/build/release"
+BUILD_DIR="$BUILT_PRODUCTS_DIR"
 
 # Release date
 RELEASE_DATE=`date -u '+%Y-%m-%d %H:%M:%S %Z'`
