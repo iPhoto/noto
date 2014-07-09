@@ -20,14 +20,19 @@
         
         [self.textView setFont:[UIFont systemFontOfSize:kGlobalFontSize]];
         [self.textView setTextColor:[UIColor whiteColor]];
-        self.textView.textContainerInset = UIEdgeInsetsMake((kNoteActionViewHeight - kGlobalFontSize) / 2 - 2, kNoteActionViewHeight / 2 - 6, 0, kNoteActionViewHeight / 2 - 6);
+        self.textView.textContainerInset = UIEdgeInsetsMake((kNoteActionViewHeight - kGlobalFontSize) / 2 - 2, kNoteActionViewHeight, 0, kNoteActionViewHeight);
         
         self.clipsToBounds = YES;
         self.layer.cornerRadius = kNoteActionViewHeight / 2;
-        
         [self addSubview:self.textView];
         
         self.imageView = [[UIImageView alloc] init];
+        self.imageView.backgroundColor = secondaryColor;
+        [self.imageView.layer setBorderColor: [[UIColor whiteColor] CGColor]];
+        [self.imageView.layer setBorderWidth: 1.5];
+        self.imageView.clipsToBounds = YES;
+        self.imageView.layer.cornerRadius = kNoteActionImageHeight / 2;
+//        self.imageView.contentMode = UIViewContentModeScaleAspectFit;
         [self addSubview:self.imageView];
     }
     return self;
@@ -43,15 +48,18 @@
         emailAddress = [Utilities getSettingsValue:@"swipeRightTo"];
     }
     
+    [self.imageView setImage:[UIImage imageNamed: @"icon_warning"]];
+    
     // TODO: Refactor into state class
     if ([Utilities isEmptyString:emailAddress]) {
         actionText = @"No email address!";
     } else if (![Utilities isValidEmail:emailAddress]) {
-        actionText = @"Invalid email address!";
+        actionText = @"Invalid address!";
     } else if ([Utilities isEmptyString:noteText]) {
-        actionText = @"No Note! ";
+        actionText = @"No Note!";
     } else {
         actionText = emailAddress;
+        [self.imageView setImage:[UIImage imageNamed: @"icon_message"]];
     }
 
     // TODO: Refactor into state class

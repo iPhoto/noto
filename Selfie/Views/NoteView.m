@@ -95,8 +95,10 @@
             // TODO: Refactor into state class
             if (translation.x < -self.swipeThreshold && ![Utilities isEmptyString:self.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeLeftTo"]]) {
                 self.leftNoteActionView.backgroundColor = primaryColor;
+                self.leftNoteActionView.imageView.backgroundColor = primaryColor;
             } else {
                 self.leftNoteActionView.backgroundColor = secondaryColor;
+                self.leftNoteActionView.imageView.backgroundColor = secondaryColor;
             }
             
             CGPoint newLeftCenter = CGPointMake(self.leftNoteActionViewOriginalCenter.x + translation.x, self.leftNoteActionViewOriginalCenter.y);
@@ -105,8 +107,10 @@
             // TODO: Refactor into state class
             if (translation.x > self.swipeThreshold && ![Utilities isEmptyString:self.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeRightTo"]]) {
                 self.rightNoteActionView.backgroundColor = primaryColor;
+                self.rightNoteActionView.imageView.backgroundColor = primaryColor;
             } else {
                 self.rightNoteActionView.backgroundColor = secondaryColor;
+                self.rightNoteActionView.imageView.backgroundColor = secondaryColor;
             }
             CGPoint newRightCenter = CGPointMake(self.rightNoteActionViewOriginalCenter.x + translation.x, self.rightNoteActionViewOriginalCenter.y);
             [self.rightNoteActionView setCenter:(newRightCenter)];

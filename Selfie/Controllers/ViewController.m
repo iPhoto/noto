@@ -64,6 +64,11 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
                                              selector:@selector(keyboardWillShow:)
                                                  name:UIKeyboardWillShowNotification
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidShow:)
+                                                 name:UIKeyboardDidShowNotification
+                                               object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -149,8 +154,16 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
     self.noteView.leftNoteActionView.textView.frame = CGRectMake(0, 0, keyboardRect.size.width, kNoteActionViewHeight);
     self.noteView.rightNoteActionView.textView.frame = CGRectMake(0, 0, keyboardRect.size.width, kNoteActionViewHeight);
     
+    // TODO: This should be done with constraints
+    self.noteView.leftNoteActionView.imageView.frame = CGRectMake(kNoteActionImageBorder, kNoteActionImageBorder, kNoteActionImageHeight, kNoteActionImageHeight);
+    self.noteView.rightNoteActionView.imageView.frame = CGRectMake(keyboardRect.size.width - kNoteActionViewHeight + kNoteActionImageBorder, kNoteActionImageBorder, kNoteActionImageHeight, kNoteActionImageHeight);
+    
     self.noteView.leftNoteActionViewOriginalCenter = self.noteView.leftNoteActionView.center;
     self.noteView.rightNoteActionViewOriginalCenter = self.noteView.rightNoteActionView.center;
+}
+
+- (void)keyboardDidShow:(NSNotification *)notification {
+    self.noteView.panGestureRecognizer.enabled = YES;
 }
 
 @end

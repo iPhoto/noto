@@ -18,6 +18,8 @@ static NSString * const SGPassword = @"TheLAC41988";
 static NSString * const CrashlyticsAPIKey = @"7052c7c0dfa3dc8a01de1c9fadf87a6abec3d33a";
 
 static NSUInteger const kNoteActionViewHeight = 40;
+static NSUInteger const kNoteActionImageBorder = 3;
+static NSUInteger const kNoteActionImageHeight = 40 - 2 * kNoteActionImageBorder;
 static NSUInteger const kGlobalFontSize = 18;
 
 static NSUInteger const kSwipeThreshold = 120;
