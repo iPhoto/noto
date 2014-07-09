@@ -88,8 +88,8 @@
 }
 
 + (void) setDefaultSettings {
-    [Utilities setSettingsValue:@"[Selfie]" forKey:@"subjectPrefix"];
-    [Utilities setSettingsValue:@"Sent with Selfie" forKey:@"signature"];
+    [Utilities setSettingsValue:@"[Nōto]" forKey:@"subjectPrefix"];
+    [Utilities setSettingsValue:@"Sent with Nōto" forKey:@"signature"];
 }
 
 + (BOOL)isFirstLaunch {
