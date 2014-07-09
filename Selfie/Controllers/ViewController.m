@@ -100,7 +100,12 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
     NSString *title = [self.noteView.text componentsSeparatedByString:@"\n"][0];
     
     if ([Utilities isEmptyString:title]) {
-        self.navBarTitle.title = @"New Note";
+        if ([Utilities isEmptyString:self.noteView.text]) {
+            self.navBarTitle.title = @"New Note";
+        } else {
+            self.navBarTitle.title = @"[No Subject]";
+        }
+        
     } else {
         self.navBarTitle.title = [self.noteView.text componentsSeparatedByString:@"\n"][0];
     }

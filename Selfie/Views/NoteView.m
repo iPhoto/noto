@@ -91,7 +91,7 @@
         }];
     } else {
         // TODO: This needs improvement; causes problems when move y a bit and then x
-        if (abs(translation.x) > abs(translation.y)) {
+//        if (abs(translation.x) > abs(translation.y)) {
             // TODO: Refactor into state class
             if (translation.x < -self.swipeThreshold && ![Utilities isEmptyString:self.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeLeftTo"]]) {
                 self.leftNoteActionView.backgroundColor = primaryColor;
@@ -114,7 +114,7 @@
             }
             CGPoint newRightCenter = CGPointMake(self.rightNoteActionViewOriginalCenter.x + translation.x, self.rightNoteActionViewOriginalCenter.y);
             [self.rightNoteActionView setCenter:(newRightCenter)];
-        }
+//        }
     }
 }
 

@@ -1,17 +1,14 @@
 {
   "images" : [
     {
-      "idiom" : "universal"
-    },
-    {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "SettingsGear.png"
+      "filename" : "icon_settings.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "SettingsGear@2x.png"
+      "filename" : "icon_settings@2x.png"
     }
   ],
   "info" : {

@@ -9,7 +9,7 @@
             <objects>
                 <viewController extendedLayoutIncludesOpaqueBars="YES" id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" title="New Note" id="QlS-Wp-MjW">
-                        <barButtonItem key="rightBarButtonItem" image="SettingsGear" id="dmr-EG-7lQ">
+                        <barButtonItem key="rightBarButtonItem" image="icon_settings" style="plain" id="dmr-EG-7lQ">
                             <connections>
                                 <segue destination="xw0-um-NU6" kind="push" identifier="showSettingsFromNote" id="cZo-9D-aFX"/>
                             </connections>
@@ -71,7 +71,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="SettingsGear" width="20" height="20"/>
+        <image name="icon_settings" width="20" height="20"/>
     </resources>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
