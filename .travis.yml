@@ -1,8 +1,6 @@
 language: objective-c
 
-xcode_workspace: Selfie.xcworkspace
-xcode_scheme: SelfieTests
-xcode_sdk: iphoneos
+script: xctool -workspace Selfie.xcworkspace -scheme SelfieTests -sdk iphonesimulator build test ONLY_ACTIVE_ARCH=NO
 
 before_install:
 - gem install cocoapods -v '0.33.1'
