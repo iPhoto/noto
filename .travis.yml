@@ -1,8 +1,7 @@
 language: objective-c
 
 script: 
-  # - xctool -workspace Selfie.xcworkspace -scheme Selfie -sdk iphonesimulator build test ONLY_ACTIVE_ARCH=NO -archivePath "$BUILD_DIR"
-  - xctool -showBuildSettings
+  - xctool -workspace Selfie.xcworkspace -scheme Selfie -sdk iphonesimulator build test ONLY_ACTIVE_ARCH=NO -archivePath "$BUILD_DIR" -showBuildSettings
 
 before_install:
   - gem install cocoapods -v '0.33.1'
