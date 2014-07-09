@@ -9,7 +9,7 @@
             <objects>
                 <viewController extendedLayoutIncludesOpaqueBars="YES" id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" title="New Note" id="QlS-Wp-MjW">
-                        <barButtonItem key="rightBarButtonItem" image="settingsWhite" id="dmr-EG-7lQ">
+                        <barButtonItem key="rightBarButtonItem" image="SettingsGear" id="dmr-EG-7lQ">
                             <connections>
                                 <segue destination="xw0-um-NU6" kind="push" identifier="showSettingsFromNote" id="cZo-9D-aFX"/>
                             </connections>
@@ -59,7 +59,6 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="s6T-4B-I1h">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.21960784310000001" green="0.50980392159999999" blue="0.80392156859999997" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -72,8 +71,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="settingsWhite" width="20" height="20"/>
+        <image name="SettingsGear" width="20" height="20"/>
     </resources>
+    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

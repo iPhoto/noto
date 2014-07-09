@@ -9,7 +9,6 @@
 #import "AppDelegate.h"
 
 @interface AppDelegate ()
-            
 
 @end
 
@@ -45,10 +44,13 @@
     
     [Queue pollQueue];
     
-    // Set n
-    [[UIView appearance] setTintColor:[UIColor whiteColor]];
-    [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
+    // Set navigation and status bar appearance
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
+    [[UINavigationBar appearance] setBarTintColor:primaryColor];
+    
+    // TODO: set button bar item color to white in code, not storyboard
+    // [[UIBarButtonItem appearance] setTintColor:[UIColor whiteColor]];
     
     return YES;
 }

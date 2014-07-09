@@ -49,10 +49,7 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
     
     self.noteView.leftNoteActionView.textView.text = [Utilities getSettingsValue:@"swipeLeftTo"];
     self.noteView.rightNoteActionView.textView.text = [Utilities getSettingsValue:@"swipeRightTo"];
-    
-    [self.noteView.leftNoteActionView.textView addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
-    [self.noteView.rightNoteActionView.textView addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
-    
+
     [self.view addSubview:self.noteView];
 }
 
@@ -142,15 +139,15 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
         statusBarHeight -
         keyboardRect.size.height -
         self.navigationController.navigationBar.frame.size.height -
-        80;
+        kNoteActionViewHeight;
     
     // TODO: Change rectangle widths to be frame widths
-    self.noteView.leftNoteActionView.frame = CGRectMake(keyboardRect.size.width, actionViewHeight, 1000, 80);
-    self.noteView.rightNoteActionView.frame = CGRectMake(-1000, actionViewHeight, 1000, 80);
+    self.noteView.leftNoteActionView.frame = CGRectMake(keyboardRect.size.width, actionViewHeight, keyboardRect.size.width, kNoteActionViewHeight);
+    self.noteView.rightNoteActionView.frame = CGRectMake(-keyboardRect.size.width, actionViewHeight, keyboardRect.size.width, kNoteActionViewHeight);
     
     // TODO: Subviews can be moved into initialization
-    self.noteView.leftNoteActionView.textView.frame = CGRectMake(0, 20, 1000, 40);
-    self.noteView.rightNoteActionView.textView.frame = CGRectMake(0, 20, 1000, 40);
+    self.noteView.leftNoteActionView.textView.frame = CGRectMake(0, 0, keyboardRect.size.width, kNoteActionViewHeight);
+    self.noteView.rightNoteActionView.textView.frame = CGRectMake(0, 0, keyboardRect.size.width, kNoteActionViewHeight);
     
     self.noteView.leftNoteActionViewOriginalCenter = self.noteView.leftNoteActionView.center;
     self.noteView.rightNoteActionViewOriginalCenter = self.noteView.rightNoteActionView.center;
@@ -163,13 +160,6 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
     NSLog(@"keyboard: %f %f", keyboardRect.size.width, keyboardRect.size.height);
     NSLog(@"screen: %f %f", self.view.frame.size.width, self.view.frame.size.height);
     NSLog(@"\n\n");
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    UITextView *tv = object;
-    CGFloat topCorrect = ([tv bounds].size.height - [tv contentSize].height * [tv zoomScale])/2.0;
-    topCorrect = ( topCorrect < 0.0 ? 0.0 : topCorrect );
-    tv.contentOffset = (CGPoint){.x = 0, .y = -topCorrect};
 }
 
 @end

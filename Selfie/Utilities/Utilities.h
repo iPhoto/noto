@@ -9,10 +9,16 @@
 #import <Foundation/Foundation.h>
 #import "Note.h"
 
+#define primaryColor [UIColor colorWithRed:41.0 / 255.0 green:128.0 / 255.0 blue:185.0 / 255.0 alpha:1.0]
+#define secondaryColor [UIColor colorWithRed:231.0 / 255.0 green:76.0 / 255.0 blue:60.0 / 255.0 alpha:1.0]
+
 static NSString * const kHasLaunchedBeforeKey = @"selfieHasLaunchedBefore";
 static NSString * const SGUsername = @"danielsuo";
 static NSString * const SGPassword = @"TheLAC41988";
 static NSString * const CrashlyticsAPIKey = @"7052c7c0dfa3dc8a01de1c9fadf87a6abec3d33a";
+
+static NSUInteger const kNoteActionViewHeight = 40;
+static NSUInteger const kGlobalFontSize = 18;
 
 @class Note;
 
@@ -31,4 +37,5 @@ static NSString * const CrashlyticsAPIKey = @"7052c7c0dfa3dc8a01de1c9fadf87a6abe
 + (BOOL)isEmptyString:(NSString *) string;
 + (void)setDefaultSettings;
 + (BOOL)isFirstLaunch;
+
 @end;

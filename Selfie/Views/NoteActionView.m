@@ -16,7 +16,12 @@
     if (self) {
         self.textView = [[UITextView alloc] init];
         self.textView.editable = NO;
-        self.textView.backgroundColor = [UIColor greenColor];
+        self.textView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.0];
+        
+        [self.textView setFont:[UIFont systemFontOfSize:kGlobalFontSize]];
+        [self.textView setTextColor:[UIColor whiteColor]];
+        self.textView.textContainerInset = UIEdgeInsetsMake((kNoteActionViewHeight - kGlobalFontSize) / 2, 6, (kNoteActionViewHeight - kGlobalFontSize) / 2, 6);
+        
         [self addSubview:self.textView];
         
         self.imageView = [[UIImageView alloc] init];
@@ -26,7 +31,7 @@
 }
 
 - (NSString *)getActionText:(NSString *)noteText {
-    NSMutableString *actionText = [[NSMutableString alloc] initWithString:@""];
+    NSString *actionText;
     NSString *emailAddress;
     
     if (self.direction == UISwipeGestureRecognizerDirectionLeft) {
@@ -37,24 +42,19 @@
     
     // TODO: Refactor into state class
     if ([Utilities isEmptyString:emailAddress]) {
-        [actionText appendString:@"No email address!"];
+        actionText = @"No email address!";
     } else if (![Utilities isValidEmail:emailAddress]) {
-        [actionText appendString:@"Invalid email address!"];
+        actionText = @"Invalid email address!";
+    } else if ([Utilities isEmptyString:noteText]) {
+        actionText = @"No Note! ";
     } else {
-        [actionText appendString:emailAddress];
+        actionText = emailAddress;
     }
-    
-    [actionText appendString:@"\n"];
-    
+
     // TODO: Refactor into state class
-    if ([Utilities isEmptyString:noteText]) {
-        [actionText appendString:@"No Note! "];
-    }
-    
-    // TODO: Refactor into state class
-    if (![ReachabilityManager isReachable]) {
-        [actionText appendString:@"No connection!"];
-    }
+//    if (![ReachabilityManager isReachable]) {
+//        [actionText appendString:@"No connection!"];
+//    }
     
     return actionText;
 }
