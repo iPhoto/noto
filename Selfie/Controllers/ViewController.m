@@ -58,7 +58,7 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
     self.noteView.noteViewDelegate = self;
     [self.noteView setUserInteractionEnabled:TRUE];
     [self.noteView becomeFirstResponder];
-    self.noteView.textContainerInset = UIEdgeInsetsMake(6, 6, 0, 0);
+    self.noteView.textContainerInset = UIEdgeInsetsMake(10, 10, 0, 0);
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
@@ -151,15 +151,6 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
     
     self.noteView.leftNoteActionViewOriginalCenter = self.noteView.leftNoteActionView.center;
     self.noteView.rightNoteActionViewOriginalCenter = self.noteView.rightNoteActionView.center;
-    
-    NSLog(@"actionViewHeight: %f", actionViewHeight);
-    NSLog(@"view frame height: %f", self.view.frame.size.height);
-    NSLog(@"status bar height: %f", statusBarHeight);
-    NSLog(@"keyboard height: %f", keyboardRect.size.height);
-    NSLog(@"nav bar height: %f", self.navigationController.navigationBar.frame.size.height);
-    NSLog(@"keyboard: %f %f", keyboardRect.size.width, keyboardRect.size.height);
-    NSLog(@"screen: %f %f", self.view.frame.size.width, self.view.frame.size.height);
-    NSLog(@"\n\n");
 }
 
 @end
