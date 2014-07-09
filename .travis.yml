@@ -1,6 +1,8 @@
 language: objective-c
 
-script: xctool -workspace Selfie.xcworkspace -scheme Selfie -sdk iphonesimulator build test ONLY_ACTIVE_ARCH=NO -archivePath "$BUILD_DIR"
+script: 
+  # - xctool -workspace Selfie.xcworkspace -scheme Selfie -sdk iphonesimulator build test ONLY_ACTIVE_ARCH=NO -archivePath "$BUILD_DIR"
+  - xctool -showBuildSettings
 
 before_install:
   - gem install cocoapods -v '0.33.1'
@@ -10,7 +12,7 @@ before_install:
 after_script:
   - ./scripts/travis/remove-key.sh
 after_success:
-  - ./scripts/travis/testflight.sh
+  # - ./scripts/travis/testflight.sh
 env:
   global:
     - APPNAME="Selfie"
