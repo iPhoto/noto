@@ -14,7 +14,7 @@ after_success:
 env:
   global:
     - APPNAME="Selfie"
-    - CERT_NAME="iPhone Distribution: Daniel Suo (BEYQ438FZ3)"
+    - CERT_NAME="iPhone Developer: Daniel Suo (JJE6K79Y82)"
     - PROFILE_UUID=4c9f7a1aea45e188cf79e8b0bafc743fa92719f6
     - secure: TAsO/pHSX2jL7O+QAGRcn1xAGKZJDlC4QOKvgCy4dNdpnSZINTngZ0VU4sST0yuwvD3N2yfJN/c6IQZdUd+K1BatBYdtxuTA1Xuqj/nKHld5cKYGhPDarVMPcshZ4fKI9jEbN6XQosUV0WhOpjhvO3ZtWt/pEPJqZdYrMA+Zqgc=
     - secure: dH2Bmj6xTIUhohPTZWUTMjlA13Cpbl2j9RcB7XiRNsEAr8d3tFxpGkIYWUz+xFb8Vz3oLe4m7+ub8qlJYwKONQoV35zBbiiqhTVIepZTVAVto0gC1yVQ4Aagx/vfi/Bdjq2CeOop6MUr3Yucxu4Tlloo9DL5AxAGunTUESmBMt0=
@@ -24,10 +24,10 @@ env:
     - TF_DISTRIBUTION_LISTS="selfie-sandbox"
 
     # Developer name used to sign the app
-    - DEVELOPER_NAME="iPhone Distribution: Daniel Suo (BEYQ438FZ3)"
+    - DEVELOPER_NAME="iPhone Developer: Daniel Suo (JJE6K79Y82)"
 
     # Mobile provisioning profile name used to sign the app
-    - PROFILE_NAME=C176A9C3-B187-4C02-AEC9-AC82FFC850F5
+    - PROFILE_NAME=Wildcard_App_InHouse_Dist
 
     # Deploy only if testing on this branch
     - TF_BRANCH="dev"
