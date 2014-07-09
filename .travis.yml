@@ -1,6 +1,6 @@
 language: objective-c
 
-script: xctool -workspace Selfie.xcworkspace -scheme Selfie -sdk iphonesimulator build test ONLY_ACTIVE_ARCH=NO
+script: xctool -workspace Selfie.xcworkspace -scheme Selfie -sdk iphonesimulator build test ONLY_ACTIVE_ARCH=NO -archivePath "$BUILD_DIR"
 
 before_install:
   - gem install cocoapods -v '0.33.1'
@@ -20,6 +20,9 @@ env:
     - secure: dH2Bmj6xTIUhohPTZWUTMjlA13Cpbl2j9RcB7XiRNsEAr8d3tFxpGkIYWUz+xFb8Vz3oLe4m7+ub8qlJYwKONQoV35zBbiiqhTVIepZTVAVto0gC1yVQ4Aagx/vfi/Bdjq2CeOop6MUr3Yucxu4Tlloo9DL5AxAGunTUESmBMt0=
     - secure: g2REGh2cYLvsjwqgVjDUPTiVmWAsrqpveEy945sQeT8RTs0gWxHwvj25TwFL7Sr+4TTlzM2Lq+bJNUkisP2wkU5dW7lADSFBqY7sl6xMV9KYmpQ/ndyzI0bK2FwMhR+XwY/za4pwzruBPjuzhLPKopXsKgD3F8N2LDbcIHlUoPY=
     
+    # Build directory
+    - BUILD_DIR="$PWD/build/release"
+
     # TestFlight distribution lists (coma separated)
     - TF_DISTRIBUTION_LISTS="selfie-sandbox"
 

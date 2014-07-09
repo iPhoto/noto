@@ -1,5 +1,11 @@
 #!/bin/sh
 
+# Thnaks @JagCesar https://gist.github.com/JagCesar/a6283bc2cb2f439b3a1d 
+# Thanks @djacobs https://gist.github.com/djacobs/2411095
+
+################################################################################
+# Configuration
+
 # TestFlight API Token
 # TF_API_TOKEN=... (stored securely in .travis.yml)
 
@@ -14,9 +20,6 @@ TF_NOTIFY=True
 
 # Replace binary for an existing build if one is found with the same name/bundle version
 TF_REPLACE=True
-
-# Build directory
-BUILD_DIR="$BUILT_PRODUCTS_DIR"
 
 # Release date
 RELEASE_DATE=`date -u '+%Y-%m-%d %H:%M:%S %Z'`
@@ -50,6 +53,7 @@ echo
 
 rm -f "$BUILD_DIR/$APPNAME.ipa"
 rm -f "$BUILD_DIR/$APPNAME.app.dSYM"
+ls "$BUILD_DIR"
 xcrun -log -sdk iphoneos PackageApplication "$BUILD_DIR/$APPNAME.app" -o "$BUILD_DIR/$APPNAME.ipa" -sign "$DEVELOPER_NAME" -embed "$PROVISIONING_PROFILE"
 
 rm -f "$BUILD_DIR/$APPNAME.app.dSYM.zip"
