@@ -1,0 +1,3 @@
+language: objective-c
+xcode_workspace: Selfie.xcworkspace
+xcode_scheme: SelfieTests
