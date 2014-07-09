@@ -48,6 +48,12 @@
 #define COCOAPODS_VERSION_MINOR_AFNetworking_UIKit 3
 #define COCOAPODS_VERSION_PATCH_AFNetworking_UIKit 1
 
+// CrashlyticsFramework
+#define COCOAPODS_POD_AVAILABLE_CrashlyticsFramework
+#define COCOAPODS_VERSION_MAJOR_CrashlyticsFramework 2
+#define COCOAPODS_VERSION_MINOR_CrashlyticsFramework 2
+#define COCOAPODS_VERSION_PATCH_CrashlyticsFramework 1
+
 // InAppSettingsKit
 #define COCOAPODS_POD_AVAILABLE_InAppSettingsKit
 #define COCOAPODS_VERSION_MAJOR_InAppSettingsKit 2

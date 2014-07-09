@@ -11,7 +11,6 @@
 		4F531FFD195F3B3600F4ABAE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F531FFC195F3B3600F4ABAE /* AudioToolbox.framework */; };
 		4F59863C196C4EAB006D969E /* ReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F59863B196C4EAB006D969E /* ReachabilityManager.m */; };
 		4F59863F196C71BA006D969E /* State.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F59863E196C71BA006D969E /* State.m */; };
-		4F6E39D41967BCB700E7A0A8 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F6E39D31967BCB700E7A0A8 /* Crashlytics.framework */; };
 		4F6E3A2319687F1D00E7A0A8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6E3A0F19687F1D00E7A0A8 /* AppDelegate.m */; };
 		4F6E3A2419687F1D00E7A0A8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6E3A1219687F1D00E7A0A8 /* ViewController.m */; };
 		4F6E3A2519687F1D00E7A0A8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F6E3A1319687F1D00E7A0A8 /* Images.xcassets */; };
@@ -23,6 +22,7 @@
 		4F6E3A2C19687F1D00E7A0A8 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6E3A2019687F1D00E7A0A8 /* Utilities.m */; };
 		4F6E3A2D19687F1D00E7A0A8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F6E3A2219687F1D00E7A0A8 /* Main.storyboard */; };
 		4F8D540D196D7BF000FF1BE8 /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8D540C196D7BF000FF1BE8 /* Tests.m */; };
+		4F8D544C196DBAA700FF1BE8 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F8D544B196DBAA700FF1BE8 /* Crashlytics.framework */; };
 		4F953A94194E7F9E00F67A0A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F953A93194E7F9E00F67A0A /* Foundation.framework */; };
 		4FB649891968D9A200CF3ED8 /* NoteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB649881968D9A200CF3ED8 /* NoteView.m */; };
 		4FF87437194A83F600787DE0 /* SelfieTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF87436194A83F600787DE0 /* SelfieTests.m */; };
@@ -48,7 +48,6 @@
 		4F59863B196C4EAB006D969E /* ReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReachabilityManager.m; sourceTree = "<group>"; };
 		4F59863D196C71BA006D969E /* State.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = State.h; sourceTree = "<group>"; };
 		4F59863E196C71BA006D969E /* State.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = State.m; sourceTree = "<group>"; };
-		4F6E39D31967BCB700E7A0A8 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		4F6E3A0319687E9000E7A0A8 /* Note.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Note.m; path = Selfie/Models/Note.m; sourceTree = "<group>"; };
 		4F6E3A0E19687F1D00E7A0A8 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4F6E3A0F19687F1D00E7A0A8 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -67,6 +66,8 @@
 		4F6E3A2019687F1D00E7A0A8 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
 		4F6E3A2219687F1D00E7A0A8 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		4F8D540C196D7BF000FF1BE8 /* Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
+		4F8D5449196DB9ED00FF1BE8 /* libPods-CrashlyticsFramework.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-CrashlyticsFramework.a"; path = "Pods/build/Debug-iphoneos/libPods-CrashlyticsFramework.a"; sourceTree = "<group>"; };
+		4F8D544B196DBAA700FF1BE8 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = Pods/CrashlyticsFramework/Crashlytics.framework; sourceTree = "<group>"; };
 		4F953A93194E7F9E00F67A0A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4FB649871968D9A200CF3ED8 /* NoteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteView.h; sourceTree = "<group>"; };
 		4FB649881968D9A200CF3ED8 /* NoteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteView.m; sourceTree = "<group>"; };
@@ -84,9 +85,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F8D544C196DBAA700FF1BE8 /* Crashlytics.framework in Frameworks */,
 				4F531FFD195F3B3600F4ABAE /* AudioToolbox.framework in Frameworks */,
 				4F953A94194E7F9E00F67A0A /* Foundation.framework in Frameworks */,
-				4F6E39D41967BCB700E7A0A8 /* Crashlytics.framework in Frameworks */,
 				6CE63EEB8D4349A48F08C6F4 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -104,9 +105,10 @@
 		49A85F4260824FD59E33F5C0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4F8D544B196DBAA700FF1BE8 /* Crashlytics.framework */,
+				4F8D5449196DB9ED00FF1BE8 /* libPods-CrashlyticsFramework.a */,
 				4F598638196C4BF9006D969E /* CoreTelephony.framework */,
 				4F6E3A0319687E9000E7A0A8 /* Note.m */,
-				4F6E39D31967BCB700E7A0A8 /* Crashlytics.framework */,
 				4F531FFC195F3B3600F4ABAE /* AudioToolbox.framework */,
 				4F953A93194E7F9E00F67A0A /* Foundation.framework */,
 				4FD7A01F194E3F3700906537 /* CFNetwork.framework */,
@@ -346,7 +348,7 @@
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = "./Crashlytics.framework/run 7052c7c0dfa3dc8a01de1c9fadf87a6abec3d33a a7136dc96debcf9af21da096b20cf5f140805651225ddf0634d1c5b97c704a78";
+			shellPath = "./Pods/CrashlyticsFramework/Crashlytics.framework/run 7052c7c0dfa3dc8a01de1c9fadf87a6abec3d33a a7136dc96debcf9af21da096b20cf5f140805651225ddf0634d1c5b97c704a78";
 			shellScript = "";
 		};
 		82945C37F0DD432685CCE0CE /* Check Pods Manifest.lock */ = {
@@ -493,10 +495,15 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Pods/CrashlyticsFramework",
 				);
 				INFOPLIST_FILE = Selfie/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
@@ -519,10 +526,15 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Pods/CrashlyticsFramework",
 				);
 				INFOPLIST_FILE = Selfie/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
