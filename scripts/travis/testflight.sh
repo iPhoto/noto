@@ -1,11 +1,5 @@
 #!/bin/sh
 
-# Thnaks @JagCesar https://gist.github.com/JagCesar/a6283bc2cb2f439b3a1d 
-# Thanks @djacobs https://gist.github.com/djacobs/2411095
-
-################################################################################
-# Configuration
-
 # TestFlight API Token
 # TF_API_TOKEN=... (stored securely in .travis.yml)
 
