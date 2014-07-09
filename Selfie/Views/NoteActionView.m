@@ -56,7 +56,7 @@
     } else if (![Utilities isValidEmail:emailAddress]) {
         actionText = @"Invalid address!";
     } else if ([Utilities isEmptyString:noteText]) {
-        actionText = @"No Note!";
+        actionText = @"No note!";
     } else {
         actionText = emailAddress;
         [self.imageView setImage:[UIImage imageNamed: @"icon_message"]];
