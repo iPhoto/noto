@@ -30,7 +30,7 @@
         self.gestureRecognizers = gestureRecognizers;
         
         if (!self.swipeThreshold) {
-            self.swipeThreshold = 100;
+            self.swipeThreshold = kSwipeThreshold;
         }
 
         // Swipe left

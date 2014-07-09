@@ -20,6 +20,8 @@ static NSString * const CrashlyticsAPIKey = @"7052c7c0dfa3dc8a01de1c9fadf87a6abe
 static NSUInteger const kNoteActionViewHeight = 40;
 static NSUInteger const kGlobalFontSize = 18;
 
+static NSUInteger const kSwipeThreshold = 120;
+
 @class Note;
 
 @interface Utilities : NSObject
