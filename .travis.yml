@@ -1,3 +1,6 @@
 language: objective-c
 xcode_workspace: Selfie.xcworkspace
 xcode_scheme: SelfieTests
+
+before_install:
+  - gem install cocoapods -v '0.33.1'
