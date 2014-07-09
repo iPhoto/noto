@@ -31,7 +31,7 @@
 
 - (void)test {
 //    return NO;
-    XCTFail(@"failed@");
+    //XCTFail(@"failed@");
 }
 
 - (void)testPerformanceExample {
