@@ -1,6 +1,9 @@
 language: objective-c
+
 xcode_workspace: Selfie.xcworkspace
 xcode_scheme: SelfieTests
+xcode_sdk: iphonesimuator7.0
+
 before_install:
 - gem install cocoapods -v '0.33.1'
 - ./scripts/travis/add-key.sh
