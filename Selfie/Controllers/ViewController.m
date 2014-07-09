@@ -42,7 +42,7 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
     
     if([Utilities isFirstLaunch]) {
         self.noteView.text = firstLaunchSettingsText;
-        
+        self.navBarTitle.title = @"New Note";
         // Now that we've shown the first launch text,
         // save that they've launched before
         [Utilities setSettingsValue:@"notFirstLaunch" forKey:kHasLaunchedBeforeKey];
