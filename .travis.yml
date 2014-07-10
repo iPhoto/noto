@@ -8,7 +8,7 @@ before_install:
   - gem install cocoapods -v '0.33.1'
   - brew update
   - brew upgrade xctool
-  - ./scripts/travis/upload-bundle.sh
+  - ./scripts/travis/update-bundle.sh
   - ./scripts/travis/add-key.sh
 after_script:
   - ./scripts/travis/remove-key.sh
