@@ -31,7 +31,7 @@ env:
     - TF_DISTRIBUTION_LISTS="selfie-sandbox"
 
     # Developer name used to sign the app
-    - DEVELOPER_NAME="iPhone Developer: Daniel Suo (JJE6K79Y82)"
+    - DEVELOPER_NAME="JJE6K79Y82"
 
     # Mobile provisioning profile name used to sign the app
     - PROFILE_NAME="Wildcard_App_InHouse_Dist"

@@ -51,8 +51,8 @@ echo
 echo "***** Signing *****"
 echo
 
-rm -f "$BUILD_DIR/$APPNAME.ipa"
-rm -f "$BUILD_DIR/$APPNAME.app.dSYM"
+rm -rf "$BUILD_DIR/$APPNAME.ipa"
+rm -rf "$BUILD_DIR/$APPNAME.app.dSYM"
 
 echo
 echo "***** INFO *****"
