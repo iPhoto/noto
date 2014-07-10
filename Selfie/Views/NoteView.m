@@ -91,30 +91,39 @@
         }];
     } else {
         // TODO: This needs improvement; causes problems when move y a bit and then x
-//        if (abs(translation.x) > abs(translation.y)) {
-            // TODO: Refactor into state class
-            if (translation.x < -self.swipeThreshold && ![Utilities isEmptyString:self.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeLeftTo"]]) {
+
+        // TODO: Refactor into state class
+        if (![Utilities isEmptyString:self.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeLeftTo"]]) {
+            if (translation.x < -self.swipeThreshold) {
                 self.leftNoteActionView.backgroundColor = primaryColor;
                 self.leftNoteActionView.imageView.backgroundColor = primaryColor;
             } else {
-                self.leftNoteActionView.backgroundColor = secondaryColor;
-                self.leftNoteActionView.imageView.backgroundColor = secondaryColor;
+                self.leftNoteActionView.backgroundColor = tertiaryColor;
+                self.leftNoteActionView.imageView.backgroundColor = tertiaryColor;
             }
-            
-            CGPoint newLeftCenter = CGPointMake(self.leftNoteActionViewOriginalCenter.x + translation.x, self.leftNoteActionViewOriginalCenter.y);
-            [self.leftNoteActionView setCenter:(newLeftCenter)];
-            
-            // TODO: Refactor into state class
-            if (translation.x > self.swipeThreshold && ![Utilities isEmptyString:self.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeRightTo"]]) {
+        } else {
+            self.leftNoteActionView.backgroundColor = secondaryColor;
+            self.leftNoteActionView.imageView.backgroundColor = secondaryColor;
+        }
+        
+        CGPoint newLeftCenter = CGPointMake(self.leftNoteActionViewOriginalCenter.x + translation.x, self.leftNoteActionViewOriginalCenter.y);
+        [self.leftNoteActionView setCenter:(newLeftCenter)];
+        
+        // TODO: Refactor into state class
+        if (![Utilities isEmptyString:self.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeRightTo"]]) {
+            if (translation.x > self.swipeThreshold) {
                 self.rightNoteActionView.backgroundColor = primaryColor;
                 self.rightNoteActionView.imageView.backgroundColor = primaryColor;
             } else {
-                self.rightNoteActionView.backgroundColor = secondaryColor;
-                self.rightNoteActionView.imageView.backgroundColor = secondaryColor;
+                self.rightNoteActionView.backgroundColor = tertiaryColor;
+                self.rightNoteActionView.imageView.backgroundColor = tertiaryColor;
             }
-            CGPoint newRightCenter = CGPointMake(self.rightNoteActionViewOriginalCenter.x + translation.x, self.rightNoteActionViewOriginalCenter.y);
-            [self.rightNoteActionView setCenter:(newRightCenter)];
-//        }
+        } else {
+            self.rightNoteActionView.backgroundColor = secondaryColor;
+            self.rightNoteActionView.imageView.backgroundColor = secondaryColor;
+        }
+        CGPoint newRightCenter = CGPointMake(self.rightNoteActionViewOriginalCenter.x + translation.x, self.rightNoteActionViewOriginalCenter.y);
+        [self.rightNoteActionView setCenter:(newRightCenter)];
     }
 }
 
