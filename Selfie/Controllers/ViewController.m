@@ -39,9 +39,9 @@
                                 @"Swipe left or right to send to the corresponding email.\n",
                                 @"\n",
                                 @"(｡･ω･｡)ﾉ♡\n",
-                                @"The",
+                                @"The ",
                                 [Utilities appName],
-                                @"Team"] componentsJoinedByString:@""];
+                                @" Team"] componentsJoinedByString:@""];
         
         self.navBarTitle.title = @"New Note";
         // Now that we've shown the first launch text,

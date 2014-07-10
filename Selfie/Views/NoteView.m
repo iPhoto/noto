@@ -28,10 +28,6 @@
         
         NSArray *gestureRecognizers = [self.gestureRecognizers arrayByAddingObject:pan];
         self.gestureRecognizers = gestureRecognizers;
-        
-        if (!self.swipeThreshold) {
-            self.swipeThreshold = kSwipeThreshold;
-        }
 
         // Swipe left
         self.leftNoteActionView = [[NoteActionView alloc] init];
@@ -71,9 +67,9 @@
         // TODO: make sure send gesture and view gesture are identical; don't want users to be confused
         if (abs(translation.x) > abs(translation.y)) {
             // TODO: Refactor into state class
-            if (translation.x > self.swipeThreshold && ![Utilities isEmptyString:self.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeRightTo"]]) {
+            if (translation.x > kSwipeThreshold && ![Utilities isEmptyString:self.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeRightTo"]]) {
                 [noteViewDelegate didPanInDirection:UISwipeGestureRecognizerDirectionRight];
-            } else if (translation.x < -self.swipeThreshold && ![Utilities isEmptyString:self.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeLeftTo"]]) {
+            } else if (translation.x < -kSwipeThreshold && ![Utilities isEmptyString:self.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeLeftTo"]]) {
                 [noteViewDelegate didPanInDirection:UISwipeGestureRecognizerDirectionLeft];
             }
         }
@@ -94,7 +90,7 @@
 
         // TODO: Refactor into state class
         if (![Utilities isEmptyString:self.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeLeftTo"]]) {
-            if (translation.x < -self.swipeThreshold) {
+            if (translation.x < -kSwipeThreshold) {
                 self.leftNoteActionView.backgroundColor = primaryColor;
                 self.leftNoteActionView.imageView.backgroundColor = primaryColor;
             } else {
@@ -111,7 +107,7 @@
         
         // TODO: Refactor into state class
         if (![Utilities isEmptyString:self.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeRightTo"]]) {
-            if (translation.x > self.swipeThreshold) {
+            if (translation.x > kSwipeThreshold) {
                 self.rightNoteActionView.backgroundColor = primaryColor;
                 self.rightNoteActionView.imageView.backgroundColor = primaryColor;
             } else {

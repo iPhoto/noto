@@ -18,7 +18,6 @@
 
 @interface NoteView : UITextView <UIGestureRecognizerDelegate>
 @property (nonatomic, assign) id <NoteViewDelegate> noteViewDelegate;
-@property (nonatomic) NSInteger swipeThreshold;
 @property (nonatomic, strong) NoteActionView *leftNoteActionView;
 @property (nonatomic, strong) NoteActionView *rightNoteActionView;
 @property (nonatomic) CGPoint leftNoteActionViewOriginalCenter;
