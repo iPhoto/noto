@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
-#import "UIColor+CrossFade.h"
 #import "NoteActionView.h"
 
 @class NoteView;
