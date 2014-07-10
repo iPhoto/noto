@@ -51,18 +51,8 @@ echo
 echo "***** Signing *****"
 echo
 
-# rm -rf "$BUILD_DIR/$APPNAME.ipa"
-# rm -rf "$BUILD_DIR/$APPNAME.app.dSYM"
-
-echo
-echo "***** INFO *****"
-echo
-ls "$BUILD_DIR"
-echo "$BUILD_DIR"
-
 xcrun -log -sdk iphoneos PackageApplication "$BUILD_DIR/$APPNAME.app" -o "$BUILD_DIR/$APPNAME.ipa" -sign "$DEVELOPER_NAME" -embed "$PROVISIONING_PROFILE"
 
-# rm -f "$BUILD_DIR/$APPNAME.app.dSYM.zip"
 zip -r -9 "$BUILD_DIR/$APPNAME.app.dSYM.zip" "$BUILD_DIR/$APPNAME.app.dSYM"
 
 ################################################################################
