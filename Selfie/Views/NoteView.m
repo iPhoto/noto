@@ -93,20 +93,6 @@
                 self.leftNoteActionView.backgroundColor = primaryColor;
                 self.leftNoteActionView.imageView.backgroundColor = primaryColor;
             } else {
-//                CAKeyframeAnimation *animation = nil;
-//                CGColorRef finalColor = nil;
-//                CGFloat endSliderVal = 0.0f;
-//                
-//                animation = [UIColor keyframeAnimationForKeyPath:@"backgroundColor"
-//                                                        duration:1.5
-//                                               betweenFirstColor:self.leftNoteActionView.backgroundColor
-//                                                       lastColor:tertiaryColor];
-//                finalColor = tertiaryColor.CGColor;
-//                endSliderVal = 0.0f;
-//                
-//                self.leftNoteActionView.layer.backgroundColor = finalColor;
-//                [self.leftNoteActionView.layer addAnimation:animation forKey:@"backgroundColorChange"];
-                
                 self.leftNoteActionView.backgroundColor = tertiaryColor;
                 self.leftNoteActionView.imageView.backgroundColor = tertiaryColor;
             }
