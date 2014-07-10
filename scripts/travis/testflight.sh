@@ -97,8 +97,8 @@ fi
 RESPONSE=$(curl http://testflightapp.com/api/builds.json \
   -F file="@$IPA_FILE" \
   -F dsym="@$DSYM_ZIP_FILE" \
-  -F api_token="$TF_API_TOKEN" \
-  -F team_token="$TF_TEAM_TOKEN" \
+  -F api_token="$API_TOKEN" \
+  -F team_token="$TEAM_TOKEN" \
   -F notes="$RELEASE_NOTES" \
   -F notify=$TF_NOTIFY \
   -F replace=$TF_REPLACE \
