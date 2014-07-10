@@ -40,7 +40,7 @@
                                 @"\n",
                                 @"(｡･ω･｡)ﾉ♡\n",
                                 @"The",
-                                [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"],
+                                [Utilities appName],
                                 @"Team"] componentsJoinedByString:@""];
         
         self.navBarTitle.title = @"New Note";

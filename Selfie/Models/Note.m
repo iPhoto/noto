@@ -47,13 +47,9 @@
     }
     
     NSString *toEmail = (NSString *)[Utilities getSettingsObject:emailTo];
-    NSString *fromEmail = (NSString *)[Utilities getSettingsObject:emailFrom];
+    NSString *fromEmail = [@[@"<", [Utilities appName], @"> ", toEmail] componentsJoinedByString:@""];
     
     if (toEmail) {
-        if ([Utilities isEmptyString:fromEmail]) {
-            fromEmail = toEmail;
-        }
-        
         NSString *message = [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         
         if ([Utilities isEmptyString:message]) {

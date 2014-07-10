@@ -27,6 +27,7 @@ static NSUInteger const kSwipeThreshold = 120;
 @class Note;
 
 @interface Utilities : NSObject
++ (NSString *)appName;
 + (void) setSettingsValue:(NSString *) value forKey:(NSString *) key;
 + (NSString *) getSettingsValue:(NSString *) key;
 + (void) setSettingsObject:(NSObject *) object forKey:(NSString *) key;

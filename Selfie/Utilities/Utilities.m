@@ -9,8 +9,13 @@
 #import "Utilities.h"
 
 @implementation Utilities
-    // Convenience methods to help get / set values / objects
-    // in NSUserDefaults
+
++ (NSString *) appName {
+    return [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
+}
+
+// Convenience methods to help get / set values / objects
+// in NSUserDefaults
 
 + (void) setSettingsValue:(NSString *) value forKey:(NSString *) key {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
