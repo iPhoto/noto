@@ -2,7 +2,8 @@ language: objective-c
 cache: bundler
 
 script: 
-  - xctool -workspace Selfie.xcworkspace -scheme Selfie -sdk iphonesimulator build test ONLY_ACTIVE_ARCH=NO OBJROOT=$PWD/build SYMROOT=$PWD/build
+  - xctool -workspace Selfie.xcworkspace -scheme Selfie -sdk iphoneos -configuration Release OBJROOT=$PWD/build SYMROOT=$PWD/build ONLY_ACTIVE_ARCH=NO
+  - xctool test -workspace Selfie.xcworkspace -scheme Selfie -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
 
 before_install:
   - gem install cocoapods -v '0.33.1'
@@ -24,7 +25,7 @@ env:
     - secure: g2REGh2cYLvsjwqgVjDUPTiVmWAsrqpveEy945sQeT8RTs0gWxHwvj25TwFL7Sr+4TTlzM2Lq+bJNUkisP2wkU5dW7lADSFBqY7sl6xMV9KYmpQ/ndyzI0bK2FwMhR+XwY/za4pwzruBPjuzhLPKopXsKgD3F8N2LDbcIHlUoPY=
     
     # Build directory
-    - BUILD_DIR="$PWD/build"
+    - BUILD_DIR="$PWD/build/Release-iphoneos"
 
     # TestFlight distribution lists (coma separated)
     - TF_DISTRIBUTION_LISTS="selfie-sandbox"
