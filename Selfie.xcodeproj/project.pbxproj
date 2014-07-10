@@ -24,6 +24,7 @@
 		4F8D540D196D7BF000FF1BE8 /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8D540C196D7BF000FF1BE8 /* Tests.m */; };
 		4F8D544C196DBAA700FF1BE8 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F8D544B196DBAA700FF1BE8 /* Crashlytics.framework */; };
 		4F8D5454196E44F600FF1BE8 /* NoConnectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8D5453196E44F600FF1BE8 /* NoConnectionView.m */; };
+		4F8D5457196EEC9800FF1BE8 /* UIColor+CrossFade.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8D5456196EEC9800FF1BE8 /* UIColor+CrossFade.m */; };
 		4F953A94194E7F9E00F67A0A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F953A93194E7F9E00F67A0A /* Foundation.framework */; };
 		4FB649891968D9A200CF3ED8 /* NoteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB649881968D9A200CF3ED8 /* NoteView.m */; };
 		4FF87437194A83F600787DE0 /* SelfieTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF87436194A83F600787DE0 /* SelfieTests.m */; };
@@ -71,6 +72,8 @@
 		4F8D544B196DBAA700FF1BE8 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = Pods/CrashlyticsFramework/Crashlytics.framework; sourceTree = "<group>"; };
 		4F8D5452196E44F600FF1BE8 /* NoConnectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoConnectionView.h; sourceTree = "<group>"; };
 		4F8D5453196E44F600FF1BE8 /* NoConnectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoConnectionView.m; sourceTree = "<group>"; };
+		4F8D5455196EEC9800FF1BE8 /* UIColor+CrossFade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+CrossFade.h"; path = "../../../Downloads/UIColor-CrossFade-master/UIColor+CrossFade.h"; sourceTree = "<group>"; };
+		4F8D5456196EEC9800FF1BE8 /* UIColor+CrossFade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+CrossFade.m"; path = "../../../Downloads/UIColor-CrossFade-master/UIColor+CrossFade.m"; sourceTree = "<group>"; };
 		4F953A93194E7F9E00F67A0A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4FB649871968D9A200CF3ED8 /* NoteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteView.h; sourceTree = "<group>"; };
 		4FB649881968D9A200CF3ED8 /* NoteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteView.m; sourceTree = "<group>"; };
@@ -143,6 +146,8 @@
 		4F6E3A1E19687F1D00E7A0A8 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				4F8D5455196EEC9800FF1BE8 /* UIColor+CrossFade.h */,
+				4F8D5456196EEC9800FF1BE8 /* UIColor+CrossFade.m */,
 				4F6E3A1F19687F1D00E7A0A8 /* Utilities.h */,
 				4F6E3A2019687F1D00E7A0A8 /* Utilities.m */,
 				4F59863A196C4EAB006D969E /* ReachabilityManager.h */,
@@ -384,6 +389,7 @@
 				4F59863F196C71BA006D969E /* State.m in Sources */,
 				4F6E3A2419687F1D00E7A0A8 /* ViewController.m in Sources */,
 				4F8D5454196E44F600FF1BE8 /* NoConnectionView.m in Sources */,
+				4F8D5457196EEC9800FF1BE8 /* UIColor+CrossFade.m in Sources */,
 				4F6E3A2319687F1D00E7A0A8 /* AppDelegate.m in Sources */,
 				4F6E3A2919687F1D00E7A0A8 /* Queue.m in Sources */,
 				4F59863C196C4EAB006D969E /* ReachabilityManager.m in Sources */,

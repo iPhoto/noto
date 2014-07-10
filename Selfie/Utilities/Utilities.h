@@ -23,7 +23,7 @@ static NSUInteger const kNoteActionImageBorder = 3;
 static NSUInteger const kNoteActionImageHeight = 40 - 2 * kNoteActionImageBorder;
 static NSUInteger const kGlobalFontSize = 18;
 
-static NSUInteger const kSwipeThreshold = 120;
+static NSInteger const kSwipeThreshold = 120;
 
 @class Note;
 

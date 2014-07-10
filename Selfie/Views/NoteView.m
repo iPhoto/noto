@@ -86,14 +86,27 @@
 
         }];
     } else {
-        // TODO: This needs improvement; causes problems when move y a bit and then x
-
+        
         // TODO: Refactor into state class
         if (![Utilities isEmptyString:self.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeLeftTo"]]) {
             if (translation.x < -kSwipeThreshold) {
                 self.leftNoteActionView.backgroundColor = primaryColor;
                 self.leftNoteActionView.imageView.backgroundColor = primaryColor;
             } else {
+//                CAKeyframeAnimation *animation = nil;
+//                CGColorRef finalColor = nil;
+//                CGFloat endSliderVal = 0.0f;
+//                
+//                animation = [UIColor keyframeAnimationForKeyPath:@"backgroundColor"
+//                                                        duration:1.5
+//                                               betweenFirstColor:self.leftNoteActionView.backgroundColor
+//                                                       lastColor:tertiaryColor];
+//                finalColor = tertiaryColor.CGColor;
+//                endSliderVal = 0.0f;
+//                
+//                self.leftNoteActionView.layer.backgroundColor = finalColor;
+//                [self.leftNoteActionView.layer addAnimation:animation forKey:@"backgroundColorChange"];
+                
                 self.leftNoteActionView.backgroundColor = tertiaryColor;
                 self.leftNoteActionView.imageView.backgroundColor = tertiaryColor;
             }
