@@ -51,12 +51,12 @@
     [self.imageView setImage:[UIImage imageNamed: @"icon_warning"]];
     
     // TODO: Refactor into state class
-    if ([Utilities isEmptyString:emailAddress]) {
+    if ([Utilities isEmptyString:noteText]) {
+        actionText = @"No note!";
+    } else if ([Utilities isEmptyString:emailAddress]) {
         actionText = @"No email address!";
     } else if (![Utilities isValidEmail:emailAddress]) {
         actionText = @"Invalid address!";
-    } else if ([Utilities isEmptyString:noteText]) {
-        actionText = @"No note!";
     } else {
         actionText = emailAddress;
         [self.imageView setImage:[UIImage imageNamed: @"icon_message"]];
