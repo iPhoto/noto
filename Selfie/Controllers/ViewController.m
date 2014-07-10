@@ -8,15 +8,6 @@
 
 #import "ViewController.h"
 
-NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
-                                    "New lines below are the email body!\n"
-                                    "Tap the settings icon in the top right to set your emails.\n"
-                                    "\n"
-                                    "Swipe left or right to send to the corresponding email.\n"
-                                    "\n"
-                                    "(｡･ω･｡)ﾉ♡\n"
-                                    "The Nōto Team";
-
 @interface ViewController ()
 @property (strong, nonatomic) NoteView *noteView;
 @property (strong, nonatomic) IBOutlet UINavigationItem *navBarTitle;
@@ -41,7 +32,17 @@ NSString *firstLaunchSettingsText = @"The first line becomes the subject.\n"
     [super viewDidLoad];
     
     if([Utilities isFirstLaunch]) {
-        self.noteView.text = firstLaunchSettingsText;
+        self.noteView.text = [@[@"The first line becomes the subject.\n",
+                                @"New lines below are the email body!\n",
+                                @"Tap the settings icon in the top right to set your emails.\n",
+                                @"\n",
+                                @"Swipe left or right to send to the corresponding email.\n",
+                                @"\n",
+                                @"(｡･ω･｡)ﾉ♡\n",
+                                @"The",
+                                [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"],
+                                @"Team"] componentsJoinedByString:@""];
+        
         self.navBarTitle.title = @"New Note";
         // Now that we've shown the first launch text,
         // save that they've launched before
