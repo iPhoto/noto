@@ -47,9 +47,10 @@
     }
     
     NSString *toEmail = (NSString *)[Utilities getSettingsObject:emailTo];
-    NSString *fromEmail = [@[@"<", [Utilities appName], @"> ", toEmail] componentsJoinedByString:@""];
+    NSString *fromEmail = toEmail;
     
     if (toEmail) {
+        
         NSString *message = [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         
         if ([Utilities isEmptyString:message]) {
@@ -107,6 +108,7 @@
         msg.from = self.fromEmail;
         msg.subject = self.subject;
         msg.text = self.body;
+        msg.fromName = [Utilities appName];
         
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
         
