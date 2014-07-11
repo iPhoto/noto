@@ -3,7 +3,7 @@ cache: bundler
 
 script: 
   - xctool -workspace Selfie.xcworkspace -scheme Selfie -sdk iphoneos -configuration Release OBJROOT=$PWD/build SYMROOT=$PWD/build ONLY_ACTIVE_ARCH=NO
-  - xctool test -workspace Selfie.xcworkspace -scheme Selfie -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
+  # - xctool test -workspace Selfie.xcworkspace -scheme Selfie -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
 
 before_install:
   - gem install cocoapods -v '0.33.1'
