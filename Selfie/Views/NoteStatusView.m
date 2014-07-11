@@ -15,6 +15,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.editable = NO;
+        self.selectable = NO;
         self.backgroundColor = tertiaryColor;
         [self setAlpha:0.6];
         [self setFont:[UIFont systemFontOfSize:kGlobalFontSize]];

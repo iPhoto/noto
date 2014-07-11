@@ -16,6 +16,7 @@
     if (self) {
         self.textView = [[UITextView alloc] init];
         self.textView.editable = NO;
+        self.textView.selectable = NO;
         self.textView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.0];
         
         [self.textView setFont:[UIFont systemFontOfSize:kGlobalFontSize]];
