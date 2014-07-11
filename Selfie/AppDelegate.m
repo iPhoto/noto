@@ -20,14 +20,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [Crashlytics startWithAPIKey:CrashlyticsAPIKey];
-    
-    [State state];
-    [State setReachableBlock:^(Reachability *reachableBlock) {
-        [Queue pollQueue];
-    }];
-    [State setUnreachableBlock:^(Reachability *unreachableBlock) {
-    }];
-    
+        
     if ([Utilities isFirstLaunch]) {
         [Utilities setDefaultSettings];
     }

@@ -218,10 +218,11 @@
     Note *note = [[Note alloc] initWithString:self.noteView.text direction:direction];
     
     if (note) {
-        [self.statusView setHidden:NO];
-        self.statusView.backgroundColor = tertiaryColor;
-        self.statusView.text = kStatusSendingNote;
-        [self.statusView show];
+        if ([State isReachable]) {
+            self.statusView.backgroundColor = tertiaryColor;
+            self.statusView.text = kStatusSendingNote;
+            [self.statusView show];
+        }
         [note send];
     }
     
@@ -241,9 +242,11 @@
 }
 
 - (void) sendSuccess:(NSNotification *) notification {
-    self.statusView.backgroundColor = primaryColor;
-    self.statusView.text = @"Success!";
-    [self.statusView hideWithDelay:1];
+    if ([State isReachable]) {
+        self.statusView.backgroundColor = primaryColor;
+        self.statusView.text = @"Success!";
+        [self.statusView hideWithDelay:1];
+    }
 }
 
 - (void) sendFailure:(NSNotification *) notification {

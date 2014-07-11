@@ -14,7 +14,7 @@
 // Color palette
 #define primaryColor [UIColor colorWithRed:75.0 / 255.0 green:139.0 / 255.0 blue:204.0 / 255.0 alpha:1.0]
 #define secondaryColor [UIColor colorWithRed:231.0 / 255.0 green:94.0 / 255.0 blue:82.0 / 255.0 alpha:1.0]
-#define tertiaryColor [UIColor colorWithRed:127.0 / 255.0 green:140.0 / 255.0 blue:141.0 / 255.0 alpha:1.0]
+#define tertiaryColor [UIColor colorWithRed:170 / 255.0 green:187 / 255.0 blue:205 / 255.0 alpha:1.0]
 
 // Typography
 static NSUInteger const kGlobalFontSize = 18;

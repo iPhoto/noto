@@ -14,6 +14,7 @@
 @implementation Queue
 
 + (void)enqueue:(Note *) note {
+    NSLog(@"Queued: %@", note.subject);
     NSMutableArray *queue = [[Utilities getSettingsObject:kSettingsNoteQueueKey] mutableCopy];
     [queue addObject:[note toDictionary]];
     [Utilities setSettingsObject:queue forKey:kSettingsNoteQueueKey];
@@ -31,6 +32,7 @@
 + (void)pollQueueWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"emailQueueFull" object:nil];
     [Utilities loopThroughQueueAndSave:^(NSMutableArray *queue, NSDictionary *dict) {
+        NSLog(@"Queued: %@", [dict valueForKey:@"subject"]);
         [[[Note alloc] initFromDictionary:dict] sendWithCompletionHandler:completionHandler];
         [queue removeObject:dict];
     }];
