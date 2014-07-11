@@ -21,6 +21,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self setFont:[UIFont systemFontOfSize:kGlobalFontSize]];
+        self.textContainerInset = UIEdgeInsetsMake(8, 8, 0, 0);
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         
         UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
@@ -45,7 +46,7 @@
         
         self.rightNoteActionViewOriginalCenter = self.rightNoteActionView.center;
         
-        
+        [self becomeFirstResponder];
     }
     return self;
 }

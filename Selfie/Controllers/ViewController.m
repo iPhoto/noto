@@ -37,9 +37,6 @@
     
     self.noteView.delegate = self;
     self.noteView.noteViewDelegate = self;
-    [self.noteView setUserInteractionEnabled:TRUE];
-    [self.noteView becomeFirstResponder];
-    self.noteView.textContainerInset = UIEdgeInsetsMake(8, 8, 0, 0);
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
