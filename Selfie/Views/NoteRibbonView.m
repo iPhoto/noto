@@ -53,6 +53,21 @@
     [self setCenter:(newCenter)];
 }
 
+- (void) setColorWithPastTheshold:(BOOL) pastThreshold validSend:(BOOL) validity {
+    if (validity) {
+        if (pastThreshold) {
+            self.backgroundColor = primaryColor;
+            self.imageView.backgroundColor = primaryColor;
+        } else {
+            self.backgroundColor = tertiaryColor;
+            self.imageView.backgroundColor = tertiaryColor;
+        }
+    } else {
+        self.backgroundColor = secondaryColor;
+        self.imageView.backgroundColor = secondaryColor;
+    }
+}
+
 - (void) updateFrameToKeyboard:(CGRect) keyboardRect {
     // TODO: Move magic numbers into NoteView constants
     CGFloat ribbonViewHeight = self.superview.frame.size.height -

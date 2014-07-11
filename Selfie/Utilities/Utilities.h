@@ -78,7 +78,9 @@ static NSString * const kNoteSendFailNotification = @"noteSendFailNotification";
 + (void) initDB;
 + (void) clearDB;
 
-+ (BOOL) isValidEmail:(NSString *) candidate;
++ (BOOL) isValidEmailString:(NSString *) candidate;
++ (BOOL) isValidEmailAddressWithDirection:(SwipeDirection) direction;
+
 + (BOOL) isEmptyString:(NSString *) string;
 
 + (BOOL) isFirstLaunch;

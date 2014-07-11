@@ -58,8 +58,9 @@
 }
 
 // TODO: create self.emails and set them on notify
-+ (BOOL) isValidEmail:(SwipeDirection) direction {
-    return [Utilities isValidEmail:[Utilities getEmailWithDirection:direction]];
+
++ (BOOL) isValidSend:(NSString *) text withDirection:(SwipeDirection) direction {
+    return [Note isValidNote:text] && [Utilities isValidEmailAddressWithDirection:direction];
 }
 
 // TODO: refactor duplicate ribbontext/image logic with State
@@ -74,7 +75,7 @@
         ribbonText = @"No note!";
     } else if ([Utilities isEmptyString:emailAddress]) {
         ribbonText = @"No email address!";
-    } else if (![Utilities isValidEmail:emailAddress]) {
+    } else if (![Utilities isValidEmailString:emailAddress]) {
         ribbonText = @"Invalid address!";
     } else {
         ribbonText = emailAddress;
@@ -90,7 +91,7 @@
     // TODO: Refactor into state class
     if ([Utilities isEmptyString:noteText] ||
         [Utilities isEmptyString:emailAddress] ||
-        ![Utilities isValidEmail:emailAddress]) {
+        ![Utilities isValidEmailString:emailAddress]) {
         ribbonImage = [UIImage imageNamed: @"icon_warning"];
     } else {
         ribbonImage = [UIImage imageNamed: @"icon_message"];

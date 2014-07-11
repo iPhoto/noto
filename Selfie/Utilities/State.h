@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import "Reachability.h"
+#import "Note.h"
 #import "Utilities.h"
 
 @class Reachability;
@@ -16,6 +17,8 @@
 @interface State : NSObject
 @property (strong, nonatomic) Reachability *reachability;
 @property (strong, nonatomic) NSString *noteTitle;
+@property (nonatomic) BOOL isValidSendLeft;
+@property (nonatomic) BOOL isValidSendRight;
 
 #pragma mark -
 #pragma mark State
@@ -33,7 +36,7 @@
 + (BOOL) isReachableViaWWAN;
 + (BOOL) isReachableViaWiFi;
 
-+ (BOOL) isValidEmail:(SwipeDirection) direction;
++ (BOOL) isValidSend:(NSString *) text withDirection:(SwipeDirection) direction;
 
 + (NSString *) getRibbonText:(NSString *) noteText withDirection:(SwipeDirection) direction;
 + (UIImage *) getRibbonImage:(NSString *) noteText withDirection:(SwipeDirection) direction;

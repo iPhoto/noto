@@ -29,7 +29,7 @@
     return self;
 }
 
-- (instancetype)initWithString:(NSString *) string
+- (instancetype)initWithString:(NSString *) message
                      direction:(SwipeDirection) direction {
     
     NSString *toEmail = [Utilities getEmailWithDirection:direction];
@@ -37,12 +37,11 @@
     
     if (toEmail) {
         
-        NSString *message = [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-        
         if ([Utilities isEmptyString:message]) {
             return self;
         }
         
+        // TODO: refactor this subject getting logic
         NSArray *lines = [message componentsSeparatedByString:@"\n"];
         NSUInteger count = [lines count];
         
@@ -81,55 +80,45 @@
     [self sendWithCompletionHandler:nil];
 }
 
-- (BOOL)validNote {
-    return ![Utilities isEmptyString:self.toEmail] &&
-    ![Utilities isEmptyString:self.fromEmail] &&
-    ![Utilities isEmptyString:self.subject];
-}
-
 - (void)sendWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    if ([self validNote]) {
-        sendgrid *msg = [sendgrid user:SGUsername andPass:SGPassword];
-        msg.to = self.toEmail;
-        msg.from = self.fromEmail;
-        msg.subject = self.subject;
-        msg.text = self.body;
-        msg.fromName = [Utilities appName];
+    sendgrid *msg = [sendgrid user:SGUsername andPass:SGPassword];
+    msg.to = self.toEmail;
+    msg.from = self.fromEmail;
+    msg.subject = self.subject;
+    msg.text = self.body;
+    msg.fromName = [Utilities appName];
+    
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    
+    // List of all system sounds
+    // https://github.com/TUNER88/iOSSystemSoundsLibrary
+    AudioServicesPlaySystemSound (1001);
+    
+    [msg sendWithWebUsingSuccessBlock:^(id responseObject) {
+        NSLog(@"Success!: %@", self.subject);
         
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+        [Radio postNotificationName:kNoteSendSuccessNotification object:nil];
         
-        // List of all system sounds
-        // https://github.com/TUNER88/iOSSystemSoundsLibrary
-        AudioServicesPlaySystemSound (1001);
+        if (completionHandler) {
+            completionHandler(UIBackgroundFetchResultNewData);
+        }
         
-        [msg sendWithWebUsingSuccessBlock:^(id responseObject) {
-            NSLog(@"Success!: %@", self.subject);
-            
-            [Radio postNotificationName:kNoteSendSuccessNotification object:nil];
-            
-            if (completionHandler) {
-                completionHandler(UIBackgroundFetchResultNewData);
-            }
-            
-            [self onComplete];
-        } failureBlock:^(NSError *error) {
-            NSLog(@"Error sending email: %@", error);
-            
-            [Radio postNotificationName:kNoteSendFailNotification object:nil];
-            
-            [Queue enqueue:self];
-            
-            if (completionHandler) {
-                completionHandler(UIBackgroundFetchResultFailed);
-            }
-            
-            [self onComplete];
-            
-            // TODO: Handle Sendgrid error codes here. Send NSNotifications to trigger UI events.
-        }];
-    } else {
-        // TODO: Handle invalid note
-    }
+        [self onComplete];
+    } failureBlock:^(NSError *error) {
+        NSLog(@"Error sending email: %@", error);
+        
+        [Radio postNotificationName:kNoteSendFailNotification object:nil];
+        
+        [Queue enqueue:self];
+        
+        if (completionHandler) {
+            completionHandler(UIBackgroundFetchResultFailed);
+        }
+        
+        [self onComplete];
+        
+        // TODO: Handle Sendgrid error codes here. Send NSNotifications to trigger UI events.
+    }];
 }
 
 - (NSDictionary *)toDictionary {
@@ -144,5 +133,27 @@
     [UIApplication sharedApplication].applicationIconBadgeNumber = [Queue count];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
-        
+
+// TODO: should make this reusable
++ (NSString *) getNoteSubject:(NSString *) text {
+    NSArray *lines = [text componentsSeparatedByString:@"\n"];
+    
+    if ([lines count] > 0) {
+        return lines[0];
+    } else {
+        return nil;
+    }
+}
+
++ (NSString *) getNoteBody:(NSString *) text {
+    NSArray *lines = [text componentsSeparatedByString:@"\n"];
+    
+    return [[NSString alloc] initWithString:[[lines subarrayWithRange:NSMakeRange(1, [lines count] - 1)] componentsJoinedByString:@"\n"] ];
+}
+
++ (BOOL) isValidNote:(NSString *) text {
+    // Ignores email addresses; just evalutes the text of the note
+    return ![Utilities isEmptyString:[Note getNoteSubject:text]];
+}
+
 @end

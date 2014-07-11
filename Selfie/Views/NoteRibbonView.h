@@ -18,5 +18,6 @@
 
 - (void) finalizePosition;
 - (void) panWithTranslation:(CGPoint) translation;
+- (void) setColorWithPastTheshold:(BOOL) pastThreshold validSend:(BOOL) validity;
 - (void) updateFrameToKeyboard:(CGRect) keyboardRect;
 @end

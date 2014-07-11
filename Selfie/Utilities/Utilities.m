@@ -68,7 +68,7 @@
     return string == nil || [[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""];
 }
 
-+ (BOOL) isValidEmail:(NSString *) candidate {
++ (BOOL) isValidEmailString:(NSString *) candidate {
     NSString *emailRegex =
     @"(?:[a-z0-9!#$%\\&'*+/=?\\^_`{|}~-]+(?:\\.[a-z0-9!#$%\\&'*+/=?\\^_`{|}"
     @"~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\"
@@ -80,6 +80,10 @@
     NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES[c] %@", emailRegex];
     
     return [emailTest evaluateWithObject:candidate];
+}
+
++ (BOOL) isValidEmailAddressWithDirection:(SwipeDirection) direction {
+    return [Utilities isValidEmailString:[Utilities getEmailWithDirection:direction]];
 }
 
 + (BOOL) isFirstLaunch {

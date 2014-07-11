@@ -14,7 +14,6 @@
 
 @protocol NoteViewDelegate <UITextViewDelegate>
 @required
-//- (void) didPanInDirection:(UISwipeGestureRecognizerDirection) direction;
 - (void) didPan:(UIPanGestureRecognizer *) gestureRecognizer;
 @end
 
