@@ -16,7 +16,7 @@
 
 @synthesize noteViewDelegate;
 
-- (id)initWithFrame:(CGRect)frame
+- (id) initWithFrame:(CGRect) frame
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -49,12 +49,12 @@
     return self;
 }
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+- (BOOL) gestureRecognizer:(UIGestureRecognizer *) gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *) otherGestureRecognizer
 {
     return YES;
 }
 
-- (void)handlePanGesture: (UIPanGestureRecognizer *) gestureRecognizer {
+- (void) handlePanGesture: (UIPanGestureRecognizer *) gestureRecognizer {
     [noteViewDelegate didPan:gestureRecognizer];
 }
 
