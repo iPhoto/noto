@@ -22,6 +22,8 @@
         [self setTextColor:[UIColor whiteColor]];
         self.textAlignment = NSTextAlignmentCenter;
         self.textContainerInset = UIEdgeInsetsMake((kStatusViewHeight - kGlobalFontSize)/2 - 2, 0, 0, 0);
+        
+        self.hidden = YES;
     }
     return self;
 }
@@ -36,20 +38,29 @@
 }
 
 - (void) show {
+    [self showWithDelay:0];
+}
+
+- (void) showWithDelay:(NSTimeInterval) delay {
     self.hidden = NO;
-    
-    [UIView animateWithDuration:2.0 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.alpha = 0.6;
+    [UIView animateWithDuration:2.0 delay:delay usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        self.alpha = 0.8;
     } completion:^(BOOL finished){
         
     }];
 }
 
 - (void) hide {
-    [UIView animateWithDuration:2.0 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [self hideWithDelay:0];
+}
+
+- (void) hideWithDelay:(NSTimeInterval) delay {
+    [UIView animateWithDuration:2.0 delay:delay usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.alpha = 0.0;
     } completion:^(BOOL finished){
-        self.hidden = YES;
+        if (finished) {
+            self.hidden = YES;   
+        }
     }];
 }
 
