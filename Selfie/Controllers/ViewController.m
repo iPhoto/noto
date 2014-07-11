@@ -12,7 +12,7 @@
 @property (strong, nonatomic) NoteView *noteView;
 @property (strong, nonatomic) NoteRibbonView *leftRibbon;
 @property (strong, nonatomic) NoteRibbonView *rightRibbon;
-@property (strong, nonatomic) NoConnectionView *noConnection;
+@property (strong, nonatomic) NoteStatusVuew *statusView;
 @property (strong, nonatomic) IBOutlet UINavigationItem *navBarTitle;
 @end
 
@@ -47,12 +47,12 @@
     return _rightRibbon;
 }
 
-- (NoConnectionView *) noConnection {
-    if (!_noConnection) {
-        _noConnection = [[NoConnectionView alloc] init];
+- (NoteStatusVuew *) statusView {
+    if (!_statusView) {
+        _statusView = [[NoteStatusVuew alloc] init];
     }
     
-    return _noConnection;
+    return _statusView;
 }
 
 - (void) viewDidLoad {
@@ -61,12 +61,12 @@
     [self onFirstLaunch];
     
     [self.view addSubview:self.noteView];
-    [self.view addSubview:self.noConnection];
+    [self.view addSubview:self.statusView];
     [self.view addSubview:self.leftRibbon];
     [self.view addSubview:self.rightRibbon];
     
     if ([State isReachable]) {
-        self.noConnection.hidden = YES;
+        self.statusView.hidden = YES;
     }
     
     self.noteView.delegate = self;
@@ -199,7 +199,7 @@
     self.leftRibbon.originalCenter = self.leftRibbon.center;
     self.rightRibbon.originalCenter = self.rightRibbon.center;
     
-    self.noConnection.frame = CGRectMake((keyboardRect.size.width - kNoConnectionViewWidth) / 2, ribbonViewHeight + (kNoteRibbonViewHeight - kNoConnectionViewHeight) / 2, kNoConnectionViewWidth, kNoConnectionViewHeight);
+    self.statusView.frame = CGRectMake((keyboardRect.size.width - kNoConnectionViewWidth) / 2, ribbonViewHeight + (kNoteRibbonViewHeight - kNoConnectionViewHeight) / 2, kNoConnectionViewWidth, kNoConnectionViewHeight);
 }
 
 - (void) keyboardDidShow:(NSNotification *) notification {
@@ -218,7 +218,7 @@
         [self.rightRibbon.textView setText:[State getRibbonText:noteView.text withDirection:SwipeDirectionRight]];
         [self.rightRibbon.imageView setImage:[State getRibbonImage:noteView.text withDirection:SwipeDirectionRight]];
         
-        self.noConnection.hidden = YES;
+        self.statusView.hidden = YES;
     } else if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
         // TODO: make sure send gesture and view gesture are identical; don't want users to be confused
         if (abs(translation.x) > abs(translation.y)) {
@@ -283,9 +283,9 @@
 
 - (void) reachabilityChanged:(NSNotification *) notification {
     if ([State isReachable]) {
-        self.noConnection.hidden = YES;
+        self.statusView.hidden = YES;
     } else {
-        self.noConnection.hidden = NO;
+        self.statusView.hidden = NO;
     }
 }
 

@@ -1,5 +1,5 @@
 //
-//  NoConnectionView.h
+//  NoteStatusView.h
 //  Selfie
 //
 //  Created by Daniel Suo on 7/9/14.
@@ -10,6 +10,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import "Utilities.h"
 
-@interface NoConnectionView : UITextView
+@interface NoteStatusVuew : UITextView
 
 @end
