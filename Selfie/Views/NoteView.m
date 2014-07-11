@@ -29,20 +29,6 @@
         
         NSArray *gestureRecognizers = [self.gestureRecognizers arrayByAddingObject:pan];
         self.gestureRecognizers = gestureRecognizers;
-
-        // Swipe left
-        self.leftNoteRibbonView = [[NoteRibbonView alloc] init];
-        self.leftNoteRibbonView.textView.textAlignment = NSTextAlignmentLeft;
-        [self addSubview:self.leftNoteRibbonView];
-        
-        self.leftNoteRibbonView.originalCenter = self.leftNoteRibbonView.center;
-        
-        // Swipe right
-        self.rightNoteRibbonView = [[NoteRibbonView alloc] init];
-        self.rightNoteRibbonView.textView.textAlignment = NSTextAlignmentRight;
-        [self addSubview:self.rightNoteRibbonView];
-        
-        self.leftNoteRibbonView.originalCenter = self.rightNoteRibbonView.center;
         
         [self becomeFirstResponder];
     }

@@ -10,6 +10,8 @@
 
 @interface ViewController ()
 @property (strong, nonatomic) NoteView *noteView;
+@property (strong, nonatomic) NoteRibbonView *leftRibbon;
+@property (strong, nonatomic) NoteRibbonView *rightRibbon;
 @property (strong, nonatomic) IBOutlet UINavigationItem *navBarTitle;
 @end
 
@@ -28,12 +30,30 @@
     return _noteView;
 }
 
+- (NoteRibbonView *) leftRibbon {
+    if (!_leftRibbon) {
+        _leftRibbon = [[NoteRibbonView alloc] init];
+        _leftRibbon.textView.textAlignment = NSTextAlignmentLeft;
+    }
+    return _leftRibbon;
+}
+
+- (NoteRibbonView *) rightRibbon {
+    if (!_rightRibbon) {
+        _rightRibbon = [[NoteRibbonView alloc] init];
+        _rightRibbon.textView.textAlignment = NSTextAlignmentRight;
+    }
+    return _rightRibbon;
+}
+
 - (void) viewDidLoad {
     [super viewDidLoad];
     
     [self onFirstLaunch];
     
     [self.view addSubview:self.noteView];
+    [self.view addSubview:self.leftRibbon];
+    [self.view addSubview:self.rightRibbon];
     
     self.noteView.delegate = self;
     self.noteView.noteViewDelegate = self;
@@ -140,30 +160,25 @@
     
     self.noteView.panGestureRecognizer.enabled = NO;
     
-    CGRect statusBarFrame = [self.view.window convertRect:UIApplication.sharedApplication.statusBarFrame toView:self.view];
-    CGFloat statusBarHeight = statusBarFrame.size.height;
-    
     // TODO: Move magic numbers into NoteView constants
     CGFloat actionViewHeight = self.view.frame.size.height -
-        statusBarHeight -
         keyboardRect.size.height -
-        self.navigationController.navigationBar.frame.size.height -
         kNoteActionViewHeight;
     
     // TODO: Change rectangle widths to be frame widths
-    self.noteView.leftNoteRibbonView.frame = CGRectMake(keyboardRect.size.width, actionViewHeight, keyboardRect.size.width, kNoteActionViewHeight);
-    self.noteView.rightNoteRibbonView.frame = CGRectMake(-keyboardRect.size.width, actionViewHeight, keyboardRect.size.width, kNoteActionViewHeight);
+    self.leftRibbon.frame = CGRectMake(keyboardRect.size.width, actionViewHeight, keyboardRect.size.width, kNoteActionViewHeight);
+    self.rightRibbon.frame = CGRectMake(-keyboardRect.size.width, actionViewHeight, keyboardRect.size.width, kNoteActionViewHeight);
     
     // TODO: Subviews can be moved into initialization
-    self.noteView.leftNoteRibbonView.textView.frame = CGRectMake(0, 0, keyboardRect.size.width, kNoteActionViewHeight);
-    self.noteView.rightNoteRibbonView.textView.frame = CGRectMake(0, 0, keyboardRect.size.width, kNoteActionViewHeight);
+    self.leftRibbon.textView.frame = CGRectMake(0, 0, keyboardRect.size.width, kNoteActionViewHeight);
+    self.rightRibbon.textView.frame = CGRectMake(0, 0, keyboardRect.size.width, kNoteActionViewHeight);
     
     // TODO: This should be done with constraints
-    self.noteView.leftNoteRibbonView.imageView.frame = CGRectMake(kNoteActionImageBorder, kNoteActionImageBorder, kNoteActionImageHeight, kNoteActionImageHeight);
-    self.noteView.rightNoteRibbonView.imageView.frame = CGRectMake(keyboardRect.size.width - kNoteActionViewHeight + kNoteActionImageBorder, kNoteActionImageBorder, kNoteActionImageHeight, kNoteActionImageHeight);
+    self.leftRibbon.imageView.frame = CGRectMake(kNoteActionImageBorder, kNoteActionImageBorder, kNoteActionImageHeight, kNoteActionImageHeight);
+    self.rightRibbon.imageView.frame = CGRectMake(keyboardRect.size.width - kNoteActionViewHeight + kNoteActionImageBorder, kNoteActionImageBorder, kNoteActionImageHeight, kNoteActionImageHeight);
     
-    self.noteView.leftNoteRibbonView.originalCenter = self.noteView.leftNoteRibbonView.center;
-    self.noteView.rightNoteRibbonView.originalCenter = self.noteView.rightNoteRibbonView.center;
+    self.leftRibbon.originalCenter = self.leftRibbon.center;
+    self.rightRibbon.originalCenter = self.rightRibbon.center;
 }
 
 - (void) keyboardDidShow:(NSNotification *) notification {
@@ -176,11 +191,11 @@
     CGPoint translation = [gestureRecognizer translationInView:noteView];
     
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        [self.noteView.leftNoteRibbonView.textView setText:[State getRibbonText:noteView.text withDirection:SwipeDirectionLeft]];
-        [self.noteView.leftNoteRibbonView.imageView setImage:[State getRibbonImage:noteView.text withDirection:SwipeDirectionLeft]];
+        [self.leftRibbon.textView setText:[State getRibbonText:noteView.text withDirection:SwipeDirectionLeft]];
+        [self.leftRibbon.imageView setImage:[State getRibbonImage:noteView.text withDirection:SwipeDirectionLeft]];
         
-        [self.noteView.rightNoteRibbonView.textView setText:[State getRibbonText:noteView.text withDirection:SwipeDirectionRight]];
-        [self.noteView.rightNoteRibbonView.imageView setImage:[State getRibbonImage:noteView.text withDirection:SwipeDirectionRight]];
+        [self.rightRibbon.textView setText:[State getRibbonText:noteView.text withDirection:SwipeDirectionRight]];
+        [self.rightRibbon.imageView setImage:[State getRibbonImage:noteView.text withDirection:SwipeDirectionRight]];
         
     } else if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
         // TODO: make sure send gesture and view gesture are identical; don't want users to be confused
@@ -194,13 +209,13 @@
         }
         
         [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-            self.noteView.leftNoteRibbonView.center = self.noteView.leftNoteRibbonView.originalCenter;
+            self.leftRibbon.center = self.leftRibbon.originalCenter;
         } completion:^(BOOL finished){
             
         }];
         
         [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-            self.noteView.rightNoteRibbonView.center = self.noteView.rightNoteRibbonView.originalCenter;
+            self.rightRibbon.center = self.rightRibbon.originalCenter;
         } completion:^(BOOL finished){
             
         }];
@@ -209,35 +224,35 @@
         // TODO: Refactor into state class
         if (![Utilities isEmptyString:self.noteView.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeLeftTo"]]) {
             if (translation.x < -kSwipeThreshold) {
-                self.noteView.leftNoteRibbonView.backgroundColor = primaryColor;
-                self.noteView.leftNoteRibbonView.imageView.backgroundColor = primaryColor;
+                self.leftRibbon.backgroundColor = primaryColor;
+                self.leftRibbon.imageView.backgroundColor = primaryColor;
             } else {
-                self.noteView.leftNoteRibbonView.backgroundColor = tertiaryColor;
-                self.noteView.leftNoteRibbonView.imageView.backgroundColor = tertiaryColor;
+                self.leftRibbon.backgroundColor = tertiaryColor;
+                self.leftRibbon.imageView.backgroundColor = tertiaryColor;
             }
         } else {
-            self.noteView.leftNoteRibbonView.backgroundColor = secondaryColor;
-            self.noteView.leftNoteRibbonView.imageView.backgroundColor = secondaryColor;
+            self.leftRibbon.backgroundColor = secondaryColor;
+            self.leftRibbon.imageView.backgroundColor = secondaryColor;
         }
         
-        CGPoint newLeftCenter = CGPointMake(self.noteView.leftNoteRibbonView.originalCenter.x + translation.x, self.noteView.leftNoteRibbonView.originalCenter.y);
-        [self.noteView.leftNoteRibbonView setCenter:(newLeftCenter)];
+        CGPoint newLeftCenter = CGPointMake(self.leftRibbon.originalCenter.x + translation.x, self.leftRibbon.originalCenter.y);
+        [self.leftRibbon setCenter:(newLeftCenter)];
         
         // TODO: Refactor into state class
         if (![Utilities isEmptyString:self.noteView.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeRightTo"]]) {
             if (translation.x > kSwipeThreshold) {
-                self.noteView.rightNoteRibbonView.backgroundColor = primaryColor;
-                self.noteView.rightNoteRibbonView.imageView.backgroundColor = primaryColor;
+                self.rightRibbon.backgroundColor = primaryColor;
+                self.rightRibbon.imageView.backgroundColor = primaryColor;
             } else {
-                self.noteView.rightNoteRibbonView.backgroundColor = tertiaryColor;
-                self.noteView.rightNoteRibbonView.imageView.backgroundColor = tertiaryColor;
+                self.rightRibbon.backgroundColor = tertiaryColor;
+                self.rightRibbon.imageView.backgroundColor = tertiaryColor;
             }
         } else {
-            self.noteView.rightNoteRibbonView.backgroundColor = secondaryColor;
-            self.noteView.rightNoteRibbonView.imageView.backgroundColor = secondaryColor;
+            self.rightRibbon.backgroundColor = secondaryColor;
+            self.rightRibbon.imageView.backgroundColor = secondaryColor;
         }
-        CGPoint newRightCenter = CGPointMake(self.noteView.rightNoteRibbonView.originalCenter.x + translation.x, self.noteView.rightNoteRibbonView.originalCenter.y);
-        [self.noteView.rightNoteRibbonView setCenter:(newRightCenter)];
+        CGPoint newRightCenter = CGPointMake(self.rightRibbon.originalCenter.x + translation.x, self.rightRibbon.originalCenter.y);
+        [self.rightRibbon setCenter:(newRightCenter)];
     }
 }
 
