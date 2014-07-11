@@ -53,8 +53,8 @@ static NSInteger const kNoteRibbonViewWidth = 1000;
 static NSInteger const kSwipeThreshold = 120;
 
 // No connection constants
-static NSInteger const kNoConnectionViewWidth = 240;
-static NSInteger const kNoConnectionViewHeight = kNoteRibbonViewHeight / 2;
+static NSInteger const kStatusViewWidth = kNoteRibbonViewWidth;
+static NSInteger const kStatusViewHeight = kNoteRibbonViewHeight;
 
 // Notification names
 static NSString * const kEmptyNoteNotification = @"emptyNoteNotification";

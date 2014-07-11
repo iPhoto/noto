@@ -12,7 +12,7 @@
 @property (strong, nonatomic) NoteView *noteView;
 @property (strong, nonatomic) NoteRibbonView *leftRibbon;
 @property (strong, nonatomic) NoteRibbonView *rightRibbon;
-@property (strong, nonatomic) NoteStatusVuew *statusView;
+@property (strong, nonatomic) NoteStatusView *statusView;
 @property (strong, nonatomic) IBOutlet UINavigationItem *navBarTitle;
 @end
 
@@ -47,9 +47,9 @@
     return _rightRibbon;
 }
 
-- (NoteStatusVuew *) statusView {
+- (NoteStatusView *) statusView {
     if (!_statusView) {
-        _statusView = [[NoteStatusVuew alloc] init];
+        _statusView = [[NoteStatusView alloc] init];
     }
     
     return _statusView;
@@ -199,7 +199,7 @@
     self.leftRibbon.originalCenter = self.leftRibbon.center;
     self.rightRibbon.originalCenter = self.rightRibbon.center;
     
-    self.statusView.frame = CGRectMake((keyboardRect.size.width - kNoConnectionViewWidth) / 2, ribbonViewHeight + (kNoteRibbonViewHeight - kNoConnectionViewHeight) / 2, kNoConnectionViewWidth, kNoConnectionViewHeight);
+    self.statusView.frame = CGRectMake(0, ribbonViewHeight, kStatusViewWidth, kStatusViewHeight);
 }
 
 - (void) keyboardDidShow:(NSNotification *) notification {

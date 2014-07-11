@@ -10,6 +10,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import "Utilities.h"
 
-@interface NoteStatusVuew : UITextView
+@interface NoteStatusView : UITextView
 
 @end

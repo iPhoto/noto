@@ -11,7 +11,7 @@
 #import "Note.h"
 #import "NoteView.h"
 #import "NoteRibbonView.h"
-#import "NoteStatusVuew.h"
+#import "NoteStatusView.h"
 #import "State.h"
 #import "Utilities.h"
 
