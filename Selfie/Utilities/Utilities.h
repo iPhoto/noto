@@ -50,6 +50,11 @@ static NSUInteger const kNoteActionImageHeight = 40 - 2 * kNoteActionImageBorder
 
 static NSInteger const kSwipeThreshold = 120;
 
+// Notification names
+static NSString * const kEmptyNoteNotification = @"emptyNoteNotification";
+static NSString * const kEmptySubjectNotification = @"emptySubjectNotification";
+static NSString * const kUpdateSubjectNotification = @"updateSubjectNotification";
+
 @interface Utilities : NSObject
 + (NSString *) appName;
 + (void) setSettingsValue:(NSString *) value forKey:(NSString *) key;
@@ -69,4 +74,5 @@ static NSInteger const kSwipeThreshold = 120;
 + (void) setDefaultSettings;
 
 + (NSString *) getEmailWithDirection:(SwipeDirection) direction;
++ (NSString *) getNoteSubject:(NSString *) text;
 @end;

@@ -104,5 +104,9 @@
     }
 }
 
++ (NSString *) getNoteSubject:(NSString *) text {
+    return [text componentsSeparatedByString:@"\n"][0];
+}
+
 @end;
 

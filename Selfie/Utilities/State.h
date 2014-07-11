@@ -14,6 +14,7 @@
 
 @interface State : NSObject
 @property (strong, nonatomic) Reachability *reachability;
+@property (strong, nonatomic) NSString *noteTitle;
 
 #pragma mark -
 #pragma mark State
