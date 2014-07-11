@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Reachability.h"
+#import "Utilities.h"
 
 @class Reachability;
 
@@ -16,18 +17,19 @@
 
 #pragma mark -
 #pragma mark State
-+ (State *)state;
++ (State *) state;
 
 #pragma mark -
 #pragma mark Reachability blocks
-+ (void)setReachableBlock:(void(^)(Reachability *))reachableBlock;
-+ (void)setUnreachableBlock:(void(^)(Reachability *))unreachableBlock;
++ (void) setReachableBlock:(void(^)(Reachability *)) reachableBlock;
++ (void) setUnreachableBlock:(void(^)(Reachability *)) unreachableBlock;
 
 #pragma mark -
 #pragma mark Class Methods
-+ (BOOL)isReachable;
-+ (BOOL)isUnreachable;
-+ (BOOL)isReachableViaWWAN;
-+ (BOOL)isReachableViaWiFi;
++ (BOOL) isReachable;
++ (BOOL) isUnreachable;
++ (BOOL) isReachableViaWWAN;
++ (BOOL) isReachableViaWiFi;
 
++ (BOOL) isValidEmail:(SwipeDirection) direction;
 @end

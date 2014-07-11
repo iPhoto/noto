@@ -9,44 +9,60 @@
 #import <Foundation/Foundation.h>
 #import "Note.h"
 
+// Color palette
 #define primaryColor [UIColor colorWithRed:41.0 / 255.0 green:128.0 / 255.0 blue:185.0 / 255.0 alpha:1.0]
 #define secondaryColor [UIColor colorWithRed:231.0 / 255.0 green:76.0 / 255.0 blue:60.0 / 255.0 alpha:1.0]
 #define tertiaryColor [UIColor colorWithRed:127.0 / 255.0 green:140.0 / 255.0 blue:141.0 / 255.0 alpha:1.0]
 
-enum SwipeDirection : NSUInteger {
+// Typography
+static NSUInteger const kGlobalFontSize = 18;
+
+// Swipe directions
+typedef enum {
     SwipeDirectionLeft = 1,
     SwipeDirectionRight = 2
-};
+} SwipeDirection;
 
+// API Keys and passwords
 static NSString * const kHasLaunchedBeforeKey = @"selfieHasLaunchedBefore";
 static NSString * const SGUsername = @"danielsuo";
 static NSString * const SGPassword = @"TheLAC41988";
 static NSString * const CrashlyticsAPIKey = @"7052c7c0dfa3dc8a01de1c9fadf87a6abec3d33a";
 
+// Note defaults
+static NSString * const kEmptyNoteSubject = @"New Note";
+static NSString * const kNoSubject = @"[No subject]";
+
+// User data
+static NSString * const kSwipeLeftToEmailKey = @"swipeLeftTo";
+static NSString * const kSwipeRightToEmailKey = @"swipeRightTo";
+static NSString * const kSubjectPrefixKey = @"subjectPrefix";
+static NSString * const kSignatureKey = @"signature";
+
+// Ribbon layout constants
 static NSUInteger const kNoteActionViewHeight = 40;
 static NSUInteger const kNoteActionImageBorder = 3;
 static NSUInteger const kNoteActionImageHeight = 40 - 2 * kNoteActionImageBorder;
-static NSUInteger const kGlobalFontSize = 18;
 
 static NSInteger const kSwipeThreshold = 120;
 
-@class Note;
-
 @interface Utilities : NSObject
-+ (NSString *)appName;
++ (NSString *) appName;
 + (void) setSettingsValue:(NSString *) value forKey:(NSString *) key;
 + (NSString *) getSettingsValue:(NSString *) key;
 + (void) setSettingsObject:(NSObject *) object forKey:(NSString *) key;
 + (NSObject *) getSettingsObject:(NSString *) key;
 
-+ (void)loopThroughQueueAndSave:(void(^)(NSMutableArray*, NSDictionary*))predicate;
++ (void) loopThroughQueueAndSave:(void(^)(NSMutableArray*, NSDictionary*)) predicate;
 
-+ (void)initDB;
-+ (void)clearDB;
++ (void) initDB;
++ (void) clearDB;
 
-+ (BOOL)isValidEmail: (NSString *) candidate;
-+ (BOOL)isEmptyString:(NSString *) string;
-+ (void)setDefaultSettings;
-+ (BOOL)isFirstLaunch;
++ (BOOL) isValidEmail:(NSString *) candidate;
++ (BOOL) isEmptyString:(NSString *) string;
 
++ (BOOL) isFirstLaunch;
++ (void) setDefaultSettings;
+
++ (NSString *) getEmailWithDirection:(SwipeDirection) direction;
 @end;

@@ -37,7 +37,7 @@
         return [[NSUserDefaults standardUserDefaults] objectForKey:key];
     };
 
-+ (void)loopThroughQueueAndSave:(void(^)(NSMutableArray *, NSDictionary *))predicate {
++ (void) loopThroughQueueAndSave:(void(^)(NSMutableArray *, NSDictionary *)) predicate {
     NSArray *queue = (NSArray *) [Utilities getSettingsObject:@"emailQueue"];
     NSMutableArray *mutableQueue = [queue mutableCopy];
     
@@ -78,7 +78,7 @@
     return string == nil || [[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""];
 }
 
-+ (BOOL) isValidEmail:(NSString *)candidate {
++ (BOOL) isValidEmail:(NSString *) candidate {
     NSString *emailRegex =
     @"(?:[a-z0-9!#$%\\&'*+/=?\\^_`{|}~-]+(?:\\.[a-z0-9!#$%\\&'*+/=?\\^_`{|}"
     @"~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\"
@@ -92,16 +92,26 @@
     return [emailTest evaluateWithObject:candidate];
 }
 
++ (BOOL) isFirstLaunch {
+    if(![Utilities getSettingsValue:kHasLaunchedBeforeKey]) {
+        return YES;
+    }
+    return NO;
+}
+
 + (void) setDefaultSettings {
     [Utilities setSettingsValue:[Utilities appName] forKey:@"subjectPrefix"];
     [Utilities setSettingsValue:[NSString stringWithFormat:@"Sent with %@", [Utilities appName]] forKey:@"signature"];
 }
 
-+ (BOOL)isFirstLaunch {
-    if(![Utilities getSettingsValue:kHasLaunchedBeforeKey]) {
-        return YES;
++ (NSString *) getEmailWithDirection:(SwipeDirection) direction {
+    if (direction == SwipeDirectionLeft) {
+        return [Utilities getSettingsValue:kSwipeLeftToEmailKey];
+    } else if (direction == SwipeDirectionRight) {
+        return [Utilities getSettingsValue:kSwipeRightToEmailKey];
+    } else {
+        return nil;
     }
-    return NO;
 }
 
 @end;

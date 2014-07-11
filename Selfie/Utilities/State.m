@@ -12,7 +12,7 @@
 
 #pragma mark -
 #pragma mark Default Manager
-+ (State *)state {
++ (State *) state {
     static State *_state = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -24,7 +24,7 @@
 
 #pragma mark -
 #pragma mark Memory Management
-- (void)dealloc {
+- (void) dealloc {
     // Stop Notifier
     if (_reachability) {
         [_reachability stopNotifier];
@@ -33,33 +33,37 @@
 
 #pragma mark -
 #pragma mark Class Methods
-+ (BOOL)isReachable {
++ (BOOL) isReachable {
     return [[[State state] reachability] isReachable];
 }
 
-+ (BOOL)isUnreachable {
++ (BOOL) isUnreachable {
     return ![[[State state] reachability] isReachable];
 }
 
-+ (BOOL)isReachableViaWWAN {
++ (BOOL) isReachableViaWWAN {
     return [[[State state] reachability] isReachableViaWWAN];
 }
 
-+ (BOOL)isReachableViaWiFi {
++ (BOOL) isReachableViaWiFi {
     return [[[State state] reachability] isReachableViaWiFi];
 }
 
-+ (void)setReachableBlock:(void(^)(Reachability *))reachableBlock {
++ (void) setReachableBlock:(void(^)(Reachability *)) reachableBlock {
     [[[State state] reachability] setReachableBlock:reachableBlock];
 }
 
-+ (void)setUnreachableBlock:(void(^)(Reachability *))unreachableBlock {
++ (void) setUnreachableBlock:(void(^)(Reachability *)) unreachableBlock {
     [[[State state] reachability] setUnreachableBlock:unreachableBlock];
+}
+
++ (BOOL) isValidEmail:(SwipeDirection) direction {
+    return [Utilities isValidEmail:[Utilities getEmailWithDirection:direction]];
 }
 
 #pragma mark -
 #pragma mark Private Initialization
-- (id)init {
+- (id) init {
     self = [super init];
     
     if (self) {

@@ -102,9 +102,9 @@
     
     if ([Utilities isEmptyString:title]) {
         if ([Utilities isEmptyString:self.noteView.text]) {
-            self.navBarTitle.title = @"New Note";
+            self.navBarTitle.title = kEmptyNoteSubject;
         } else {
-            self.navBarTitle.title = @"[No Subject]";
+            self.navBarTitle.title = kNoSubject;
         }
         
     } else {
