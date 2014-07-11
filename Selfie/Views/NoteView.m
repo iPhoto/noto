@@ -35,14 +35,14 @@
         self.leftNoteRibbonView.textView.textAlignment = NSTextAlignmentLeft;
         [self addSubview:self.leftNoteRibbonView];
         
-        self.leftNoteRibbonViewOriginalCenter = self.leftNoteRibbonView.center;
+        self.leftNoteRibbonView.originalCenter = self.leftNoteRibbonView.center;
         
         // Swipe right
         self.rightNoteRibbonView = [[NoteRibbonView alloc] init];
         self.rightNoteRibbonView.textView.textAlignment = NSTextAlignmentRight;
         [self addSubview:self.rightNoteRibbonView];
         
-        self.rightNoteRibbonViewOriginalCenter = self.rightNoteRibbonView.center;
+        self.leftNoteRibbonView.originalCenter = self.rightNoteRibbonView.center;
         
         [self becomeFirstResponder];
     }

@@ -162,8 +162,8 @@
     self.noteView.leftNoteRibbonView.imageView.frame = CGRectMake(kNoteActionImageBorder, kNoteActionImageBorder, kNoteActionImageHeight, kNoteActionImageHeight);
     self.noteView.rightNoteRibbonView.imageView.frame = CGRectMake(keyboardRect.size.width - kNoteActionViewHeight + kNoteActionImageBorder, kNoteActionImageBorder, kNoteActionImageHeight, kNoteActionImageHeight);
     
-    self.noteView.leftNoteRibbonViewOriginalCenter = self.noteView.leftNoteRibbonView.center;
-    self.noteView.rightNoteRibbonViewOriginalCenter = self.noteView.rightNoteRibbonView.center;
+    self.noteView.leftNoteRibbonView.originalCenter = self.noteView.leftNoteRibbonView.center;
+    self.noteView.rightNoteRibbonView.originalCenter = self.noteView.rightNoteRibbonView.center;
 }
 
 - (void) keyboardDidShow:(NSNotification *) notification {
@@ -194,13 +194,13 @@
         }
         
         [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-            self.noteView.leftNoteRibbonView.center = self.noteView.leftNoteRibbonViewOriginalCenter;
+            self.noteView.leftNoteRibbonView.center = self.noteView.leftNoteRibbonView.originalCenter;
         } completion:^(BOOL finished){
             
         }];
         
         [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-            self.noteView.rightNoteRibbonView.center = self.noteView.rightNoteRibbonViewOriginalCenter;
+            self.noteView.rightNoteRibbonView.center = self.noteView.rightNoteRibbonView.originalCenter;
         } completion:^(BOOL finished){
             
         }];
@@ -220,7 +220,7 @@
             self.noteView.leftNoteRibbonView.imageView.backgroundColor = secondaryColor;
         }
         
-        CGPoint newLeftCenter = CGPointMake(self.noteView.leftNoteRibbonViewOriginalCenter.x + translation.x, self.noteView.leftNoteRibbonViewOriginalCenter.y);
+        CGPoint newLeftCenter = CGPointMake(self.noteView.leftNoteRibbonView.originalCenter.x + translation.x, self.noteView.leftNoteRibbonView.originalCenter.y);
         [self.noteView.leftNoteRibbonView setCenter:(newLeftCenter)];
         
         // TODO: Refactor into state class
@@ -236,7 +236,7 @@
             self.noteView.rightNoteRibbonView.backgroundColor = secondaryColor;
             self.noteView.rightNoteRibbonView.imageView.backgroundColor = secondaryColor;
         }
-        CGPoint newRightCenter = CGPointMake(self.noteView.rightNoteRibbonViewOriginalCenter.x + translation.x, self.noteView.rightNoteRibbonViewOriginalCenter.y);
+        CGPoint newRightCenter = CGPointMake(self.noteView.rightNoteRibbonView.originalCenter.x + translation.x, self.noteView.rightNoteRibbonView.originalCenter.y);
         [self.noteView.rightNoteRibbonView setCenter:(newRightCenter)];
     }
 }

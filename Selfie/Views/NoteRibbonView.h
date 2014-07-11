@@ -13,4 +13,5 @@
 @interface NoteRibbonView : UIView
 @property (nonatomic, strong) UITextView *textView;
 @property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic) CGPoint originalCenter;
 @end
