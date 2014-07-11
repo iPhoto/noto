@@ -85,6 +85,7 @@ static NSString * const kNoteSendFailNotification = @"noteSendFailNotification";
 
 + (BOOL) isFirstLaunch;
 + (void) setDefaultSettings;
++ (NSString *) getFirstLaunchText;
 
 + (NSString *) getEmailWithDirection:(SwipeDirection) direction;
 @end;

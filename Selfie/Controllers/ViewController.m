@@ -97,15 +97,7 @@
 
 - (void) onFirstLaunch {
     if([Utilities isFirstLaunch]) {
-        self.noteView.text = [@[@"All text goes in the email body; first line becomes the subject.\n",
-                                @"Tap the settings icon in the top right to set your emails.\n",
-                                @"\n",
-                                @"Swipe left or right to send to the corresponding email.\n",
-                                @"\n",
-                                @"(｡･ω･｡)ﾉ♡\n",
-                                @"The ",
-                                [Utilities appName],
-                                @" Team"] componentsJoinedByString:@""];
+        self.noteView.text = [Utilities getFirstLaunchText];
         
         self.navBarTitle.title = kEmptyNoteSubject;
         
