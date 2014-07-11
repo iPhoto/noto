@@ -29,8 +29,6 @@
         
         NSArray *gestureRecognizers = [self.gestureRecognizers arrayByAddingObject:pan];
         self.gestureRecognizers = gestureRecognizers;
-        
-        [self becomeFirstResponder];
     }
     return self;
 }

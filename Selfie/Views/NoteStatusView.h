@@ -12,4 +12,6 @@
 
 @interface NoteStatusView : UITextView
 - (void) updateFrameToKeyboard:(CGRect) keyboardRect;
+- (void) show;
+- (void) hide;
 @end

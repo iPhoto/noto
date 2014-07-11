@@ -68,7 +68,7 @@
     [self.view addSubview:self.rightRibbon];
     
     if ([State isReachable]) {
-        self.statusView.hidden = YES;
+        [self.statusView hide];
     }
     
     self.noteView.delegate = self;
@@ -93,6 +93,8 @@
               selector:@selector(reachabilityChanged:)
                   name:kReachabilityChangedNotification
                 object:nil];
+    
+    [self.noteView becomeFirstResponder];
 }
 
 - (void) onFirstLaunch {
@@ -218,10 +220,10 @@
 
 - (void) reachabilityChanged:(NSNotification *) notification {
     if ([State isReachable]) {
-        self.statusView.hidden = YES;
+        [self.statusView hide];
         self.statusView.text = @"";
     } else {
-        self.statusView.hidden = NO;
+        [self.statusView show];
         self.statusView.text = kStatusNoConnection;
     }
 }

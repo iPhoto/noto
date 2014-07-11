@@ -18,7 +18,6 @@
         self.selectable = NO;
         self.backgroundColor = tertiaryColor;
         self.userInteractionEnabled = NO;
-        [self setAlpha:0.6];
         [self setFont:[UIFont systemFontOfSize:kGlobalFontSize]];
         [self setTextColor:[UIColor whiteColor]];
         self.textAlignment = NSTextAlignmentCenter;
@@ -34,6 +33,24 @@
     kNoteRibbonViewHeight;
     
     self.frame = CGRectMake((keyboardRect.size.width - kStatusViewWidth) / 2, ribbonViewHeight, kStatusViewWidth, kStatusViewHeight);
+}
+
+- (void) show {
+    self.hidden = NO;
+    
+    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        self.alpha = 0.6;
+    } completion:^(BOOL finished){
+        
+    }];
+}
+
+- (void) hide {
+    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        self.alpha = 0.0;
+    } completion:^(BOOL finished){
+        self.hidden = YES;
+    }];
 }
 
 @end
