@@ -12,6 +12,7 @@
 @property (strong, nonatomic) NoteView *noteView;
 @property (strong, nonatomic) NoteRibbonView *leftRibbon;
 @property (strong, nonatomic) NoteRibbonView *rightRibbon;
+@property (strong, nonatomic) NoConnectionView *noConnection;
 @property (strong, nonatomic) IBOutlet UINavigationItem *navBarTitle;
 @end
 
@@ -46,32 +47,50 @@
     return _rightRibbon;
 }
 
+- (NoConnectionView *) noConnection {
+    if (!_noConnection) {
+        _noConnection = [[NoConnectionView alloc] init];
+    }
+    
+    return _noConnection;
+}
+
 - (void) viewDidLoad {
     [super viewDidLoad];
     
     [self onFirstLaunch];
     
     [self.view addSubview:self.noteView];
+    [self.view addSubview:self.noConnection];
     [self.view addSubview:self.leftRibbon];
     [self.view addSubview:self.rightRibbon];
+    
+    if ([State isReachable]) {
+        self.noConnection.hidden = YES;
+    }
     
     self.noteView.delegate = self;
     self.noteView.noteViewDelegate = self;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow:)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
+    [Radio addObserver:self
+              selector:@selector(keyboardWillShow:)
+                  name:UIKeyboardWillShowNotification
+                object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardDidShow:)
-                                                 name:UIKeyboardDidShowNotification
-                                               object:nil];
+    [Radio addObserver:self
+              selector:@selector(keyboardDidShow:)
+                  name:UIKeyboardDidShowNotification
+                object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardIsUp:)
-                                                 name:UIKeyboardDidShowNotification
-                                               object:nil];
+    [Radio addObserver:self
+              selector:@selector(keyboardIsUp:)
+                  name:UIKeyboardDidShowNotification
+                object:nil];
+    
+    [Radio addObserver:self
+              selector:@selector(reachabilityChanged:)
+                  name:kReachabilityChangedNotification
+                object:nil];
 }
 
 - (void) onFirstLaunch {
@@ -161,13 +180,13 @@
     self.noteView.panGestureRecognizer.enabled = NO;
     
     // TODO: Move magic numbers into NoteView constants
-    CGFloat actionViewHeight = self.view.frame.size.height -
+    CGFloat ribbonViewHeight = self.view.frame.size.height -
         keyboardRect.size.height -
         kNoteRibbonViewHeight;
     
     // TODO: Change rectangle widths to be frame widths
-    self.leftRibbon.frame = CGRectMake(keyboardRect.size.width, actionViewHeight, kNoteRibbonViewWidth, kNoteRibbonViewHeight);
-    self.rightRibbon.frame = CGRectMake(-kNoteRibbonViewWidth, actionViewHeight, kNoteRibbonViewWidth, kNoteRibbonViewHeight);
+    self.leftRibbon.frame = CGRectMake(keyboardRect.size.width, ribbonViewHeight, kNoteRibbonViewWidth, kNoteRibbonViewHeight);
+    self.rightRibbon.frame = CGRectMake(-kNoteRibbonViewWidth, ribbonViewHeight, kNoteRibbonViewWidth, kNoteRibbonViewHeight);
     
     // TODO: Subviews can be moved into initialization
     self.leftRibbon.textView.frame = CGRectMake(0, 0, kNoteRibbonViewWidth, kNoteRibbonViewHeight);
@@ -179,6 +198,8 @@
     
     self.leftRibbon.originalCenter = self.leftRibbon.center;
     self.rightRibbon.originalCenter = self.rightRibbon.center;
+    
+    self.noConnection.frame = CGRectMake((keyboardRect.size.width - kNoConnectionViewWidth) / 2, ribbonViewHeight + (kNoteRibbonViewHeight - kNoConnectionViewHeight) / 2, kNoConnectionViewWidth, kNoConnectionViewHeight);
 }
 
 - (void) keyboardDidShow:(NSNotification *) notification {
@@ -197,6 +218,7 @@
         [self.rightRibbon.textView setText:[State getRibbonText:noteView.text withDirection:SwipeDirectionRight]];
         [self.rightRibbon.imageView setImage:[State getRibbonImage:noteView.text withDirection:SwipeDirectionRight]];
         
+        self.noConnection.hidden = YES;
     } else if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
         // TODO: make sure send gesture and view gesture are identical; don't want users to be confused
         if (abs(translation.x) > abs(translation.y)) {
@@ -219,6 +241,8 @@
         } completion:^(BOOL finished){
             
         }];
+        
+        [self reachabilityChanged:nil];
     } else {
         if (abs(translation.x) < self.view.frame.size.width) {
             // TODO: Refactor into state class
@@ -254,6 +278,14 @@
             CGPoint newRightCenter = CGPointMake(self.rightRibbon.originalCenter.x + translation.x, self.rightRibbon.originalCenter.y);
             [self.rightRibbon setCenter:(newRightCenter)];
         }
+    }
+}
+
+- (void) reachabilityChanged:(NSNotification *) notification {
+    if ([State isReachable]) {
+        self.noConnection.hidden = YES;
+    } else {
+        self.noConnection.hidden = NO;
     }
 }
 

@@ -10,6 +10,8 @@
 #import "Reachability.h"
 #import "Note.h"
 #import "NoteView.h"
+#import "NoteRibbonView.h"
+#import "NoConnectionView.h"
 #import "State.h"
 #import "Utilities.h"
 
