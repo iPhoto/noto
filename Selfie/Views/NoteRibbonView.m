@@ -47,9 +47,32 @@
     }];
 }
 
-- (void) xPanWithTranslation:(CGFloat) xTranslation {
-    CGPoint newCenter = CGPointMake(self.originalCenter.x + xTranslation, self.originalCenter.y);
+- (void) panWithTranslation:(CGPoint) translation {
+    // Ignoring y pans for now
+    CGPoint newCenter = CGPointMake(self.originalCenter.x + translation.x, self.originalCenter.y);
     [self setCenter:(newCenter)];
+}
+
+- (void) updateFrameToKeyboard:(CGRect) keyboardRect {
+    // TODO: Move magic numbers into NoteView constants
+    CGFloat ribbonViewHeight = self.superview.frame.size.height -
+    keyboardRect.size.height -
+    kNoteRibbonViewHeight;
+    
+    BOOL isLeft = self.direction == SwipeDirectionLeft;
+    
+    // TODO: Change rectangle widths to be frame widths
+    CGFloat xOffset = isLeft ? keyboardRect.size.width : -kNoteRibbonViewWidth;
+    self.frame = CGRectMake(xOffset, ribbonViewHeight, kNoteRibbonViewWidth, kNoteRibbonViewHeight);
+    
+    // TODO: Subviews can be moved into initialization
+    self.textView.frame = CGRectMake(0, 0, kNoteRibbonViewWidth, kNoteRibbonViewHeight);
+    
+    // TODO: This should be done with constraints
+    CGFloat xImageOffset = kNoteRibbonImageBorderSpacing + (isLeft ? 0 : kNoteRibbonViewWidth - kNoteRibbonViewHeight);
+    self.imageView.frame = CGRectMake(xImageOffset, kNoteRibbonImageBorderSpacing, kNoteRibbonImageHeight, kNoteRibbonImageHeight);
+    
+    self.originalCenter = self.center;
 }
 
 @end

@@ -27,4 +27,13 @@
     return self;
 }
 
+- (void) updateFrameToKeyboard:(CGRect) keyboardRect {
+    // TODO: Refactor this duplicate code
+    CGFloat ribbonViewHeight = self.superview.frame.size.height -
+    keyboardRect.size.height -
+    kNoteRibbonViewHeight;
+    
+    self.frame = CGRectMake((keyboardRect.size.width - kStatusViewWidth) / 2, ribbonViewHeight, kStatusViewWidth, kStatusViewHeight);
+}
+
 @end

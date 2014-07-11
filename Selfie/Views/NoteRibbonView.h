@@ -11,10 +11,12 @@
 #import "Utilities.h"
 
 @interface NoteRibbonView : UIView
+@property (nonatomic) SwipeDirection direction;
 @property (nonatomic, strong) UITextView *textView;
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic) CGPoint originalCenter;
 
 - (void) finalizePosition;
-- (void) xPanWithTranslation:(CGFloat) xTranslation;
+- (void) panWithTranslation:(CGPoint) translation;
+- (void) updateFrameToKeyboard:(CGRect) keyboardRect;
 @end

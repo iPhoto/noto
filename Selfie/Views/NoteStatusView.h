@@ -11,5 +11,5 @@
 #import "Utilities.h"
 
 @interface NoteStatusView : UITextView
-
+- (void) updateFrameToKeyboard:(CGRect) keyboardRect;
 @end

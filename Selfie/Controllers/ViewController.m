@@ -35,6 +35,7 @@
     if (!_leftRibbon) {
         _leftRibbon = [[NoteRibbonView alloc] init];
         _leftRibbon.textView.textAlignment = NSTextAlignmentLeft;
+        _leftRibbon.direction = SwipeDirectionLeft;
     }
     return _leftRibbon;
 }
@@ -43,6 +44,7 @@
     if (!_rightRibbon) {
         _rightRibbon = [[NoteRibbonView alloc] init];
         _rightRibbon.textView.textAlignment = NSTextAlignmentRight;
+        _rightRibbon.direction = SwipeDirectionRight;
     }
     return _rightRibbon;
 }
@@ -182,27 +184,9 @@
     
     self.noteView.panGestureRecognizer.enabled = NO;
     
-    // TODO: Move magic numbers into NoteView constants
-    CGFloat ribbonViewHeight = self.view.frame.size.height -
-        keyboardRect.size.height -
-        kNoteRibbonViewHeight;
-    
-    // TODO: Change rectangle widths to be frame widths
-    self.leftRibbon.frame = CGRectMake(keyboardRect.size.width, ribbonViewHeight, kNoteRibbonViewWidth, kNoteRibbonViewHeight);
-    self.rightRibbon.frame = CGRectMake(-kNoteRibbonViewWidth, ribbonViewHeight, kNoteRibbonViewWidth, kNoteRibbonViewHeight);
-    
-    // TODO: Subviews can be moved into initialization
-    self.leftRibbon.textView.frame = CGRectMake(0, 0, kNoteRibbonViewWidth, kNoteRibbonViewHeight);
-    self.rightRibbon.textView.frame = CGRectMake(0, 0, kNoteRibbonViewWidth, kNoteRibbonViewHeight);
-    
-    // TODO: This should be done with constraints
-    self.leftRibbon.imageView.frame = CGRectMake(kNoteRibbonImageBorderSpacing, kNoteRibbonImageBorderSpacing, kNoteRibbonImageHeight, kNoteRibbonImageHeight);
-    self.rightRibbon.imageView.frame = CGRectMake(kNoteRibbonViewWidth - kNoteRibbonViewHeight + kNoteRibbonImageBorderSpacing, kNoteRibbonImageBorderSpacing, kNoteRibbonImageHeight, kNoteRibbonImageHeight);
-    
-    self.leftRibbon.originalCenter = self.leftRibbon.center;
-    self.rightRibbon.originalCenter = self.rightRibbon.center;
-    
-    self.statusView.frame = CGRectMake((keyboardRect.size.width - kStatusViewWidth) / 2, ribbonViewHeight, kStatusViewWidth, kStatusViewHeight);
+    [self.leftRibbon updateFrameToKeyboard:keyboardRect];
+    [self.rightRibbon updateFrameToKeyboard:keyboardRect];
+    [self.statusView updateFrameToKeyboard:keyboardRect];
 }
 
 - (void) keyboardDidShow:(NSNotification *) notification {
@@ -249,7 +233,7 @@
                 self.leftRibbon.imageView.backgroundColor = secondaryColor;
             }
             
-            [self.leftRibbon xPanWithTranslation:translation.x];
+            [self.leftRibbon panWithTranslation:translation];
             
             // TODO: Refactor into state class
             if (![Utilities isEmptyString:self.noteView.text] && [Utilities isValidEmail:[Utilities getSettingsValue:kSettingsSwipeRightToEmailKey]]) {
@@ -264,7 +248,7 @@
                 self.rightRibbon.backgroundColor = secondaryColor;
                 self.rightRibbon.imageView.backgroundColor = secondaryColor;
             }
-            [self.rightRibbon xPanWithTranslation:translation.x];
+            [self.rightRibbon panWithTranslation:translation];
         }
     }
 }
