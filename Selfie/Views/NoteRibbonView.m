@@ -29,7 +29,7 @@
         self.imageView = [[UIImageView alloc] init];
         self.imageView.backgroundColor = secondaryColor;
         [self.imageView.layer setBorderColor: [[UIColor whiteColor] CGColor]];
-        [self.imageView.layer setBorderWidth: 1.5];
+        [self.imageView.layer setBorderWidth: kNoteRibbonImageBorder];
         self.imageView.clipsToBounds = YES;
         self.imageView.layer.cornerRadius = kNoteRibbonImageHeight / 2;
         [self addSubview:self.imageView];

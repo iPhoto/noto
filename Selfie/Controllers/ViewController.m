@@ -196,8 +196,8 @@
     self.rightRibbon.textView.frame = CGRectMake(0, 0, kNoteRibbonViewWidth, kNoteRibbonViewHeight);
     
     // TODO: This should be done with constraints
-    self.leftRibbon.imageView.frame = CGRectMake(kNoteRibbonImageBorder, kNoteRibbonImageBorder, kNoteRibbonImageHeight, kNoteRibbonImageHeight);
-    self.rightRibbon.imageView.frame = CGRectMake(kNoteRibbonViewWidth - kNoteRibbonViewHeight + kNoteRibbonImageBorder, kNoteRibbonImageBorder, kNoteRibbonImageHeight, kNoteRibbonImageHeight);
+    self.leftRibbon.imageView.frame = CGRectMake(kNoteRibbonImageBorderSpacing, kNoteRibbonImageBorderSpacing, kNoteRibbonImageHeight, kNoteRibbonImageHeight);
+    self.rightRibbon.imageView.frame = CGRectMake(kNoteRibbonViewWidth - kNoteRibbonViewHeight + kNoteRibbonImageBorderSpacing, kNoteRibbonImageBorderSpacing, kNoteRibbonImageHeight, kNoteRibbonImageHeight);
     
     self.leftRibbon.originalCenter = self.leftRibbon.center;
     self.rightRibbon.originalCenter = self.rightRibbon.center;
