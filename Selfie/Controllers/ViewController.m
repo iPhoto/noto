@@ -67,10 +67,6 @@
     [self.view addSubview:self.leftRibbon];
     [self.view addSubview:self.rightRibbon];
     
-    if ([State isReachable]) {
-        [self.statusView hide];
-    }
-    
     self.noteView.delegate = self;
     self.noteView.noteViewDelegate = self;
     
@@ -92,6 +88,16 @@
     [Radio addObserver:self
               selector:@selector(reachabilityChanged:)
                   name:kReachabilityChangedNotification
+                object:nil];
+    
+    [Radio addObserver:self
+              selector:@selector(sendSuccess:)
+                  name:kNoteSendSuccessNotification
+                object:nil];
+    
+    [Radio addObserver:self
+              selector:@selector(sendFailure:)
+                  name:kNoteSendFailNotification
                 object:nil];
     
     [self.noteView becomeFirstResponder];
@@ -172,7 +178,7 @@
     // TODO: Refactor and delegate to viewcontroller
     NoteView *noteView = (NoteView *) gestureRecognizer.view;
     CGPoint translation = [gestureRecognizer translationInView:noteView];
-    
+
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
         [self.leftRibbon.textView setText:[State getRibbonText:noteView.text withDirection:SwipeDirectionLeft]];
         [self.leftRibbon.imageView setImage:[State getRibbonImage:noteView.text withDirection:SwipeDirectionLeft]];
@@ -212,6 +218,10 @@
     Note *note = [[Note alloc] initWithString:self.noteView.text direction:direction];
     
     if (note) {
+        [self.statusView setHidden:NO];
+        self.statusView.backgroundColor = tertiaryColor;
+        self.statusView.text = kStatusSendingNote;
+        [self.statusView show];
         [note send];
     }
     
@@ -220,11 +230,27 @@
 
 - (void) reachabilityChanged:(NSNotification *) notification {
     if ([State isReachable]) {
+        NSLog(@"hiding");
         [self.statusView hide];
         self.statusView.text = @"";
     } else {
-        [self.statusView show];
+        self.statusView.backgroundColor = tertiaryColor;
         self.statusView.text = kStatusNoConnection;
+        [self.statusView show];
+    }
+}
+
+- (void) sendSuccess:(NSNotification *) notification {
+    self.statusView.backgroundColor = primaryColor;
+    self.statusView.text = @"Success!";
+    [self.statusView hideWithDelay:1];
+}
+
+- (void) sendFailure:(NSNotification *) notification {
+    if ([State isReachable]) {
+        self.statusView.backgroundColor = secondaryColor;
+        self.statusView.text = @"Failure!";
+        [self.statusView hideWithDelay:1];
     }
 }
 

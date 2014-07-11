@@ -33,10 +33,10 @@ static NSString * const CrashlyticsAPIKey = @"7052c7c0dfa3dc8a01de1c9fadf87a6abe
 
 // Note default copy
 static NSString * const kEmptyNoteSubject = @"New Note";
-static NSString * const kNoSubject = @"[No subject]";
 
 // Status bar default copy
 static NSString * const kStatusNoConnection = @"No connection! Notes will be saved.";
+static NSString * const kStatusSendingNote = @"Sending note!";
 
 // User data
 static NSString * const kSettingsNoteQueueKey = @"noteQueue";
