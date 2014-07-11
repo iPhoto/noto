@@ -38,40 +38,30 @@
     };
 
 + (void) loopThroughQueueAndSave:(void(^)(NSMutableArray *, NSDictionary *)) predicate {
-    NSArray *queue = (NSArray *) [Utilities getSettingsObject:@"emailQueue"];
+    NSArray *queue = (NSArray *) [Utilities getSettingsObject:kEmailQueueKey];
     NSMutableArray *mutableQueue = [queue mutableCopy];
     
     for (int i = 0; i < [queue count]; i++) {
         predicate(mutableQueue, (NSDictionary *)[queue objectAtIndex: i]);
     }
     
-    [Utilities setSettingsObject:mutableQueue forKey:@"emailQueue"];
+    [Utilities setSettingsObject:mutableQueue forKey:kEmailQueueKey];
 }
 
 + (void) initDB {
     // Set up NSUserDefaults
-    NSArray *queue = (NSArray *)[Utilities getSettingsObject:@"emailQueue"];
+    NSArray *queue = (NSArray *)[Utilities getSettingsObject:kEmailQueueKey];
     if (!queue) {
         queue = [[NSArray alloc] init];
     }
-    [Utilities setSettingsObject:queue forKey:@"emailQueue"];
-    
-    NSString *nextID = (NSString *)[Utilities getSettingsValue:@"nextID"];
-    if (!nextID) {
-        nextID = [NSString stringWithFormat:@"%d", 1];
-    }
-    [Utilities setSettingsValue:nextID forKey:@"nextID"];
+    [Utilities setSettingsObject:queue forKey:kEmailQueueKey];
 }
 
 + (void) clearDB {
     // Set up NSUserDefaults
-    NSArray *queue = (NSArray *)[Utilities getSettingsObject:@"emailQueue"];
+    NSArray *queue = (NSArray *)[Utilities getSettingsObject:kEmailQueueKey];
     queue = [[NSArray alloc] init];
-    [Utilities setSettingsObject:queue forKey:@"emailQueue"];
-    
-    NSString *nextID = (NSString *)[Utilities getSettingsValue:@"nextID"];
-    nextID = [NSString stringWithFormat:@"%d", 1];
-    [Utilities setSettingsValue:nextID forKey:@"nextID"];
+    [Utilities setSettingsObject:queue forKey:kEmailQueueKey];
 }
 
 + (BOOL) isEmptyString:(NSString *) string {
@@ -100,8 +90,8 @@
 }
 
 + (void) setDefaultSettings {
-    [Utilities setSettingsValue:[Utilities appName] forKey:@"subjectPrefix"];
-    [Utilities setSettingsValue:[NSString stringWithFormat:@"Sent with %@", [Utilities appName]] forKey:@"signature"];
+    [Utilities setSettingsValue:[Utilities appName] forKey:kSubjectPrefixKey];
+    [Utilities setSettingsValue:[NSString stringWithFormat:@"Sent with %@", [Utilities appName]] forKey:kSignatureKey];
 }
 
 + (NSString *) getEmailWithDirection:(SwipeDirection) direction {

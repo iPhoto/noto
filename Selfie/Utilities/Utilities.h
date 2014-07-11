@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "Note.h"
 
+// Default notification center
+#define Radio [NSNotificationCenter defaultCenter]
+
 // Color palette
 #define primaryColor [UIColor colorWithRed:41.0 / 255.0 green:128.0 / 255.0 blue:185.0 / 255.0 alpha:1.0]
 #define secondaryColor [UIColor colorWithRed:231.0 / 255.0 green:76.0 / 255.0 blue:60.0 / 255.0 alpha:1.0]
@@ -34,6 +37,7 @@ static NSString * const kEmptyNoteSubject = @"New Note";
 static NSString * const kNoSubject = @"[No subject]";
 
 // User data
+static NSString * const kEmailQueueKey = @"emailQueue";
 static NSString * const kSwipeLeftToEmailKey = @"swipeLeftTo";
 static NSString * const kSwipeRightToEmailKey = @"swipeRightTo";
 static NSString * const kSubjectPrefixKey = @"subjectPrefix";
