@@ -1,5 +1,5 @@
 //
-//  NoteActionView.h
+//  NoteRibbonView.h
 //  Selfie
 //
 //  Created by Daniel Suo on 7/7/14.
@@ -10,7 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "Utilities.h"
 
-@interface NoteActionView : UIView
+@interface NoteRibbonView : UIView
 @property (nonatomic, strong) UITextView *textView;
 @property (nonatomic, strong) UIImageView *imageView;
 @end

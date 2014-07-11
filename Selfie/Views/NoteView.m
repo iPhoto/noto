@@ -31,14 +31,14 @@
         self.gestureRecognizers = gestureRecognizers;
 
         // Swipe left
-        self.leftNoteActionView = [[NoteActionView alloc] init];
+        self.leftNoteActionView = [[NoteRibbonView alloc] init];
         self.leftNoteActionView.textView.textAlignment = NSTextAlignmentLeft;
         [self addSubview:self.leftNoteActionView];
         
         self.leftNoteActionViewOriginalCenter = self.leftNoteActionView.center;
         
         // Swipe right
-        self.rightNoteActionView = [[NoteActionView alloc] init];
+        self.rightNoteActionView = [[NoteRibbonView alloc] init];
         self.rightNoteActionView.textView.textAlignment = NSTextAlignmentRight;
         [self addSubview:self.rightNoteActionView];
         

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
-#import "NoteActionView.h"
+#import "NoteRibbonView.h"
 
 @class NoteView;
 
@@ -20,8 +20,8 @@
 
 @interface NoteView : UITextView <UIGestureRecognizerDelegate>
 @property (nonatomic, assign) id <NoteViewDelegate> noteViewDelegate;
-@property (nonatomic, strong) NoteActionView *leftNoteActionView;
-@property (nonatomic, strong) NoteActionView *rightNoteActionView;
+@property (nonatomic, strong) NoteRibbonView *leftNoteActionView;
+@property (nonatomic, strong) NoteRibbonView *rightNoteActionView;
 @property (nonatomic) CGPoint leftNoteActionViewOriginalCenter;
 @property (nonatomic) CGPoint rightNoteActionViewOriginalCenter;
 @end

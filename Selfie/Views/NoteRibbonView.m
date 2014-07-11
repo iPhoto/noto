@@ -1,14 +1,14 @@
 //
-//  NoteActionView.m
+//  NoteRibbonView.m
 //  Selfie
 //
 //  Created by Daniel Suo on 7/7/14.
 //  Copyright (c) 2014 The Leather Apron Club. All rights reserved.
 //
 
-#import "NoteActionView.h"
+#import "NoteRibbonView.h"
 
-@implementation NoteActionView
+@implementation NoteRibbonView
 
 - (id)initWithFrame:(CGRect)frame
 {
