@@ -17,6 +17,7 @@
         self.editable = NO;
         self.selectable = NO;
         self.backgroundColor = tertiaryColor;
+        self.userInteractionEnabled = NO;
         [self setAlpha:0.6];
         [self setFont:[UIFont systemFontOfSize:kGlobalFontSize]];
         [self setTextColor:[UIColor whiteColor]];
