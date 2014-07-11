@@ -11,9 +11,6 @@
 #import "Utilities.h"
 
 @interface NoteActionView : UIView
-@property (nonatomic) UISwipeGestureRecognizerDirection direction;
 @property (nonatomic, strong) UITextView *textView;
 @property (nonatomic, strong) UIImageView *imageView;
-
-- (NSString *)getActionText:(NSString *)noteText;
 @end

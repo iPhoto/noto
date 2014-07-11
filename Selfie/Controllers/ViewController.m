@@ -176,8 +176,12 @@
     CGPoint translation = [gestureRecognizer translationInView:noteView];
     
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        self.noteView.leftNoteActionView.textView.text = [self.noteView.leftNoteActionView getActionText:noteView.text];
-        self.noteView.rightNoteActionView.textView.text = [self.noteView.rightNoteActionView getActionText:noteView.text];
+        [self.noteView.leftNoteActionView.textView setText:[State getRibbonText:noteView.text withDirection:SwipeDirectionLeft]];
+        [self.noteView.leftNoteActionView.imageView setImage:[State getRibbonImage:noteView.text withDirection:SwipeDirectionLeft]];
+        
+        [self.noteView.rightNoteActionView.textView setText:[State getRibbonText:noteView.text withDirection:SwipeDirectionRight]];
+        [self.noteView.rightNoteActionView.imageView setImage:[State getRibbonImage:noteView.text withDirection:SwipeDirectionRight]];
+        
     } else if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
         // TODO: make sure send gesture and view gesture are identical; don't want users to be confused
         if (abs(translation.x) > abs(translation.y)) {

@@ -33,4 +33,7 @@
 + (BOOL) isReachableViaWiFi;
 
 + (BOOL) isValidEmail:(SwipeDirection) direction;
+
++ (NSString *) getRibbonText:(NSString *) noteText withDirection:(SwipeDirection) direction;
++ (UIImage *) getRibbonImage:(NSString *) noteText withDirection:(SwipeDirection) direction;
 @end

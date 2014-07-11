@@ -10,6 +10,7 @@
 #import "Reachability.h"
 #import "Note.h"
 #import "NoteView.h"
+#import "State.h"
 #import "Utilities.h"
 
 @interface ViewController : UIViewController <NoteViewDelegate>

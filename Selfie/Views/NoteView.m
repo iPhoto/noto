@@ -33,7 +33,6 @@
         // Swipe left
         self.leftNoteActionView = [[NoteActionView alloc] init];
         self.leftNoteActionView.textView.textAlignment = NSTextAlignmentLeft;
-        self.leftNoteActionView.direction = UISwipeGestureRecognizerDirectionLeft;
         [self addSubview:self.leftNoteActionView];
         
         self.leftNoteActionViewOriginalCenter = self.leftNoteActionView.center;
@@ -41,7 +40,6 @@
         // Swipe right
         self.rightNoteActionView = [[NoteActionView alloc] init];
         self.rightNoteActionView.textView.textAlignment = NSTextAlignmentRight;
-        self.rightNoteActionView.direction = UISwipeGestureRecognizerDirectionRight;
         [self addSubview:self.rightNoteActionView];
         
         self.rightNoteActionViewOriginalCenter = self.rightNoteActionView.center;
