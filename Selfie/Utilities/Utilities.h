@@ -44,10 +44,11 @@ static NSString * const kSubjectPrefixKey = @"subjectPrefix";
 static NSString * const kSignatureKey = @"signature";
 
 // Ribbon layout constants
-static NSUInteger const kNoteActionViewHeight = 40;
-static NSUInteger const kNoteActionImageBorder = 3;
-static NSUInteger const kNoteActionImageHeight = 40 - 2 * kNoteActionImageBorder;
+static NSInteger const kNoteRibbonViewHeight = 40;
+static NSInteger const kNoteRibbonImageBorder = 3;
+static NSInteger const kNoteRibbonImageHeight = 40 - 2 * kNoteRibbonImageBorder;
 
+static NSInteger const kNoteRibbonViewWidth = 1000;
 static NSInteger const kSwipeThreshold = 120;
 
 // Notification names

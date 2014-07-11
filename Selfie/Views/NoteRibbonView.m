@@ -20,10 +20,10 @@
         
         [self.textView setFont:[UIFont systemFontOfSize:kGlobalFontSize]];
         [self.textView setTextColor:[UIColor whiteColor]];
-        self.textView.textContainerInset = UIEdgeInsetsMake((kNoteActionViewHeight - kGlobalFontSize) / 2 - 2, kNoteActionViewHeight, 0, kNoteActionViewHeight);
+        self.textView.textContainerInset = UIEdgeInsetsMake((kNoteRibbonViewHeight - kGlobalFontSize) / 2 - 2, kNoteRibbonViewHeight, 0, kNoteRibbonViewHeight);
         
         self.clipsToBounds = YES;
-        self.layer.cornerRadius = kNoteActionViewHeight / 2;
+        self.layer.cornerRadius = kNoteRibbonViewHeight / 2;
         [self addSubview:self.textView];
         
         self.imageView = [[UIImageView alloc] init];
@@ -31,7 +31,7 @@
         [self.imageView.layer setBorderColor: [[UIColor whiteColor] CGColor]];
         [self.imageView.layer setBorderWidth: 1.5];
         self.imageView.clipsToBounds = YES;
-        self.imageView.layer.cornerRadius = kNoteActionImageHeight / 2;
+        self.imageView.layer.cornerRadius = kNoteRibbonImageHeight / 2;
         [self addSubview:self.imageView];
     }
     return self;

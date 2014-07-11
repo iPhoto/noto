@@ -19,7 +19,7 @@
 
 - (void) initNote {
     self.noteView.text = nil;
-    self.navBarTitle.title = @"New Note";
+    self.navBarTitle.title = kEmptyNoteSubject;
 }
 
 - (NoteView *) noteView {
@@ -163,19 +163,19 @@
     // TODO: Move magic numbers into NoteView constants
     CGFloat actionViewHeight = self.view.frame.size.height -
         keyboardRect.size.height -
-        kNoteActionViewHeight;
+        kNoteRibbonViewHeight;
     
     // TODO: Change rectangle widths to be frame widths
-    self.leftRibbon.frame = CGRectMake(keyboardRect.size.width, actionViewHeight, keyboardRect.size.width, kNoteActionViewHeight);
-    self.rightRibbon.frame = CGRectMake(-keyboardRect.size.width, actionViewHeight, keyboardRect.size.width, kNoteActionViewHeight);
+    self.leftRibbon.frame = CGRectMake(keyboardRect.size.width, actionViewHeight, kNoteRibbonViewWidth, kNoteRibbonViewHeight);
+    self.rightRibbon.frame = CGRectMake(-kNoteRibbonViewWidth, actionViewHeight, kNoteRibbonViewWidth, kNoteRibbonViewHeight);
     
     // TODO: Subviews can be moved into initialization
-    self.leftRibbon.textView.frame = CGRectMake(0, 0, keyboardRect.size.width, kNoteActionViewHeight);
-    self.rightRibbon.textView.frame = CGRectMake(0, 0, keyboardRect.size.width, kNoteActionViewHeight);
+    self.leftRibbon.textView.frame = CGRectMake(0, 0, kNoteRibbonViewWidth, kNoteRibbonViewHeight);
+    self.rightRibbon.textView.frame = CGRectMake(0, 0, kNoteRibbonViewWidth, kNoteRibbonViewHeight);
     
     // TODO: This should be done with constraints
-    self.leftRibbon.imageView.frame = CGRectMake(kNoteActionImageBorder, kNoteActionImageBorder, kNoteActionImageHeight, kNoteActionImageHeight);
-    self.rightRibbon.imageView.frame = CGRectMake(keyboardRect.size.width - kNoteActionViewHeight + kNoteActionImageBorder, kNoteActionImageBorder, kNoteActionImageHeight, kNoteActionImageHeight);
+    self.leftRibbon.imageView.frame = CGRectMake(kNoteRibbonImageBorder, kNoteRibbonImageBorder, kNoteRibbonImageHeight, kNoteRibbonImageHeight);
+    self.rightRibbon.imageView.frame = CGRectMake(kNoteRibbonViewWidth - kNoteRibbonViewHeight + kNoteRibbonImageBorder, kNoteRibbonImageBorder, kNoteRibbonImageHeight, kNoteRibbonImageHeight);
     
     self.leftRibbon.originalCenter = self.leftRibbon.center;
     self.rightRibbon.originalCenter = self.rightRibbon.center;
@@ -220,39 +220,40 @@
             
         }];
     } else {
-        
-        // TODO: Refactor into state class
-        if (![Utilities isEmptyString:self.noteView.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeLeftTo"]]) {
-            if (translation.x < -kSwipeThreshold) {
-                self.leftRibbon.backgroundColor = primaryColor;
-                self.leftRibbon.imageView.backgroundColor = primaryColor;
+        if (abs(translation.x) < self.view.frame.size.width) {
+            // TODO: Refactor into state class
+            if (![Utilities isEmptyString:self.noteView.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeLeftTo"]]) {
+                if (translation.x < -kSwipeThreshold) {
+                    self.leftRibbon.backgroundColor = primaryColor;
+                    self.leftRibbon.imageView.backgroundColor = primaryColor;
+                } else {
+                    self.leftRibbon.backgroundColor = tertiaryColor;
+                    self.leftRibbon.imageView.backgroundColor = tertiaryColor;
+                }
             } else {
-                self.leftRibbon.backgroundColor = tertiaryColor;
-                self.leftRibbon.imageView.backgroundColor = tertiaryColor;
+                self.leftRibbon.backgroundColor = secondaryColor;
+                self.leftRibbon.imageView.backgroundColor = secondaryColor;
             }
-        } else {
-            self.leftRibbon.backgroundColor = secondaryColor;
-            self.leftRibbon.imageView.backgroundColor = secondaryColor;
-        }
-        
-        CGPoint newLeftCenter = CGPointMake(self.leftRibbon.originalCenter.x + translation.x, self.leftRibbon.originalCenter.y);
-        [self.leftRibbon setCenter:(newLeftCenter)];
-        
-        // TODO: Refactor into state class
-        if (![Utilities isEmptyString:self.noteView.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeRightTo"]]) {
-            if (translation.x > kSwipeThreshold) {
-                self.rightRibbon.backgroundColor = primaryColor;
-                self.rightRibbon.imageView.backgroundColor = primaryColor;
+            
+            CGPoint newLeftCenter = CGPointMake(self.leftRibbon.originalCenter.x + translation.x, self.leftRibbon.originalCenter.y);
+            [self.leftRibbon setCenter:(newLeftCenter)];
+            
+            // TODO: Refactor into state class
+            if (![Utilities isEmptyString:self.noteView.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeRightTo"]]) {
+                if (translation.x > kSwipeThreshold) {
+                    self.rightRibbon.backgroundColor = primaryColor;
+                    self.rightRibbon.imageView.backgroundColor = primaryColor;
+                } else {
+                    self.rightRibbon.backgroundColor = tertiaryColor;
+                    self.rightRibbon.imageView.backgroundColor = tertiaryColor;
+                }
             } else {
-                self.rightRibbon.backgroundColor = tertiaryColor;
-                self.rightRibbon.imageView.backgroundColor = tertiaryColor;
+                self.rightRibbon.backgroundColor = secondaryColor;
+                self.rightRibbon.imageView.backgroundColor = secondaryColor;
             }
-        } else {
-            self.rightRibbon.backgroundColor = secondaryColor;
-            self.rightRibbon.imageView.backgroundColor = secondaryColor;
+            CGPoint newRightCenter = CGPointMake(self.rightRibbon.originalCenter.x + translation.x, self.rightRibbon.originalCenter.y);
+            [self.rightRibbon setCenter:(newRightCenter)];
         }
-        CGPoint newRightCenter = CGPointMake(self.rightRibbon.originalCenter.x + translation.x, self.rightRibbon.originalCenter.y);
-        [self.rightRibbon setCenter:(newRightCenter)];
     }
 }
 
