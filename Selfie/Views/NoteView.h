@@ -20,8 +20,8 @@
 
 @interface NoteView : UITextView <UIGestureRecognizerDelegate>
 @property (nonatomic, assign) id <NoteViewDelegate> noteViewDelegate;
-@property (nonatomic, strong) NoteRibbonView *leftNoteActionView;
-@property (nonatomic, strong) NoteRibbonView *rightNoteActionView;
-@property (nonatomic) CGPoint leftNoteActionViewOriginalCenter;
-@property (nonatomic) CGPoint rightNoteActionViewOriginalCenter;
+@property (nonatomic, strong) NoteRibbonView *leftNoteRibbonView;
+@property (nonatomic, strong) NoteRibbonView *rightNoteRibbonView;
+@property (nonatomic) CGPoint leftNoteRibbonViewOriginalCenter;
+@property (nonatomic) CGPoint rightNoteRibbonViewOriginalCenter;
 @end

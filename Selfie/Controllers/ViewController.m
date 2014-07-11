@@ -151,19 +151,19 @@
         kNoteActionViewHeight;
     
     // TODO: Change rectangle widths to be frame widths
-    self.noteView.leftNoteActionView.frame = CGRectMake(keyboardRect.size.width, actionViewHeight, keyboardRect.size.width, kNoteActionViewHeight);
-    self.noteView.rightNoteActionView.frame = CGRectMake(-keyboardRect.size.width, actionViewHeight, keyboardRect.size.width, kNoteActionViewHeight);
+    self.noteView.leftNoteRibbonView.frame = CGRectMake(keyboardRect.size.width, actionViewHeight, keyboardRect.size.width, kNoteActionViewHeight);
+    self.noteView.rightNoteRibbonView.frame = CGRectMake(-keyboardRect.size.width, actionViewHeight, keyboardRect.size.width, kNoteActionViewHeight);
     
     // TODO: Subviews can be moved into initialization
-    self.noteView.leftNoteActionView.textView.frame = CGRectMake(0, 0, keyboardRect.size.width, kNoteActionViewHeight);
-    self.noteView.rightNoteActionView.textView.frame = CGRectMake(0, 0, keyboardRect.size.width, kNoteActionViewHeight);
+    self.noteView.leftNoteRibbonView.textView.frame = CGRectMake(0, 0, keyboardRect.size.width, kNoteActionViewHeight);
+    self.noteView.rightNoteRibbonView.textView.frame = CGRectMake(0, 0, keyboardRect.size.width, kNoteActionViewHeight);
     
     // TODO: This should be done with constraints
-    self.noteView.leftNoteActionView.imageView.frame = CGRectMake(kNoteActionImageBorder, kNoteActionImageBorder, kNoteActionImageHeight, kNoteActionImageHeight);
-    self.noteView.rightNoteActionView.imageView.frame = CGRectMake(keyboardRect.size.width - kNoteActionViewHeight + kNoteActionImageBorder, kNoteActionImageBorder, kNoteActionImageHeight, kNoteActionImageHeight);
+    self.noteView.leftNoteRibbonView.imageView.frame = CGRectMake(kNoteActionImageBorder, kNoteActionImageBorder, kNoteActionImageHeight, kNoteActionImageHeight);
+    self.noteView.rightNoteRibbonView.imageView.frame = CGRectMake(keyboardRect.size.width - kNoteActionViewHeight + kNoteActionImageBorder, kNoteActionImageBorder, kNoteActionImageHeight, kNoteActionImageHeight);
     
-    self.noteView.leftNoteActionViewOriginalCenter = self.noteView.leftNoteActionView.center;
-    self.noteView.rightNoteActionViewOriginalCenter = self.noteView.rightNoteActionView.center;
+    self.noteView.leftNoteRibbonViewOriginalCenter = self.noteView.leftNoteRibbonView.center;
+    self.noteView.rightNoteRibbonViewOriginalCenter = self.noteView.rightNoteRibbonView.center;
 }
 
 - (void) keyboardDidShow:(NSNotification *) notification {
@@ -176,11 +176,11 @@
     CGPoint translation = [gestureRecognizer translationInView:noteView];
     
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        [self.noteView.leftNoteActionView.textView setText:[State getRibbonText:noteView.text withDirection:SwipeDirectionLeft]];
-        [self.noteView.leftNoteActionView.imageView setImage:[State getRibbonImage:noteView.text withDirection:SwipeDirectionLeft]];
+        [self.noteView.leftNoteRibbonView.textView setText:[State getRibbonText:noteView.text withDirection:SwipeDirectionLeft]];
+        [self.noteView.leftNoteRibbonView.imageView setImage:[State getRibbonImage:noteView.text withDirection:SwipeDirectionLeft]];
         
-        [self.noteView.rightNoteActionView.textView setText:[State getRibbonText:noteView.text withDirection:SwipeDirectionRight]];
-        [self.noteView.rightNoteActionView.imageView setImage:[State getRibbonImage:noteView.text withDirection:SwipeDirectionRight]];
+        [self.noteView.rightNoteRibbonView.textView setText:[State getRibbonText:noteView.text withDirection:SwipeDirectionRight]];
+        [self.noteView.rightNoteRibbonView.imageView setImage:[State getRibbonImage:noteView.text withDirection:SwipeDirectionRight]];
         
     } else if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
         // TODO: make sure send gesture and view gesture are identical; don't want users to be confused
@@ -194,13 +194,13 @@
         }
         
         [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-            self.noteView.leftNoteActionView.center = self.noteView.leftNoteActionViewOriginalCenter;
+            self.noteView.leftNoteRibbonView.center = self.noteView.leftNoteRibbonViewOriginalCenter;
         } completion:^(BOOL finished){
             
         }];
         
         [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-            self.noteView.rightNoteActionView.center = self.noteView.rightNoteActionViewOriginalCenter;
+            self.noteView.rightNoteRibbonView.center = self.noteView.rightNoteRibbonViewOriginalCenter;
         } completion:^(BOOL finished){
             
         }];
@@ -209,35 +209,35 @@
         // TODO: Refactor into state class
         if (![Utilities isEmptyString:self.noteView.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeLeftTo"]]) {
             if (translation.x < -kSwipeThreshold) {
-                self.noteView.leftNoteActionView.backgroundColor = primaryColor;
-                self.noteView.leftNoteActionView.imageView.backgroundColor = primaryColor;
+                self.noteView.leftNoteRibbonView.backgroundColor = primaryColor;
+                self.noteView.leftNoteRibbonView.imageView.backgroundColor = primaryColor;
             } else {
-                self.noteView.leftNoteActionView.backgroundColor = tertiaryColor;
-                self.noteView.leftNoteActionView.imageView.backgroundColor = tertiaryColor;
+                self.noteView.leftNoteRibbonView.backgroundColor = tertiaryColor;
+                self.noteView.leftNoteRibbonView.imageView.backgroundColor = tertiaryColor;
             }
         } else {
-            self.noteView.leftNoteActionView.backgroundColor = secondaryColor;
-            self.noteView.leftNoteActionView.imageView.backgroundColor = secondaryColor;
+            self.noteView.leftNoteRibbonView.backgroundColor = secondaryColor;
+            self.noteView.leftNoteRibbonView.imageView.backgroundColor = secondaryColor;
         }
         
-        CGPoint newLeftCenter = CGPointMake(self.noteView.leftNoteActionViewOriginalCenter.x + translation.x, self.noteView.leftNoteActionViewOriginalCenter.y);
-        [self.noteView.leftNoteActionView setCenter:(newLeftCenter)];
+        CGPoint newLeftCenter = CGPointMake(self.noteView.leftNoteRibbonViewOriginalCenter.x + translation.x, self.noteView.leftNoteRibbonViewOriginalCenter.y);
+        [self.noteView.leftNoteRibbonView setCenter:(newLeftCenter)];
         
         // TODO: Refactor into state class
         if (![Utilities isEmptyString:self.noteView.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeRightTo"]]) {
             if (translation.x > kSwipeThreshold) {
-                self.noteView.rightNoteActionView.backgroundColor = primaryColor;
-                self.noteView.rightNoteActionView.imageView.backgroundColor = primaryColor;
+                self.noteView.rightNoteRibbonView.backgroundColor = primaryColor;
+                self.noteView.rightNoteRibbonView.imageView.backgroundColor = primaryColor;
             } else {
-                self.noteView.rightNoteActionView.backgroundColor = tertiaryColor;
-                self.noteView.rightNoteActionView.imageView.backgroundColor = tertiaryColor;
+                self.noteView.rightNoteRibbonView.backgroundColor = tertiaryColor;
+                self.noteView.rightNoteRibbonView.imageView.backgroundColor = tertiaryColor;
             }
         } else {
-            self.noteView.rightNoteActionView.backgroundColor = secondaryColor;
-            self.noteView.rightNoteActionView.imageView.backgroundColor = secondaryColor;
+            self.noteView.rightNoteRibbonView.backgroundColor = secondaryColor;
+            self.noteView.rightNoteRibbonView.imageView.backgroundColor = secondaryColor;
         }
-        CGPoint newRightCenter = CGPointMake(self.noteView.rightNoteActionViewOriginalCenter.x + translation.x, self.noteView.rightNoteActionViewOriginalCenter.y);
-        [self.noteView.rightNoteActionView setCenter:(newRightCenter)];
+        CGPoint newRightCenter = CGPointMake(self.noteView.rightNoteRibbonViewOriginalCenter.x + translation.x, self.noteView.rightNoteRibbonViewOriginalCenter.y);
+        [self.noteView.rightNoteRibbonView setCenter:(newRightCenter)];
     }
 }
 
