@@ -48,9 +48,10 @@
                                                  name:UIKeyboardDidShowNotification
                                                object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardIsUp:) name:UIKeyboardDidShowNotification object:nil];
-    
-    self.navigationController.navigationBar.translucent = NO;
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardIsUp:)
+                                                 name:UIKeyboardDidShowNotification
+                                               object:nil];
 }
 
 - (void) onFirstLaunch {
@@ -66,7 +67,8 @@
                                 [Utilities appName],
                                 @" Team"] componentsJoinedByString:@""];
         
-        self.navBarTitle.title = @"New Note";
+        self.navBarTitle.title = kEmptyNoteSubject;
+        
         // Now that we've shown the first launch text,
         // save that they've launched before
         [Utilities setSettingsValue:@"notFirstLaunch" forKey:kHasLaunchedBeforeKey];
