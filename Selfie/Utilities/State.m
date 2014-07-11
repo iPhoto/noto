@@ -57,8 +57,46 @@
     [[[State state] reachability] setUnreachableBlock:unreachableBlock];
 }
 
+// TODO: create self.emails and set them on notify
 + (BOOL) isValidEmail:(SwipeDirection) direction {
     return [Utilities isValidEmail:[Utilities getEmailWithDirection:direction]];
+}
+
+// TODO: refactor duplicate ribbontext/image logic with State
+// TODO: refactor to be called when status changes
+// TODO: add ribbon text/image state getters
++ (NSString *) getRibbonText:(NSString *) noteText withDirection:(SwipeDirection) direction {
+    NSString *emailAddress = [Utilities getEmailWithDirection:direction];
+    NSString *ribbonText;
+    
+    // TODO: Refactor into state class
+    if ([Utilities isEmptyString:noteText]) {
+        ribbonText = @"No note!";
+    } else if ([Utilities isEmptyString:emailAddress]) {
+        ribbonText = @"No email address!";
+    } else if (![Utilities isValidEmail:emailAddress]) {
+        ribbonText = @"Invalid address!";
+    } else {
+        ribbonText = emailAddress;
+    }
+    
+    return ribbonText;
+}
+
++ (UIImage *) getRibbonImage:(NSString *) noteText withDirection:(SwipeDirection) direction {
+    NSString *emailAddress = [Utilities getEmailWithDirection:direction];
+    UIImage *ribbonImage;
+    
+    // TODO: Refactor into state class
+    if ([Utilities isEmptyString:noteText] ||
+        [Utilities isEmptyString:emailAddress] ||
+        ![Utilities isValidEmail:emailAddress]) {
+        ribbonImage = [UIImage imageNamed: @"icon_warning"];
+    } else {
+        ribbonImage = [UIImage imageNamed: @"icon_message"];
+    }
+    
+    return ribbonImage;
 }
 
 #pragma mark -
@@ -72,6 +110,21 @@
         
         // Start Monitoring
         [self.reachability startNotifier];
+        
+        // Listen for empty note
+        [Radio addObserverForName:kEmptyNoteNotification object:nil queue:nil usingBlock:^(NSNotification *notification) {
+            self.noteTitle = kEmptyNoteSubject;
+        }];
+    
+        // Listen for empty subject, but something in body
+        [Radio addObserverForName:kEmptySubjectNotification object:nil queue:nil usingBlock:^(NSNotification *notification) {
+            self.noteTitle = kNoSubject;
+        }];
+        
+        // Listen for updated subject
+//        [Radio addObserverForName:kEmptySubjectNotification object:nil queue:nil usingBlock:^(NSNotification *notification) {
+//            self.noteTitle = kNoSubject;
+//        }];
     }
     
     return self;

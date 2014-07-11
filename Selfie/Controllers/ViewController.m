@@ -20,7 +20,7 @@
     self.navBarTitle.title = @"New Note";
 }
 
-- (NoteView *)noteView {
+- (NoteView *) noteView {
     if (!_noteView) {
         _noteView = [[NoteView alloc] initWithFrame:self.view.frame];
     }
@@ -28,9 +28,33 @@
     return _noteView;
 }
 
-- (void)viewDidLoad {
+- (void) viewDidLoad {
     [super viewDidLoad];
     
+    [self onFirstLaunch];
+    
+    [self.view addSubview:self.noteView];
+    
+    self.noteView.delegate = self;
+    self.noteView.noteViewDelegate = self;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidShow:)
+                                                 name:UIKeyboardDidShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardIsUp:)
+                                                 name:UIKeyboardDidShowNotification
+                                               object:nil];
+}
+
+- (void) onFirstLaunch {
     if([Utilities isFirstLaunch]) {
         self.noteView.text = [@[@"The first line becomes the subject.\n",
                                 @"New lines below are the email body!\n",
@@ -43,51 +67,21 @@
                                 [Utilities appName],
                                 @" Team"] componentsJoinedByString:@""];
         
-        self.navBarTitle.title = @"New Note";
+        self.navBarTitle.title = kEmptyNoteSubject;
+        
         // Now that we've shown the first launch text,
         // save that they've launched before
         [Utilities setSettingsValue:@"notFirstLaunch" forKey:kHasLaunchedBeforeKey];
     }
-    
-    self.noteView.leftNoteActionView.textView.text = [Utilities getSettingsValue:@"swipeLeftTo"];
-    self.noteView.rightNoteActionView.textView.text = [Utilities getSettingsValue:@"swipeRightTo"];
-
-    [self.view addSubview:self.noteView];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    self.noteView.delegate = self;
-    self.noteView.noteViewDelegate = self;
-    [self.noteView setUserInteractionEnabled:TRUE];
-    [self.noteView becomeFirstResponder];
-    self.noteView.textContainerInset = UIEdgeInsetsMake(8, 8, 0, 0);
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow:)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardDidShow:)
-                                                 name:UIKeyboardDidShowNotification
-                                               object:nil];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardIsUp:) name:UIKeyboardDidShowNotification object:nil];
-
-    self.navigationController.navigationBar.translucent = NO;
-}
-
-- (void)scrollToCaretInTextView:(UITextView *)textView animated:(BOOL)animated
-{
+- (void) scrollToCaretInTextView:(UITextView *) textView animated:(BOOL) animated {
     CGRect rect = [textView caretRectForPosition:textView.selectedTextRange.end];
     rect.size.height += textView.textContainerInset.bottom;
     [textView scrollRectToVisible:rect animated:animated];
 }
 
-- (void)textViewDidChange:(UITextView *)textView {
+- (void) textViewDidChange:(UITextView *) textView {
     if ([textView.text hasSuffix:@"\n"]) {
         
         [CATransaction setCompletionBlock:^{
@@ -98,21 +92,24 @@
         [self scrollToCaretInTextView:textView animated:NO];
     }
     
-    NSString *title = [self.noteView.text componentsSeparatedByString:@"\n"][0];
+    NSString *title = [Utilities getNoteSubject:self.noteView.text];
     
     if ([Utilities isEmptyString:title]) {
         if ([Utilities isEmptyString:self.noteView.text]) {
             self.navBarTitle.title = kEmptyNoteSubject;
+            [Radio postNotificationName:kEmptyNoteNotification object:nil];
         } else {
             self.navBarTitle.title = kNoSubject;
+            [Radio postNotificationName:kEmptySubjectNotification object:nil];
         }
         
     } else {
-        self.navBarTitle.title = [self.noteView.text componentsSeparatedByString:@"\n"][0];
+        self.navBarTitle.title = title;
+        [Radio postNotificationName:kUpdateSubjectNotification object:nil];
     }
 }
 
-- (void) didPanInDirection:(UISwipeGestureRecognizerDirection)direction {
+- (void) didPanInDirection:(UISwipeGestureRecognizerDirection) direction {
     Note *note = [[Note alloc] initWithString:self.noteView.text direction:direction];
     
     if (note) {
@@ -122,7 +119,7 @@
     [self initNote];
 }
 
-- (void)keyboardIsUp:(NSNotification *)notification
+- (void) keyboardIsUp:(NSNotification *) notification
 {
     NSDictionary *info = [notification userInfo];
     CGRect keyboardRect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
@@ -136,7 +133,7 @@
     [self scrollToCaretInTextView:self.noteView animated:YES];
 }
 
-- (void)keyboardWillShow:(NSNotification *)notification {
+- (void) keyboardWillShow:(NSNotification *) notification {
     NSDictionary *info = [notification userInfo];
     CGRect keyboardRect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     keyboardRect = [self.view convertRect:keyboardRect fromView:nil];
@@ -169,8 +166,79 @@
     self.noteView.rightNoteActionViewOriginalCenter = self.noteView.rightNoteActionView.center;
 }
 
-- (void)keyboardDidShow:(NSNotification *)notification {
+- (void) keyboardDidShow:(NSNotification *) notification {
     self.noteView.panGestureRecognizer.enabled = YES;
+}
+
+- (void) didPan:(UIPanGestureRecognizer *) gestureRecognizer {
+    // TODO: Refactor and delegate to viewcontroller
+    NoteView *noteView = (NoteView *) gestureRecognizer.view;
+    CGPoint translation = [gestureRecognizer translationInView:noteView];
+    
+    if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        [self.noteView.leftNoteActionView.textView setText:[State getRibbonText:noteView.text withDirection:SwipeDirectionLeft]];
+        [self.noteView.leftNoteActionView.imageView setImage:[State getRibbonImage:noteView.text withDirection:SwipeDirectionLeft]];
+        
+        [self.noteView.rightNoteActionView.textView setText:[State getRibbonText:noteView.text withDirection:SwipeDirectionRight]];
+        [self.noteView.rightNoteActionView.imageView setImage:[State getRibbonImage:noteView.text withDirection:SwipeDirectionRight]];
+        
+    } else if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
+        // TODO: make sure send gesture and view gesture are identical; don't want users to be confused
+        if (abs(translation.x) > abs(translation.y)) {
+            // TODO: Refactor into state class
+            if (translation.x > kSwipeThreshold && ![Utilities isEmptyString:self.noteView.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeRightTo"]]) {
+                [self didPanInDirection:UISwipeGestureRecognizerDirectionRight];
+            } else if (translation.x < -kSwipeThreshold && ![Utilities isEmptyString:self.noteView.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeLeftTo"]]) {
+                [self didPanInDirection:UISwipeGestureRecognizerDirectionLeft];
+            }
+        }
+        
+        [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            self.noteView.leftNoteActionView.center = self.noteView.leftNoteActionViewOriginalCenter;
+        } completion:^(BOOL finished){
+            
+        }];
+        
+        [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            self.noteView.rightNoteActionView.center = self.noteView.rightNoteActionViewOriginalCenter;
+        } completion:^(BOOL finished){
+            
+        }];
+    } else {
+        
+        // TODO: Refactor into state class
+        if (![Utilities isEmptyString:self.noteView.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeLeftTo"]]) {
+            if (translation.x < -kSwipeThreshold) {
+                self.noteView.leftNoteActionView.backgroundColor = primaryColor;
+                self.noteView.leftNoteActionView.imageView.backgroundColor = primaryColor;
+            } else {
+                self.noteView.leftNoteActionView.backgroundColor = tertiaryColor;
+                self.noteView.leftNoteActionView.imageView.backgroundColor = tertiaryColor;
+            }
+        } else {
+            self.noteView.leftNoteActionView.backgroundColor = secondaryColor;
+            self.noteView.leftNoteActionView.imageView.backgroundColor = secondaryColor;
+        }
+        
+        CGPoint newLeftCenter = CGPointMake(self.noteView.leftNoteActionViewOriginalCenter.x + translation.x, self.noteView.leftNoteActionViewOriginalCenter.y);
+        [self.noteView.leftNoteActionView setCenter:(newLeftCenter)];
+        
+        // TODO: Refactor into state class
+        if (![Utilities isEmptyString:self.noteView.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeRightTo"]]) {
+            if (translation.x > kSwipeThreshold) {
+                self.noteView.rightNoteActionView.backgroundColor = primaryColor;
+                self.noteView.rightNoteActionView.imageView.backgroundColor = primaryColor;
+            } else {
+                self.noteView.rightNoteActionView.backgroundColor = tertiaryColor;
+                self.noteView.rightNoteActionView.imageView.backgroundColor = tertiaryColor;
+            }
+        } else {
+            self.noteView.rightNoteActionView.backgroundColor = secondaryColor;
+            self.noteView.rightNoteActionView.imageView.backgroundColor = secondaryColor;
+        }
+        CGPoint newRightCenter = CGPointMake(self.noteView.rightNoteActionViewOriginalCenter.x + translation.x, self.noteView.rightNoteActionViewOriginalCenter.y);
+        [self.noteView.rightNoteActionView setCenter:(newRightCenter)];
+    }
 }
 
 @end

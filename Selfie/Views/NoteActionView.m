@@ -32,42 +32,9 @@
         [self.imageView.layer setBorderWidth: 1.5];
         self.imageView.clipsToBounds = YES;
         self.imageView.layer.cornerRadius = kNoteActionImageHeight / 2;
-//        self.imageView.contentMode = UIViewContentModeScaleAspectFit;
         [self addSubview:self.imageView];
     }
     return self;
-}
-
-- (NSString *)getActionText:(NSString *)noteText {
-    NSString *actionText;
-    NSString *emailAddress;
-    
-    if (self.direction == UISwipeGestureRecognizerDirectionLeft) {
-        emailAddress = [Utilities getSettingsValue:@"swipeLeftTo"];
-    } else if (self.direction == UISwipeGestureRecognizerDirectionRight) {
-        emailAddress = [Utilities getSettingsValue:@"swipeRightTo"];
-    }
-    
-    [self.imageView setImage:[UIImage imageNamed: @"icon_warning"]];
-    
-    // TODO: Refactor into state class
-    if ([Utilities isEmptyString:noteText]) {
-        actionText = @"No note!";
-    } else if ([Utilities isEmptyString:emailAddress]) {
-        actionText = @"No email address!";
-    } else if (![Utilities isValidEmail:emailAddress]) {
-        actionText = @"Invalid address!";
-    } else {
-        actionText = emailAddress;
-        [self.imageView setImage:[UIImage imageNamed: @"icon_message"]];
-    }
-
-    // TODO: Refactor into state class
-//    if (![ReachabilityManager isReachable]) {
-//        [actionText appendString:@"No connection!"];
-//    }
-    
-    return actionText;
 }
 
 @end
