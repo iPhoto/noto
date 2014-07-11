@@ -116,16 +116,6 @@
         [Radio addObserverForName:kEmptyNoteNotification object:nil queue:nil usingBlock:^(NSNotification *notification) {
             self.noteTitle = kEmptyNoteSubject;
         }];
-    
-        // Listen for empty subject, but something in body
-        [Radio addObserverForName:kEmptySubjectNotification object:nil queue:nil usingBlock:^(NSNotification *notification) {
-            self.noteTitle = kNoSubject;
-        }];
-        
-        // Listen for updated subject
-//        [Radio addObserverForName:kEmptySubjectNotification object:nil queue:nil usingBlock:^(NSNotification *notification) {
-//            self.noteTitle = kNoSubject;
-//        }];
     }
     
     return self;

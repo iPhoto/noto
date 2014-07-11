@@ -61,7 +61,6 @@ static NSInteger const kStatusViewHeight = kNoteRibbonViewHeight;
 
 // Notification names
 static NSString * const kEmptyNoteNotification = @"emptyNoteNotification";
-static NSString * const kEmptySubjectNotification = @"emptySubjectNotification";
 static NSString * const kUpdateSubjectNotification = @"updateSubjectNotification";
 static NSString * const kNoteSendSuccessNotification = @"noteSendSuccessNotification";
 static NSString * const kNoteSendFailNotification = @"noteSendFailNotification";
@@ -82,10 +81,10 @@ static NSString * const kNoteSendFailNotification = @"noteSendFailNotification";
 + (BOOL) isValidEmailAddressWithDirection:(SwipeDirection) direction;
 
 + (BOOL) isEmptyString:(NSString *) string;
++ (NSString *) trimWhiteSpace:(NSString *) string;
 
 + (BOOL) isFirstLaunch;
 + (void) setDefaultSettings;
 
 + (NSString *) getEmailWithDirection:(SwipeDirection) direction;
-+ (NSString *) getNoteSubject:(NSString *) text;
 @end;

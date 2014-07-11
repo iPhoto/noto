@@ -65,7 +65,11 @@
 }
 
 + (BOOL) isEmptyString:(NSString *) string {
-    return string == nil || [[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""];
+    return string == nil || [[Utilities trimWhiteSpace:string] isEqualToString:@""];
+}
+
++ (NSString *) trimWhiteSpace:(NSString *) string {
+    return [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 }
 
 + (BOOL) isValidEmailString:(NSString *) candidate {
@@ -106,10 +110,6 @@
     } else {
         return nil;
     }
-}
-
-+ (NSString *) getNoteSubject:(NSString *) text {
-    return [text componentsSeparatedByString:@"\n"][0];
 }
 
 @end;

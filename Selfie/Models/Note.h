@@ -35,8 +35,6 @@
 - (void)send;
 - (void)sendWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
 
-+ (NSString *) getNoteBody:(NSString *) text;
-
 + (NSString *) getNoteSubject:(NSString *) text;
 + (BOOL) isValidNote:(NSString *) text;
 @end

@@ -41,41 +41,32 @@
             return self;
         }
         
-        // TODO: refactor this subject getting logic
-        NSArray *lines = [message componentsSeparatedByString:@"\n"];
-        NSUInteger count = [lines count];
+        NSMutableString *subject = [[Note getNoteSubject:message] mutableCopy];
+        NSMutableString *body;
+        NSString *signature = (NSString *)[Utilities getSettingsValue:kSettingsSignatureKey];
+        NSString *subjectPrefix = (NSString *)[Utilities getSettingsValue:kSettingsSubjectPrefixKey];
         
-        if (count > 0) {
-            NSMutableString *subject = lines[0];
-            NSMutableString *body;
-            NSString *signature = (NSString *)[Utilities getSettingsValue:kSettingsSignatureKey];
-            NSString *subjectPrefix = (NSString *)[Utilities getSettingsValue:kSettingsSubjectPrefixKey];
-            
-            // Build body
-            if (count > 1) {
-                body = [[NSMutableString alloc] initWithString:[[lines subarrayWithRange:NSMakeRange(1, [lines count] - 1)] componentsJoinedByString:@"\n"] ];
-            } else {
-                body = [[NSMutableString alloc] initWithString:@" "];
-            }
-            
-            if (![Utilities isEmptyString:signature]) {
-                [body appendString:@"\n\n"];
-                [body appendString: signature];
-            }
-            
-            if (![Utilities isEmptyString:subjectPrefix]) {
-                subject = [[NSString stringWithFormat:@"%@ %@", subjectPrefix, subject] mutableCopy];
-            }
-            
-            self.toEmail = toEmail;
-            self.fromEmail = fromEmail;
-            self.subject = subject;
-            self.body = body;
+        // Build body
+        body = [message mutableCopy];
+        
+        if (![Utilities isEmptyString:signature]) {
+            [body appendString:@"\n\n"];
+            [body appendString: signature];
         }
+        
+        if (![Utilities isEmptyString:subjectPrefix]) {
+            subject = [[NSString stringWithFormat:@"%@ %@", subjectPrefix, subject] mutableCopy];
+        }
+        
+        self.toEmail = toEmail;
+        self.fromEmail = fromEmail;
+        self.subject = subject;
+        self.body = body;
+        
     }
     return self;
 }
-        
+
 - (void)send {
     [self sendWithCompletionHandler:nil];
 }
@@ -136,19 +127,13 @@
 
 // TODO: should make this reusable
 + (NSString *) getNoteSubject:(NSString *) text {
-    NSArray *lines = [text componentsSeparatedByString:@"\n"];
+    NSArray *lines = [[Utilities trimWhiteSpace:text] componentsSeparatedByString:@"\n"];
     
     if ([lines count] > 0) {
         return lines[0];
     } else {
         return nil;
     }
-}
-
-+ (NSString *) getNoteBody:(NSString *) text {
-    NSArray *lines = [text componentsSeparatedByString:@"\n"];
-    
-    return [[NSString alloc] initWithString:[[lines subarrayWithRange:NSMakeRange(1, [lines count] - 1)] componentsJoinedByString:@"\n"] ];
 }
 
 + (BOOL) isValidNote:(NSString *) text {

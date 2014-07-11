@@ -133,31 +133,13 @@
         [self scrollToCaretInTextView:textView animated:NO];
     }
     
-    NSString *title = [Utilities getNoteSubject:self.noteView.text];
-    
-    if ([Utilities isEmptyString:title]) {
-        if ([Utilities isEmptyString:self.noteView.text]) {
-            self.navBarTitle.title = kEmptyNoteSubject;
-            [Radio postNotificationName:kEmptyNoteNotification object:nil];
-        } else {
-            self.navBarTitle.title = kNoSubject;
-            [Radio postNotificationName:kEmptySubjectNotification object:nil];
-        }
-        
+    if ([Utilities isEmptyString:self.noteView.text]) {
+        self.navBarTitle.title = kEmptyNoteSubject;
+        [Radio postNotificationName:kEmptyNoteNotification object:nil];
     } else {
-        self.navBarTitle.title = title;
+        self.navBarTitle.title = [Note getNoteSubject:self.noteView.text];
         [Radio postNotificationName:kUpdateSubjectNotification object:nil];
     }
-}
-
-- (void) didPanInDirection:(SwipeDirection) direction {
-    Note *note = [[Note alloc] initWithString:self.noteView.text direction:direction];
-    
-    if (note) {
-        [note send];
-    }
-    
-    [self initNote];
 }
 
 - (void) keyboardIsUp:(NSNotification *) notification
@@ -231,6 +213,16 @@
             [self.leftRibbon panWithTranslation:translation];
         }
     }
+}
+
+- (void) didPanInDirection:(SwipeDirection) direction {
+    Note *note = [[Note alloc] initWithString:self.noteView.text direction:direction];
+    
+    if (note) {
+        [note send];
+    }
+    
+    [self initNote];
 }
 
 - (void) reachabilityChanged:(NSNotification *) notification {
