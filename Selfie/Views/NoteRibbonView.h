@@ -14,4 +14,7 @@
 @property (nonatomic, strong) UITextView *textView;
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic) CGPoint originalCenter;
+
+- (void) finalizePosition;
+- (void) xPanWithTranslation:(CGFloat) xTranslation;
 @end

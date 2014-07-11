@@ -38,4 +38,18 @@
     return self;
 }
 
+// TODO: refactor constants to Utilities
+- (void) finalizePosition {
+    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        self.center = self.originalCenter;
+    } completion:^(BOOL finished){
+        
+    }];
+}
+
+- (void) xPanWithTranslation:(CGFloat) xTranslation {
+    CGPoint newCenter = CGPointMake(self.originalCenter.x + xTranslation, self.originalCenter.y);
+    [self setCenter:(newCenter)];
+}
+
 @end

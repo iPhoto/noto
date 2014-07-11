@@ -224,29 +224,19 @@
         // TODO: make sure send gesture and view gesture are identical; don't want users to be confused
         if (abs(translation.x) > abs(translation.y)) {
             // TODO: Refactor into state class
-            if (translation.x > kSwipeThreshold && ![Utilities isEmptyString:self.noteView.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeRightTo"]]) {
+            if (translation.x > kSwipeThreshold && ![Utilities isEmptyString:self.noteView.text] && [Utilities isValidEmail:[Utilities getSettingsValue:kSettingsSwipeRightToEmailKey]]) {
                 [self didPanInDirection:SwipeDirectionRight];
-            } else if (translation.x < -kSwipeThreshold && ![Utilities isEmptyString:self.noteView.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeLeftTo"]]) {
+            } else if (translation.x < -kSwipeThreshold && ![Utilities isEmptyString:self.noteView.text] && [Utilities isValidEmail:[Utilities getSettingsValue:kSettingsSwipeLeftToEmailKey]]) {
                 [self didPanInDirection:SwipeDirectionLeft];
             }
         }
         
-        [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-            self.leftRibbon.center = self.leftRibbon.originalCenter;
-        } completion:^(BOOL finished){
-            
-        }];
-        
-        [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-            self.rightRibbon.center = self.rightRibbon.originalCenter;
-        } completion:^(BOOL finished){
-            
-        }];
-        
+        [self.leftRibbon finalizePosition];
+        [self.rightRibbon finalizePosition];
     } else {
         if (abs(translation.x) < self.view.frame.size.width) {
             // TODO: Refactor into state class
-            if (![Utilities isEmptyString:self.noteView.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeLeftTo"]]) {
+            if (![Utilities isEmptyString:self.noteView.text] && [Utilities isValidEmail:[Utilities getSettingsValue:kSettingsSwipeLeftToEmailKey]]) {
                 if (translation.x < -kSwipeThreshold) {
                     self.leftRibbon.backgroundColor = primaryColor;
                     self.leftRibbon.imageView.backgroundColor = primaryColor;
@@ -259,11 +249,10 @@
                 self.leftRibbon.imageView.backgroundColor = secondaryColor;
             }
             
-            CGPoint newLeftCenter = CGPointMake(self.leftRibbon.originalCenter.x + translation.x, self.leftRibbon.originalCenter.y);
-            [self.leftRibbon setCenter:(newLeftCenter)];
+            [self.leftRibbon xPanWithTranslation:translation.x];
             
             // TODO: Refactor into state class
-            if (![Utilities isEmptyString:self.noteView.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeRightTo"]]) {
+            if (![Utilities isEmptyString:self.noteView.text] && [Utilities isValidEmail:[Utilities getSettingsValue:kSettingsSwipeRightToEmailKey]]) {
                 if (translation.x > kSwipeThreshold) {
                     self.rightRibbon.backgroundColor = primaryColor;
                     self.rightRibbon.imageView.backgroundColor = primaryColor;
@@ -275,8 +264,7 @@
                 self.rightRibbon.backgroundColor = secondaryColor;
                 self.rightRibbon.imageView.backgroundColor = secondaryColor;
             }
-            CGPoint newRightCenter = CGPointMake(self.rightRibbon.originalCenter.x + translation.x, self.rightRibbon.originalCenter.y);
-            [self.rightRibbon setCenter:(newRightCenter)];
+            [self.rightRibbon xPanWithTranslation:translation.x];
         }
     }
 }
