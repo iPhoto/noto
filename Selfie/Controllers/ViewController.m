@@ -170,4 +170,71 @@
     self.noteView.panGestureRecognizer.enabled = YES;
 }
 
+- (void) didPan:(UIPanGestureRecognizer *) gestureRecognizer {
+    // TODO: Refactor and delegate to viewcontroller
+    NoteView *noteView = (NoteView *) gestureRecognizer.view;
+    CGPoint translation = [gestureRecognizer translationInView:noteView];
+    
+    if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        self.noteView.leftNoteActionView.textView.text = [self.noteView.leftNoteActionView getActionText:noteView.text];
+        self.noteView.rightNoteActionView.textView.text = [self.noteView.rightNoteActionView getActionText:noteView.text];
+    } else if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
+        // TODO: make sure send gesture and view gesture are identical; don't want users to be confused
+        if (abs(translation.x) > abs(translation.y)) {
+            // TODO: Refactor into state class
+            if (translation.x > kSwipeThreshold && ![Utilities isEmptyString:self.noteView.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeRightTo"]]) {
+                [self didPanInDirection:UISwipeGestureRecognizerDirectionRight];
+            } else if (translation.x < -kSwipeThreshold && ![Utilities isEmptyString:self.noteView.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeLeftTo"]]) {
+                [self didPanInDirection:UISwipeGestureRecognizerDirectionLeft];
+            }
+        }
+        
+        [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            self.noteView.leftNoteActionView.center = self.noteView.leftNoteActionViewOriginalCenter;
+        } completion:^(BOOL finished){
+            
+        }];
+        
+        [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            self.noteView.rightNoteActionView.center = self.noteView.rightNoteActionViewOriginalCenter;
+        } completion:^(BOOL finished){
+            
+        }];
+    } else {
+        
+        // TODO: Refactor into state class
+        if (![Utilities isEmptyString:self.noteView.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeLeftTo"]]) {
+            if (translation.x < -kSwipeThreshold) {
+                self.noteView.leftNoteActionView.backgroundColor = primaryColor;
+                self.noteView.leftNoteActionView.imageView.backgroundColor = primaryColor;
+            } else {
+                self.noteView.leftNoteActionView.backgroundColor = tertiaryColor;
+                self.noteView.leftNoteActionView.imageView.backgroundColor = tertiaryColor;
+            }
+        } else {
+            self.noteView.leftNoteActionView.backgroundColor = secondaryColor;
+            self.noteView.leftNoteActionView.imageView.backgroundColor = secondaryColor;
+        }
+        
+        CGPoint newLeftCenter = CGPointMake(self.noteView.leftNoteActionViewOriginalCenter.x + translation.x, self.noteView.leftNoteActionViewOriginalCenter.y);
+        [self.noteView.leftNoteActionView setCenter:(newLeftCenter)];
+        
+        // TODO: Refactor into state class
+        if (![Utilities isEmptyString:self.noteView.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeRightTo"]]) {
+            if (translation.x > kSwipeThreshold) {
+                self.noteView.rightNoteActionView.backgroundColor = primaryColor;
+                self.noteView.rightNoteActionView.imageView.backgroundColor = primaryColor;
+            } else {
+                self.noteView.rightNoteActionView.backgroundColor = tertiaryColor;
+                self.noteView.rightNoteActionView.imageView.backgroundColor = tertiaryColor;
+            }
+        } else {
+            self.noteView.rightNoteActionView.backgroundColor = secondaryColor;
+            self.noteView.rightNoteActionView.imageView.backgroundColor = secondaryColor;
+        }
+        CGPoint newRightCenter = CGPointMake(self.noteView.rightNoteActionViewOriginalCenter.x + translation.x, self.noteView.rightNoteActionViewOriginalCenter.y);
+        [self.noteView.rightNoteActionView setCenter:(newRightCenter)];
+    }
+}
+
 @end
