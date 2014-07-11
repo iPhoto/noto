@@ -166,6 +166,9 @@
     
     UIEdgeInsets inset = self.noteView.contentInset;
     inset.bottom = keyboardRect.size.height;
+    if (self.statusView.hidden == NO) {
+        inset.bottom += kStatusViewHeight;
+    }
     self.noteView.contentInset = inset;
     self.noteView.scrollIndicatorInsets = inset;
     
