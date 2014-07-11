@@ -21,7 +21,7 @@
         
         [self.textView setFont:[UIFont systemFontOfSize:kGlobalFontSize]];
         [self.textView setTextColor:[UIColor whiteColor]];
-        self.textView.textContainerInset = UIEdgeInsetsMake((kNoteRibbonViewHeight - kGlobalFontSize) / 2 - 2, kNoteRibbonViewHeight, 0, kNoteRibbonViewHeight);
+        self.textView.textContainerInset = UIEdgeInsetsMake((kNoteRibbonViewHeight - kGlobalFontSize) / 2 - 2, kNoteRibbonTextOffset, 0, kNoteRibbonTextOffset);
         
         self.clipsToBounds = YES;
         self.layer.cornerRadius = kNoteRibbonViewHeight / 2;

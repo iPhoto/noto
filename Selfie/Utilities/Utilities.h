@@ -50,7 +50,8 @@ static NSString * const kSignatureKey = @"signature";
 static NSInteger const kNoteRibbonViewHeight = 40;
 static NSInteger const kNoteRibbonImageBorder = 1;
 static NSInteger const kNoteRibbonImageBorderSpacing = 2 * kNoteRibbonImageBorder;
-static NSInteger const kNoteRibbonImageHeight = 40 - 2 * kNoteRibbonImageBorderSpacing;
+static NSInteger const kNoteRibbonImageHeight = kNoteRibbonViewHeight - 2 * kNoteRibbonImageBorderSpacing;
+static NSInteger const kNoteRibbonTextOffset = kNoteRibbonImageBorderSpacing / 2 + kNoteRibbonImageHeight;
 
 static NSInteger const kNoteRibbonViewWidth = 1000;
 static NSInteger const kSwipeThreshold = 120;
