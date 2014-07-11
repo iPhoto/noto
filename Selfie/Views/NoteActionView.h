@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
-#import "ReachabilityManager.h"
 #import "Utilities.h"
 
 @interface NoteActionView : UIView

@@ -1,0 +1,1 @@
+http://appium.io/slate/en/tutorial/ios.html

@@ -21,12 +21,12 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [Crashlytics startWithAPIKey:CrashlyticsAPIKey];
     
-    [ReachabilityManager reachabilityManager];
-    [ReachabilityManager setReachableBlock:^(Reachability *reachableBlock) {
+    [State state];
+    [State setReachableBlock:^(Reachability *reachableBlock) {
         [Queue pollQueue];
         NSLog(@"Polling");
     }];
-    [ReachabilityManager setUnreachableBlock:^(Reachability *unreachableBlock) {
+    [State setUnreachableBlock:^(Reachability *unreachableBlock) {
         NSLog(@"Unreachable");
     }];
     

@@ -93,8 +93,8 @@
 }
 
 + (void) setDefaultSettings {
-    [Utilities setSettingsValue:@"[Nōto]" forKey:@"subjectPrefix"];
-    [Utilities setSettingsValue:@"Sent with Nōto" forKey:@"signature"];
+    [Utilities setSettingsValue:[Utilities appName] forKey:@"subjectPrefix"];
+    [Utilities setSettingsValue:[NSString stringWithFormat:@"Sent with %@", [Utilities appName]] forKey:@"signature"];
 }
 
 + (BOOL)isFirstLaunch {

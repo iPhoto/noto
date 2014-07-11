@@ -13,6 +13,11 @@
 #define secondaryColor [UIColor colorWithRed:231.0 / 255.0 green:76.0 / 255.0 blue:60.0 / 255.0 alpha:1.0]
 #define tertiaryColor [UIColor colorWithRed:127.0 / 255.0 green:140.0 / 255.0 blue:141.0 / 255.0 alpha:1.0]
 
+enum SwipeDirection : NSUInteger {
+    SwipeDirectionLeft = 1,
+    SwipeDirectionRight = 2
+};
+
 static NSString * const kHasLaunchedBeforeKey = @"selfieHasLaunchedBefore";
 static NSString * const SGUsername = @"danielsuo";
 static NSString * const SGPassword = @"TheLAC41988";

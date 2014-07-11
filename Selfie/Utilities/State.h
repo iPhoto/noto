@@ -1,5 +1,5 @@
 //
-//  State.h
+//  ReachabilityManager.h
 //  Selfie
 //
 //  Created by Daniel Suo on 7/8/14.
@@ -7,7 +7,27 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Reachability.h"
+
+@class Reachability;
 
 @interface State : NSObject
+@property (strong, nonatomic) Reachability *reachability;
+
+#pragma mark -
+#pragma mark State
++ (State *)state;
+
+#pragma mark -
+#pragma mark Reachability blocks
++ (void)setReachableBlock:(void(^)(Reachability *))reachableBlock;
++ (void)setUnreachableBlock:(void(^)(Reachability *))unreachableBlock;
+
+#pragma mark -
+#pragma mark Class Methods
++ (BOOL)isReachable;
++ (BOOL)isUnreachable;
++ (BOOL)isReachableViaWWAN;
++ (BOOL)isReachableViaWiFi;
 
 @end
