@@ -38,7 +38,7 @@
 - (void) show {
     self.hidden = NO;
     
-    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:2.0 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.alpha = 0.6;
     } completion:^(BOOL finished){
         
@@ -46,7 +46,7 @@
 }
 
 - (void) hide {
-    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:2.0 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.alpha = 0.0;
     } completion:^(BOOL finished){
         self.hidden = YES;
