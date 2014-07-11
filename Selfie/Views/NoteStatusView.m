@@ -16,7 +16,7 @@
     if (self) {
         self.editable = NO;
         self.backgroundColor = primaryColor;
-        [self setAlpha:0.4];
+        [self setAlpha:0.6];
         [self setFont:[UIFont systemFontOfSize:kGlobalFontSize]];
         [self setTextColor:[UIColor whiteColor]];
         self.text = kStatusNoConnection;
