@@ -199,7 +199,7 @@
     self.leftRibbon.originalCenter = self.leftRibbon.center;
     self.rightRibbon.originalCenter = self.rightRibbon.center;
     
-    self.statusView.frame = CGRectMake(0, ribbonViewHeight, kStatusViewWidth, kStatusViewHeight);
+    self.statusView.frame = CGRectMake((keyboardRect.size.width - kStatusViewWidth) / 2, ribbonViewHeight, kStatusViewWidth, kStatusViewHeight);
 }
 
 - (void) keyboardDidShow:(NSNotification *) notification {
@@ -217,8 +217,6 @@
         
         [self.rightRibbon.textView setText:[State getRibbonText:noteView.text withDirection:SwipeDirectionRight]];
         [self.rightRibbon.imageView setImage:[State getRibbonImage:noteView.text withDirection:SwipeDirectionRight]];
-        
-        self.statusView.hidden = YES;
     } else if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
         // TODO: make sure send gesture and view gesture are identical; don't want users to be confused
         if (abs(translation.x) > abs(translation.y)) {
@@ -242,7 +240,6 @@
             
         }];
         
-        [self reachabilityChanged:nil];
     } else {
         if (abs(translation.x) < self.view.frame.size.width) {
             // TODO: Refactor into state class

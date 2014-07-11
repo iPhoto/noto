@@ -32,10 +32,12 @@ static NSString * const SGUsername = @"danielsuo";
 static NSString * const SGPassword = @"TheLAC41988";
 static NSString * const CrashlyticsAPIKey = @"7052c7c0dfa3dc8a01de1c9fadf87a6abec3d33a";
 
-// Note defaults
+// Note default copy
 static NSString * const kEmptyNoteSubject = @"New Note";
 static NSString * const kNoSubject = @"[No subject]";
-static NSString * const kNoConnection = @"No connection! Notes will be saved.";
+
+// Status bar default copy
+static NSString * const kStatusNoConnection = @"No connection! Notes will be saved.";
 
 // User data
 static NSString * const kEmailQueueKey = @"emailQueue";
@@ -52,7 +54,7 @@ static NSInteger const kNoteRibbonImageHeight = 40 - 2 * kNoteRibbonImageBorder;
 static NSInteger const kNoteRibbonViewWidth = 1000;
 static NSInteger const kSwipeThreshold = 120;
 
-// No connection constants
+// Status bar layout constants
 static NSInteger const kStatusViewWidth = kNoteRibbonViewWidth;
 static NSInteger const kStatusViewHeight = kNoteRibbonViewHeight;
 

@@ -16,10 +16,12 @@
     if (self) {
         self.editable = NO;
         self.backgroundColor = primaryColor;
-        [self setAlpha:0.7];
-        self.text = kNoConnection;
+        [self setAlpha:0.4];
+        [self setFont:[UIFont systemFontOfSize:kGlobalFontSize]];
+        [self setTextColor:[UIColor whiteColor]];
+        self.text = kStatusNoConnection;
         self.textAlignment = NSTextAlignmentCenter;
-        self.textContainerInset = UIEdgeInsetsMake(-self.contentSize.height / 2 - 1, 0, 0, 0);
+        self.textContainerInset = UIEdgeInsetsMake((kStatusViewHeight - kGlobalFontSize)/2 - 2, 0, 0, 0);
     }
     return self;
 }
