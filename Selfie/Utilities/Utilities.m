@@ -90,7 +90,7 @@
 }
 
 + (void) setDefaultSettings {
-    [Utilities setSettingsValue:[Utilities appName] forKey:kSubjectPrefixKey];
+    [Utilities setSettingsValue:[NSString stringWithFormat:@"[%@]", [Utilities appName]] forKey:kSubjectPrefixKey];
     [Utilities setSettingsValue:[NSString stringWithFormat:@"Sent with %@", [Utilities appName]] forKey:kSignatureKey];
 }
 
