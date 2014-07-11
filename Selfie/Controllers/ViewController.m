@@ -148,7 +148,7 @@
     }
 }
 
-- (void) didPanInDirection:(UISwipeGestureRecognizerDirection) direction {
+- (void) didPanInDirection:(SwipeDirection) direction {
     Note *note = [[Note alloc] initWithString:self.noteView.text direction:direction];
     
     if (note) {
@@ -225,9 +225,9 @@
         if (abs(translation.x) > abs(translation.y)) {
             // TODO: Refactor into state class
             if (translation.x > kSwipeThreshold && ![Utilities isEmptyString:self.noteView.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeRightTo"]]) {
-                [self didPanInDirection:UISwipeGestureRecognizerDirectionRight];
+                [self didPanInDirection:SwipeDirectionRight];
             } else if (translation.x < -kSwipeThreshold && ![Utilities isEmptyString:self.noteView.text] && [Utilities isValidEmail:[Utilities getSettingsValue:@"swipeLeftTo"]]) {
-                [self didPanInDirection:UISwipeGestureRecognizerDirectionLeft];
+                [self didPanInDirection:SwipeDirectionLeft];
             }
         }
         

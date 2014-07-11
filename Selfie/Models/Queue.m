@@ -14,19 +14,20 @@
 @implementation Queue
 
 + (void)enqueue:(Note *) note {
-    NSMutableArray *queue = [[Utilities getSettingsObject:@"emailQueue"] mutableCopy];
+    NSMutableArray *queue = [[Utilities getSettingsObject:kSettingsNoteQueueKey] mutableCopy];
     [queue addObject:[note toDictionary]];
-    [Utilities setSettingsObject:queue forKey:@"emailQueue"];
+    [Utilities setSettingsObject:queue forKey:kSettingsNoteQueueKey];
 }
 
 + (NSUInteger)count {
-    return [(NSArray *)[Utilities getSettingsObject:@"emailQueue"] count];
+    return [(NSArray *)[Utilities getSettingsObject:kSettingsNoteQueueKey] count];
 }
 
 + (void)pollQueue {
     [Queue pollQueueWithCompletionHandler:nil];
 }
 
+// TODO: refactor notifications
 + (void)pollQueueWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"emailQueueFull" object:nil];
     [Utilities loopThroughQueueAndSave:^(NSMutableArray *queue, NSDictionary *dict) {

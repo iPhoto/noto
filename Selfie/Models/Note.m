@@ -1,5 +1,5 @@
 //
-//  Mail.m
+//  Note.h
 //  Selfie
 //
 //  Created by Daniel Suo on 6/30/14.
@@ -29,24 +29,10 @@
     return self;
 }
 
-- (instancetype)initWithString:(NSString *)string
-                     direction:(NSUInteger)direction {
+- (instancetype)initWithString:(NSString *) string
+                     direction:(SwipeDirection) direction {
     
-    NSString *emailTo;
-    NSString *emailFrom;
-    
-    // TODO: remove swipeFrom emails and set fromEmail to toEmail automatically?
-    if (direction == UISwipeGestureRecognizerDirectionRight) {
-        emailTo = @"swipeRightTo";
-        emailFrom = @"swipeRightFrom";
-    } else if (direction == UISwipeGestureRecognizerDirectionLeft) {
-        emailTo = @"swipeLeftTo";
-        emailFrom = @"swipeLeftFrom";
-    } else {
-        return self;
-    }
-    
-    NSString *toEmail = (NSString *)[Utilities getSettingsObject:emailTo];
+    NSString *toEmail = [Utilities getEmailWithDirection:direction];
     NSString *fromEmail = toEmail;
     
     if (toEmail) {
@@ -63,8 +49,8 @@
         if (count > 0) {
             NSMutableString *subject = lines[0];
             NSMutableString *body;
-            NSString *signature = (NSString *)[Utilities getSettingsObject:@"signature"];
-            NSString *subjectPrefix = (NSString *)[Utilities getSettingsObject:@"subjectPrefix"];
+            NSString *signature = (NSString *)[Utilities getSettingsValue:kSettingsSignatureKey];
+            NSString *subjectPrefix = (NSString *)[Utilities getSettingsValue:kSettingsSubjectPrefixKey];
             
             // Build body
             if (count > 1) {
@@ -119,6 +105,8 @@
         [msg sendWithWebUsingSuccessBlock:^(id responseObject) {
             NSLog(@"Success!: %@", self.subject);
             
+            [Radio postNotificationName:kNoteSendSuccessNotification object:nil];
+            
             if (completionHandler) {
                 completionHandler(UIBackgroundFetchResultNewData);
             }
@@ -126,7 +114,9 @@
             [self onComplete];
         } failureBlock:^(NSError *error) {
             NSLog(@"Error sending email: %@", error);
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"setMinimumBackgroundFetchInterval" object:nil];
+            
+            [Radio postNotificationName:kNoteSendFailNotification object:nil];
+            
             [Queue enqueue:self];
             
             if (completionHandler) {
@@ -149,6 +139,7 @@
     return dict;
 }
 
+// TODO: refactor to respond to notifications
 - (void)onComplete {
     [UIApplication sharedApplication].applicationIconBadgeNumber = [Queue count];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];

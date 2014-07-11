@@ -24,10 +24,8 @@
     [State state];
     [State setReachableBlock:^(Reachability *reachableBlock) {
         [Queue pollQueue];
-        NSLog(@"Polling");
     }];
     [State setUnreachableBlock:^(Reachability *unreachableBlock) {
-        NSLog(@"Unreachable");
     }];
     
     if ([Utilities isFirstLaunch]) {
@@ -39,7 +37,7 @@
     application.applicationIconBadgeNumber = [Queue count];
     
     // Set up Notification observers
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setMinimumBackgroundFetchInterval:) name:@"setMinimumBackgroundFetchInterval" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setMinimumBackgroundFetchInterval:) name:kNoteSendFailNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopMinimumBackgroundFetchInterval:) name:@"stopMinimumBackgroundFetchInterval" object:nil];
     
     [Queue pollQueue];

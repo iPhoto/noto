@@ -1,5 +1,5 @@
 //
-//  Mail.h
+//  Note.h
 //  Selfie
 //
 //  Created by Daniel Suo on 6/30/14.
@@ -20,17 +20,17 @@
 @property (strong, nonatomic) NSString *subject;
 @property (strong, nonatomic) NSString *body;
 
-- (instancetype)initFromDictionary:(NSDictionary *)dict;
+- (instancetype)initFromDictionary:(NSDictionary *) dict;
 
-- (instancetype)initWithToEmail:(NSString *)toEmail
-                      fromEmail:(NSString *)fromEmail
-                        subject:(NSString *)subject
-                           body:(NSString *)body;
+- (instancetype) initWithToEmail:(NSString *) toEmail
+                      fromEmail:(NSString *) fromEmail
+                        subject:(NSString *) subject
+                           body:(NSString *) body;
 
-- (instancetype)initWithString:(NSString *)string
-                     direction:(NSUInteger) direction;
+- (instancetype) initWithString:(NSString *) string
+                     direction:(SwipeDirection) direction;
 
-- (NSDictionary *)toDictionary;
+- (NSDictionary *) toDictionary;
 
 - (void)send;
 - (void)sendWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;

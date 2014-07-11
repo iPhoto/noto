@@ -38,30 +38,30 @@
     };
 
 + (void) loopThroughQueueAndSave:(void(^)(NSMutableArray *, NSDictionary *)) predicate {
-    NSArray *queue = (NSArray *) [Utilities getSettingsObject:kEmailQueueKey];
+    NSArray *queue = (NSArray *) [Utilities getSettingsObject:kSettingsNoteQueueKey];
     NSMutableArray *mutableQueue = [queue mutableCopy];
     
     for (int i = 0; i < [queue count]; i++) {
         predicate(mutableQueue, (NSDictionary *)[queue objectAtIndex: i]);
     }
     
-    [Utilities setSettingsObject:mutableQueue forKey:kEmailQueueKey];
+    [Utilities setSettingsObject:mutableQueue forKey:kSettingsNoteQueueKey];
 }
 
 + (void) initDB {
     // Set up NSUserDefaults
-    NSArray *queue = (NSArray *)[Utilities getSettingsObject:kEmailQueueKey];
+    NSArray *queue = (NSArray *)[Utilities getSettingsObject:kSettingsNoteQueueKey];
     if (!queue) {
         queue = [[NSArray alloc] init];
     }
-    [Utilities setSettingsObject:queue forKey:kEmailQueueKey];
+    [Utilities setSettingsObject:queue forKey:kSettingsNoteQueueKey];
 }
 
 + (void) clearDB {
     // Set up NSUserDefaults
-    NSArray *queue = (NSArray *)[Utilities getSettingsObject:kEmailQueueKey];
+    NSArray *queue = (NSArray *)[Utilities getSettingsObject:kSettingsNoteQueueKey];
     queue = [[NSArray alloc] init];
-    [Utilities setSettingsObject:queue forKey:kEmailQueueKey];
+    [Utilities setSettingsObject:queue forKey:kSettingsNoteQueueKey];
 }
 
 + (BOOL) isEmptyString:(NSString *) string {
@@ -90,15 +90,15 @@
 }
 
 + (void) setDefaultSettings {
-    [Utilities setSettingsValue:[NSString stringWithFormat:@"[%@]", [Utilities appName]] forKey:kSubjectPrefixKey];
-    [Utilities setSettingsValue:[NSString stringWithFormat:@"Sent with %@", [Utilities appName]] forKey:kSignatureKey];
+    [Utilities setSettingsValue:[NSString stringWithFormat:@"[%@]", [Utilities appName]] forKey:kSettingsSubjectPrefixKey];
+    [Utilities setSettingsValue:[NSString stringWithFormat:@"Sent with %@", [Utilities appName]] forKey:kSettingsSignatureKey];
 }
 
 + (NSString *) getEmailWithDirection:(SwipeDirection) direction {
     if (direction == SwipeDirectionLeft) {
-        return [Utilities getSettingsValue:kSwipeLeftToEmailKey];
+        return [Utilities getSettingsValue:kSettingsSwipeLeftToEmailKey];
     } else if (direction == SwipeDirectionRight) {
-        return [Utilities getSettingsValue:kSwipeRightToEmailKey];
+        return [Utilities getSettingsValue:kSettingsSwipeRightToEmailKey];
     } else {
         return nil;
     }

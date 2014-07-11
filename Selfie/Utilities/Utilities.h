@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Note.h"
 
 // Default notification center
 #define Radio [NSNotificationCenter defaultCenter]
@@ -40,11 +39,11 @@ static NSString * const kNoSubject = @"[No subject]";
 static NSString * const kStatusNoConnection = @"No connection! Notes will be saved.";
 
 // User data
-static NSString * const kEmailQueueKey = @"emailQueue";
-static NSString * const kSwipeLeftToEmailKey = @"swipeLeftTo";
-static NSString * const kSwipeRightToEmailKey = @"swipeRightTo";
-static NSString * const kSubjectPrefixKey = @"subjectPrefix";
-static NSString * const kSignatureKey = @"signature";
+static NSString * const kSettingsNoteQueueKey = @"noteQueue";
+static NSString * const kSettingsSwipeLeftToEmailKey = @"swipeLeftTo";
+static NSString * const kSettingsSwipeRightToEmailKey = @"swipeRightTo";
+static NSString * const kSettingsSubjectPrefixKey = @"subjectPrefix";
+static NSString * const kSettingsSignatureKey = @"signature";
 
 // Ribbon layout constants
 static NSInteger const kNoteRibbonViewHeight = 40;
@@ -64,6 +63,8 @@ static NSInteger const kStatusViewHeight = kNoteRibbonViewHeight;
 static NSString * const kEmptyNoteNotification = @"emptyNoteNotification";
 static NSString * const kEmptySubjectNotification = @"emptySubjectNotification";
 static NSString * const kUpdateSubjectNotification = @"updateSubjectNotification";
+static NSString * const kNoteSendSuccessNotification = @"noteSendSuccessNotification";
+static NSString * const kNoteSendFailNotification = @"noteSendFailNotification";
 
 @interface Utilities : NSObject
 + (NSString *) appName;
