@@ -21,7 +21,6 @@
         [self setAlpha:0.6];
         [self setFont:[UIFont systemFontOfSize:kGlobalFontSize]];
         [self setTextColor:[UIColor whiteColor]];
-        self.text = kStatusNoConnection;
         self.textAlignment = NSTextAlignmentCenter;
         self.textContainerInset = UIEdgeInsetsMake((kStatusViewHeight - kGlobalFontSize)/2 - 2, 0, 0, 0);
     }

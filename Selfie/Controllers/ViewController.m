@@ -284,8 +284,10 @@
 - (void) reachabilityChanged:(NSNotification *) notification {
     if ([State isReachable]) {
         self.statusView.hidden = YES;
+        self.statusView.text = @"";
     } else {
         self.statusView.hidden = NO;
+        self.statusView.text = kStatusNoConnection;
     }
 }
 
