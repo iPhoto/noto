@@ -103,9 +103,9 @@
 }
 
 + (NSString *) getFirstLaunchText {
-    return [@[[NSString stringWithFormat:@"Welcome to %@!.\n\n", [Utilities appName]],
+    return [@[[NSString stringWithFormat:@"Welcome to %@!\n\n", [Utilities appName]],
               @"First, tap the gear icon to set your email addresses.",
-              @"Then, swipe in the corresponding direction to email yourself notes!\n",
+              @"Then, swipe in the corresponding direction to email yourself notes.\n",
               @"\n",
               @"(｡･ω･｡)ﾉ♡\n",
               [NSString stringWithFormat:@"The %@ Team", [Utilities appName]]]
