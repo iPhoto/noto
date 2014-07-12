@@ -98,11 +98,6 @@
                 object:nil];
     
     [Radio addObserver:self
-              selector:@selector(reachabilityChanged:)
-                  name:kReachabilityChangedNotification
-                object:nil];
-    
-    [Radio addObserver:self
               selector:@selector(sendSuccess:)
                   name:kNoteSendSuccessNotification
                 object:nil];
@@ -113,6 +108,13 @@
                 object:nil];
     
     [self.noteView becomeFirstResponder];
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    [Radio addObserver:self
+              selector:@selector(reachabilityChanged:)
+                  name:kReachabilityChangedNotification
+                object:nil];
 }
 
 - (void) onFirstLaunch {
