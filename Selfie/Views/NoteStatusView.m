@@ -43,7 +43,7 @@
 
 - (void) showWithDelay:(NSTimeInterval) delay {
     self.hidden = NO;
-    [UIView animateWithDuration:2.0 delay:delay usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:2.0 delay:delay usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveLinear animations:^{
         self.alpha = 0.8;
     } completion:^(BOOL finished){
         
@@ -55,7 +55,7 @@
 }
 
 - (void) hideWithDelay:(NSTimeInterval) delay {
-    [UIView animateWithDuration:2.0 delay:delay usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:2.0 delay:delay usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveLinear animations:^{
         self.alpha = 0.0;
     } completion:^(BOOL finished){
         if (finished) {

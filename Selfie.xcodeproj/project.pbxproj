@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4F1F9263196B25C500EAD653 /* NoteRibbonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F9262196B25C500EAD653 /* NoteRibbonView.m */; };
 		4F531FFD195F3B3600F4ABAE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F531FFC195F3B3600F4ABAE /* AudioToolbox.framework */; };
+		4F58C4E519709BA00054CE12 /* NoteAttachmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F58C4E419709BA00054CE12 /* NoteAttachmentView.m */; };
 		4F59863F196C71BA006D969E /* State.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F59863E196C71BA006D969E /* State.m */; };
 		4F6E3A2319687F1D00E7A0A8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6E3A0F19687F1D00E7A0A8 /* AppDelegate.m */; };
 		4F6E3A2419687F1D00E7A0A8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6E3A1219687F1D00E7A0A8 /* ViewController.m */; };
@@ -43,6 +44,8 @@
 		4F1F9261196B25C500EAD653 /* NoteRibbonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteRibbonView.h; sourceTree = "<group>"; };
 		4F1F9262196B25C500EAD653 /* NoteRibbonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteRibbonView.m; sourceTree = "<group>"; };
 		4F531FFC195F3B3600F4ABAE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		4F58C4E319709BA00054CE12 /* NoteAttachmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteAttachmentView.h; sourceTree = "<group>"; };
+		4F58C4E419709BA00054CE12 /* NoteAttachmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteAttachmentView.m; sourceTree = "<group>"; };
 		4F598638196C4BF9006D969E /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		4F59863D196C71BA006D969E /* State.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = State.h; sourceTree = "<group>"; };
 		4F59863E196C71BA006D969E /* State.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = State.m; sourceTree = "<group>"; };
@@ -154,10 +157,12 @@
 				4F6E3A2219687F1D00E7A0A8 /* Main.storyboard */,
 				4FB649871968D9A200CF3ED8 /* NoteView.h */,
 				4FB649881968D9A200CF3ED8 /* NoteView.m */,
-				4F8D5452196E44F600FF1BE8 /* NoteStatusView.h */,
-				4F8D5453196E44F600FF1BE8 /* NoteStatusView.m */,
+				4F58C4E319709BA00054CE12 /* NoteAttachmentView.h */,
+				4F58C4E419709BA00054CE12 /* NoteAttachmentView.m */,
 				4F1F9261196B25C500EAD653 /* NoteRibbonView.h */,
 				4F1F9262196B25C500EAD653 /* NoteRibbonView.m */,
+				4F8D5452196E44F600FF1BE8 /* NoteStatusView.h */,
+				4F8D5453196E44F600FF1BE8 /* NoteStatusView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -382,6 +387,7 @@
 				4F6E3A2319687F1D00E7A0A8 /* AppDelegate.m in Sources */,
 				4F6E3A2919687F1D00E7A0A8 /* Queue.m in Sources */,
 				4FB649891968D9A200CF3ED8 /* NoteView.m in Sources */,
+				4F58C4E519709BA00054CE12 /* NoteAttachmentView.m in Sources */,
 				4F1F9263196B25C500EAD653 /* NoteRibbonView.m in Sources */,
 				4F6E3A2719687F1D00E7A0A8 /* main.m in Sources */,
 			);

@@ -13,6 +13,7 @@
 @property (strong, nonatomic) NoteRibbonView *leftRibbon;
 @property (strong, nonatomic) NoteRibbonView *rightRibbon;
 @property (strong, nonatomic) NoteStatusView *statusView;
+@property (strong, nonatomic) NoteAttachmentView *attachmentView;
 @property (strong, nonatomic) IBOutlet UINavigationItem *navBarTitle;
 @end
 
@@ -57,12 +58,23 @@
     return _statusView;
 }
 
+- (NoteAttachmentView *) attachmentView {
+    if (!_attachmentView) {
+        _attachmentView = [[NoteAttachmentView alloc] init];
+    }
+    
+    return _attachmentView;
+}
+
 - (void) viewDidLoad {
     [super viewDidLoad];
     
     [self onFirstLaunch];
     
+    UIView *square = [[UIView alloc] initWithFrame:CGRectMake(0, 50, 40, 40)];
+    square.backgroundColor = [UIColor greenColor];
     [self.view addSubview:self.noteView];
+    [self.view addSubview:self.attachmentView];
     [self.view addSubview:self.statusView];
     [self.view addSubview:self.leftRibbon];
     [self.view addSubview:self.rightRibbon];
@@ -168,6 +180,7 @@
     [self.leftRibbon updateFrameToKeyboard:keyboardRect];
     [self.rightRibbon updateFrameToKeyboard:keyboardRect];
     [self.statusView updateFrameToKeyboard:keyboardRect];
+    [self.attachmentView updateFrameToKeyboard:keyboardRect withNavBarHeight:self.navigationController.navigationBar.frame.size.height];
 }
 
 - (void) keyboardDidShow:(NSNotification *) notification {
@@ -231,7 +244,6 @@
 
 - (void) reachabilityChanged:(NSNotification *) notification {
     if ([State isReachable]) {
-        NSLog(@"hiding");
         [self.statusView hide];
         self.statusView.text = @"";
     } else {
@@ -245,7 +257,7 @@
     if ([State isReachable]) {
         self.statusView.backgroundColor = primaryColor;
         self.statusView.text = @"Success!";
-        [self.statusView hideWithDelay:1];
+        [self.statusView hideWithDelay:0.5];
     }
 }
 
@@ -253,7 +265,7 @@
     if ([State isReachable]) {
         self.statusView.backgroundColor = secondaryColor;
         self.statusView.text = @"Failure!";
-        [self.statusView hideWithDelay:1];
+        [self.statusView hideWithDelay:0.5];
     }
 }
 

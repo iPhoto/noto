@@ -59,6 +59,10 @@ static NSInteger const kSwipeThreshold = 120;
 static NSInteger const kStatusViewWidth = kNoteRibbonViewWidth;
 static NSInteger const kStatusViewHeight = kNoteRibbonViewHeight;
 
+// Icon layout constants
+static NSInteger const kIconDim = 30;
+static NSInteger const kIconSpacing = 10;
+
 // Notification names
 static NSString * const kEmptyNoteNotification = @"emptyNoteNotification";
 static NSString * const kUpdateSubjectNotification = @"updateSubjectNotification";
