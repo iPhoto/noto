@@ -59,7 +59,8 @@
         self.alpha = 0.0;
     } completion:^(BOOL finished){
         if (finished) {
-            self.hidden = YES;   
+            self.hidden = YES;
+            self.text = @"";
         }
     }];
 }

@@ -41,7 +41,7 @@
     [[UINavigationBar appearance] setBarTintColor:primaryColor];
     
     // TODO: set button bar item color to white in code, not storyboard
-    // [[UIBarButtonItem appearance] setTintColor:[UIColor whiteColor]];
+//    // [[UIBarButtonItem appearance] setTintColor:[UIColor whiteColor]];
     
     return YES;
 }

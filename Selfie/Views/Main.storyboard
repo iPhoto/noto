@@ -9,15 +9,18 @@
             <objects>
                 <viewController extendedLayoutIncludesOpaqueBars="YES" id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" title="New Note" id="QlS-Wp-MjW">
-                        <barButtonItem key="rightBarButtonItem" image="icon_settings" id="dmr-EG-7lQ">
+                        <barButtonItem key="leftBarButtonItem" image="icon_settings" id="dmr-EG-7lQ">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <segue destination="xw0-um-NU6" kind="push" identifier="showSettingsFromNote" id="cZo-9D-aFX"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="icon_camera" id="TRr-P9-6sd"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="attachmentButton" destination="TRr-P9-6sd" id="kDX-k8-1GO"/>
                         <outlet property="navBarTitle" destination="QlS-Wp-MjW" id="5QB-F7-GbM"/>
+                        <outlet property="settingsButton" destination="dmr-EG-7lQ" id="ypm-QW-0FW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -73,6 +76,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="icon_camera" width="20" height="20"/>
         <image name="icon_settings" width="20" height="20"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

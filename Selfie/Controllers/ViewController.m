@@ -13,7 +13,8 @@
 @property (strong, nonatomic) NoteRibbonView *leftRibbon;
 @property (strong, nonatomic) NoteRibbonView *rightRibbon;
 @property (strong, nonatomic) NoteStatusView *statusView;
-@property (strong, nonatomic) NoteAttachmentView *attachmentView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *attachmentButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *settingsButton;
 @property (strong, nonatomic) IBOutlet UINavigationItem *navBarTitle;
 @end
 
@@ -58,23 +59,14 @@
     return _statusView;
 }
 
-- (NoteAttachmentView *) attachmentView {
-    if (!_attachmentView) {
-        _attachmentView = [[NoteAttachmentView alloc] init];
-    }
-    
-    return _attachmentView;
-}
-
 - (void) viewDidLoad {
     [super viewDidLoad];
     
     [self onFirstLaunch];
     
-    UIView *square = [[UIView alloc] initWithFrame:CGRectMake(0, 50, 40, 40)];
-    square.backgroundColor = [UIColor greenColor];
+    [self.noteView becomeFirstResponder];
+    
     [self.view addSubview:self.noteView];
-    [self.view addSubview:self.attachmentView];
     [self.view addSubview:self.statusView];
     [self.view addSubview:self.leftRibbon];
     [self.view addSubview:self.rightRibbon];
@@ -82,7 +74,8 @@
     self.noteView.delegate = self;
     self.noteView.noteViewDelegate = self;
     
-    [self.attachmentView.takePhotoButton addTarget:self action:@selector(selectPhoto:) forControlEvents:UIControlEventTouchUpInside];
+    [self.attachmentButton setTarget:self];
+    [self.attachmentButton setAction:@selector(selectPhoto:)];
     
     [Radio addObserver:self
               selector:@selector(keyboardWillShow:)
@@ -109,14 +102,14 @@
                   name:kNoteSendFailNotification
                 object:nil];
     
-    [self.noteView becomeFirstResponder];
-}
-
-- (void) viewWillAppear:(BOOL)animated {
-    [Radio addObserver:self
-              selector:@selector(reachabilityChanged:)
-                  name:kReachabilityChangedNotification
-                object:nil];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [Radio addObserver:self
+                  selector:@selector(reachabilityChanged:)
+                      name:kReachabilityChangedNotification
+                    object:nil];
+    });
+    
+    
 }
 
 - (void) onFirstLaunch {
@@ -184,7 +177,6 @@
     [self.leftRibbon updateFrameToKeyboard:keyboardRect];
     [self.rightRibbon updateFrameToKeyboard:keyboardRect];
     [self.statusView updateFrameToKeyboard:keyboardRect];
-    [self.attachmentView updateFrameToKeyboard:keyboardRect withNavBarHeight:self.navigationController.navigationBar.frame.size.height];
 }
 
 - (void) keyboardDidShow:(NSNotification *) notification {
@@ -249,7 +241,6 @@
 - (void) reachabilityChanged:(NSNotification *) notification {
     if ([State isReachable]) {
         [self.statusView hide];
-        self.statusView.text = @"";
     } else {
         self.statusView.backgroundColor = tertiaryColor;
         self.statusView.text = kStatusNoConnection;
@@ -305,7 +296,9 @@
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     
-    [picker dismissViewControllerAnimated:YES completion:NULL];
+    [picker dismissViewControllerAnimated:YES completion:^{
+        [self.noteView becomeFirstResponder];
+    }];
     
 }
 
