@@ -82,6 +82,8 @@
     self.noteView.delegate = self;
     self.noteView.noteViewDelegate = self;
     
+    [self.attachmentView.takePhotoButton addTarget:self action:@selector(selectPhoto:) forControlEvents:UIControlEventTouchUpInside];
+    
     [Radio addObserver:self
               selector:@selector(keyboardWillShow:)
                   name:UIKeyboardWillShowNotification
@@ -196,7 +198,7 @@
 
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
         [self.leftRibbon.textView setText:[State getRibbonText:noteView.text withDirection:SwipeDirectionLeft]];
-        [self.leftRibbon.imageView setImage:[State getRibbonImage:noteView.text withDirection:SwipeDirectionLeft]];
+//        [self.leftRibbon.imageView setImage:[State getRibbonImage:noteView.text withDirection:SwipeDirectionLeft]];
         
         [self.rightRibbon.textView setText:[State getRibbonText:noteView.text withDirection:SwipeDirectionRight]];
         [self.rightRibbon.imageView setImage:[State getRibbonImage:noteView.text withDirection:SwipeDirectionRight]];
@@ -269,6 +271,42 @@
         self.statusView.text = @"Failure!";
         [self.statusView hideWithDelay:0.5];
     }
+}
+
+- (void) takePhoto:(UIButton *) sender {
+    
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    picker.allowsEditing = YES;
+    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    
+    [self presentViewController:picker animated:YES completion:NULL];
+}
+
+- (void) selectPhoto:(UIButton *) sender {
+    
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    picker.allowsEditing = YES;
+    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    
+    [self presentViewController:picker animated:YES completion:NULL];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
+    self.leftRibbon.imageView.image = chosenImage;
+    
+    [picker dismissViewControllerAnimated:YES completion:^{
+        [self.noteView becomeFirstResponder];
+    }];
+
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+    
 }
 
 @end
