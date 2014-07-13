@@ -115,8 +115,10 @@
         // Initialize Reachability
         self.reachability = [Reachability reachabilityWithHostname:@"www.google.com"];
         
-        // Start Monitoring
-        [self.reachability startNotifier];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            // Start Monitoring
+            [self.reachability startNotifier];
+        });
         
         // Listen for empty note
         [Radio addObserverForName:kEmptyNoteNotification object:nil queue:nil usingBlock:^(NSNotification *notification) {

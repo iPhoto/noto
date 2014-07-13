@@ -63,7 +63,7 @@
 
 - (NoteAttachmentView *) attachmentView {
     if (!_attachmentView) {
-        _attachmentView = [[NoteStatusView alloc] init];
+        _attachmentView = [[NoteAttachmentView alloc] init];
     }
     
     return _attachmentView;
@@ -104,6 +104,11 @@
                 object:nil];
     
     [Radio addObserver:self
+              selector:@selector(keyboardWillHide:)
+                  name:UIKeyboardWillHideNotification
+                object:nil];
+    
+    [Radio addObserver:self
               selector:@selector(sendSuccess:)
                   name:kNoteSendSuccessNotification
                 object:nil];
@@ -113,14 +118,10 @@
                   name:kNoteSendFailNotification
                 object:nil];
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-        [Radio addObserver:self
-                  selector:@selector(reachabilityChanged:)
-                      name:kReachabilityChangedNotification
-                    object:nil];
-    });
-    
-    
+    [Radio addObserver:self
+              selector:@selector(reachabilityChanged:)
+                  name:kReachabilityChangedNotification
+                object:nil];
 }
 
 - (void) onFirstLaunch {
@@ -161,8 +162,7 @@
     }
 }
 
-- (void) keyboardIsUp:(NSNotification *) notification
-{
+- (void) keyboardIsUp:(NSNotification *) notification {
     NSDictionary *info = [notification userInfo];
     CGRect keyboardRect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
     keyboardRect = [self.view convertRect:keyboardRect fromView:nil];
@@ -176,6 +176,12 @@
     self.noteView.scrollIndicatorInsets = inset;
     
     [self scrollToCaretInTextView:self.noteView animated:YES];
+}
+
+- (void) keyboardWillHide:(NSNotification *) notification {
+}
+
+- (void) keyboardDidHide:(NSNotification *) notification {
 }
 
 - (void) keyboardWillShow:(NSNotification *) notification {
@@ -258,10 +264,12 @@
 - (void) reachabilityChanged:(NSNotification *) notification {
     if ([State isReachable]) {
         [self.statusView hide];
+        NSLog(@"reachable");
     } else {
         self.statusView.backgroundColor = tertiaryColor;
         self.statusView.text = kStatusNoConnection;
         [self.statusView show];
+        NSLog(@"unreachable");
     }
 }
 

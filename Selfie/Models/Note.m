@@ -97,7 +97,7 @@
     sendgrid *msg = [sendgrid user:SGUsername andPass:SGPassword];
     msg.to = self.toEmail;
     msg.from = self.fromEmail;
-    msg.subject = self.subject;
+    msg.subject = [self.subject substringToIndex:MIN(kMaxSubjectLength, [self.subject length])];
     msg.text = self.body;
     msg.fromName = [Utilities appName];
     
