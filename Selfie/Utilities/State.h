@@ -36,8 +36,8 @@
 + (BOOL) isReachableViaWWAN;
 + (BOOL) isReachableViaWiFi;
 
-+ (BOOL) isValidSend:(NSString *) text withDirection:(SwipeDirection) direction;
++ (BOOL) isValidSend:(NSString *) text withDirection:(SwipeDirection) direction withAttachment:(NSObject *) attachment;
 
-+ (NSString *) getRibbonText:(NSString *) noteText withDirection:(SwipeDirection) direction;
-+ (UIImage *) getRibbonImage:(NSString *) noteText withDirection:(SwipeDirection) direction;
++ (NSString *) getRibbonText:(NSString *) noteText withDirection:(SwipeDirection) direction withAttachment:(NSObject *) attachment;
++ (UIImage *) getRibbonImage:(NSString *) noteText withDirection:(SwipeDirection) direction withAttachment:(NSObject *) attachment;
 @end

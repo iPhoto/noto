@@ -15,13 +15,13 @@
 
 + (void)enqueue:(Note *) note {
     NSLog(@"Queued: %@", note.subject);
-    NSMutableArray *queue = [[Utilities getSettingsObject:kSettingsNoteQueueKey] mutableCopy];
+    NSMutableArray *queue = [[Utilities getSettingsObject:kQueueKey] mutableCopy];
     [queue addObject:[note toDictionary]];
-    [Utilities setSettingsObject:queue forKey:kSettingsNoteQueueKey];
+    [Utilities setSettingsObject:queue forKey:kQueueKey];
 }
 
 + (NSUInteger)count {
-    return [(NSArray *)[Utilities getSettingsObject:kSettingsNoteQueueKey] count];
+    return [(NSArray *)[Utilities getSettingsObject:kQueueKey] count];
 }
 
 + (void)pollQueue {

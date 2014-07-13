@@ -38,30 +38,30 @@
     };
 
 + (void) loopThroughQueueAndSave:(void(^)(NSMutableArray *, NSDictionary *)) predicate {
-    NSArray *queue = (NSArray *) [Utilities getSettingsObject:kSettingsNoteQueueKey];
+    NSArray *queue = (NSArray *) [Utilities getSettingsObject:kQueueKey];
     NSMutableArray *mutableQueue = [queue mutableCopy];
     
     for (int i = 0; i < [queue count]; i++) {
         predicate(mutableQueue, (NSDictionary *)[queue objectAtIndex: i]);
     }
     
-    [Utilities setSettingsObject:mutableQueue forKey:kSettingsNoteQueueKey];
+    [Utilities setSettingsObject:mutableQueue forKey:kQueueKey];
 }
 
 + (void) initDB {
     // Set up NSUserDefaults
-    NSArray *queue = (NSArray *)[Utilities getSettingsObject:kSettingsNoteQueueKey];
+    NSArray *queue = (NSArray *)[Utilities getSettingsObject:kQueueKey];
     if (!queue) {
         queue = [[NSArray alloc] init];
     }
-    [Utilities setSettingsObject:queue forKey:kSettingsNoteQueueKey];
+    [Utilities setSettingsObject:queue forKey:kQueueKey];
 }
 
 + (void) clearDB {
     // Set up NSUserDefaults
-    NSArray *queue = (NSArray *)[Utilities getSettingsObject:kSettingsNoteQueueKey];
+    NSArray *queue = (NSArray *)[Utilities getSettingsObject:kQueueKey];
     queue = [[NSArray alloc] init];
-    [Utilities setSettingsObject:queue forKey:kSettingsNoteQueueKey];
+    [Utilities setSettingsObject:queue forKey:kQueueKey];
 }
 
 + (BOOL) isEmptyString:(NSString *) string {

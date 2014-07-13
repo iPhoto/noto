@@ -18,9 +18,9 @@
                         <barButtonItem key="rightBarButtonItem" image="icon_camera" id="TRr-P9-6sd"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="attachmentButton" destination="TRr-P9-6sd" id="kDX-k8-1GO"/>
+                        <outlet property="attachmentBarButtonItem" destination="TRr-P9-6sd" id="I9g-sS-9Aa"/>
                         <outlet property="navBarTitle" destination="QlS-Wp-MjW" id="5QB-F7-GbM"/>
-                        <outlet property="settingsButton" destination="dmr-EG-7lQ" id="ypm-QW-0FW"/>
+                        <outlet property="settingsBarButtonItem" destination="dmr-EG-7lQ" id="NkI-hW-NOW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

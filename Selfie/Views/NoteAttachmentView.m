@@ -14,12 +14,13 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.takePhotoButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.takePhotoButton.frame = CGRectMake(0, 0, kIconDim, kIconDim);
-        UIImage *takePhotoButtonImage = [UIImage imageNamed:@"icon_camera_white"];
-        [self.takePhotoButton setImage:takePhotoButtonImage forState:UIControlStateNormal];
-        self.takePhotoButton.contentEdgeInsets = UIEdgeInsetsMake(-10, -10, -10, -10);
-        [self addSubview:self.takePhotoButton];
+        
+//        self.takePhotoButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//        self.takePhotoButton.frame = CGRectMake(0, 0, kIconDim, kIconDim);
+//        UIImage *takePhotoButtonImage = [UIImage imageNamed:@"icon_camera_white"];
+//        [self.takePhotoButton setImage:takePhotoButtonImage forState:UIControlStateNormal];
+//        self.takePhotoButton.contentEdgeInsets = UIEdgeInsetsMake(-10, -10, -10, -10);
+//        [self addSubview:self.takePhotoButton];
     }
     return self;
 }

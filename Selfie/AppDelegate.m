@@ -35,10 +35,11 @@
     
     [Queue pollQueue];
     
-    // Set navigation and status bar appearance
+    // TODO: refactor into Utilities Set navigation and status bar appearance
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
     [[UINavigationBar appearance] setBarTintColor:primaryColor];
+//    [[UINavigationBar appearance] setTranslucent:NO];
     
     // TODO: set button bar item color to white in code, not storyboard
 //    // [[UIBarButtonItem appearance] setTintColor:[UIColor whiteColor]];

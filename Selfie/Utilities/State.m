@@ -59,19 +59,21 @@
 
 // TODO: create self.emails and set them on notify
 
-+ (BOOL) isValidSend:(NSString *) text withDirection:(SwipeDirection) direction {
-    return [Note isValidNote:text] && [Utilities isValidEmailAddressWithDirection:direction];
++ (BOOL) isValidSend:(NSString *) text withDirection:(SwipeDirection) direction withAttachment:(NSObject *) attachment {
+    return ([Note isValidNote:text] || attachment) && [Utilities isValidEmailAddressWithDirection:direction];
 }
 
 // TODO: refactor duplicate ribbontext/image logic with State
 // TODO: refactor to be called when status changes
 // TODO: add ribbon text/image state getters
-+ (NSString *) getRibbonText:(NSString *) noteText withDirection:(SwipeDirection) direction {
++ (NSString *) getRibbonText:(NSString *) noteText
+               withDirection:(SwipeDirection) direction
+              withAttachment:(NSObject *) attachment {
     NSString *emailAddress = [Utilities getEmailWithDirection:direction];
     NSString *ribbonText;
     
     // TODO: Refactor into state class
-    if ([Utilities isEmptyString:noteText]) {
+    if ([Utilities isEmptyString:noteText] && attachment == NULL) {
         ribbonText = @"No note!";
     } else if ([Utilities isEmptyString:emailAddress]) {
         ribbonText = @"No email address!";
@@ -84,12 +86,16 @@
     return ribbonText;
 }
 
-+ (UIImage *) getRibbonImage:(NSString *) noteText withDirection:(SwipeDirection) direction {
++ (UIImage *) getRibbonImage:(NSString *) noteText
+               withDirection:(SwipeDirection) direction
+              withAttachment:(NSObject *) attachment {
     NSString *emailAddress = [Utilities getEmailWithDirection:direction];
     UIImage *ribbonImage;
     
-    // TODO: Refactor into state class
-    if ([Utilities isEmptyString:noteText] ||
+    // TODO: what if attachment isn't image?
+    if (attachment) {
+        ribbonImage = (UIImage *) attachment;
+    } else if ([Utilities isEmptyString:noteText] ||
         [Utilities isEmptyString:emailAddress] ||
         ![Utilities isValidEmailString:emailAddress]) {
         ribbonImage = [UIImage imageNamed: @"icon_warning"];

@@ -13,8 +13,10 @@
 @property (strong, nonatomic) NoteRibbonView *leftRibbon;
 @property (strong, nonatomic) NoteRibbonView *rightRibbon;
 @property (strong, nonatomic) NoteStatusView *statusView;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *attachmentButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *settingsButton;
+@property (strong, nonatomic) NoteAttachmentView *attachmentView;
+@property (strong, nonatomic) UIImage *imageAttachment;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *attachmentBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *settingsBarButtonItem;
 @property (strong, nonatomic) IBOutlet UINavigationItem *navBarTitle;
 @end
 
@@ -59,6 +61,14 @@
     return _statusView;
 }
 
+- (NoteAttachmentView *) attachmentView {
+    if (!_attachmentView) {
+        _attachmentView = [[NoteStatusView alloc] init];
+    }
+    
+    return _attachmentView;
+}
+
 - (void) viewDidLoad {
     [super viewDidLoad];
     
@@ -67,6 +77,7 @@
     [self.noteView becomeFirstResponder];
     
     [self.view addSubview:self.noteView];
+    [self.view addSubview:self.attachmentView];
     [self.view addSubview:self.statusView];
     [self.view addSubview:self.leftRibbon];
     [self.view addSubview:self.rightRibbon];
@@ -74,8 +85,8 @@
     self.noteView.delegate = self;
     self.noteView.noteViewDelegate = self;
     
-    [self.attachmentButton setTarget:self];
-    [self.attachmentButton setAction:@selector(selectPhoto:)];
+    [self.attachmentBarButtonItem setTarget:self];
+    [self.attachmentBarButtonItem setAction:@selector(selectPhoto:)];
     
     [Radio addObserver:self
               selector:@selector(keyboardWillShow:)
@@ -189,14 +200,14 @@
     CGPoint translation = [gestureRecognizer translationInView:noteView];
 
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        [self.leftRibbon.textView setText:[State getRibbonText:noteView.text withDirection:SwipeDirectionLeft]];
-//        [self.leftRibbon.imageView setImage:[State getRibbonImage:noteView.text withDirection:SwipeDirectionLeft]];
+        [self.leftRibbon.textView setText:[State getRibbonText:noteView.text withDirection:SwipeDirectionLeft withAttachment:self.imageAttachment]];
+        [self.leftRibbon.imageView setImage:[State getRibbonImage:noteView.text withDirection:SwipeDirectionLeft withAttachment:self.imageAttachment]];
         
-        [self.rightRibbon.textView setText:[State getRibbonText:noteView.text withDirection:SwipeDirectionRight]];
-        [self.rightRibbon.imageView setImage:[State getRibbonImage:noteView.text withDirection:SwipeDirectionRight]];
+        [self.rightRibbon.textView setText:[State getRibbonText:noteView.text withDirection:SwipeDirectionRight withAttachment:self.imageAttachment]];
+        [self.rightRibbon.imageView setImage:[State getRibbonImage:noteView.text withDirection:SwipeDirectionRight withAttachment:self.imageAttachment]];
         
-        [State state].isValidSendLeft = [State isValidSend:noteView.text withDirection:SwipeDirectionLeft];
-        [State state].isValidSendRight = [State isValidSend:noteView.text withDirection:SwipeDirectionRight];
+        [State state].isValidSendLeft = [State isValidSend:noteView.text withDirection:SwipeDirectionLeft withAttachment:self.imageAttachment];
+        [State state].isValidSendRight = [State isValidSend:noteView.text withDirection:SwipeDirectionRight withAttachment:self.imageAttachment];
     } else if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
         // TODO: make sure send gesture and view gesture are identical; don't want users to be confused
         if (abs(translation.x) > abs(translation.y) && abs(translation.x) > kSwipeThreshold) {
@@ -232,6 +243,12 @@
             self.statusView.text = kStatusSendingNote;
             [self.statusView show];
         }
+        
+        if (self.imageAttachment) {
+            note.image = self.imageAttachment;
+            self.imageAttachment = nil;
+        }
+        
         [note send];
     }
     
@@ -277,6 +294,7 @@
 - (void) selectPhoto:(UIButton *) sender {
     
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+
     picker.delegate = self;
     picker.allowsEditing = YES;
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
@@ -286,20 +304,26 @@
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
-    self.leftRibbon.imageView.image = chosenImage;
+    self.imageAttachment = chosenImage;
     
     [picker dismissViewControllerAnimated:YES completion:^{
         [self.noteView becomeFirstResponder];
     }];
-
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    
     [picker dismissViewControllerAnimated:YES completion:^{
         [self.noteView becomeFirstResponder];
     }];
-    
+}
+
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
+    [[UINavigationBar appearance] setBarTintColor:primaryColor];
+    navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    navigationController.navigationBar.translucent = NO;
 }
 
 @end
