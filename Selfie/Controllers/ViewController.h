@@ -10,12 +10,13 @@
 #import "Reachability.h"
 #import "Note.h"
 #import "NoteView.h"
+#import "NoteAttachmentView.h"
 #import "NoteRibbonView.h"
 #import "NoteStatusView.h"
 #import "State.h"
 #import "Utilities.h"
 
-@interface ViewController : UIViewController <NoteViewDelegate>
+@interface ViewController : UIViewController <NoteViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 
 @end

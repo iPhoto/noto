@@ -10,16 +10,38 @@
 
 @implementation Note
 
-- (instancetype)initFromDictionary:(NSDictionary *)dict {
-    Note *note = [self initWithToEmail:[dict valueForKey:@"toEmail"] fromEmail:[dict valueForKey:@"fromEmail"] subject:[dict valueForKey:@"subject"] body:[dict valueForKey:@"body"]];
+// TODO: refactor initialization and validation into note creation
+- (instancetype) init {
+    self = [super init];
+    if (self) {
+        _toEmail = @"";
+        _fromEmail = @"";
+        _subject = [NSString stringWithFormat:@"[%@] No Subject", [Utilities appName]];
+        _body = [NSString stringWithFormat:@"\n\n%@", [Utilities getSettingsValue:kSettingsSignatureKey]];
+    }
+    
+    return self;
+}
+
+- (instancetype) initFromDictionary:(NSDictionary *)dict {
+    Note *note = [self initWithToEmail:[dict valueForKey:kQueueNoteDictionaryToEmail]
+                             fromEmail:[dict valueForKey:kQueueNoteDictionaryFromEmail]
+                               subject:[dict valueForKey:kQueueNoteDictionarySubject]
+                                  body:[dict valueForKey:kQueueNoteDictionaryBody]];
+    
+    NSString *imagePath = [dict valueForKey:kQueueNoteDictionaryImagePath];
+    if (imagePath) {
+        self.image = [UIImage imageWithData:[NSData dataWithContentsOfFile:imagePath]];
+    }
+    
     return note;
 }
 
-- (instancetype)initWithToEmail:(NSString *)toEmail
+- (instancetype) initWithToEmail:(NSString *)toEmail
                       fromEmail:(NSString *)fromEmail
                         subject:(NSString *)subject
                            body:(NSString *)body {
-    self = [super init];
+    self = [self init];
     if (self) {
         _toEmail = toEmail;
         _fromEmail = fromEmail;
@@ -29,8 +51,10 @@
     return self;
 }
 
-- (instancetype)initWithString:(NSString *) message
+- (instancetype) initWithString:(NSString *) message
                      direction:(SwipeDirection) direction {
+    
+    self = [self init];
     
     NSString *toEmail = [Utilities getEmailWithDirection:direction];
     NSString *fromEmail = toEmail;
@@ -38,6 +62,8 @@
     if (toEmail) {
         
         if ([Utilities isEmptyString:message]) {
+            self.toEmail = toEmail;
+            self.fromEmail = fromEmail;
             return self;
         }
         
@@ -58,26 +84,26 @@
             subject = [[NSString stringWithFormat:@"%@ %@", subjectPrefix, subject] mutableCopy];
         }
         
-        self.toEmail = toEmail;
-        self.fromEmail = fromEmail;
-        self.subject = subject;
-        self.body = body;
-        
+        return [self initWithToEmail:toEmail fromEmail:fromEmail subject:subject body:body];
     }
     return self;
 }
 
-- (void)send {
+- (void) send {
     [self sendWithCompletionHandler:nil];
 }
 
-- (void)sendWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+- (void) sendWithCompletionHandler:(void (^)(UIBackgroundFetchResult)) completionHandler {
     sendgrid *msg = [sendgrid user:SGUsername andPass:SGPassword];
     msg.to = self.toEmail;
     msg.from = self.fromEmail;
     msg.subject = self.subject;
     msg.text = self.body;
     msg.fromName = [Utilities appName];
+    
+    if (self.image) {
+        [msg attachImage:self.image];
+    }
     
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
@@ -112,17 +138,38 @@
     }];
 }
 
-- (NSDictionary *)toDictionary {
-    NSDictionary *dict = [[NSDictionary alloc]
+- (NSDictionary *) toDictionary {
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc]
                           initWithObjects:@[self.toEmail, self.fromEmail, self.subject, self.body]
-                          forKeys:@[@"toEmail", @"fromEmail", @"subject", @"body"]];
+                          forKeys:@[kQueueNoteDictionaryToEmail, kQueueNoteDictionaryFromEmail, kQueueNoteDictionarySubject, kQueueNoteDictionaryBody]];
+    if (self.image) {
+        // Get image data. Here you can use UIImagePNGRepresentation if you need transparency
+        NSData *imageData = UIImageJPEGRepresentation(self.image, 1);
+        
+        // Get image path in user's folder and store file with name image_CurrentTimestamp.jpg (see documentsPathForFileName below)
+        NSString *imagePath = [self documentsPathForFileName:[NSString stringWithFormat:@"image_%f.jpg", [NSDate timeIntervalSinceReferenceDate]]];
+        
+        // Write image data to user's folder
+        [imageData writeToFile:imagePath atomically:YES];
+        
+        // Store path in NSUserDefaults
+        [dict setObject:imagePath forKey:kQueueNoteDictionaryImagePath];
+    }
+    
     return dict;
 }
 
 // TODO: refactor to respond to notifications
-- (void)onComplete {
+- (void) onComplete {
     [UIApplication sharedApplication].applicationIconBadgeNumber = [Queue count];
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+}
+
+- (NSString *) documentsPathForFileName:(NSString *)name {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0];
+    
+    return [documentsPath stringByAppendingPathComponent:name];
 }
 
 // TODO: should make this reusable

@@ -33,17 +33,25 @@ static NSString * const CrashlyticsAPIKey = @"7052c7c0dfa3dc8a01de1c9fadf87a6abe
 
 // Note default copy
 static NSString * const kEmptyNoteSubject = @"New Note";
+static NSString * const kNoNoteSubject = @"[No Subject]";
 
 // Status bar default copy
 static NSString * const kStatusNoConnection = @"No connection! Notes will be saved.";
 static NSString * const kStatusSendingNote = @"Sending note!";
 
 // User data
-static NSString * const kSettingsNoteQueueKey = @"noteQueue";
 static NSString * const kSettingsSwipeLeftToEmailKey = @"swipeLeftTo";
 static NSString * const kSettingsSwipeRightToEmailKey = @"swipeRightTo";
 static NSString * const kSettingsSubjectPrefixKey = @"subjectPrefix";
 static NSString * const kSettingsSignatureKey = @"signature";
+
+// Queue data
+static NSString * const kQueueKey = @"noteQueue";
+static NSString * const kQueueNoteDictionaryToEmail = @"toEmail";
+static NSString * const kQueueNoteDictionaryFromEmail = @"fromEmail";
+static NSString * const kQueueNoteDictionarySubject = @"subject";
+static NSString * const kQueueNoteDictionaryBody = @"body";
+static NSString * const kQueueNoteDictionaryImagePath = @"imagePath";
 
 // Ribbon layout constants
 static NSInteger const kNoteRibbonViewHeight = 40;
@@ -58,6 +66,10 @@ static NSInteger const kSwipeThreshold = 120;
 // Status bar layout constants
 static NSInteger const kStatusViewWidth = kNoteRibbonViewWidth;
 static NSInteger const kStatusViewHeight = kNoteRibbonViewHeight;
+
+// Icon layout constants
+static NSInteger const kIconDim = 30;
+static NSInteger const kIconSpacing = 10;
 
 // Notification names
 static NSString * const kEmptyNoteNotification = @"emptyNoteNotification";

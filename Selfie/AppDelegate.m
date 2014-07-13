@@ -35,13 +35,14 @@
     
     [Queue pollQueue];
     
-    // Set navigation and status bar appearance
+    // TODO: refactor into Utilities Set navigation and status bar appearance
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
     [[UINavigationBar appearance] setBarTintColor:primaryColor];
+//    [[UINavigationBar appearance] setTranslucent:NO];
     
     // TODO: set button bar item color to white in code, not storyboard
-    // [[UIBarButtonItem appearance] setTintColor:[UIColor whiteColor]];
+//    // [[UIBarButtonItem appearance] setTintColor:[UIColor whiteColor]];
     
     return YES;
 }
@@ -76,6 +77,8 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     [Queue pollQueue];
+    
+    [Radio postNotificationName:kReachabilityChangedNotification object:nil];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

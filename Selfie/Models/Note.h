@@ -19,6 +19,7 @@
 @property (strong, nonatomic) NSString *fromEmail;
 @property (strong, nonatomic) NSString *subject;
 @property (strong, nonatomic) NSString *body;
+@property (strong, nonatomic) UIImage *image;
 
 - (instancetype)initFromDictionary:(NSDictionary *) dict;
 

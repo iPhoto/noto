@@ -13,6 +13,10 @@
 @property (strong, nonatomic) NoteRibbonView *leftRibbon;
 @property (strong, nonatomic) NoteRibbonView *rightRibbon;
 @property (strong, nonatomic) NoteStatusView *statusView;
+@property (strong, nonatomic) NoteAttachmentView *attachmentView;
+@property (strong, nonatomic) UIImage *imageAttachment;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *attachmentBarButtonItem;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *settingsBarButtonItem;
 @property (strong, nonatomic) IBOutlet UINavigationItem *navBarTitle;
 @end
 
@@ -57,18 +61,32 @@
     return _statusView;
 }
 
+- (NoteAttachmentView *) attachmentView {
+    if (!_attachmentView) {
+        _attachmentView = [[NoteStatusView alloc] init];
+    }
+    
+    return _attachmentView;
+}
+
 - (void) viewDidLoad {
     [super viewDidLoad];
     
     [self onFirstLaunch];
     
+    [self.noteView becomeFirstResponder];
+    
     [self.view addSubview:self.noteView];
+    [self.view addSubview:self.attachmentView];
     [self.view addSubview:self.statusView];
     [self.view addSubview:self.leftRibbon];
     [self.view addSubview:self.rightRibbon];
     
     self.noteView.delegate = self;
     self.noteView.noteViewDelegate = self;
+    
+    [self.attachmentBarButtonItem setTarget:self];
+    [self.attachmentBarButtonItem setAction:@selector(selectPhoto:)];
     
     [Radio addObserver:self
               selector:@selector(keyboardWillShow:)
@@ -86,11 +104,6 @@
                 object:nil];
     
     [Radio addObserver:self
-              selector:@selector(reachabilityChanged:)
-                  name:kReachabilityChangedNotification
-                object:nil];
-    
-    [Radio addObserver:self
               selector:@selector(sendSuccess:)
                   name:kNoteSendSuccessNotification
                 object:nil];
@@ -100,7 +113,14 @@
                   name:kNoteSendFailNotification
                 object:nil];
     
-    [self.noteView becomeFirstResponder];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [Radio addObserver:self
+                  selector:@selector(reachabilityChanged:)
+                      name:kReachabilityChangedNotification
+                    object:nil];
+    });
+    
+    
 }
 
 - (void) onFirstLaunch {
@@ -180,14 +200,14 @@
     CGPoint translation = [gestureRecognizer translationInView:noteView];
 
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        [self.leftRibbon.textView setText:[State getRibbonText:noteView.text withDirection:SwipeDirectionLeft]];
-        [self.leftRibbon.imageView setImage:[State getRibbonImage:noteView.text withDirection:SwipeDirectionLeft]];
+        [self.leftRibbon.textView setText:[State getRibbonText:noteView.text withDirection:SwipeDirectionLeft withAttachment:self.imageAttachment]];
+        [self.leftRibbon.imageView setImage:[State getRibbonImage:noteView.text withDirection:SwipeDirectionLeft withAttachment:self.imageAttachment]];
         
-        [self.rightRibbon.textView setText:[State getRibbonText:noteView.text withDirection:SwipeDirectionRight]];
-        [self.rightRibbon.imageView setImage:[State getRibbonImage:noteView.text withDirection:SwipeDirectionRight]];
+        [self.rightRibbon.textView setText:[State getRibbonText:noteView.text withDirection:SwipeDirectionRight withAttachment:self.imageAttachment]];
+        [self.rightRibbon.imageView setImage:[State getRibbonImage:noteView.text withDirection:SwipeDirectionRight withAttachment:self.imageAttachment]];
         
-        [State state].isValidSendLeft = [State isValidSend:noteView.text withDirection:SwipeDirectionLeft];
-        [State state].isValidSendRight = [State isValidSend:noteView.text withDirection:SwipeDirectionRight];
+        [State state].isValidSendLeft = [State isValidSend:noteView.text withDirection:SwipeDirectionLeft withAttachment:self.imageAttachment];
+        [State state].isValidSendRight = [State isValidSend:noteView.text withDirection:SwipeDirectionRight withAttachment:self.imageAttachment];
     } else if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
         // TODO: make sure send gesture and view gesture are identical; don't want users to be confused
         if (abs(translation.x) > abs(translation.y) && abs(translation.x) > kSwipeThreshold) {
@@ -223,6 +243,12 @@
             self.statusView.text = kStatusSendingNote;
             [self.statusView show];
         }
+        
+        if (self.imageAttachment) {
+            note.image = self.imageAttachment;
+            self.imageAttachment = nil;
+        }
+        
         [note send];
     }
     
@@ -231,9 +257,7 @@
 
 - (void) reachabilityChanged:(NSNotification *) notification {
     if ([State isReachable]) {
-        NSLog(@"hiding");
         [self.statusView hide];
-        self.statusView.text = @"";
     } else {
         self.statusView.backgroundColor = tertiaryColor;
         self.statusView.text = kStatusNoConnection;
@@ -245,7 +269,7 @@
     if ([State isReachable]) {
         self.statusView.backgroundColor = primaryColor;
         self.statusView.text = @"Success!";
-        [self.statusView hideWithDelay:1];
+        [self.statusView hideWithDelay:0.5];
     }
 }
 
@@ -253,8 +277,53 @@
     if ([State isReachable]) {
         self.statusView.backgroundColor = secondaryColor;
         self.statusView.text = @"Failure!";
-        [self.statusView hideWithDelay:1];
+        [self.statusView hideWithDelay:0.5];
     }
+}
+
+- (void) takePhoto:(UIButton *) sender {
+    
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    picker.allowsEditing = YES;
+    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    
+    [self presentViewController:picker animated:YES completion:NULL];
+}
+
+- (void) selectPhoto:(UIButton *) sender {
+    
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+
+    picker.delegate = self;
+    picker.allowsEditing = YES;
+    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    
+    [self presentViewController:picker animated:YES completion:NULL];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
+    self.imageAttachment = chosenImage;
+    
+    [picker dismissViewControllerAnimated:YES completion:^{
+        [self.noteView becomeFirstResponder];
+    }];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [picker dismissViewControllerAnimated:YES completion:^{
+        [self.noteView becomeFirstResponder];
+    }];
+}
+
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
+    [[UINavigationBar appearance] setBarTintColor:primaryColor];
+    navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    navigationController.navigationBar.translucent = NO;
 }
 
 @end
