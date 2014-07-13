@@ -264,12 +264,10 @@
 - (void) reachabilityChanged:(NSNotification *) notification {
     if ([State isReachable]) {
         [self.statusView hide];
-        NSLog(@"reachable");
     } else {
         self.statusView.backgroundColor = tertiaryColor;
         self.statusView.text = kStatusNoConnection;
         [self.statusView show];
-        NSLog(@"unreachable");
     }
 }
 
