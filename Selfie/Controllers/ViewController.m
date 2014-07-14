@@ -16,8 +16,8 @@
 @property (strong, nonatomic) NoteAttachmentView *attachmentView;
 @property (strong, nonatomic) NoteProgressView *progressView;
 @property (strong, nonatomic) UIImage *imageAttachment;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *attachmentBarButtonItem;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *settingsBarButtonItem;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *attachmentBarButtonItem;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *settingsBarButtonItem;
 @property (strong, nonatomic) IBOutlet UINavigationItem *navBarTitle;
 @end
 
@@ -262,33 +262,41 @@
         
         if (self.imageAttachment) {
             note.image = self.imageAttachment;
-            self.imageAttachment = nil;
-            
-            [UIView animateWithDuration:0.25 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-                self.navigationItem.rightBarButtonItem.customView.alpha = 0;
-            } completion:^(BOOL finished){
-                if (finished) {
-                    // TODO: refactor into Utilities
-                    UIButton *imageAttachmentView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
-                    [imageAttachmentView addTarget:self action:@selector(selectPhoto:) forControlEvents:UIControlEventTouchUpInside];
-                    [imageAttachmentView setBackgroundImage:[UIImage imageNamed:@"icon_camera"] forState:UIControlStateNormal];
-                    
-                    
-                    UIBarButtonItem *imageAttachmentButton = [[UIBarButtonItem alloc] initWithCustomView:imageAttachmentView];
-                    [self.navigationItem setRightBarButtonItem:imageAttachmentButton];
-                    self.navigationItem.rightBarButtonItem.customView.alpha = 0;
-                    
-                    [UIView animateWithDuration:0.25 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-                        self.navigationItem.rightBarButtonItem.customView.alpha = 1;
-                    } completion:nil];
-                }
-            }];
+            [self resetAttachmentBarButtonItem];
         }
         
         [note send];
     }
     
     [self initNote];
+}
+
+- (void) resetAttachmentBarButtonItem {
+    self.imageAttachment = nil;
+    [self setAttachmentBarButtonItem:self.attachmentBarButtonItem withImage:[UIImage imageNamed:@"icon_camera"] withAction:@selector(selectPhoto:)];
+}
+
+- (void)setAttachmentBarButtonItem:(UIBarButtonItem *) attachmentBarButtonItem withImage:(UIImage *) image withAction:(SEL) action {
+    [UIView animateWithDuration:0.25 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        self.navigationItem.rightBarButtonItem.customView.alpha = 0;
+    } completion:^(BOOL finished){
+        if (finished) {
+            // TODO: refactor into Utilities
+            UIButton *imageAttachmentView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
+            [imageAttachmentView addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
+            [imageAttachmentView setBackgroundImage:image forState:UIControlStateNormal];
+            
+            self.attachmentBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:imageAttachmentView];
+            [self.navigationItem setRightBarButtonItem:self.attachmentBarButtonItem];
+            self.navigationItem.rightBarButtonItem.customView.alpha = 0;
+            
+            [UIView animateWithDuration:0.25 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                self.navigationItem.rightBarButtonItem.customView.alpha = 1;
+            } completion:^(BOOL finished) {
+                [self.navigationItem setRightBarButtonItem:self.attachmentBarButtonItem];
+            }];
+        }
+    }];
 }
 
 - (void) reachabilityChanged:(NSNotification *) notification {
@@ -329,26 +337,39 @@
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
 
     picker.delegate = self;
-    picker.allowsEditing = YES;
-    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    picker.allowsEditing = NO;
+    picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
     
     [self presentViewController:picker animated:YES completion:NULL];
 }
 
 - (void) imagePickerController:(UIImagePickerController *) picker didFinishPickingMediaWithInfo:(NSDictionary *) info {
-    UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
-    self.imageAttachment = [chosenImage copy];
-    
-    // TODO: refactor into Utilities
-    UIButton *imageAttachmentView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
-    [imageAttachmentView addTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
-    [imageAttachmentView setBackgroundImage:chosenImage forState:UIControlStateNormal];
-    UIBarButtonItem *imageAttachmentButton = [[UIBarButtonItem alloc] initWithCustomView:imageAttachmentView];
-    [self.navigationItem setRightBarButtonItem:imageAttachmentButton];
+    UIImage *chosenImage = info[UIImagePickerControllerOriginalImage];
+    self.imageAttachment = chosenImage;
     
     [picker dismissViewControllerAnimated:YES completion:^{
+        [self setAttachmentBarButtonItem:self.attachmentBarButtonItem withImage:chosenImage withAction:@selector(showAttachmentAlertView:)];
         [self.noteView becomeFirstResponder];
     }];
+}
+
+- (void) showAttachmentAlertView:(UIButton *) sender {
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle: @"Remove attachment?"
+                          message: nil
+                          delegate: self
+                          cancelButtonTitle:@"Cancel"
+                          otherButtonTitles:@"Remove", nil];
+    
+    [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        NSLog(@"user pressed Cancel");
+    } else {
+        [self resetAttachmentBarButtonItem];
+    }
 }
 
 - (void) imagePickerControllerDidCancel:(UIImagePickerController *)picker {
@@ -359,6 +380,7 @@
 
 - (void) navigationController:(UINavigationController *) navigationController willShowViewController:(UIViewController *) viewController animated:(BOOL)animated
 {
+    // TODO: refactor into utilities
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
     [[UINavigationBar appearance] setBarTintColor:primaryColor];

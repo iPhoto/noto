@@ -17,7 +17,7 @@
 #import "State.h"
 #import "Utilities.h"
 
-@interface ViewController : UIViewController <NoteViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface ViewController : UIViewController <NoteViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate>
 
 
 @end
