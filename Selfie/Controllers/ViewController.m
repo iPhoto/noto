@@ -345,7 +345,7 @@
 
 - (void) imagePickerController:(UIImagePickerController *) picker didFinishPickingMediaWithInfo:(NSDictionary *) info {
     UIImage *chosenImage = info[UIImagePickerControllerOriginalImage];
-    self.imageAttachment = [Utilities imageWithImage:chosenImage withScale:0.1];
+    self.imageAttachment = [Utilities compareeImageWithImage:chosenImage];
     
     [picker dismissViewControllerAnimated:YES completion:^{
         [self setAttachmentBarButtonItem:self.attachmentBarButtonItem withImage:self.imageAttachment withAction:@selector(showAttachmentAlertView:)];

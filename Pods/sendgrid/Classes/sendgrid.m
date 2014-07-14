@@ -70,30 +70,11 @@ NSString * const sgEndpoint = @"api/mail.send.json";
 
 - (void)sendWithWeb
 {
-    
-    //Uses Web Api to send email
-    [self configureHeader];
-    
-    //Posting Paramters to server using AFNetworking 2.0
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-    [manager POST:self.baseURL parameters:[self parametersDictionary] constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-        //if image attachment exists it will post it
-        for (int i = 0; i < self.imgs.count; i++)
-        {
-            UIImage *img = [self.imgs objectAtIndex:i];
-            NSString *filename = [NSString stringWithFormat:@"image%d.png", i];
-            NSString *name = [NSString stringWithFormat:@"files[image%d.png]", i];
-            NSLog(@"name: %@, Filename: %@", name, filename);
-            NSData *imageData = UIImagePNGRepresentation(img);
-            [formData appendPartWithFileData:imageData name:name fileName:filename mimeType:@"image/png"];
-        }
-    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self sendWithWebUsingSuccessBlock:^(id responseObject) {
         NSLog(@"Success: %@", responseObject);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failureBlock:^(NSError *error) {
         NSLog(@"Error: %@", error);
     }];
-    
 }
 
 - (void)sendWithWebUsingSuccessBlock:(void(^)(id responseObject))successBlock failureBlock:(void(^)(NSError *error))failureBlock
@@ -108,11 +89,15 @@ NSString * const sgEndpoint = @"api/mail.send.json";
         for (int i = 0; i < self.imgs.count; i++)
         {
             UIImage *img = [self.imgs objectAtIndex:i];
-            NSString *filename = [NSString stringWithFormat:@"image%d.png", i];
-            NSString *name = [NSString stringWithFormat:@"files[image%d.png]", i];
+            
+            // TODO: this is bad; we should not assume that there will be at most 1 image
+            NSString *filename = [NSString stringWithFormat:@"image.jpeg"];
+            NSString *name = [NSString stringWithFormat:@"files[image.jpeg]"];
             NSLog(@"name: %@, Filename: %@", name, filename);
-            NSData *imageData = UIImagePNGRepresentation(img);
-            [formData appendPartWithFileData:imageData name:name fileName:filename mimeType:@"image/png"];
+            
+            // TODO: this is bad; we shouldn't assume that users want their images compressed
+            NSData *imageData = UIImageJPEGRepresentation(img, 0.8);
+            [formData appendPartWithFileData:imageData name:name fileName:filename mimeType:@"image/jpeg"];
         }
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         successBlock(responseObject);
@@ -180,8 +165,8 @@ NSString * const sgEndpoint = @"api/mail.send.json";
         for (int i = 0; i < self.imgs.count; i++)
         {
             
-            NSString *filename = [NSString stringWithFormat:@"image%d.png", i];
-            NSString *key = [NSString stringWithFormat:@"content[image%d.png]", i];
+            NSString *filename = [NSString stringWithFormat:@"image_%d.jpeg", i];
+            NSString *key = [NSString stringWithFormat:@"content[image_%d.jpeg]", i];
             NSLog(@"name: %@, Filename: %@", key, filename);
             [parameters setObject:filename forKey:key];
             

@@ -104,7 +104,7 @@
 
 + (NSString *) getFirstLaunchText {
     return [@[[NSString stringWithFormat:@"Welcome to %@!\n\n", [Utilities appName]],
-              @"First, tap the gear icon to set your email addresses.",
+              @"First, tap the gear icon to set your email addresses. ",
               @"Then, swipe in the corresponding direction to email yourself notes.\n",
               @"\n",
               @"(｡･ω･｡)ﾉ♡\n",
@@ -122,19 +122,19 @@
     }
 }
 
-+ (UIImage*)imageWithImage:(UIImage*) image
-              withScale:(CGFloat) scale {
++ (UIImage*) compareeImageWithImage:(UIImage*) image {
     
     CGRect screenRect = [[UIScreen mainScreen] bounds];
-    CGFloat screenWidth = MAX(screenRect.size.width, screenRect.size.height);
+    CGFloat longSideScreen = MAX(screenRect.size.width, screenRect.size.height);
+    CGFloat shortSideScreen = MIN(screenRect.size.width, screenRect.size.height);
     
-    NSLog(@"%f", screenWidth);
+    CGFloat longSideImage = MAX(image.size.width, image.size.height);
+    CGFloat shortSideImage = MIN(image.size.width, image.size.height);
     
-    CGFloat aspectRatio = image.size.width / image.size.height;
-    CGFloat newWidth = MAX(image.size.width * scale, screenWidth);
-    CGFloat newHeight = newWidth / aspectRatio;
+    CGFloat scale = MIN(1, MIN(longSideScreen / longSideImage, shortSideScreen / shortSideImage));
     
-    NSLog(@"%f %f", newWidth, newHeight);
+    CGFloat newWidth = image.size.width * scale;
+    CGFloat newHeight = image.size.height * scale;
     
     CGSize newSize = CGSizeMake(newWidth, newHeight);
     UIGraphicsBeginImageContextWithOptions(newSize, YES, 0.0);

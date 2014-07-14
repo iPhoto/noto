@@ -104,5 +104,5 @@ static NSString * const kNoteSendFailNotification = @"noteSendFailNotification";
 
 + (NSString *) getEmailWithDirection:(SwipeDirection) direction;
 
-+ (UIImage *)imageWithImage:(UIImage *) image withScale:(CGFloat) scale;
++ (UIImage *) compareeImageWithImage:(UIImage *) image;
 @end;
