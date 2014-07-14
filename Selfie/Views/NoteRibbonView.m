@@ -39,13 +39,6 @@
         self.layer.shadowRadius = 1.0;
         self.layer.shadowColor = [[UIColor blackColor] CGColor];
         self.layer.shadowOpacity = 0.6;
-        
-        
-        //apply the offset and radius
-//        self.navigationController.navigationBar.layer.shadowOffset = CGSizeMake(0, shadowOffset);
-//        self.navigationController.navigationBar.layer.shadowRadius = shadowRadius;
-//        self.navigationController.navigationBar.layer.shadowColor = [UIColor blackColor].CGColor;
-//        self.navigationController.navigationBar.layer.shadowOpacity = 0.6;
     }
     return self;
 }
@@ -54,7 +47,7 @@
 - (void) finalizePosition {
     [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.center = self.originalCenter;
-    } completion:^(BOOL finished){
+    } completion:^(BOOL finished) {
         
     }];
 }
@@ -66,18 +59,30 @@
 }
 
 - (void) setColorWithPastTheshold:(BOOL) pastThreshold validSend:(BOOL) validity {
+    
+    UIColor *currColor = self.backgroundColor;
+    UIColor *nextColor = self.backgroundColor;
+    
     if (validity) {
-        if (pastThreshold) {
-            self.backgroundColor = primaryColor;
-            self.imageView.backgroundColor = primaryColor;
-        } else {
-            self.backgroundColor = tertiaryColor;
-            self.imageView.backgroundColor = tertiaryColor;
-        }
+        nextColor = pastThreshold ? primaryColor : tertiaryColor;
+        [UIView animateWithDuration:0.25
+                              delay:0
+             usingSpringWithDamping:1
+              initialSpringVelocity:0
+                            options:UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
+                             self.backgroundColor = nextColor;
+                             self.imageView.backgroundColor = nextColor;
+                         }
+                         completion:^(BOOL finished) {
+                             
+                         }
+         ];
     } else {
         self.backgroundColor = secondaryColor;
         self.imageView.backgroundColor = secondaryColor;
     }
+    
 }
 
 - (void) updateFrameToKeyboard:(CGRect) keyboardRect {
