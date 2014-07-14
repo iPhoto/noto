@@ -149,6 +149,28 @@
     }
 }
 
+- (void) scrollViewDidScroll:(UIScrollView *) scrollView{
+    
+    // Depending on how far the user scrolled, set the new offset.
+    // Divide by a hundred so we have a sane value. You could adjust this
+    // for different effects.
+    // The larger you number divide by, the slower the shadow will change
+    
+    float shadowOffset = (scrollView.contentOffset.y / 100);
+    
+    // Make sure that the offset doesn't exceed 3 or drop below 0.5
+    shadowOffset = MIN(MAX(shadowOffset, 0.25), 1.25);
+    
+    //Ensure that the shadow radius is between 1 and 3
+    float shadowRadius = MIN(MAX(shadowOffset, 1), 2.5);
+    
+    //apply the offset and radius
+    self.navigationController.navigationBar.layer.shadowOffset = CGSizeMake(0, shadowOffset);
+    self.navigationController.navigationBar.layer.shadowRadius = shadowRadius;
+    self.navigationController.navigationBar.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.navigationController.navigationBar.layer.shadowOpacity = 0.6;
+}
+
 - (void) scrollToCaretInTextView:(UITextView *) textView animated:(BOOL) animated {
     CGRect rect = [textView caretRectForPosition:textView.selectedTextRange.end];
     rect.size.height += textView.textContainerInset.bottom;
@@ -273,7 +295,9 @@
 
 - (void) resetAttachmentBarButtonItem {
     self.imageAttachment = nil;
-    [self setAttachmentBarButtonItem:self.attachmentBarButtonItem withImage:[UIImage imageNamed:@"icon_camera"] withAction:@selector(selectPhoto:)];
+    [self setAttachmentBarButtonItem:self.attachmentBarButtonItem
+                           withImage:[UIImage imageNamed:@"icon_camera"]
+                          withAction:@selector(selectPhoto:)];
 }
 
 - (void)setAttachmentBarButtonItem:(UIBarButtonItem *) attachmentBarButtonItem withImage:(UIImage *) image withAction:(SEL) action {
@@ -348,7 +372,9 @@
     self.imageAttachment = [Utilities compareeImageWithImage:chosenImage];
     
     [picker dismissViewControllerAnimated:YES completion:^{
-        [self setAttachmentBarButtonItem:self.attachmentBarButtonItem withImage:self.imageAttachment withAction:@selector(showAttachmentAlertView:)];
+        [self setAttachmentBarButtonItem:self.attachmentBarButtonItem
+                               withImage:self.imageAttachment
+                              withAction:@selector(showAttachmentAlertView:)];
         [self.noteView becomeFirstResponder];
     }];
 }
