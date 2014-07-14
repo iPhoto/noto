@@ -74,7 +74,7 @@
     
     // TODO: Refactor into state class
     if ([Utilities isEmptyString:noteText] && attachment == NULL) {
-        ribbonText = @"No note!";
+        ribbonText = @"Empty note!";
     } else if ([Utilities isEmptyString:emailAddress]) {
         ribbonText = @"No email address!";
     } else if (![Utilities isValidEmailString:emailAddress]) {
