@@ -48,7 +48,7 @@
     [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.center = self.originalCenter;
     } completion:^(BOOL finished) {
-        
+        self.layer.shadowOpacity = 0.0;
     }];
 }
 
@@ -56,6 +56,7 @@
     // Ignoring y pans for now
     CGPoint newCenter = CGPointMake(self.originalCenter.x + translation.x, self.originalCenter.y);
     [self setCenter:(newCenter)];
+    self.layer.shadowOpacity = 0.6;
 }
 
 - (void) setColorWithPastTheshold:(BOOL) pastThreshold validSend:(BOOL) validity {
