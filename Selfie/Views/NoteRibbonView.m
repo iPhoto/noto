@@ -23,7 +23,7 @@
         [self.textView setTextColor:[UIColor whiteColor]];
         self.textView.textContainerInset = UIEdgeInsetsMake((kNoteRibbonViewHeight - kGlobalFontSize) / 2 - 2, kNoteRibbonTextOffset, 0, kNoteRibbonTextOffset);
         
-        self.clipsToBounds = YES;
+//        self.clipsToBounds = YES;
         self.layer.cornerRadius = kNoteRibbonViewHeight / 2;
         [self addSubview:self.textView];
         
@@ -34,6 +34,18 @@
         self.imageView.clipsToBounds = YES;
         self.imageView.layer.cornerRadius = kNoteRibbonImageHeight / 2;
         [self addSubview:self.imageView];
+        
+        self.layer.shadowOffset = CGSizeMake(0.25, 0.25);
+        self.layer.shadowRadius = 1.0;
+        self.layer.shadowColor = [[UIColor blackColor] CGColor];
+        self.layer.shadowOpacity = 0.6;
+        
+        
+        //apply the offset and radius
+//        self.navigationController.navigationBar.layer.shadowOffset = CGSizeMake(0, shadowOffset);
+//        self.navigationController.navigationBar.layer.shadowRadius = shadowRadius;
+//        self.navigationController.navigationBar.layer.shadowColor = [UIColor blackColor].CGColor;
+//        self.navigationController.navigationBar.layer.shadowOpacity = 0.6;
     }
     return self;
 }
