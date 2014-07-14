@@ -122,5 +122,28 @@
     }
 }
 
++ (UIImage*)imageWithImage:(UIImage*) image
+              withScale:(CGFloat) scale {
+    
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = MAX(screenRect.size.width, screenRect.size.height);
+    
+    NSLog(@"%f", screenWidth);
+    
+    CGFloat aspectRatio = image.size.width / image.size.height;
+    CGFloat newWidth = MAX(image.size.width * scale, screenWidth);
+    CGFloat newHeight = newWidth / aspectRatio;
+    
+    NSLog(@"%f %f", newWidth, newHeight);
+    
+    CGSize newSize = CGSizeMake(newWidth, newHeight);
+    UIGraphicsBeginImageContextWithOptions(newSize, YES, 0.0);
+    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return newImage;
+}
+
 @end;
 

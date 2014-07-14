@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 // Default notification center
 #define Radio [NSNotificationCenter defaultCenter]
@@ -102,4 +103,6 @@ static NSString * const kNoteSendFailNotification = @"noteSendFailNotification";
 + (NSString *) getFirstLaunchText;
 
 + (NSString *) getEmailWithDirection:(SwipeDirection) direction;
+
++ (UIImage *)imageWithImage:(UIImage *) image withScale:(CGFloat) scale;
 @end;
