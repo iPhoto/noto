@@ -103,7 +103,7 @@ NSString * const sgEndpoint = @"api/mail.send.json";
     //Posting Paramters to server using AFNetworking 2.0
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
-    [manager POST:self.baseURL parameters:[self parametersDictionary] constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    AFHTTPRequestOperation *operation = [manager POST:self.baseURL parameters:[self parametersDictionary] constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         //if image attachment exists it will post it
         for (int i = 0; i < self.imgs.count; i++)
         {
@@ -120,6 +120,10 @@ NSString * const sgEndpoint = @"api/mail.send.json";
         failureBlock(error);
     }];
     
+    [operation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+        NSNumber *progress = [NSNumber numberWithFloat:((CGFloat) totalBytesWritten / totalBytesExpectedToWrite)];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"AFHTTPRequestProgress" object:nil userInfo:[NSDictionary dictionaryWithObject:progress forKey:@"AFHTTPRequestProgress"]];
+    }];
 }
 
 #pragma mark - Private Methods

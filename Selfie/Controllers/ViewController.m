@@ -14,6 +14,7 @@
 @property (strong, nonatomic) NoteRibbonView *rightRibbon;
 @property (strong, nonatomic) NoteStatusView *statusView;
 @property (strong, nonatomic) NoteAttachmentView *attachmentView;
+@property (strong, nonatomic) NoteProgressView *progressView;
 @property (strong, nonatomic) UIImage *imageAttachment;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *attachmentBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *settingsBarButtonItem;
@@ -31,8 +32,14 @@
     if (!_noteView) {
         _noteView = [[NoteView alloc] initWithFrame:self.view.frame];
     }
-    
     return _noteView;
+}
+
+- (UIProgressView *) progressView {
+    if (!_progressView) {
+        _progressView = [[NoteProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
+    }
+    return _progressView;
 }
 
 - (NoteRibbonView *) leftRibbon {
@@ -79,6 +86,7 @@
     [self.view addSubview:self.noteView];
     [self.view addSubview:self.attachmentView];
     [self.view addSubview:self.statusView];
+    [self.view addSubview:self.progressView];
     [self.view addSubview:self.leftRibbon];
     [self.view addSubview:self.rightRibbon];
     
@@ -121,6 +129,11 @@
     [Radio addObserver:self
               selector:@selector(reachabilityChanged:)
                   name:kReachabilityChangedNotification
+                object:nil];
+    
+    [Radio addObserver:self
+              selector:@selector(progressUpdated:)
+                  name:kStatusProgress
                 object:nil];
 }
 
@@ -194,6 +207,7 @@
     [self.leftRibbon updateFrameToKeyboard:keyboardRect];
     [self.rightRibbon updateFrameToKeyboard:keyboardRect];
     [self.statusView updateFrameToKeyboard:keyboardRect];
+    [self.progressView updateFrameToKeyboard:keyboardRect];
 }
 
 - (void) keyboardDidShow:(NSNotification *) notification {
@@ -244,15 +258,31 @@
     Note *note = [[Note alloc] initWithString:self.noteView.text direction:direction];
     
     if (note) {
-        if ([State isReachable]) {
-            self.statusView.backgroundColor = tertiaryColor;
-            self.statusView.text = kStatusSendingNote;
-            [self.statusView show];
-        }
+        [self.progressView send];
         
         if (self.imageAttachment) {
             note.image = self.imageAttachment;
             self.imageAttachment = nil;
+            
+            [UIView animateWithDuration:0.25 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                self.navigationItem.rightBarButtonItem.customView.alpha = 0;
+            } completion:^(BOOL finished){
+                if (finished) {
+                    // TODO: refactor into Utilities
+                    UIButton *imageAttachmentView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
+                    [imageAttachmentView addTarget:self action:@selector(selectPhoto:) forControlEvents:UIControlEventTouchUpInside];
+                    [imageAttachmentView setBackgroundImage:[UIImage imageNamed:@"icon_camera"] forState:UIControlStateNormal];
+                    
+                    
+                    UIBarButtonItem *imageAttachmentButton = [[UIBarButtonItem alloc] initWithCustomView:imageAttachmentView];
+                    [self.navigationItem setRightBarButtonItem:imageAttachmentButton];
+                    self.navigationItem.rightBarButtonItem.customView.alpha = 0;
+                    
+                    [UIView animateWithDuration:0.25 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                        self.navigationItem.rightBarButtonItem.customView.alpha = 1;
+                    } completion:nil];
+                }
+            }];
         }
         
         [note send];
@@ -272,19 +302,16 @@
 }
 
 - (void) sendSuccess:(NSNotification *) notification {
-    if ([State isReachable]) {
-        self.statusView.backgroundColor = primaryColor;
-        self.statusView.text = @"Success!";
-        [self.statusView hideWithDelay:0.5];
-    }
 }
 
 - (void) sendFailure:(NSNotification *) notification {
-    if ([State isReachable]) {
-        self.statusView.backgroundColor = secondaryColor;
-        self.statusView.text = @"Failure!";
-        [self.statusView hideWithDelay:0.5];
-    }
+    // TODO: refactor as [self.statusView flashWithMessage:(NSString *) message withColor:(UIColor *) color];
+//    if ([State isReachable]) {
+//        self.statusView.hidden = NO;
+//        self.statusView.backgroundColor = secondaryColor;
+//        self.statusView.text = @"Failure!";
+//        [self.statusView hideWithDelay:0.5];
+//    }
 }
 
 - (void) takePhoto:(UIButton *) sender {
@@ -308,28 +335,41 @@
     [self presentViewController:picker animated:YES completion:NULL];
 }
 
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+- (void) imagePickerController:(UIImagePickerController *) picker didFinishPickingMediaWithInfo:(NSDictionary *) info {
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
-    self.imageAttachment = chosenImage;
+    self.imageAttachment = [chosenImage copy];
+    
+    // TODO: refactor into Utilities
+    UIButton *imageAttachmentView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
+    [imageAttachmentView addTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
+    [imageAttachmentView setBackgroundImage:chosenImage forState:UIControlStateNormal];
+    UIBarButtonItem *imageAttachmentButton = [[UIBarButtonItem alloc] initWithCustomView:imageAttachmentView];
+    [self.navigationItem setRightBarButtonItem:imageAttachmentButton];
     
     [picker dismissViewControllerAnimated:YES completion:^{
         [self.noteView becomeFirstResponder];
     }];
 }
 
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+- (void) imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     [picker dismissViewControllerAnimated:YES completion:^{
         [self.noteView becomeFirstResponder];
     }];
 }
 
-- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+- (void) navigationController:(UINavigationController *) navigationController willShowViewController:(UIViewController *) viewController animated:(BOOL)animated
 {
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
     [[UINavigationBar appearance] setBarTintColor:primaryColor];
     navigationController.navigationBar.tintColor = [UIColor whiteColor];
     navigationController.navigationBar.translucent = NO;
+}
+
+- (void) progressUpdated:(NSNotification *) notification {
+    // Use actual upload progress
+    // NSDictionary *dict = [notification userInfo];
+    // [self.progressView setProgress:[[dict valueForKeyPath:kStatusProgress] floatValue] animated:YES];
 }
 
 @end

@@ -44,7 +44,7 @@
 - (void) showWithDelay:(NSTimeInterval) delay {
     self.hidden = NO;
     [UIView animateWithDuration:2.0 delay:delay usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveLinear animations:^{
-        self.alpha = 0.8;
+        self.alpha = 1.0;
     } completion:^(BOOL finished){
         
     }];

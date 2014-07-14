@@ -39,6 +39,7 @@ static NSInteger const kMaxSubjectLength = 78;
 // Status bar default copy
 static NSString * const kStatusNoConnection = @"No connection! Notes will be saved.";
 static NSString * const kStatusSendingNote = @"Sending note!";
+static NSString * const kStatusProgress = @"AFHTTPRequestProgress";
 
 // User data
 static NSString * const kSettingsSwipeLeftToEmailKey = @"swipeLeftTo";

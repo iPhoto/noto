@@ -93,9 +93,10 @@
     UIImage *ribbonImage;
     
     // TODO: what if attachment isn't image?
-    if (attachment) {
-        ribbonImage = (UIImage *) attachment;
-    } else if ([Utilities isEmptyString:noteText] ||
+//    if (attachment) {
+//        ribbonImage = (UIImage *) attachment;
+//    } else
+    if ([Utilities isEmptyString:noteText] ||
         [Utilities isEmptyString:emailAddress] ||
         ![Utilities isValidEmailString:emailAddress]) {
         ribbonImage = [UIImage imageNamed: @"icon_warning"];
