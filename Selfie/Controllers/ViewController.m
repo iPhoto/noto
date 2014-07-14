@@ -228,6 +228,7 @@
     
     [self.leftRibbon updateFrameToKeyboard:keyboardRect];
     [self.rightRibbon updateFrameToKeyboard:keyboardRect];
+    [self.attachmentView updateFrameToKeyboard:keyboardRect];
     [self.statusView updateFrameToKeyboard:keyboardRect];
     [self.progressView updateFrameToKeyboard:keyboardRect];
 }
@@ -358,13 +359,19 @@
 
 - (void) selectPhoto:(UIButton *) sender {
     
-    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-
-    picker.delegate = self;
-    picker.allowsEditing = NO;
-    picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+    if ([self.noteView isFirstResponder]) {
+        [self.noteView resignFirstResponder];
+    } else {
+        [self.noteView becomeFirstResponder];
+    }
     
-    [self presentViewController:picker animated:YES completion:NULL];
+//    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+//
+//    picker.delegate = self;
+//    picker.allowsEditing = NO;
+//    picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+//    
+//    [self presentViewController:picker animated:YES completion:NULL];
 }
 
 - (void) imagePickerController:(UIImagePickerController *) picker didFinishPickingMediaWithInfo:(NSDictionary *) info {

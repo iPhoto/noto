@@ -12,5 +12,5 @@
 @interface NoteAttachmentView : UIView
 @property (nonatomic, strong) UIButton *takePhotoButton;
 
-- (void) updateFrameToKeyboard:(CGRect) keyboardRect withNavBarHeight:(CGFloat) height;
+- (void) updateFrameToKeyboard:(CGRect) keyboardRect;
 @end
