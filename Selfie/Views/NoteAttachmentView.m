@@ -19,14 +19,16 @@
     self = [super initWithFrame:frame collectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
     if (self) {
         [self setBackgroundColor:secondaryColor];
+        
         UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
         [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
-//        [flowLayout setMinimumInteritemSpacing:0.0f];
+        [flowLayout setMinimumInteritemSpacing:5.0];
 //        [flowLayout setMinimumLineSpacing:0.0f];
-        [self setPagingEnabled:YES];
-//        [flowLayout setItemSize:CGSizeMake(80, 60)];
+//        [self setPagingEnabled:YES];
+        [flowLayout setItemSize:CGSizeMake(50, 50)];
         [self setCollectionViewLayout:flowLayout];
         [self registerClass:[NotePhotoCell class] forCellWithReuseIdentifier:@"cellIdentifier"];
+        self.hidden = YES;
     }
     return self;
 }
@@ -39,6 +41,33 @@
 //    self.frame = CGRectMake(keyboardRect.size.width - kIconDim - kIconSpacing, statusBarViewRect.size.height + height + kIconSpacing, kIconDim, kIconDim);
     
     self.frame = CGRectMake(0, self.superview.frame.size.height - keyboardRect.size.height, keyboardRect.size.width, keyboardRect.size.height);
+}
+
+- (void) show {
+    [self showWithDelay:0];
+}
+
+- (void) showWithDelay:(NSTimeInterval) delay {
+    self.hidden = NO;
+    [UIView animateWithDuration:0 delay:delay usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveLinear animations:^{
+        self.alpha = 1.0;
+    } completion:^(BOOL finished){
+        
+    }];
+}
+
+- (void) hide {
+    [self hideWithDelay:0];
+}
+
+- (void) hideWithDelay:(NSTimeInterval) delay {
+    [UIView animateWithDuration:0.5 delay:delay usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveLinear animations:^{
+        self.alpha = 0.0;
+    } completion:^(BOOL finished){
+        if (finished) {
+            self.hidden = YES;
+        }
+    }];
 }
 
 @end

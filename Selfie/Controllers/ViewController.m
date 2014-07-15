@@ -267,6 +267,7 @@
 }
 
 - (void) keyboardWillHide:(NSNotification *) notification {
+    [self.attachmentView show];
 }
 
 - (void) keyboardDidHide:(NSNotification *) notification {
@@ -288,6 +289,9 @@
 
 - (void) keyboardDidShow:(NSNotification *) notification {
     self.noteView.panGestureRecognizer.enabled = YES;
+    if (self.attachmentView.hidden == NO) {
+        [self.attachmentView hide];
+    }
 }
 
 - (void) didPan:(UIPanGestureRecognizer *) gestureRecognizer {
@@ -414,10 +418,8 @@
     
     if ([self.noteView isFirstResponder]) {
         [self.noteView resignFirstResponder];
-        self.attachmentView.hidden = NO;
     } else {
         [self.noteView becomeFirstResponder];
-        self.attachmentView.hidden = YES;
     }
     
 //    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
@@ -496,6 +498,10 @@
 {
     NotePhotoCell *cell = (NotePhotoCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cellIdentifier" forIndexPath:indexPath];
     
+//    [collectionView.panGestureRecognizer requireGestureRecognizerToFail:cell.tapGestureRecognizer];
+//    cell.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(setImageFromCell:)];
+//    [cell addGestureRecognizer:cell.tapGestureRecognizer];
+    
     ALAsset *asset = self.assets[indexPath.row];
     cell.asset = asset;
     cell.backgroundColor = [UIColor redColor];
@@ -503,12 +509,12 @@
     return cell;
 }
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    ALAsset *asset = self.assets[indexPath.row];
-    UIImage *image = [UIImage imageWithCGImage:[asset thumbnail]];
-    return CGSizeMake(image.size.width, image.size.height);
-}
+//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    ALAsset *asset = self.assets[indexPath.row];
+//    UIImage *image = [UIImage imageWithCGImage:[asset thumbnail]];
+//    return CGSizeMake(image.size.width, image.size.height);
+//}
 
 - (CGFloat) collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
@@ -518,6 +524,17 @@
 - (CGFloat) collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
 {
     return 1;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    // If you need to use the touched cell, you can retrieve it like so
+    NotePhotoCell *cell = (NotePhotoCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    
+    self.imageAttachment = [UIImage imageWithCGImage:[[cell.asset defaultRepresentation] fullScreenImage]];
+    [self setAttachmentBarButtonItem:self.attachmentBarButtonItem withImage:self.imageAttachment withAction:@selector(showAttachmentAlertView:)];
+    
+    NSLog(@"touched cell %@ at indexPath %@", cell, indexPath);
 }
 
 @end

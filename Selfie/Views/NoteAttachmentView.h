@@ -15,4 +15,8 @@
 //@property (nonatomic, strong) 
 
 - (void) updateFrameToKeyboard:(CGRect) keyboardRect;
+- (void) show;
+- (void) showWithDelay:(NSTimeInterval) delay;
+- (void) hide;
+- (void) hideWithDelay:(NSTimeInterval) delay;
 @end

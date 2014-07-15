@@ -10,5 +10,6 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 
 @interface NotePhotoCell : UICollectionViewCell
-@property(nonatomic, strong) ALAsset *asset;
+@property (nonatomic, strong) ALAsset *asset;
+@property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
 @end
