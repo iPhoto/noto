@@ -40,7 +40,7 @@
     
     self.frame = CGRectMake(0, self.superview.frame.size.height - keyboardRect.size.height, keyboardRect.size.width, keyboardRect.size.height);
     
-    CGFloat cellDim = (keyboardRect.size.height - 3 * kNoteAttachmentViewBorder) / 2;
+    CGFloat cellDim = (keyboardRect.size.height - (kNoteAttachmentNumRows + 1) * kNoteAttachmentViewBorder) / kNoteAttachmentNumRows;
     
     [(UICollectionViewFlowLayout * )self.collectionViewLayout setItemSize:CGSizeMake(cellDim, cellDim)];
 }
