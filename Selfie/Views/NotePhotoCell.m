@@ -20,7 +20,7 @@
         
         self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] init];
         
-        CGRect frame  = CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width, self.bounds.size.height);
+        CGRect frame = self.contentView.bounds;
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:frame];
         
         self.imageView = imageView;

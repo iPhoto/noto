@@ -61,7 +61,6 @@
 
 - (void) setColorWithPastTheshold:(BOOL) pastThreshold validSend:(BOOL) validity {
     
-    UIColor *currColor = self.backgroundColor;
     UIColor *nextColor = self.backgroundColor;
     
     if (validity) {

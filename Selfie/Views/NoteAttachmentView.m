@@ -16,15 +16,21 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithFrame:frame collectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
+    self = [super initWithFrame:frame];
     if (self) {
-        [self setBackgroundColor:secondaryColor];
         
-        [self registerClass:[NotePhotoCell class] forCellWithReuseIdentifier:@"cellIdentifier"];
+        self.collectionView = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
         
-        [self setCollectionViewLayout:[self createCollectionViewFlowLayoutWithCellDim:0]];
+        [self.collectionView registerClass:[NotePhotoCell class] forCellWithReuseIdentifier:@"cellIdentifier"];
         
-        self.contentInset = UIEdgeInsetsMake(kNoteAttachmentViewBorder, kNoteAttachmentViewBorder, kNoteAttachmentViewBorder, kNoteAttachmentViewBorder);
+        [self.collectionView setCollectionViewLayout:[self createCollectionViewFlowLayoutWithCellDim:50]];
+        
+        self.collectionView.contentInset = UIEdgeInsetsMake(kNoteAttachmentViewBorder, kNoteAttachmentViewBorder, kNoteAttachmentViewBorder, kNoteAttachmentViewBorder);
+        
+        self.collectionView.backgroundColor = tertiaryColorLight;
+        self.collectionView.hidden = YES;
+        
+        [self addSubview:self.collectionView];
         
         self.hidden = YES;
     }
@@ -50,9 +56,13 @@
     
     self.frame = CGRectMake(0, self.superview.frame.size.height - keyboardRect.size.height, keyboardRect.size.width, keyboardRect.size.height);
     
+    self.collectionView.frame = self.frame;
+    
+    NSLog(@"%f %f %f %f", keyboardRect.origin.x, keyboardRect.origin.y, keyboardRect.size.width, keyboardRect.size.height);
+    
     CGFloat cellDim = (keyboardRect.size.height - (kNoteAttachmentNumRows + 1) * kNoteAttachmentViewBorder) / kNoteAttachmentNumRows;
     
-    [(UICollectionViewFlowLayout * )self.collectionViewLayout setItemSize:CGSizeMake(cellDim, cellDim)];
+    [(UICollectionViewFlowLayout *) self.collectionView.collectionViewLayout setItemSize:CGSizeMake(cellDim, cellDim)];
 }
 
 - (void) show {
@@ -61,8 +71,10 @@
 
 - (void) showWithDelay:(NSTimeInterval) delay {
     self.hidden = NO;
+    self.collectionView.hidden = NO;
     [UIView animateWithDuration:0 delay:delay usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveLinear animations:^{
         self.alpha = 1.0;
+        self.collectionView.alpha = 1.0;
     } completion:^(BOOL finished){
         
     }];
@@ -75,9 +87,11 @@
 - (void) hideWithDelay:(NSTimeInterval) delay {
     [UIView animateWithDuration:0.5 delay:delay usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveLinear animations:^{
         self.alpha = 0.0;
+        self.collectionView.alpha = 0.0;
     } completion:^(BOOL finished){
         if (finished) {
             self.hidden = YES;
+            self.collectionView.hidden = YES;
         }
     }];
 }

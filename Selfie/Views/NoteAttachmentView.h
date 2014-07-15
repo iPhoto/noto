@@ -10,7 +10,9 @@
 #import "NotePhotoCell.h"
 #import "Utilities.h"
 
-@interface NoteAttachmentView : UICollectionView
+@interface NoteAttachmentView : UIView
+@property (strong, nonatomic) UICollectionView *collectionView;
+
 - (void) updateFrameToKeyboard:(CGRect) keyboardRect;
 - (void) show;
 - (void) showWithDelay:(NSTimeInterval) delay;

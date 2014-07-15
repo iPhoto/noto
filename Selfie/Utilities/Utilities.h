@@ -16,6 +16,7 @@
 #define primaryColor [UIColor colorWithRed:75.0 / 255.0 green:139.0 / 255.0 blue:204.0 / 255.0 alpha:1.0]
 #define secondaryColor [UIColor colorWithRed:231.0 / 255.0 green:94.0 / 255.0 blue:82.0 / 255.0 alpha:1.0]
 #define tertiaryColor [UIColor colorWithRed:170 / 255.0 green:187 / 255.0 blue:205 / 255.0 alpha:1.0]
+#define tertiaryColorLight [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1.0]
 
 // Typography
 static NSUInteger const kGlobalFontSize = 18;
@@ -86,6 +87,7 @@ static NSString * const kNoteSendFailNotification = @"noteSendFailNotification";
 static NSString * const kEnumerateGroupCompleteNotification = @"enumerateGroupCompletionNotification";
 
 @interface Utilities : NSObject
+
 + (NSString *) appName;
 + (void) setSettingsValue:(NSString *) value forKey:(NSString *) key;
 + (NSString *) getSettingsValue:(NSString *) key;

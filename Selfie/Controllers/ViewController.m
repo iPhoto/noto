@@ -18,6 +18,7 @@
 @property (strong, nonatomic) NoteAttachmentView *attachmentView;
 @property (strong, nonatomic) NoteProgressView *progressView;
 @property (strong, nonatomic) UIImage *imageAttachment;
+
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *attachmentBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *settingsBarButtonItem;
 @property (strong, nonatomic) IBOutlet UINavigationItem *navBarTitle;
@@ -112,7 +113,7 @@
         
         // 5
 
-        [self.attachmentView reloadData];
+        [self.attachmentView.collectionView reloadData];
     } failureBlock:^(NSError *error) {
         NSLog(@"Error loading images %@", error);
     }];
@@ -123,6 +124,9 @@
     
     [self.view addSubview:self.noteView];
     [self.view addSubview:self.attachmentView];
+    
+    // TODO: this is not ideal; should be encapsulated in attachmentView
+    [self.view addSubview:self.attachmentView.collectionView];
     [self.view addSubview:self.statusView];
     [self.view addSubview:self.progressView];
     [self.view addSubview:self.leftRibbon];
@@ -134,8 +138,8 @@
     [self.attachmentBarButtonItem setTarget:self];
     [self.attachmentBarButtonItem setAction:@selector(toggleKeyboard)];
     
-    [self.attachmentView setDataSource:self];
-    [self.attachmentView setDelegate:self];
+    self.attachmentView.collectionView.dataSource = self;
+    self.attachmentView.collectionView.delegate = self;
     
     [Radio addObserver:self
               selector:@selector(keyboardWillShow:)
@@ -186,7 +190,7 @@
 - (void) reloadTableView:(NSNotification*) notification {
     
     // reloadData after receive the notification
-    [_attachmentView reloadData];
+    [_attachmentView.collectionView reloadData];
     
 }
 
@@ -424,6 +428,9 @@
 // TODO: Refactor so that actions don't hinge on toggling keyboard (will/did show/hide)
 - (void) toggleKeyboard {
     if ([self.noteView isFirstResponder]) {
+        [UIView animateKeyframesWithDuration:0.25 delay:0 options:UIViewKeyframeAnimationOptionCalculationModeLinear animations:^{
+//            self.attachmentBarButtonItem.transform = CGAffineTransformMakeRotation( 45 * M_PI  / 180);
+        } completion:nil];
         [self.noteView resignFirstResponder];
     } else {
         [self.noteView becomeFirstResponder];
@@ -507,17 +514,16 @@
 - (UICollectionViewCell *) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     NotePhotoCell *cell = (NotePhotoCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cellIdentifier" forIndexPath:indexPath];
-    
+
     ALAsset *asset = self.assets[indexPath.row];
     cell.asset = asset;
-    cell.backgroundColor = [UIColor redColor];
     
     return cell;
 }
 
 - (CGFloat) collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
-    return 4;
+    return kNoteAttachmentViewBorder;
 }
                        
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath

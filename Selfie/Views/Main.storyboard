@@ -15,7 +15,7 @@
                                 <segue destination="xw0-um-NU6" kind="push" identifier="showSettingsFromNote" id="cZo-9D-aFX"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="icon_attachment" id="TRr-P9-6sd"/>
+                        <barButtonItem key="rightBarButtonItem" image="icon_add_attachment" id="TRr-P9-6sd"/>
                     </navigationItem>
                     <connections>
                         <outlet property="attachmentBarButtonItem" destination="TRr-P9-6sd" id="I9g-sS-9Aa"/>
@@ -76,7 +76,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="icon_attachment" width="30" height="30"/>
+        <image name="icon_add_attachment" width="30" height="30"/>
         <image name="icon_settings" width="25" height="25"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
