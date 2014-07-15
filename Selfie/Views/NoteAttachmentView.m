@@ -16,9 +16,17 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    self = [super initWithFrame:frame];
+    self = [super initWithFrame:frame collectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
     if (self) {
         [self setBackgroundColor:secondaryColor];
+        UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+        [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
+//        [flowLayout setMinimumInteritemSpacing:0.0f];
+//        [flowLayout setMinimumLineSpacing:0.0f];
+        [self setPagingEnabled:YES];
+//        [flowLayout setItemSize:CGSizeMake(80, 60)];
+        [self setCollectionViewLayout:flowLayout];
+        [self registerClass:[NotePhotoCell class] forCellWithReuseIdentifier:@"cellIdentifier"];
     }
     return self;
 }

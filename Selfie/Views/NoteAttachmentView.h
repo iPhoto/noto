@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NotePhotoCell.h"
 #import "Utilities.h"
 
-@interface NoteAttachmentView : UIView
+@interface NoteAttachmentView : UICollectionView
 @property (nonatomic, strong) UIButton *takePhotoButton;
+//@property (nonatomic, strong) 
 
 - (void) updateFrameToKeyboard:(CGRect) keyboardRect;
 @end

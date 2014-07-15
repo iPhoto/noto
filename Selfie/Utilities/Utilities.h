@@ -79,6 +79,7 @@ static NSString * const kEmptyNoteNotification = @"emptyNoteNotification";
 static NSString * const kUpdateSubjectNotification = @"updateSubjectNotification";
 static NSString * const kNoteSendSuccessNotification = @"noteSendSuccessNotification";
 static NSString * const kNoteSendFailNotification = @"noteSendFailNotification";
+static NSString * const kEnumerateGroupCompleteNotification = @"enumerateGroupCompletionNotification";
 
 @interface Utilities : NSObject
 + (NSString *) appName;

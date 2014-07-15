@@ -9,6 +9,8 @@
 #import "ViewController.h"
 
 @interface ViewController ()
+@property(nonatomic, strong) NSMutableArray *assets;
+
 @property (strong, nonatomic) NoteView *noteView;
 @property (strong, nonatomic) NoteRibbonView *leftRibbon;
 @property (strong, nonatomic) NoteRibbonView *rightRibbon;
@@ -76,8 +78,44 @@
     return _attachmentView;
 }
 
++ (ALAssetsLibrary *) defaultAssetsLibrary
+{
+    static dispatch_once_t pred = 0;
+    static ALAssetsLibrary *library = nil;
+    dispatch_once(&pred, ^{
+        library = [[ALAssetsLibrary alloc] init];
+    });
+    return library;
+}
+
 - (void) viewDidLoad {
     [super viewDidLoad];
+    
+    _assets = [@[] mutableCopy];
+    __block NSMutableArray *tmpAssets = [@[] mutableCopy];
+    // 1
+    ALAssetsLibrary *assetsLibrary = [ViewController defaultAssetsLibrary];
+    // 2
+    [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupAll usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
+        [group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
+            if(result)
+            {
+                // 3
+                [tmpAssets addObject:result];
+            }
+        }];
+        
+        // 4
+        //NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO];
+        //self.assets = [tmpAssets sortedArrayUsingDescriptors:@[sort]];
+        self.assets = tmpAssets;
+        
+        // 5
+
+        [self.attachmentView reloadData];
+    } failureBlock:^(NSError *error) {
+        NSLog(@"Error loading images %@", error);
+    }];
     
     [self onFirstLaunch];
     
@@ -95,6 +133,9 @@
     
     [self.attachmentBarButtonItem setTarget:self];
     [self.attachmentBarButtonItem setAction:@selector(selectPhoto:)];
+    
+    [self.attachmentView setDataSource:self];
+    [self.attachmentView setDelegate:self];
     
     [Radio addObserver:self
               selector:@selector(keyboardWillShow:)
@@ -135,6 +176,18 @@
               selector:@selector(progressUpdated:)
                   name:kStatusProgress
                 object:nil];
+    
+    [Radio addObserver:self
+              selector:@selector(reloadTableView:)
+                  name:kEnumerateGroupCompleteNotification
+                object:nil];
+}
+
+- (void) reloadTableView:(NSNotification*) notification {
+    
+    // reloadData after receive the notification
+    [_attachmentView reloadData];
+    
 }
 
 - (void) onFirstLaunch {
@@ -361,8 +414,10 @@
     
     if ([self.noteView isFirstResponder]) {
         [self.noteView resignFirstResponder];
+        self.attachmentView.hidden = NO;
     } else {
         [self.noteView becomeFirstResponder];
+        self.attachmentView.hidden = YES;
     }
     
 //    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
@@ -425,6 +480,44 @@
     // Use actual upload progress
     // NSDictionary *dict = [notification userInfo];
     // [self.progressView setProgress:[[dict valueForKeyPath:kStatusProgress] floatValue] animated:YES];
+}
+
+- (NSInteger) numberOfSectionsInCollectionView:(UICollectionView *) collectionView {
+    return 1;
+}
+
+
+- (NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return self.assets.count;
+}
+
+- (UICollectionViewCell *) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NotePhotoCell *cell = (NotePhotoCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cellIdentifier" forIndexPath:indexPath];
+    
+    ALAsset *asset = self.assets[indexPath.row];
+    cell.asset = asset;
+    cell.backgroundColor = [UIColor redColor];
+    
+    return cell;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    ALAsset *asset = self.assets[indexPath.row];
+    UIImage *image = [UIImage imageWithCGImage:[asset thumbnail]];
+    return CGSizeMake(image.size.width, image.size.height);
+}
+
+- (CGFloat) collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
+{
+    return 4;
+}
+
+- (CGFloat) collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
+{
+    return 1;
 }
 
 @end

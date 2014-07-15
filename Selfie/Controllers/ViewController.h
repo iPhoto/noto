@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AssetsLibrary/AssetsLibrary.h>
 #import "Reachability.h"
 #import "Note.h"
 #import "NoteView.h"
@@ -14,10 +15,11 @@
 #import "NoteProgressView.h"
 #import "NoteRibbonView.h"
 #import "NoteStatusView.h"
+#import "NotePhotoCell.h"
 #import "State.h"
 #import "Utilities.h"
 
-@interface ViewController : UIViewController <NoteViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate>
+@interface ViewController : UIViewController <NoteViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIAlertViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 
 @end
