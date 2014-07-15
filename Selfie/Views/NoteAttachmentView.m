@@ -20,14 +20,12 @@
     if (self) {
         [self setBackgroundColor:secondaryColor];
         
-        UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-        [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
-        [flowLayout setMinimumInteritemSpacing:5.0];
-//        [flowLayout setMinimumLineSpacing:0.0f];
-//        [self setPagingEnabled:YES];
-        [flowLayout setItemSize:CGSizeMake(50, 50)];
-        [self setCollectionViewLayout:flowLayout];
+        [(UICollectionViewFlowLayout * )self.collectionViewLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
+        [(UICollectionViewFlowLayout * )self.collectionViewLayout setMinimumInteritemSpacing:kNoteAttachmentViewBorder];
         [self registerClass:[NotePhotoCell class] forCellWithReuseIdentifier:@"cellIdentifier"];
+        
+        self.contentInset = UIEdgeInsetsMake(kNoteAttachmentViewBorder, kNoteAttachmentViewBorder, kNoteAttachmentViewBorder, kNoteAttachmentViewBorder);
+        
         self.hidden = YES;
     }
     return self;
@@ -41,6 +39,10 @@
 //    self.frame = CGRectMake(keyboardRect.size.width - kIconDim - kIconSpacing, statusBarViewRect.size.height + height + kIconSpacing, kIconDim, kIconDim);
     
     self.frame = CGRectMake(0, self.superview.frame.size.height - keyboardRect.size.height, keyboardRect.size.width, keyboardRect.size.height);
+    
+    CGFloat cellDim = (keyboardRect.size.height - 3 * kNoteAttachmentViewBorder) / 2;
+    
+    [(UICollectionViewFlowLayout * )self.collectionViewLayout setItemSize:CGSizeMake(cellDim, cellDim)];
 }
 
 - (void) show {

@@ -503,7 +503,6 @@
     
     ALAsset *asset = self.assets[indexPath.row];
     cell.asset = asset;
-    cell.backgroundColor = [UIColor redColor];
     
     return cell;
 }

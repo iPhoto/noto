@@ -66,6 +66,9 @@ static NSInteger const kNoteRibbonTextOffset = kNoteRibbonImageBorderSpacing / 2
 static NSInteger const kNoteRibbonViewWidth = 1000;
 static NSInteger const kSwipeThreshold = 120;
 
+// Attachment view layout constants
+static NSInteger const kNoteAttachmentViewBorder = 5;
+
 // Status bar layout constants
 static NSInteger const kStatusViewWidth = kNoteRibbonViewWidth;
 static NSInteger const kStatusViewHeight = kNoteRibbonViewHeight;
