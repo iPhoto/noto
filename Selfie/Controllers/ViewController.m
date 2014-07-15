@@ -21,6 +21,8 @@
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *attachmentBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *settingsBarButtonItem;
 @property (strong, nonatomic) IBOutlet UINavigationItem *navBarTitle;
+
+@property (nonatomic) UIInterfaceOrientation orientation;
 @end
 
 @implementation ViewController
@@ -106,8 +108,6 @@
         }];
         
         // 4
-        //NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO];
-        //self.assets = [tmpAssets sortedArrayUsingDescriptors:@[sort]];
         self.assets = tmpAssets;
         
         // 5
@@ -286,6 +286,13 @@
     [self.statusView updateFrameToKeyboard:keyboardRect];
     [self.progressView updateFrameToKeyboard:keyboardRect];
 }
+
+//-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+//                               duration:(NSTimeInterval)duration{
+//    
+//    self.orientation = toInterfaceOrientation;
+//    [self.attachmentView.collectionViewLayout invalidateLayout];
+//}
 
 - (void) keyboardDidShow:(NSNotification *) notification {
     self.noteView.panGestureRecognizer.enabled = YES;
@@ -503,6 +510,7 @@
     
     ALAsset *asset = self.assets[indexPath.row];
     cell.asset = asset;
+    cell.backgroundColor = [UIColor redColor];
     
     return cell;
 }
@@ -511,12 +519,7 @@
 {
     return 4;
 }
-
-- (CGFloat) collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section
-{
-    return 1;
-}
-
+                       
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     // If you need to use the touched cell, you can retrieve it like so

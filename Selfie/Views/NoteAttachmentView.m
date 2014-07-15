@@ -20,15 +20,25 @@
     if (self) {
         [self setBackgroundColor:secondaryColor];
         
-        [(UICollectionViewFlowLayout * )self.collectionViewLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
-        [(UICollectionViewFlowLayout * )self.collectionViewLayout setMinimumInteritemSpacing:kNoteAttachmentViewBorder];
         [self registerClass:[NotePhotoCell class] forCellWithReuseIdentifier:@"cellIdentifier"];
+        
+        [self setCollectionViewLayout:[self createCollectionViewFlowLayoutWithCellDim:0]];
         
         self.contentInset = UIEdgeInsetsMake(kNoteAttachmentViewBorder, kNoteAttachmentViewBorder, kNoteAttachmentViewBorder, kNoteAttachmentViewBorder);
         
         self.hidden = YES;
     }
     return self;
+}
+
+- (UICollectionViewFlowLayout *) createCollectionViewFlowLayoutWithCellDim:(CGFloat) dim {
+    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+    
+    layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+    layout.minimumInteritemSpacing = kNoteAttachmentViewBorder;
+    layout.itemSize = CGSizeMake(dim, dim);
+    
+    return layout;
 }
 
 - (void) updateFrameToKeyboard:(CGRect) keyboardRect {

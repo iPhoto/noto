@@ -11,9 +11,6 @@
 #import "Utilities.h"
 
 @interface NoteAttachmentView : UICollectionView
-@property (nonatomic, strong) UIButton *takePhotoButton;
-//@property (nonatomic, strong) 
-
 - (void) updateFrameToKeyboard:(CGRect) keyboardRect;
 - (void) show;
 - (void) showWithDelay:(NSTimeInterval) delay;

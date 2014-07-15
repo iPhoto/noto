@@ -11,5 +11,6 @@
 
 @interface NotePhotoCell : UICollectionViewCell
 @property (nonatomic, strong) ALAsset *asset;
+@property(nonatomic, weak) UIImageView *imageView;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
 @end
