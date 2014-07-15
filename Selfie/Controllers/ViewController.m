@@ -132,7 +132,7 @@
     self.noteView.noteViewDelegate = self;
     
     [self.attachmentBarButtonItem setTarget:self];
-    [self.attachmentBarButtonItem setAction:@selector(selectPhoto:)];
+    [self.attachmentBarButtonItem setAction:@selector(toggleKeyboard)];
     
     [self.attachmentView setDataSource:self];
     [self.attachmentView setDelegate:self];
@@ -355,7 +355,7 @@
     self.imageAttachment = nil;
     [self setAttachmentBarButtonItem:self.attachmentBarButtonItem
                            withImage:[UIImage imageNamed:@"icon_camera"]
-                          withAction:@selector(selectPhoto:)];
+                          withAction:@selector(toggleKeyboard)];
 }
 
 - (void)setAttachmentBarButtonItem:(UIBarButtonItem *) attachmentBarButtonItem withImage:(UIImage *) image withAction:(SEL) action {
@@ -414,21 +414,24 @@
     [self presentViewController:picker animated:YES completion:NULL];
 }
 
-- (void) selectPhoto:(UIButton *) sender {
-    
+// TODO: Refactor so that actions don't hinge on toggling keyboard (will/did show/hide)
+- (void) toggleKeyboard {
     if ([self.noteView isFirstResponder]) {
         [self.noteView resignFirstResponder];
     } else {
         [self.noteView becomeFirstResponder];
     }
+}
+
+- (void) selectPhoto:(UIButton *) sender {
     
-//    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-//
-//    picker.delegate = self;
-//    picker.allowsEditing = NO;
-//    picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-//    
-//    [self presentViewController:picker animated:YES completion:NULL];
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+
+    picker.delegate = self;
+    picker.allowsEditing = NO;
+    picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+    
+    [self presentViewController:picker animated:YES completion:NULL];
 }
 
 - (void) imagePickerController:(UIImagePickerController *) picker didFinishPickingMediaWithInfo:(NSDictionary *) info {
@@ -498,23 +501,12 @@
 {
     NotePhotoCell *cell = (NotePhotoCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cellIdentifier" forIndexPath:indexPath];
     
-//    [collectionView.panGestureRecognizer requireGestureRecognizerToFail:cell.tapGestureRecognizer];
-//    cell.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(setImageFromCell:)];
-//    [cell addGestureRecognizer:cell.tapGestureRecognizer];
-    
     ALAsset *asset = self.assets[indexPath.row];
     cell.asset = asset;
     cell.backgroundColor = [UIColor redColor];
     
     return cell;
 }
-
-//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    ALAsset *asset = self.assets[indexPath.row];
-//    UIImage *image = [UIImage imageWithCGImage:[asset thumbnail]];
-//    return CGSizeMake(image.size.width, image.size.height);
-//}
 
 - (CGFloat) collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
@@ -534,7 +526,7 @@
     self.imageAttachment = [UIImage imageWithCGImage:[[cell.asset defaultRepresentation] fullScreenImage]];
     [self setAttachmentBarButtonItem:self.attachmentBarButtonItem withImage:self.imageAttachment withAction:@selector(showAttachmentAlertView:)];
     
-    NSLog(@"touched cell %@ at indexPath %@", cell, indexPath);
+    [self toggleKeyboard];
 }
 
 @end
