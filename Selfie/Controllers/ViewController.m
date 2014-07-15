@@ -361,7 +361,7 @@
 - (void) resetAttachmentBarButtonItem {
     self.imageAttachment = nil;
     [self setAttachmentBarButtonItem:self.attachmentBarButtonItem
-                           withImage:[UIImage imageNamed:@"icon_camera"]
+                           withImage:[UIImage imageNamed:@"icon_attachment"]
                           withAction:@selector(toggleKeyboard)];
 }
 
