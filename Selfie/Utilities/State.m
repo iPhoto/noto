@@ -96,9 +96,9 @@
 //    if (attachment) {
 //        ribbonImage = (UIImage *) attachment;
 //    } else
-    if ([Utilities isEmptyString:noteText] ||
+    if (([Utilities isEmptyString:noteText] ||
         [Utilities isEmptyString:emailAddress] ||
-        ![Utilities isValidEmailString:emailAddress]) {
+        ![Utilities isValidEmailString:emailAddress]) && attachment == nil) {
         ribbonImage = [UIImage imageNamed: @"icon_warning"];
     } else {
         ribbonImage = [UIImage imageNamed: @"icon_message"];
