@@ -499,12 +499,14 @@
     CGFloat shownAttachmentViewHeight = statusBarViewRect.size.height + navBarHeight;
     
     UIImage *image = [UIImage imageNamed:@"icon_camera"];
-    UIButton *imageAttachmentView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
+
+    UIButton *imageAttachmentView = [UIButton buttonWithType:UIButtonTypeSystem];
+    imageAttachmentView.frame = CGRectMake(0, 0, 25, 25);
     [imageAttachmentView addTarget:self action:@selector(takePhoto:) forControlEvents:UIControlEventTouchUpInside];
     [imageAttachmentView setBackgroundImage:image forState:UIControlStateNormal];
     
     UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:imageAttachmentView];
-    
+
     UIButton *spacer = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 8, 25)];
     UIBarButtonItem *spacerBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spacer];
     
