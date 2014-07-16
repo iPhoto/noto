@@ -39,7 +39,7 @@ static NSString * const kNoNoteSubject = @"[No Subject]";
 static NSInteger const kMaxSubjectLength = 78;
 
 // Status bar default copy
-static NSString * const kStatusNoConnection = @"No connection! Notes will be saved.";
+static NSString * const kStatusNoConnection = @"No connection! Noto will resend.";
 static NSString * const kStatusSendingNote = @"Sending note!";
 static NSString * const kStatusProgress = @"AFHTTPRequestProgress";
 
