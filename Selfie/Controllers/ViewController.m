@@ -95,11 +95,7 @@
     return library;
 }
 
-- (void) viewDidLoad {
-    [super viewDidLoad];
-    
-    self.view.backgroundColor = tertiaryColor;
-    
+- (void) getPhotoLibrary {
     _assets = [@[] mutableCopy];
     __block NSMutableArray *tmpAssets = [@[] mutableCopy];
     // 1
@@ -118,13 +114,21 @@
         self.assets = tmpAssets;
         
         // 5
-
+        
         [self.attachmentView.collectionView reloadData];
     } failureBlock:^(NSError *error) {
         NSLog(@"Error loading images %@", error);
     }];
+}
+
+- (void) viewDidLoad {
+    [super viewDidLoad];
+    
+    self.view.backgroundColor = tertiaryColor;
     
     [self onFirstLaunch];
+    
+    [self getPhotoLibrary];
     
     [self.noteView becomeFirstResponder];
     
@@ -478,6 +482,7 @@
 - (void) showAttachmentView {
     self.attachmentView.collectionView.hidden = NO;
     self.attachmentView.hidden = NO;
+    [self getPhotoLibrary];
     
     CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
     CGRect statusBarWindowRect = [self.view.window convertRect:statusBarFrame fromWindow: nil];
@@ -514,7 +519,6 @@
                                                               self.attachmentView.collectionView.frame.size.height);
         
         ((UIBarButtonItem *)self.navigationItem.rightBarButtonItems[2]).customView.alpha = 1;
-        
     } completion:^(BOOL finished) {
         if (finished) {
         }
