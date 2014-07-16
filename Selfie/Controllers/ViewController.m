@@ -19,8 +19,12 @@
 @property (strong, nonatomic) NoteProgressView *progressView;
 @property (strong, nonatomic) UIImage *imageAttachment;
 
+@property (strong, nonatomic) UIImageView *attachmentBarButtonItemImage;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *attachmentBarButtonItem;
+
+@property (strong, nonatomic) UIImageView *settingsBarButtonItemImage;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *settingsBarButtonItem;
+
 @property (strong, nonatomic) IBOutlet UINavigationItem *navBarTitle;
 
 @property (nonatomic) UIInterfaceOrientation orientation;
@@ -135,11 +139,17 @@
     self.noteView.delegate = self;
     self.noteView.noteViewDelegate = self;
     
-    [self.attachmentBarButtonItem setTarget:self];
-    [self.attachmentBarButtonItem setAction:@selector(toggleKeyboard)];
-    
     self.attachmentView.collectionView.dataSource = self;
     self.attachmentView.collectionView.delegate = self;
+    
+    self.attachmentBarButtonItemImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_add_attachment"]];
+
+    self.attachmentBarButtonItemImage.autoresizingMask = UIViewAutoresizingNone;
+    self.attachmentBarButtonItemImage.contentMode = UIViewContentModeCenter;
+    
+//    self.attachmentBarButtonItem.customView = self.attachmentBarButtonItemImage;
+    
+    [self resetAttachmentBarButtonItem];
     
     [Radio addObserver:self
               selector:@selector(keyboardWillShow:)
@@ -364,9 +374,30 @@
 
 - (void) resetAttachmentBarButtonItem {
     self.imageAttachment = nil;
-    [self setAttachmentBarButtonItem:self.attachmentBarButtonItem
-                           withImage:[UIImage imageNamed:@"icon_attachment"]
-                          withAction:@selector(toggleKeyboard)];
+    
+    [UIView animateWithDuration:0.25 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        self.navigationItem.rightBarButtonItem.customView.alpha = 0;
+    } completion:^(BOOL finished){
+        if (finished) {
+            [self.attachmentBarButtonItem setTarget:self];
+            [self.attachmentBarButtonItem setAction:@selector(toggleKeyboard)];
+            
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+            button.frame = CGRectMake(16, -1, 60, 60);
+            [button addSubview:self.attachmentBarButtonItemImage];
+            [button addTarget:self action:@selector(toggleKeyboard) forControlEvents:UIControlEventTouchUpInside];
+            
+            self.attachmentBarButtonItemImage.center = button.center;
+            self.attachmentBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+            
+            self.navigationItem.rightBarButtonItem.customView = button;
+        }
+        [UIView animateWithDuration:0.25 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            self.navigationItem.rightBarButtonItem.customView.alpha = 1;
+        } completion:^(BOOL finished) {
+            [self.navigationItem setRightBarButtonItem:self.attachmentBarButtonItem];
+        }];
+    }];
 }
 
 - (void)setAttachmentBarButtonItem:(UIBarButtonItem *) attachmentBarButtonItem withImage:(UIImage *) image withAction:(SEL) action {
@@ -428,11 +459,16 @@
 // TODO: Refactor so that actions don't hinge on toggling keyboard (will/did show/hide)
 - (void) toggleKeyboard {
     if ([self.noteView isFirstResponder]) {
-        [UIView animateKeyframesWithDuration:0.25 delay:0 options:UIViewKeyframeAnimationOptionCalculationModeLinear animations:^{
+        [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.6 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            self.attachmentBarButtonItemImage.transform = CGAffineTransformMakeRotation( 45 * M_PI  / 180);
 //            self.attachmentBarButtonItem.transform = CGAffineTransformMakeRotation( 45 * M_PI  / 180);
         } completion:nil];
         [self.noteView resignFirstResponder];
     } else {
+        [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.6 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            self.attachmentBarButtonItemImage.transform = CGAffineTransformMakeRotation( 0  * M_PI  / 180);
+            //            self.attachmentBarButtonItem.transform = CGAffineTransformMakeRotation( 45 * M_PI  / 180);
+        } completion:nil];
         [self.noteView becomeFirstResponder];
     }
 }

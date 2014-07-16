@@ -60,7 +60,7 @@
     
     NSLog(@"%f %f %f %f", keyboardRect.origin.x, keyboardRect.origin.y, keyboardRect.size.width, keyboardRect.size.height);
     
-    CGFloat cellDim = (keyboardRect.size.height - (kNoteAttachmentNumRows + 1) * kNoteAttachmentViewBorder) / kNoteAttachmentNumRows;
+    CGFloat cellDim = (keyboardRect.size.width - (kNoteAttachmentNumCols + 1) * kNoteAttachmentViewBorder) / kNoteAttachmentNumCols;
     
     [(UICollectionViewFlowLayout *) self.collectionView.collectionViewLayout setItemSize:CGSizeMake(cellDim, cellDim)];
 }

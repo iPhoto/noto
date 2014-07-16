@@ -69,7 +69,8 @@ static NSInteger const kSwipeThreshold = 120;
 
 // Attachment view layout constants
 static NSInteger const kNoteAttachmentViewBorder = 5;
-static NSInteger const kNoteAttachmentNumRows = 3;
+static NSInteger const kNoteAttachmentNumRows = 1;
+static NSInteger const kNoteAttachmentNumCols = 4;
 
 // Status bar layout constants
 static NSInteger const kStatusViewWidth = kNoteRibbonViewWidth;
