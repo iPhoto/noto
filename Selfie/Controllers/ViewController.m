@@ -149,8 +149,6 @@
     self.attachmentBarButtonItemImage.autoresizingMask = UIViewAutoresizingNone;
     self.attachmentBarButtonItemImage.contentMode = UIViewContentModeCenter;
     
-//    self.attachmentBarButtonItem.customView = self.attachmentBarButtonItemImage;
-    
     [self resetAttachmentBarButtonItem];
     
     [Radio addObserver:self
@@ -495,8 +493,12 @@
     [imageAttachmentView setBackgroundImage:image forState:UIControlStateNormal];
     
     UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:imageAttachmentView];
-    self.navigationItem.rightBarButtonItems = @[self.attachmentBarButtonItem, barButtonItem];
-    ((UIBarButtonItem *)self.navigationItem.rightBarButtonItems[1]).customView.alpha = 0;
+    
+    UIButton *spacer = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 8, 25)];
+    UIBarButtonItem *spacerBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spacer];
+    
+    self.navigationItem.rightBarButtonItems = @[self.attachmentBarButtonItem, spacerBarButtonItem, barButtonItem];
+    ((UIBarButtonItem *)self.navigationItem.rightBarButtonItems[2]).customView.alpha = 0;
     
     [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.attachmentBarButtonItemImage.transform = CGAffineTransformMakeRotation( 45 * M_PI  / 180);
@@ -511,7 +513,7 @@
                                                               self.attachmentView.collectionView.frame.size.width,
                                                               self.attachmentView.collectionView.frame.size.height);
         
-        ((UIBarButtonItem *)self.navigationItem.rightBarButtonItems[1]).customView.alpha = 1;
+        ((UIBarButtonItem *)self.navigationItem.rightBarButtonItems[2]).customView.alpha = 1;
         
     } completion:^(BOOL finished) {
         if (finished) {
@@ -540,7 +542,7 @@
                                                               self.attachmentView.collectionView.frame.size.width,
                                                               self.attachmentView.collectionView.frame.size.height);
         
-        ((UIBarButtonItem *)self.navigationItem.rightBarButtonItems[1]).customView.alpha = 0;
+        ((UIBarButtonItem *)self.navigationItem.rightBarButtonItems[2]).customView.alpha = 0;
     } completion:^(BOOL finished) {
         if (finished) {
             self.attachmentView.collectionView.hidden = YES;
