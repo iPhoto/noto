@@ -12,8 +12,4 @@
 @interface NoteProgressView : UIProgressView
 - (void) updateFrameToKeyboard:(CGRect) keyboardRect;
 - (void) send;
-- (void) show;
-- (void) showWithDelay:(NSTimeInterval) delay;
-- (void) hide;
-- (void) hideWithDelay:(NSTimeInterval) delay;
 @end

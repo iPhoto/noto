@@ -7,10 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NotePhotoCell.h"
 #import "Utilities.h"
 
 @interface NoteAttachmentView : UIView
-@property (nonatomic, strong) UIButton *takePhotoButton;
+@property (strong, nonatomic) UICollectionView *collectionView;
 
-- (void) updateFrameToKeyboard:(CGRect) keyboardRect withNavBarHeight:(CGFloat) height;
+- (void) updateFrameToKeyboard:(CGRect) keyboardRect withNavBarHeight:(CGFloat) navBarHeight;
+//- (void) show;
+//- (void) showWithDelay:(NSTimeInterval) delay;
+//- (void) hide;
+//- (void) hideWithDelay:(NSTimeInterval) delay;
 @end

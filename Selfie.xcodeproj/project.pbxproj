@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		4F1F9263196B25C500EAD653 /* NoteRibbonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F9262196B25C500EAD653 /* NoteRibbonView.m */; };
 		4F531FFD195F3B3600F4ABAE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F531FFC195F3B3600F4ABAE /* AudioToolbox.framework */; };
+		4F56592B1974CB02006E7A24 /* NotePhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F56592A1974CB02006E7A24 /* NotePhotoCell.m */; };
+		4F56592D1974D17C006E7A24 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F56592C1974D17C006E7A24 /* AssetsLibrary.framework */; };
 		4F58C4E519709BA00054CE12 /* NoteAttachmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F58C4E419709BA00054CE12 /* NoteAttachmentView.m */; };
 		4F58C4E819735FC00054CE12 /* NoteProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F58C4E719735FC00054CE12 /* NoteProgressView.m */; };
 		4F59863F196C71BA006D969E /* State.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F59863E196C71BA006D969E /* State.m */; };
@@ -45,6 +47,9 @@
 		4F1F9261196B25C500EAD653 /* NoteRibbonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteRibbonView.h; sourceTree = "<group>"; };
 		4F1F9262196B25C500EAD653 /* NoteRibbonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteRibbonView.m; sourceTree = "<group>"; };
 		4F531FFC195F3B3600F4ABAE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		4F5659291974CB02006E7A24 /* NotePhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotePhotoCell.h; sourceTree = "<group>"; };
+		4F56592A1974CB02006E7A24 /* NotePhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotePhotoCell.m; sourceTree = "<group>"; };
+		4F56592C1974D17C006E7A24 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		4F58C4E319709BA00054CE12 /* NoteAttachmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteAttachmentView.h; sourceTree = "<group>"; };
 		4F58C4E419709BA00054CE12 /* NoteAttachmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteAttachmentView.m; sourceTree = "<group>"; };
 		4F58C4E619735FC00054CE12 /* NoteProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteProgressView.h; sourceTree = "<group>"; };
@@ -91,6 +96,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F56592D1974D17C006E7A24 /* AssetsLibrary.framework in Frameworks */,
 				4F8D544C196DBAA700FF1BE8 /* Crashlytics.framework in Frameworks */,
 				4F531FFD195F3B3600F4ABAE /* AudioToolbox.framework in Frameworks */,
 				4F953A94194E7F9E00F67A0A /* Foundation.framework in Frameworks */,
@@ -111,6 +117,7 @@
 		49A85F4260824FD59E33F5C0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4F56592C1974D17C006E7A24 /* AssetsLibrary.framework */,
 				4F8D544B196DBAA700FF1BE8 /* Crashlytics.framework */,
 				4F8D5449196DB9ED00FF1BE8 /* libPods-CrashlyticsFramework.a */,
 				4F598638196C4BF9006D969E /* CoreTelephony.framework */,
@@ -168,6 +175,8 @@
 				4F8D5453196E44F600FF1BE8 /* NoteStatusView.m */,
 				4F58C4E619735FC00054CE12 /* NoteProgressView.h */,
 				4F58C4E719735FC00054CE12 /* NoteProgressView.m */,
+				4F5659291974CB02006E7A24 /* NotePhotoCell.h */,
+				4F56592A1974CB02006E7A24 /* NotePhotoCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -383,6 +392,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F56592B1974CB02006E7A24 /* NotePhotoCell.m in Sources */,
 				4F6E3A2A19687F1D00E7A0A8 /* Selfie.xcdatamodeld in Sources */,
 				4F6E3A2819687F1D00E7A0A8 /* Note.m in Sources */,
 				4F6E3A2C19687F1D00E7A0A8 /* Utilities.m in Sources */,

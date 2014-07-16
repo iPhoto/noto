@@ -16,6 +16,7 @@
 #define primaryColor [UIColor colorWithRed:75.0 / 255.0 green:139.0 / 255.0 blue:204.0 / 255.0 alpha:1.0]
 #define secondaryColor [UIColor colorWithRed:231.0 / 255.0 green:94.0 / 255.0 blue:82.0 / 255.0 alpha:1.0]
 #define tertiaryColor [UIColor colorWithRed:170 / 255.0 green:187 / 255.0 blue:205 / 255.0 alpha:1.0]
+#define tertiaryColorLight [UIColor colorWithRed:238 / 255.0 green:238 / 255.0 blue:238 / 255.0 alpha:1.0]
 
 // Typography
 static NSUInteger const kGlobalFontSize = 18;
@@ -38,7 +39,7 @@ static NSString * const kNoNoteSubject = @"[No Subject]";
 static NSInteger const kMaxSubjectLength = 78;
 
 // Status bar default copy
-static NSString * const kStatusNoConnection = @"No connection! Notes will be saved.";
+static NSString * const kStatusNoConnection = @"No connection! Noto will resend.";
 static NSString * const kStatusSendingNote = @"Sending note!";
 static NSString * const kStatusProgress = @"AFHTTPRequestProgress";
 
@@ -66,6 +67,13 @@ static NSInteger const kNoteRibbonTextOffset = kNoteRibbonImageBorderSpacing / 2
 static NSInteger const kNoteRibbonViewWidth = 1000;
 static NSInteger const kSwipeThreshold = 120;
 
+// Attachment view layout constants
+static NSInteger const kNoteAttachmentViewBorder = 5;
+static NSInteger const kNoteAttachmentViewHeight = 50;
+static NSInteger const kNoteAttachmentViewCellDim = kNoteAttachmentViewHeight - 2 * kNoteAttachmentViewBorder;
+//static NSInteger const kNoteAttachmentNumRows = 1;
+//static NSInteger const kNoteAttachmentNumCols = 5;
+
 // Status bar layout constants
 static NSInteger const kStatusViewWidth = kNoteRibbonViewWidth;
 static NSInteger const kStatusViewHeight = kNoteRibbonViewHeight;
@@ -79,8 +87,10 @@ static NSString * const kEmptyNoteNotification = @"emptyNoteNotification";
 static NSString * const kUpdateSubjectNotification = @"updateSubjectNotification";
 static NSString * const kNoteSendSuccessNotification = @"noteSendSuccessNotification";
 static NSString * const kNoteSendFailNotification = @"noteSendFailNotification";
+static NSString * const kEnumerateGroupCompleteNotification = @"enumerateGroupCompletionNotification";
 
 @interface Utilities : NSObject
+
 + (NSString *) appName;
 + (void) setSettingsValue:(NSString *) value forKey:(NSString *) key;
 + (NSString *) getSettingsValue:(NSString *) key;
@@ -104,5 +114,5 @@ static NSString * const kNoteSendFailNotification = @"noteSendFailNotification";
 
 + (NSString *) getEmailWithDirection:(SwipeDirection) direction;
 
-+ (UIImage *) compareeImageWithImage:(UIImage *) image;
++ (UIImage *) compressImageWithImage:(UIImage *) image;
 @end;
