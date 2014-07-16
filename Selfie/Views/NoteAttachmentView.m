@@ -27,7 +27,7 @@
         
         self.collectionView.contentInset = UIEdgeInsetsMake(kNoteAttachmentViewBorder, kNoteAttachmentViewBorder, kNoteAttachmentViewBorder, kNoteAttachmentViewBorder);
         
-        self.collectionView.backgroundColor = tertiaryColorLight;
+        self.collectionView.backgroundColor = tertiaryColor;
         self.collectionView.hidden = YES;
         
         [self addSubview:self.collectionView];

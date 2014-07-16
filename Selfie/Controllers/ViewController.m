@@ -98,6 +98,8 @@
 - (void) viewDidLoad {
     [super viewDidLoad];
     
+    self.view.backgroundColor = tertiaryColor;
+    
     _assets = [@[] mutableCopy];
     __block NSMutableArray *tmpAssets = [@[] mutableCopy];
     // 1
