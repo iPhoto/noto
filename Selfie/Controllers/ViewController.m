@@ -96,29 +96,35 @@
 }
 
 - (void) getPhotoLibrary {
-    _assets = [@[] mutableCopy];
-    __block NSMutableArray *tmpAssets = [@[] mutableCopy];
-    // 1
-    ALAssetsLibrary *assetsLibrary = [ViewController defaultAssetsLibrary];
-    // 2
-    [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupAll usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
-        [group enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
-            if(result)
-            {
-                // 3
-                [tmpAssets addObject:result];
-            }
+    if([ALAssetsLibrary authorizationStatus]) {
+        _assets = [@[] mutableCopy];
+        __block NSMutableArray *tmpAssets = [@[] mutableCopy];
+        // 1
+        ALAssetsLibrary *assetsLibrary = [ViewController defaultAssetsLibrary];
+        // 2
+        [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
+            
+            [group enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
+                if(result)
+                {
+                    // 3
+                    [tmpAssets addObject:result];
+                }
+            }];
+            
+            // 4
+            self.assets = tmpAssets;
+            
+            // 5
+            
+            [self.attachmentView.collectionView reloadData];
+        } failureBlock:^(NSError *error) {
+            NSLog(@"Error loading images %@", error);
         }];
-        
-        // 4
-        self.assets = tmpAssets;
-        
-        // 5
-        
-        [self.attachmentView.collectionView reloadData];
-    } failureBlock:^(NSError *error) {
-        NSLog(@"Error loading images %@", error);
-    }];
+    } else {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Permission Denied" message:@"Please allow the application to access your photo and videos in settings panel of your device" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+        [alertView show];
+    }
 }
 
 - (void) viewDidLoad {
