@@ -130,7 +130,7 @@
 - (void) viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = tertiaryColor;
+    self.view.backgroundColor = [UIColor whiteColor];
     
     [self onFirstLaunch];
     
