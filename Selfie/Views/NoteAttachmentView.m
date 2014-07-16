@@ -27,15 +27,15 @@
         
         self.collectionView.contentInset = UIEdgeInsetsMake(kNoteAttachmentViewBorder, kNoteAttachmentViewBorder, kNoteAttachmentViewBorder, kNoteAttachmentViewBorder);
         
-        self.collectionView.backgroundColor = tertiaryColor;
+        self.collectionView.backgroundColor = tertiaryColorLight;
         self.collectionView.hidden = YES;
         
         [self addSubview:self.collectionView];
         
-        self.layer.shadowOffset = CGSizeMake(0.25, 0.25);
-        self.layer.shadowRadius = 10.0;
-        self.layer.shadowColor = [[UIColor blackColor] CGColor];
-        self.layer.shadowOpacity = 0.6;
+//        self.layer.shadowOffset = CGSizeMake(0.25, 0.25);
+//        self.layer.shadowRadius = 1.0;
+//        self.layer.shadowColor = [[UIColor blackColor] CGColor];
+//        self.layer.shadowOpacity = 0.6;
         
         self.hidden = YES;
     }

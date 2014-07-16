@@ -98,26 +98,19 @@
 - (void) getPhotoLibrary {
     if([ALAssetsLibrary authorizationStatus]) {
         _assets = [@[] mutableCopy];
-        __block NSMutableArray *tmpAssets = [@[] mutableCopy];
         // 1
         ALAssetsLibrary *assetsLibrary = [ViewController defaultAssetsLibrary];
         // 2
         [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
             
-            [group enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
+            [group enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *result, NSUInteger index, BOOL *innerStop) {
                 if(result)
                 {
                     // 3
-                    [tmpAssets addObject:result];
+                    [_assets addObject:result];
                 }
             }];
-            
-            // 4
-            self.assets = tmpAssets;
-            
-            // 5
-            
-            [self.attachmentView.collectionView reloadData];
+            [Radio postNotificationName:kEnumerateGroupCompleteNotification object:nil];
         } failureBlock:^(NSError *error) {
             NSLog(@"Error loading images %@", error);
         }];
@@ -202,16 +195,47 @@
                 object:nil];
     
     [Radio addObserver:self
-              selector:@selector(reloadTableView:)
+              selector:@selector(reloadAttachmentView:)
                   name:kEnumerateGroupCompleteNotification
+                object:nil];
+    
+    [Radio addObserver:self
+              selector:@selector(insertIntoAttachmentViewWithAsset:)
+                  name:UIApplicationUserDidTakeScreenshotNotification
                 object:nil];
 }
 
-- (void) reloadTableView:(NSNotification*) notification {
+- (void) reloadAttachmentView:(NSNotification*) notification {
     
     // reloadData after receive the notification
     [_attachmentView.collectionView reloadData];
+}
+
+- (void) insertIntoAttachmentViewWithAsset:(NSNotification *) notification {
     
+    ALAssetsLibrary *assetsLibrary = [ViewController defaultAssetsLibrary];
+    
+    [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
+        
+        [group enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *result, NSUInteger index, BOOL *innerStop) {
+            if(result)
+            {
+                // 3
+                [_assets insertObject:result atIndex:0];
+                
+                *stop = YES; *innerStop = YES;
+                ALog(@"");
+                
+                [self.attachmentView.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:0]]];
+                
+                [self.attachmentView.collectionView reloadData];
+            }
+        }];
+        
+        [_attachmentView.collectionView reloadData];
+    } failureBlock:^(NSError *error) {
+        NSLog(@"Error loading images %@", error);
+    }];
 }
 
 - (void) onFirstLaunch {
@@ -646,6 +670,9 @@
 
     ALAsset *asset = self.assets[indexPath.row];
     cell.asset = asset;
+    
+    cell.layer.shouldRasterize = YES;
+    cell.layer.rasterizationScale = [UIScreen mainScreen].scale;
     
     return cell;
 }
