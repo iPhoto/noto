@@ -13,9 +13,9 @@
 @interface NoteAttachmentView : UIView
 @property (strong, nonatomic) UICollectionView *collectionView;
 
-- (void) updateFrameToKeyboard:(CGRect) keyboardRect;
-- (void) show;
-- (void) showWithDelay:(NSTimeInterval) delay;
-- (void) hide;
-- (void) hideWithDelay:(NSTimeInterval) delay;
+- (void) updateFrameToKeyboard:(CGRect) keyboardRect withNavBarHeight:(CGFloat) navBarHeight;
+//- (void) show;
+//- (void) showWithDelay:(NSTimeInterval) delay;
+//- (void) hide;
+//- (void) hideWithDelay:(NSTimeInterval) delay;
 @end

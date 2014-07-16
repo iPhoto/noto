@@ -39,6 +39,7 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
     [[UINavigationBar appearance] setBarTintColor:primaryColor];
+
 //    [[UINavigationBar appearance] setTranslucent:NO];
     
     // TODO: set button bar item color to white in code, not storyboard

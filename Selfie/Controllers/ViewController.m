@@ -281,7 +281,6 @@
 }
 
 - (void) keyboardWillHide:(NSNotification *) notification {
-    [self.attachmentView show];
 }
 
 - (void) keyboardDidHide:(NSNotification *) notification {
@@ -296,7 +295,7 @@
     
     [self.leftRibbon updateFrameToKeyboard:keyboardRect];
     [self.rightRibbon updateFrameToKeyboard:keyboardRect];
-    [self.attachmentView updateFrameToKeyboard:keyboardRect];
+    [self.attachmentView updateFrameToKeyboard:keyboardRect withNavBarHeight:self.navigationController.navigationBar.frame.size.height];
     [self.statusView updateFrameToKeyboard:keyboardRect];
     [self.progressView updateFrameToKeyboard:keyboardRect];
 }
@@ -310,9 +309,9 @@
 
 - (void) keyboardDidShow:(NSNotification *) notification {
     self.noteView.panGestureRecognizer.enabled = YES;
-    if (self.attachmentView.hidden == NO) {
-        [self.attachmentView hide];
-    }
+//    if (self.attachmentView.hidden == NO) {
+//        [self.attachmentView hide];
+//    }
 }
 
 - (void) didPan:(UIPanGestureRecognizer *) gestureRecognizer {
@@ -379,13 +378,10 @@
         self.navigationItem.rightBarButtonItem.customView.alpha = 0;
     } completion:^(BOOL finished){
         if (finished) {
-            [self.attachmentBarButtonItem setTarget:self];
-            [self.attachmentBarButtonItem setAction:@selector(toggleKeyboard)];
-            
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-            button.frame = CGRectMake(16, -1, 60, 60);
+            button.frame = CGRectMake(0, -1, 25, 25);
             [button addSubview:self.attachmentBarButtonItemImage];
-            [button addTarget:self action:@selector(toggleKeyboard) forControlEvents:UIControlEventTouchUpInside];
+            [button addTarget:self action:@selector(toggleAttachmentView) forControlEvents:UIControlEventTouchUpInside];
             
             self.attachmentBarButtonItemImage.center = button.center;
             self.attachmentBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
@@ -402,7 +398,7 @@
 
 - (void)setAttachmentBarButtonItem:(UIBarButtonItem *) attachmentBarButtonItem withImage:(UIImage *) image withAction:(SEL) action {
     [UIView animateWithDuration:0.25 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.navigationItem.rightBarButtonItem.customView.alpha = 0;
+        self.attachmentBarButtonItem.customView.alpha = 0;
     } completion:^(BOOL finished){
         if (finished) {
             // TODO: refactor into Utilities
@@ -411,7 +407,7 @@
             [imageAttachmentView setBackgroundImage:image forState:UIControlStateNormal];
             
             self.attachmentBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:imageAttachmentView];
-            [self.navigationItem setRightBarButtonItem:self.attachmentBarButtonItem];
+            [self.navigationItem setRightBarButtonItems:@[self.attachmentBarButtonItem]];
             self.navigationItem.rightBarButtonItem.customView.alpha = 0;
             
             [UIView animateWithDuration:0.25 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
@@ -453,24 +449,103 @@
     picker.allowsEditing = YES;
     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     
-    [self presentViewController:picker animated:YES completion:NULL];
+    [self presentViewController:picker animated:YES completion:^{
+        
+    }];
 }
 
-// TODO: Refactor so that actions don't hinge on toggling keyboard (will/did show/hide)
-- (void) toggleKeyboard {
-    if ([self.noteView isFirstResponder]) {
-        [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.6 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-            self.attachmentBarButtonItemImage.transform = CGAffineTransformMakeRotation( 45 * M_PI  / 180);
-//            self.attachmentBarButtonItem.transform = CGAffineTransformMakeRotation( 45 * M_PI  / 180);
-        } completion:nil];
-        [self.noteView resignFirstResponder];
+- (void)dismissAutocorrectSuggestionForNoteView {
+    NSRange rangeCopy = self.noteView.selectedRange;
+    NSString *textCopy = self.noteView.text.copy;
+    [self.noteView resignFirstResponder];
+    [self.noteView becomeFirstResponder];
+    [self.noteView setText:textCopy];
+    [self.noteView setSelectedRange:rangeCopy];
+}
+
+// TODO: Refactor to separate actions
+- (void) toggleAttachmentView {
+    
+    [self dismissAutocorrectSuggestionForNoteView];
+
+    if (self.attachmentView.collectionView.hidden == YES) {
+        [self showAttachmentView];
     } else {
-        [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.6 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-            self.attachmentBarButtonItemImage.transform = CGAffineTransformMakeRotation( 0  * M_PI  / 180);
-            //            self.attachmentBarButtonItem.transform = CGAffineTransformMakeRotation( 45 * M_PI  / 180);
-        } completion:nil];
-        [self.noteView becomeFirstResponder];
+        [self hideAttachmentView];
     }
+}
+
+- (void) showAttachmentView {
+    self.attachmentView.collectionView.hidden = NO;
+    self.attachmentView.hidden = NO;
+    
+    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
+    CGRect statusBarWindowRect = [self.view.window convertRect:statusBarFrame fromWindow: nil];
+    CGRect statusBarViewRect = [self.view convertRect:statusBarWindowRect fromView: nil];
+    
+    CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
+    
+    CGFloat shownAttachmentViewHeight = statusBarViewRect.size.height + navBarHeight;
+    
+    UIImage *image = [UIImage imageNamed:@"icon_camera"];
+    UIButton *imageAttachmentView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
+    [imageAttachmentView addTarget:self action:@selector(takePhoto:) forControlEvents:UIControlEventTouchUpInside];
+    [imageAttachmentView setBackgroundImage:image forState:UIControlStateNormal];
+    
+    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:imageAttachmentView];
+    self.navigationItem.rightBarButtonItems = @[self.attachmentBarButtonItem, barButtonItem];
+    ((UIBarButtonItem *)self.navigationItem.rightBarButtonItems[1]).customView.alpha = 0;
+    
+    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        self.attachmentBarButtonItemImage.transform = CGAffineTransformMakeRotation( 45 * M_PI  / 180);
+        
+        self.noteView.frame = CGRectMake(self.noteView.frame.origin.x,
+                                         kNoteAttachmentViewHeight,
+                                         self.noteView.frame.size.width,
+                                         self.noteView.frame.size.height);
+        
+        self.attachmentView.collectionView.frame = CGRectMake(self.attachmentView.collectionView.frame.origin.x,
+                                                              shownAttachmentViewHeight,
+                                                              self.attachmentView.collectionView.frame.size.width,
+                                                              self.attachmentView.collectionView.frame.size.height);
+        
+        ((UIBarButtonItem *)self.navigationItem.rightBarButtonItems[1]).customView.alpha = 1;
+        
+    } completion:^(BOOL finished) {
+        if (finished) {
+        }
+    }];
+}
+
+- (void) hideAttachmentView {
+    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
+    CGRect statusBarWindowRect = [self.view.window convertRect:statusBarFrame fromWindow: nil];
+    CGRect statusBarViewRect = [self.view convertRect:statusBarWindowRect fromView: nil];
+    
+    CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
+    
+    CGFloat shownAttachmentViewHeight = statusBarViewRect.size.height + navBarHeight;
+    CGFloat hiddenAttachmentViewHeight = shownAttachmentViewHeight - kNoteAttachmentViewHeight;
+    
+    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        self.attachmentBarButtonItemImage.transform = CGAffineTransformMakeRotation( 0  * M_PI  / 180);
+        self.noteView.frame = CGRectMake(self.noteView.frame.origin.x,
+                                         0,
+                                         self.noteView.frame.size.width,
+                                         self.noteView.frame.size.height);
+        self.attachmentView.collectionView.frame = CGRectMake(self.attachmentView.collectionView.frame.origin.x,
+                                                              hiddenAttachmentViewHeight,
+                                                              self.attachmentView.collectionView.frame.size.width,
+                                                              self.attachmentView.collectionView.frame.size.height);
+        
+        ((UIBarButtonItem *)self.navigationItem.rightBarButtonItems[1]).customView.alpha = 0;
+    } completion:^(BOOL finished) {
+        if (finished) {
+            self.attachmentView.collectionView.hidden = YES;
+            self.attachmentView.hidden = YES;
+            self.navigationItem.rightBarButtonItems = @[self.attachmentBarButtonItem];
+        }
+    }];
 }
 
 - (void) selectPhoto:(UIButton *) sender {
@@ -486,13 +561,15 @@
 
 - (void) imagePickerController:(UIImagePickerController *) picker didFinishPickingMediaWithInfo:(NSDictionary *) info {
     UIImage *chosenImage = info[UIImagePickerControllerOriginalImage];
-    self.imageAttachment = [Utilities compareeImageWithImage:chosenImage];
+    self.imageAttachment = [Utilities compressImageWithImage:chosenImage];
     
     [picker dismissViewControllerAnimated:YES completion:^{
         [self setAttachmentBarButtonItem:self.attachmentBarButtonItem
                                withImage:self.imageAttachment
                               withAction:@selector(showAttachmentAlertView:)];
         [self.noteView becomeFirstResponder];
+        [self hideAttachmentView];
+        NSLog(@"hello!");
     }];
 }
 
@@ -570,7 +647,7 @@
     self.imageAttachment = [UIImage imageWithCGImage:[[cell.asset defaultRepresentation] fullScreenImage]];
     [self setAttachmentBarButtonItem:self.attachmentBarButtonItem withImage:self.imageAttachment withAction:@selector(showAttachmentAlertView:)];
     
-    [self toggleKeyboard];
+    [self toggleAttachmentView];
 }
 
 @end

@@ -122,7 +122,7 @@
     }
 }
 
-+ (UIImage*) compareeImageWithImage:(UIImage*) image {
++ (UIImage*) compressImageWithImage:(UIImage*) image {
     
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGFloat longSideScreen = MAX(screenRect.size.width, screenRect.size.height);

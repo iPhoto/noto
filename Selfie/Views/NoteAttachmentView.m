@@ -27,10 +27,15 @@
         
         self.collectionView.contentInset = UIEdgeInsetsMake(kNoteAttachmentViewBorder, kNoteAttachmentViewBorder, kNoteAttachmentViewBorder, kNoteAttachmentViewBorder);
         
-        self.collectionView.backgroundColor = tertiaryColor;
+        self.collectionView.backgroundColor = tertiaryColorLight;
         self.collectionView.hidden = YES;
         
         [self addSubview:self.collectionView];
+        
+        self.layer.shadowOffset = CGSizeMake(0.25, 0.25);
+        self.layer.shadowRadius = 10.0;
+        self.layer.shadowColor = [[UIColor blackColor] CGColor];
+        self.layer.shadowOpacity = 0.6;
         
         self.hidden = YES;
     }
@@ -47,20 +52,20 @@
     return layout;
 }
 
-- (void) updateFrameToKeyboard:(CGRect) keyboardRect {
-//    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
-//    CGRect statusBarWindowRect = [self.superview.window convertRect:statusBarFrame fromWindow: nil];
-//    CGRect statusBarViewRect = [self.superview convertRect:statusBarWindowRect fromView: nil];
+- (void) updateFrameToKeyboard:(CGRect) keyboardRect withNavBarHeight:(CGFloat) navBarHeight {
+    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
+    CGRect statusBarWindowRect = [self.superview.window convertRect:statusBarFrame fromWindow: nil];
+    CGRect statusBarViewRect = [self.superview convertRect:statusBarWindowRect fromView: nil];
     
-//    self.frame = CGRectMake(keyboardRect.size.width - kIconDim - kIconSpacing, statusBarViewRect.size.height + height + kIconSpacing, kIconDim, kIconDim);
+    CGFloat heightOffset = self.collectionView.hidden == YES ? kNoteAttachmentViewHeight : 0;
     
-    self.frame = CGRectMake(0, self.superview.frame.size.height - keyboardRect.size.height, keyboardRect.size.width, keyboardRect.size.height);
+    self.frame = CGRectMake(0, statusBarViewRect.size.height + navBarHeight - heightOffset , keyboardRect.size.width, kNoteAttachmentViewHeight);
+    
+//    self.frame = CGRectMake(0, self.superview.frame.size.height - keyboardRect.size.height, keyboardRect.size.width, keyboardRect.size.height);
     
     self.collectionView.frame = self.frame;
     
-    NSLog(@"%f %f %f %f", keyboardRect.origin.x, keyboardRect.origin.y, keyboardRect.size.width, keyboardRect.size.height);
-    
-    CGFloat cellDim = (keyboardRect.size.width - (kNoteAttachmentNumCols + 1) * kNoteAttachmentViewBorder) / kNoteAttachmentNumCols;
+    CGFloat cellDim = kNoteAttachmentViewCellDim;
     
     [(UICollectionViewFlowLayout *) self.collectionView.collectionViewLayout setItemSize:CGSizeMake(cellDim, cellDim)];
 }
@@ -72,7 +77,7 @@
 - (void) showWithDelay:(NSTimeInterval) delay {
     self.hidden = NO;
     self.collectionView.hidden = NO;
-    [UIView animateWithDuration:0 delay:delay usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveLinear animations:^{
+    [UIView animateWithDuration:0.5 delay:delay usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveLinear animations:^{
         self.alpha = 1.0;
         self.collectionView.alpha = 1.0;
     } completion:^(BOOL finished){

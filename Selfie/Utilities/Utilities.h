@@ -69,8 +69,10 @@ static NSInteger const kSwipeThreshold = 120;
 
 // Attachment view layout constants
 static NSInteger const kNoteAttachmentViewBorder = 5;
-static NSInteger const kNoteAttachmentNumRows = 1;
-static NSInteger const kNoteAttachmentNumCols = 5;
+static NSInteger const kNoteAttachmentViewHeight = 50;
+static NSInteger const kNoteAttachmentViewCellDim = kNoteAttachmentViewHeight - 2 * kNoteAttachmentViewBorder;
+//static NSInteger const kNoteAttachmentNumRows = 1;
+//static NSInteger const kNoteAttachmentNumCols = 5;
 
 // Status bar layout constants
 static NSInteger const kStatusViewWidth = kNoteRibbonViewWidth;
@@ -112,5 +114,5 @@ static NSString * const kEnumerateGroupCompleteNotification = @"enumerateGroupCo
 
 + (NSString *) getEmailWithDirection:(SwipeDirection) direction;
 
-+ (UIImage *) compareeImageWithImage:(UIImage *) image;
++ (UIImage *) compressImageWithImage:(UIImage *) image;
 @end;
