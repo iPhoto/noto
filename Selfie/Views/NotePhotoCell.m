@@ -30,11 +30,6 @@
         self.imageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         [self.imageView removeConstraints:self.imageView.constraints];
         
-        self.layer.shadowOffset = CGSizeMake(0.25, 0.25);
-        self.layer.shadowRadius = 0.5;
-        self.layer.shadowColor = [[UIColor blackColor] CGColor];
-        self.layer.shadowOpacity = 0.6;
-        
         [self.contentView addSubview:self.imageView];
     }
     return self;

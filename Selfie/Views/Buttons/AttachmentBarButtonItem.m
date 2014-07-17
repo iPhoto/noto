@@ -23,17 +23,15 @@
         self.imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_add_attachment"]];
         self.imageView.autoresizingMask = UIViewAutoresizingNone;
         self.imageView.contentMode = UIViewContentModeCenter;
+        self.button = [UIButton buttonWithType:UIButtonTypeCustom];
+        self.button.frame = CGRectMake(0, -1, 25, 25);
+        
+        [self.button addSubview:self.imageView];
+        
+        self.imageView.center = self.button.center;
+        self = [[AttachmentBarButtonItem alloc] initWithCustomView:self.button];
     }
     return self;
 }
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
 @end
