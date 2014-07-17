@@ -21,11 +21,11 @@ body {
 
 #logo-holder {
 	float: left;
+	margin-right: 10px;
 }
 
 #page-header {
 	float: left;
-	margin-left: 10px;
 }
 
 #logo {
