@@ -11,7 +11,7 @@
 #import "Reachability.h"
 #import "Note.h"
 #import "NoteView.h"
-#import "NoteAttachmentView.h"
+#import "NoteAttachmentCollectionView.h"
 #import "NoteProgressView.h"
 #import "NoteRibbonView.h"
 #import "NoteStatusView.h"

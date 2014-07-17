@@ -71,9 +71,9 @@ static NSInteger const kNoteRibbonViewWidth = 1000;
 static NSInteger const kSwipeThreshold = 120;
 
 // Attachment view layout constants
-static NSInteger const kNoteAttachmentViewBorder = 5;
-static NSInteger const kNoteAttachmentViewHeight = 80;
-static NSInteger const kNoteAttachmentViewCellDim = kNoteAttachmentViewHeight - 2 * kNoteAttachmentViewBorder;
+static NSInteger const kNoteAttachmentCollectionViewBorder = 5;
+static NSInteger const kNoteAttachmentCollectionViewHeight = 80;
+static NSInteger const kNoteAttachmentCollectionViewCellDim = kNoteAttachmentCollectionViewHeight - 2 * kNoteAttachmentCollectionViewBorder;
 //static NSInteger const kNoteAttachmentNumRows = 1;
 //static NSInteger const kNoteAttachmentNumCols = 5;
 

@@ -1,5 +1,5 @@
 //
-//  NoteAttachmentView.h
+//  NoteAttachmentCollectionView.h
 //  Selfie
 //
 //  Created by Daniel Suo on 7/11/14.
@@ -10,9 +10,7 @@
 #import "NotePhotoCell.h"
 #import "Utilities.h"
 
-@interface NoteAttachmentView : UIView
-@property (strong, nonatomic) UICollectionView *collectionView;
-
+@interface NoteAttachmentCollectionView : UICollectionView
 - (void) updateFrameToKeyboard:(CGRect) keyboardRect withNavBarHeight:(CGFloat) navBarHeight;
 //- (void) show;
 //- (void) showWithDelay:(NSTimeInterval) delay;
