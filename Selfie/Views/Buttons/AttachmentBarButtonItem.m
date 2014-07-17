@@ -15,7 +15,6 @@
 
 @implementation AttachmentBarButtonItem
 
-
 - (id)init
 {
     self = [super init];
@@ -32,6 +31,32 @@
         self = [[AttachmentBarButtonItem alloc] initWithCustomView:self.button];
     }
     return self;
+}
+
+- (void) setAction:(SEL) action withTarget:(id) target {
+    [self.button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void) setImage:(UIImage *) image {
+    [UIView animateWithDuration:0.25
+                          delay:0
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         self.imageView.alpha = 0;
+                     }
+                     completion:^(BOOL finished) {
+                         self.imageView.image = image;
+                         [UIView animateWithDuration:0.25
+                                               delay:0
+                                             options:UIViewAnimationOptionCurveEaseInOut
+                                          animations:^{
+                                              self.imageView.alpha = 1;
+                                          }
+                                          completion:^(BOOL finished) {
+                                              
+                                          }];
+                     }];
+    
 }
 
 @end

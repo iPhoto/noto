@@ -16,6 +16,9 @@
     if (self) {
         // Initialization code
     }
+    
+    //    [imageattachmentCollectionView setBackgroundImage:image forState:UIControlStateNormal];
+    
     return self;
 }
 

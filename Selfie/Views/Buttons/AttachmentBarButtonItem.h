@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface AttachmentBarButtonItem : UIBarButtonItem
-
+- (void) setAction:(SEL) action withTarget:(id) target;
+- (void) setImage:(UIImage *) image;
 @end
