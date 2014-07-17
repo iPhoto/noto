@@ -34,6 +34,11 @@
         self.imageView.clipsToBounds = YES;
         self.imageView.layer.cornerRadius = kNoteRibbonImageHeight / 2;
         [self addSubview:self.imageView];
+        
+        self.layer.shadowOffset = CGSizeMake(0.25, 0.25);
+        self.layer.shadowRadius = 1.0;
+        self.layer.shadowColor = [[UIColor blackColor] CGColor];
+        self.layer.shadowOpacity = 0.6;
     }
     return self;
 }
