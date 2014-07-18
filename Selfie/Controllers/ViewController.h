@@ -10,6 +10,8 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "Reachability.h"
 
+#import "SettingsViewController.h"
+
 #import "Note.h"
 #import "NoteView.h"
 #import "NoteAttachmentCollectionView.h"

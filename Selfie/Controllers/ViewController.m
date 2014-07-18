@@ -145,15 +145,20 @@
     
     [self.view addSubview:self.noteView];
     [self.view addSubview:self.attachmentCollectionView];
-    
-    // TODO: this is not ideal; should be encapsulated in attachmentCollectionView
-    [self.view addSubview:self.attachmentCollectionView];
     [self.view addSubview:self.statusView];
     [self.view addSubview:self.progressView];
     [self.view addSubview:self.leftRibbon];
     [self.view addSubview:self.rightRibbon];
     
     [self.attachmentBarButtonItem setAction:@selector(toggleAttachmentCollectionView) withTarget:self];
+    
+    [self.cameraBarButtonItem setAction:@selector(takePhoto:) withTarget:self];
+//    self.cameraBarButtonItem.customView.hidden = YES;
+    
+    // TODO: create unsent viewcontroller
+//    self.unsentBarButtonItem.customView.hidden = YES;
+    
+    [self.settingsBarButtonItem setAction:@selector(showSettings:) withTarget:self];
     
     SpacerBarButtonItem *spacer = [[SpacerBarButtonItem alloc] init];
     [self.navigationItem setRightBarButtonItems:@[self.attachmentBarButtonItem, spacer, self.cameraBarButtonItem]];
@@ -184,6 +189,19 @@
               selector:@selector(reloadAttachmentCollectionView:)
                   name:kEnumerateGroupCompleteNotification
                 object:nil];
+}
+
+- (void) showSettings:(UIButton *) sender {
+    
+    SettingsViewController *settings = [[SettingsViewController alloc] init];
+//    settings.delegate = self;
+//    settings.allowsEditing = YES;
+
+    [self.navigationController pushViewController:settings animated:YES];
+    
+//    [self presentViewController:settings animated:YES completion:^{
+//        
+//    }];
 }
 
 - (void) reloadAttachmentCollectionView:(NSNotification*) notification {

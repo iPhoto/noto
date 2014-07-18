@@ -13,6 +13,7 @@
 		4F372AB01978C972009F485A /* CameraBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F372AAF1978C972009F485A /* CameraBarButtonItem.m */; };
 		4F372AB319798BDC009F485A /* SpacerBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F372AB219798BDC009F485A /* SpacerBarButtonItem.m */; };
 		4F372AB619799F79009F485A /* UnsentBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F372AB519799F79009F485A /* UnsentBarButtonItem.m */; };
+		4F372AB91979A692009F485A /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F372AB81979A692009F485A /* SettingsViewController.m */; };
 		4F531FFD195F3B3600F4ABAE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F531FFC195F3B3600F4ABAE /* AudioToolbox.framework */; };
 		4F56592B1974CB02006E7A24 /* NotePhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F56592A1974CB02006E7A24 /* NotePhotoCell.m */; };
 		4F56592D1974D17C006E7A24 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F56592C1974D17C006E7A24 /* AssetsLibrary.framework */; };
@@ -63,6 +64,8 @@
 		4F372AB219798BDC009F485A /* SpacerBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpacerBarButtonItem.m; path = Buttons/SpacerBarButtonItem.m; sourceTree = "<group>"; };
 		4F372AB419799F79009F485A /* UnsentBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UnsentBarButtonItem.h; path = Buttons/UnsentBarButtonItem.h; sourceTree = "<group>"; };
 		4F372AB519799F79009F485A /* UnsentBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UnsentBarButtonItem.m; path = Buttons/UnsentBarButtonItem.m; sourceTree = "<group>"; };
+		4F372AB71979A692009F485A /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		4F372AB81979A692009F485A /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		4F531FFC195F3B3600F4ABAE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		4F5659291974CB02006E7A24 /* NotePhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotePhotoCell.h; sourceTree = "<group>"; };
 		4F56592A1974CB02006E7A24 /* NotePhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotePhotoCell.m; sourceTree = "<group>"; };
@@ -154,6 +157,8 @@
 		4F6E3A1019687F1D00E7A0A8 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				4F372AB71979A692009F485A /* SettingsViewController.h */,
+				4F372AB81979A692009F485A /* SettingsViewController.m */,
 				4F6E3A1119687F1D00E7A0A8 /* ViewController.h */,
 				4F6E3A1219687F1D00E7A0A8 /* ViewController.m */,
 			);
@@ -454,6 +459,7 @@
 				4FB649891968D9A200CF3ED8 /* NoteView.m in Sources */,
 				4F58C4E519709BA00054CE12 /* NoteAttachmentCollectionView.m in Sources */,
 				4F1F9263196B25C500EAD653 /* NoteRibbonView.m in Sources */,
+				4F372AB91979A692009F485A /* SettingsViewController.m in Sources */,
 				4F6E3A2719687F1D00E7A0A8 /* main.m in Sources */,
 				4F372AB619799F79009F485A /* UnsentBarButtonItem.m in Sources */,
 			);
