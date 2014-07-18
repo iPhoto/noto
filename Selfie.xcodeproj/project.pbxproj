@@ -10,6 +10,9 @@
 		4F1F9263196B25C500EAD653 /* NoteRibbonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F9262196B25C500EAD653 /* NoteRibbonView.m */; };
 		4F372AAA19787A9F009F485A /* NotoBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F372AA919787A9F009F485A /* NotoBarButtonItem.m */; };
 		4F372AAD1978AF27009F485A /* ImageBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F372AAC1978AF27009F485A /* ImageBarButtonItem.m */; };
+		4F372AB01978C972009F485A /* CameraBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F372AAF1978C972009F485A /* CameraBarButtonItem.m */; };
+		4F372AB319798BDC009F485A /* SpacerBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F372AB219798BDC009F485A /* SpacerBarButtonItem.m */; };
+		4F372AB619799F79009F485A /* UnsentBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F372AB519799F79009F485A /* UnsentBarButtonItem.m */; };
 		4F531FFD195F3B3600F4ABAE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F531FFC195F3B3600F4ABAE /* AudioToolbox.framework */; };
 		4F56592B1974CB02006E7A24 /* NotePhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F56592A1974CB02006E7A24 /* NotePhotoCell.m */; };
 		4F56592D1974D17C006E7A24 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F56592C1974D17C006E7A24 /* AssetsLibrary.framework */; };
@@ -54,6 +57,12 @@
 		4F372AA919787A9F009F485A /* NotoBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotoBarButtonItem.m; path = Buttons/NotoBarButtonItem.m; sourceTree = "<group>"; };
 		4F372AAB1978AF27009F485A /* ImageBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageBarButtonItem.h; path = Buttons/ImageBarButtonItem.h; sourceTree = "<group>"; };
 		4F372AAC1978AF27009F485A /* ImageBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageBarButtonItem.m; path = Buttons/ImageBarButtonItem.m; sourceTree = "<group>"; };
+		4F372AAE1978C972009F485A /* CameraBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraBarButtonItem.h; path = Buttons/CameraBarButtonItem.h; sourceTree = "<group>"; };
+		4F372AAF1978C972009F485A /* CameraBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CameraBarButtonItem.m; path = Buttons/CameraBarButtonItem.m; sourceTree = "<group>"; };
+		4F372AB119798BDC009F485A /* SpacerBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpacerBarButtonItem.h; path = Buttons/SpacerBarButtonItem.h; sourceTree = "<group>"; };
+		4F372AB219798BDC009F485A /* SpacerBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpacerBarButtonItem.m; path = Buttons/SpacerBarButtonItem.m; sourceTree = "<group>"; };
+		4F372AB419799F79009F485A /* UnsentBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UnsentBarButtonItem.h; path = Buttons/UnsentBarButtonItem.h; sourceTree = "<group>"; };
+		4F372AB519799F79009F485A /* UnsentBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UnsentBarButtonItem.m; path = Buttons/UnsentBarButtonItem.m; sourceTree = "<group>"; };
 		4F531FFC195F3B3600F4ABAE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		4F5659291974CB02006E7A24 /* NotePhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotePhotoCell.h; sourceTree = "<group>"; };
 		4F56592A1974CB02006E7A24 /* NotePhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotePhotoCell.m; sourceTree = "<group>"; };
@@ -201,8 +210,14 @@
 				4FD826EB19775D5300FBC201 /* AttachmentBarButtonItem.m */,
 				4F372AAB1978AF27009F485A /* ImageBarButtonItem.h */,
 				4F372AAC1978AF27009F485A /* ImageBarButtonItem.m */,
+				4F372AAE1978C972009F485A /* CameraBarButtonItem.h */,
+				4F372AAF1978C972009F485A /* CameraBarButtonItem.m */,
 				4FD826E719775D0700FBC201 /* SettingsBarButtonItem.h */,
 				4FD826E819775D0700FBC201 /* SettingsBarButtonItem.m */,
+				4F372AB119798BDC009F485A /* SpacerBarButtonItem.h */,
+				4F372AB219798BDC009F485A /* SpacerBarButtonItem.m */,
+				4F372AB419799F79009F485A /* UnsentBarButtonItem.h */,
+				4F372AB519799F79009F485A /* UnsentBarButtonItem.m */,
 				4F372AA819787A9F009F485A /* NotoBarButtonItem.h */,
 				4F372AA919787A9F009F485A /* NotoBarButtonItem.m */,
 			);
@@ -423,8 +438,10 @@
 				4F56592B1974CB02006E7A24 /* NotePhotoCell.m in Sources */,
 				4F6E3A2A19687F1D00E7A0A8 /* Selfie.xcdatamodeld in Sources */,
 				4FD826EC19775D5300FBC201 /* AttachmentBarButtonItem.m in Sources */,
+				4F372AB01978C972009F485A /* CameraBarButtonItem.m in Sources */,
 				4F6E3A2819687F1D00E7A0A8 /* Note.m in Sources */,
 				4F6E3A2C19687F1D00E7A0A8 /* Utilities.m in Sources */,
+				4F372AB319798BDC009F485A /* SpacerBarButtonItem.m in Sources */,
 				4F59863F196C71BA006D969E /* State.m in Sources */,
 				4F372AAD1978AF27009F485A /* ImageBarButtonItem.m in Sources */,
 				4F6E3A2419687F1D00E7A0A8 /* ViewController.m in Sources */,
@@ -438,6 +455,7 @@
 				4F58C4E519709BA00054CE12 /* NoteAttachmentCollectionView.m in Sources */,
 				4F1F9263196B25C500EAD653 /* NoteRibbonView.m in Sources */,
 				4F6E3A2719687F1D00E7A0A8 /* main.m in Sources */,
+				4F372AB619799F79009F485A /* UnsentBarButtonItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

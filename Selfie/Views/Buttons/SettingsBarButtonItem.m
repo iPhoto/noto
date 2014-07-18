@@ -10,25 +10,9 @@
 
 @implementation SettingsBarButtonItem
 
-- (id)init
-{
-    self = [super init];
-    if (self) {
-        // Initialization code
-    }
-    
-    //    [imageattachmentCollectionView setBackgroundImage:image forState:UIControlStateNormal];
-    
+- (instancetype) init {
+    self = [super initWithImage:[UIImage imageNamed:@"icon_settings"]];
     return self;
 }
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
 @end

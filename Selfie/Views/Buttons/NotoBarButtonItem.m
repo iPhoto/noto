@@ -14,7 +14,7 @@
     self = [super init];
     if (self) {
         self.button = [UIButton buttonWithType:UIButtonTypeSystem];
-        self.button.frame = CGRectMake(0, -1, 25, 25);
+        self.button.frame = CGRectMake(0, 0, 25, 25);
         [self.button setBackgroundImage:image forState:UIControlStateNormal];
         
         self.customView = self.button;

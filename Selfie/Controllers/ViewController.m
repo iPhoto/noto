@@ -20,13 +20,11 @@
 @property (strong, nonatomic) UIImage *imageAttachment;
 
 @property (strong, nonatomic) AttachmentBarButtonItem *attachmentBarButtonItem;
-
-@property (strong, nonatomic) UIImageView *settingsBarButtonItemImage;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *settingsBarButtonItem;
+@property (strong, nonatomic) CameraBarButtonItem *cameraBarButtonItem;
+@property (strong, nonatomic) SettingsBarButtonItem *settingsBarButtonItem;
+@property (strong, nonatomic) UnsentBarButtonItem *unsentBarButtonItem;
 
 @property (strong, nonatomic) IBOutlet UINavigationItem *navBarTitle;
-
-@property (nonatomic) UIInterfaceOrientation orientation;
 @end
 
 @implementation ViewController
@@ -92,8 +90,46 @@
     return _attachmentBarButtonItem;
 }
 
+- (CameraBarButtonItem *) cameraBarButtonItem {
+    if (!_cameraBarButtonItem) {
+        _cameraBarButtonItem = [[CameraBarButtonItem alloc] init];
+    }
+    return _cameraBarButtonItem;
+}
+
+- (SettingsBarButtonItem *) settingsBarButtonItem {
+    if (!_settingsBarButtonItem) {
+        _settingsBarButtonItem = [[SettingsBarButtonItem alloc] init];
+    }
+    return _settingsBarButtonItem;
+}
+
+
+- (UnsentBarButtonItem *) unsentBarButtonItem {
+    if (!_unsentBarButtonItem) {
+        _unsentBarButtonItem = [[UnsentBarButtonItem alloc] init];
+    }
+    return _unsentBarButtonItem;
+}
+
 - (void) toggleAttachmentCollectionView {
     [self.attachmentBarButtonItem toggle];
+    
+    if (self.attachmentBarButtonItem.attachmentBarOpen) {
+        [self hideAttachmentCollectionView];
+    } else {
+        [self showAttachmentCollectionView];
+    }
+}
+
+- (void) hideAttachmentCollectionView {
+    
+}
+
+- (void) showAttachmentCollectionView {
+    // noteview move down
+    // attachmentcollectionview show / move down
+    // Show camera button
 }
 
 - (void) viewDidLoad {
@@ -118,7 +154,10 @@
     [self.view addSubview:self.rightRibbon];
     
     [self.attachmentBarButtonItem setAction:@selector(toggleAttachmentCollectionView) withTarget:self];
-    [self.navigationItem setRightBarButtonItem:self.attachmentBarButtonItem];
+    
+    SpacerBarButtonItem *spacer = [[SpacerBarButtonItem alloc] init];
+    [self.navigationItem setRightBarButtonItems:@[self.attachmentBarButtonItem, spacer, self.cameraBarButtonItem]];
+    [self.navigationItem setLeftBarButtonItems:@[self.settingsBarButtonItem, spacer, self.unsentBarButtonItem]];
     
     self.noteView.delegate = self;
     self.noteView.noteViewDelegate = self;
