@@ -42,18 +42,20 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     self.title = @"Settings";
+    self.view = [[UIScrollView alloc] init];
+    ((UIScrollView *)self.view).contentSize = CGSizeMake(320, 1000);
     self.view.backgroundColor = [UIColor whiteColor];
     
     //create a label to display current user interaction with our editable text views
     CGRect myFrame = CGRectMake(10.0f, 10.0f, 250.0f, 40.0f);
     self.myLabel = [[UILabel alloc] initWithFrame:myFrame];
     self.myLabel.text = @"Credits: LAC, RRE";
-    self.myLabel.font = [UIFont boldSystemFontOfSize:16.0f];
+    self.myLabel.font = [UIFont boldSystemFontOfSize:18.0f];
     self.myLabel.textAlignment =  NSTextAlignmentLeft;
     [self.view addSubview:self.myLabel];
     
     //lets create 3 UITextViews on the screen
-    for (NSInteger i=1; i<5; i++) {
+    for (NSInteger i=1; i<20; i++) {
         
         //set the origin of the frame reference
         myFrame.origin.y += myFrame.size.height + 10.0f;
@@ -124,7 +126,7 @@
 - (void) textFieldDidChange:(NSNotification *) notification {
     UITextField *textField = (UITextField *) notification.object;
     
-    if ([Utilities isValidEmailString:textField.text] || [textField.text isEqualToString:@""]) {
+    if ([Utilities isValidEmailString:textField.text] || [textField.text isEqualToString:@""] || textField.keyboardType != UIKeyboardTypeEmailAddress) {
         textField.layer.borderColor = [tertiaryColorLight CGColor];
     } else {
         textField.layer.borderColor = [secondaryColor CGColor];
