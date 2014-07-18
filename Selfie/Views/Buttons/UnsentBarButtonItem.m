@@ -11,7 +11,7 @@
 @implementation UnsentBarButtonItem
 
 - (instancetype) init {
-    self = [super initWithImage:[UIImage imageNamed:@"icon_clock"]];
+    self = [super initWithImage:[UIImage imageNamed:@"icon_unsent_message"]];
     return self;
 }
 

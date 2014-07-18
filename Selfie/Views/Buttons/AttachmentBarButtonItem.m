@@ -21,7 +21,7 @@
         
         [self.button setBackgroundImage:nil forState:UIControlStateNormal];
         [self.button addSubview:self.imageView];
-        self.imageView.center = self.button.center;
+        self.imageView.frame = self.button.frame;
     }
     return self;
 }

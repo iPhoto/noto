@@ -13,7 +13,7 @@
 - (instancetype) init {
     self = [super init];
     if (self) {
-        self.customView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 8, 25)];
+        self.customView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 8, 20)];
     }
     return self;
 }
