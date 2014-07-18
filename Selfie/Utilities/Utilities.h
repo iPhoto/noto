@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <AssetsLibrary/AssetsLibrary.h>
 
 // Debug helpers
 #define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
@@ -118,4 +119,6 @@ static NSString * const kEnumerateGroupCompleteNotification = @"enumerateGroupCo
 + (NSString *) getEmailWithDirection:(SwipeDirection) direction;
 
 + (UIImage *) compressImageWithImage:(UIImage *) image;
+
++ (ALAssetsLibrary *) defaultAssetsLibrary;
 @end;

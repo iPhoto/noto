@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NotoBarButtonItem.h"
 
-@interface AttachmentBarButtonItem : UIBarButtonItem
-- (void) setAction:(SEL) action withTarget:(id) target;
-- (void) setImage:(UIImage *) image;
+@interface AttachmentBarButtonItem : NotoBarButtonItem
+@property (nonatomic) BOOL attachmentBarOpen;
+@property (strong, nonatomic) UIImageView *imageView;
+
+- (void) toggle;
 @end

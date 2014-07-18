@@ -8,55 +8,31 @@
 
 #import "AttachmentBarButtonItem.h"
 
-@interface AttachmentBarButtonItem ()
-@property (strong, nonatomic) UIImageView *imageView;
-@property (strong, nonatomic) UIButton *button;
-@end
-
 @implementation AttachmentBarButtonItem
 
-- (id)init
-{
-    self = [super init];
+- (id) initWithImage:(UIImage *) image {
+    self = [super initWithImage:image];
     if (self) {
-        self.imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_add_attachment"]];
+        self.attachmentBarOpen = NO;
+        
+        self.imageView = [[UIImageView alloc] initWithImage:image];
         self.imageView.autoresizingMask = UIViewAutoresizingNone;
         self.imageView.contentMode = UIViewContentModeCenter;
-        self.button = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.button.frame = CGRectMake(0, -1, 25, 25);
         
+        [self.button setBackgroundImage:nil forState:UIControlStateNormal];
         [self.button addSubview:self.imageView];
-        
         self.imageView.center = self.button.center;
-        self = [[AttachmentBarButtonItem alloc] initWithCustomView:self.button];
     }
     return self;
 }
 
-- (void) setAction:(SEL) action withTarget:(id) target {
-    [self.button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
-}
-
-- (void) setImage:(UIImage *) image {
-    [UIView animateWithDuration:0.25
-                          delay:0
-                        options:UIViewAnimationOptionCurveEaseInOut
-                     animations:^{
-                         self.imageView.alpha = 0;
-                     }
-                     completion:^(BOOL finished) {
-                         self.imageView.image = image;
-                         [UIView animateWithDuration:0.25
-                                               delay:0
-                                             options:UIViewAnimationOptionCurveEaseInOut
-                                          animations:^{
-                                              self.imageView.alpha = 1;
-                                          }
-                                          completion:^(BOOL finished) {
-                                              
-                                          }];
-                     }];
+- (void) toggle {
+    CGFloat degreesToRotate = self.attachmentBarOpen == NO ? 45 : 0;
+    self.attachmentBarOpen = !self.attachmentBarOpen;
     
+    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        self.imageView.transform = CGAffineTransformMakeRotation( degreesToRotate * M_PI  / 180);
+    } completion:nil];
 }
 
 @end

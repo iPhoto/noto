@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4F1F9263196B25C500EAD653 /* NoteRibbonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F9262196B25C500EAD653 /* NoteRibbonView.m */; };
+		4F372AAA19787A9F009F485A /* NotoBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F372AA919787A9F009F485A /* NotoBarButtonItem.m */; };
+		4F372AAD1978AF27009F485A /* ImageBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F372AAC1978AF27009F485A /* ImageBarButtonItem.m */; };
 		4F531FFD195F3B3600F4ABAE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F531FFC195F3B3600F4ABAE /* AudioToolbox.framework */; };
 		4F56592B1974CB02006E7A24 /* NotePhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F56592A1974CB02006E7A24 /* NotePhotoCell.m */; };
 		4F56592D1974D17C006E7A24 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F56592C1974D17C006E7A24 /* AssetsLibrary.framework */; };
@@ -48,6 +50,10 @@
 /* Begin PBXFileReference section */
 		4F1F9261196B25C500EAD653 /* NoteRibbonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteRibbonView.h; sourceTree = "<group>"; };
 		4F1F9262196B25C500EAD653 /* NoteRibbonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteRibbonView.m; sourceTree = "<group>"; };
+		4F372AA819787A9F009F485A /* NotoBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotoBarButtonItem.h; path = Buttons/NotoBarButtonItem.h; sourceTree = "<group>"; };
+		4F372AA919787A9F009F485A /* NotoBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotoBarButtonItem.m; path = Buttons/NotoBarButtonItem.m; sourceTree = "<group>"; };
+		4F372AAB1978AF27009F485A /* ImageBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageBarButtonItem.h; path = Buttons/ImageBarButtonItem.h; sourceTree = "<group>"; };
+		4F372AAC1978AF27009F485A /* ImageBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageBarButtonItem.m; path = Buttons/ImageBarButtonItem.m; sourceTree = "<group>"; };
 		4F531FFC195F3B3600F4ABAE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		4F5659291974CB02006E7A24 /* NotePhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotePhotoCell.h; sourceTree = "<group>"; };
 		4F56592A1974CB02006E7A24 /* NotePhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotePhotoCell.m; sourceTree = "<group>"; };
@@ -193,8 +199,12 @@
 			children = (
 				4FD826EA19775D5300FBC201 /* AttachmentBarButtonItem.h */,
 				4FD826EB19775D5300FBC201 /* AttachmentBarButtonItem.m */,
+				4F372AAB1978AF27009F485A /* ImageBarButtonItem.h */,
+				4F372AAC1978AF27009F485A /* ImageBarButtonItem.m */,
 				4FD826E719775D0700FBC201 /* SettingsBarButtonItem.h */,
 				4FD826E819775D0700FBC201 /* SettingsBarButtonItem.m */,
+				4F372AA819787A9F009F485A /* NotoBarButtonItem.h */,
+				4F372AA919787A9F009F485A /* NotoBarButtonItem.m */,
 			);
 			name = Buttons;
 			sourceTree = "<group>";
@@ -416,12 +426,14 @@
 				4F6E3A2819687F1D00E7A0A8 /* Note.m in Sources */,
 				4F6E3A2C19687F1D00E7A0A8 /* Utilities.m in Sources */,
 				4F59863F196C71BA006D969E /* State.m in Sources */,
+				4F372AAD1978AF27009F485A /* ImageBarButtonItem.m in Sources */,
 				4F6E3A2419687F1D00E7A0A8 /* ViewController.m in Sources */,
 				4F8D5454196E44F600FF1BE8 /* NoteStatusView.m in Sources */,
 				4F6E3A2319687F1D00E7A0A8 /* AppDelegate.m in Sources */,
 				4F58C4E819735FC00054CE12 /* NoteProgressView.m in Sources */,
 				4FD826E919775D0700FBC201 /* SettingsBarButtonItem.m in Sources */,
 				4F6E3A2919687F1D00E7A0A8 /* Queue.m in Sources */,
+				4F372AAA19787A9F009F485A /* NotoBarButtonItem.m in Sources */,
 				4FB649891968D9A200CF3ED8 /* NoteView.m in Sources */,
 				4F58C4E519709BA00054CE12 /* NoteAttachmentCollectionView.m in Sources */,
 				4F1F9263196B25C500EAD653 /* NoteRibbonView.m in Sources */,
