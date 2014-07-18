@@ -98,7 +98,7 @@
             case 3:
                 self.myTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
                 self.myTextField.textAlignment = NSTextAlignmentLeft;
-                self.myTextField.keyboardType = UIKeyboardTypeEmailAddress;
+                self.myTextField.keyboardType = UIKeyboardTypeDefault;
                 break;
                 
             default:
