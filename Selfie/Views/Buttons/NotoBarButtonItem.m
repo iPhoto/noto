@@ -26,19 +26,32 @@
     [self.button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void) show {
+- (void(^)(void)) showAnimationBlock {
+    self.customView.alpha = 0;
     self.customView.hidden = NO;
-    [UIView animateWithDuration:2.0 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveLinear animations:^{
-        self.customView.alpha = 1.0;
-    } completion:nil];
+    return ^{
+        self.customView.alpha = 1;
+    };
 }
 
-- (void) hide {
-    [UIView animateWithDuration:2.0 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveLinear animations:^{
-        self.customView.alpha = 1.0;
-    } completion:^(BOOL finished){
-        self.customView.hidden = YES;
-    }];
+- (void(^)(BOOL)) showCompletionBlock {
+    return ^(BOOL finished) {
+        
+    };
+}
+
+- (void(^)(void)) hideAnimationBlock {
+    return ^{
+        self.customView.alpha = 0;
+    };
+}
+
+- (void(^)(BOOL)) hideCompletionBlock {
+    return ^(BOOL finished) {
+        if (finished) {
+            self.customView.hidden = YES;
+        }
+    };
 }
 
 @end

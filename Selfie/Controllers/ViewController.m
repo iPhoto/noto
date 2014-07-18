@@ -113,7 +113,7 @@
 }
 
 - (void) toggleAttachmentCollectionView {
-    [self.attachmentBarButtonItem toggle];
+//    [self.attachmentBarButtonItem toggle];
     
     if (self.attachmentBarButtonItem.attachmentBarOpen) {
         [self hideAttachmentCollectionView];
@@ -123,13 +123,23 @@
 }
 
 - (void) hideAttachmentCollectionView {
-    
+    [UIView animateWithDuration:2.0 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveLinear animations:^{
+        self.cameraBarButtonItem.hideAnimationBlock();
+        self.unsentBarButtonItem.hideAnimationBlock();
+    } completion:^(BOOL finished) {
+        self.cameraBarButtonItem.hideCompletionBlock(finished);
+        self.unsentBarButtonItem.hideCompletionBlock(finished);
+    }];
 }
 
 - (void) showAttachmentCollectionView {
     // noteview move down
     // attachmentcollectionview show / move down
     // Show camera button
+    [UIView animateWithDuration:2.0 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveLinear animations:^{
+        self.cameraBarButtonItem.showAnimationBlock();
+        self.unsentBarButtonItem.showAnimationBlock();
+    } completion:nil];
 }
 
 - (void) viewDidLoad {
@@ -153,10 +163,10 @@
     [self.attachmentBarButtonItem setAction:@selector(toggleAttachmentCollectionView) withTarget:self];
     
     [self.cameraBarButtonItem setAction:@selector(takePhoto:) withTarget:self];
-//    self.cameraBarButtonItem.customView.hidden = YES;
+    self.cameraBarButtonItem.customView.hidden = YES;
     
     // TODO: create unsent viewcontroller
-//    self.unsentBarButtonItem.customView.hidden = YES;
+    self.unsentBarButtonItem.customView.hidden = YES;
     
     [self.settingsBarButtonItem setAction:@selector(showSettings:) withTarget:self];
     
@@ -404,17 +414,6 @@
     [self.noteView setSelectedRange:rangeCopy];
 }
 
-// TODO: Refactor to separate actions
-- (void) toggleattachmentCollectionView {
-    
-    [self dismissAutocorrectSuggestionForNoteView];
-
-    if (self.attachmentCollectionView.hidden == YES) {
-//        [self showattachmentCollectionView];
-    } else {
-//        [self hideattachmentCollectionView];
-    }
-}
 - (void) selectPhoto:(UIButton *) sender {
     
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
@@ -511,7 +510,7 @@
     self.imageAttachment = [UIImage imageWithCGImage:[[cell.asset defaultRepresentation] fullScreenImage]];
 //    [self setAttachmentBarButtonItem:self.attachmentBarButtonItem withImage:self.imageAttachment withAction:@selector(showAttachmentAlertView:)];
     
-    [self toggleattachmentCollectionView];
+//    [self toggleattachmentCollectionView];
 }
 
 - (void) getPhotoLibrary {

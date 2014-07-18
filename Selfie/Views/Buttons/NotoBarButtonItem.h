@@ -13,6 +13,9 @@
 
 - (instancetype) initWithImage:(UIImage *) image;
 - (void) setAction:(SEL) action withTarget:(id) target;
-- (void) show;
-- (void) hide;
+
+- (void(^)(void)) showAnimationBlock;
+- (void(^)(BOOL)) showCompletionBlock;
+- (void(^)(void)) hideAnimationBlock;
+- (void(^)(BOOL)) hideCompletionBlock;
 @end
