@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "Reachability.h"
+
+#import "SettingsViewController.h"
+
 #import "Note.h"
 #import "NoteView.h"
 #import "NoteAttachmentCollectionView.h"
@@ -16,6 +19,13 @@
 #import "NoteRibbonView.h"
 #import "NoteStatusView.h"
 #import "NotePhotoCell.h"
+
+#import "AttachmentBarButtonItem.h"
+#import "CameraBarButtonItem.h"
+#import "SettingsBarButtonItem.h"
+#import "UnsentBarButtonItem.h"
+#import "SpacerBarButtonItem.h"
+
 #import "State.h"
 #import "Utilities.h"
 

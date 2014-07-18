@@ -23,11 +23,6 @@
         self.textAlignment = NSTextAlignmentCenter;
         self.textContainerInset = UIEdgeInsetsMake((kStatusViewHeight - kGlobalFontSize)/2 - 2, 0, 0, 0);
         
-//        self.layer.shadowOffset = CGSizeMake(0.25, 0.25);
-//        self.layer.shadowRadius = 10.0;
-//        self.layer.shadowColor = [[UIColor blackColor] CGColor];
-//        self.layer.shadowOpacity = 0.6;
-        
         self.hidden = YES;
     }
     return self;

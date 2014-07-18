@@ -54,12 +54,6 @@
 #define COCOAPODS_VERSION_MINOR_CrashlyticsFramework 2
 #define COCOAPODS_VERSION_PATCH_CrashlyticsFramework 1
 
-// InAppSettingsKit
-#define COCOAPODS_POD_AVAILABLE_InAppSettingsKit
-#define COCOAPODS_VERSION_MAJOR_InAppSettingsKit 2
-#define COCOAPODS_VERSION_MINOR_InAppSettingsKit 1
-#define COCOAPODS_VERSION_PATCH_InAppSettingsKit 0
-
 // Reachability
 #define COCOAPODS_POD_AVAILABLE_Reachability
 #define COCOAPODS_VERSION_MAJOR_Reachability 3

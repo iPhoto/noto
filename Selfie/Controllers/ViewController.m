@@ -19,15 +19,12 @@
 @property (strong, nonatomic) NoteProgressView *progressView;
 @property (strong, nonatomic) UIImage *imageAttachment;
 
-@property (strong, nonatomic) UIImageView *attachmentBarButtonItemImage;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *attachmentBarButtonItem;
-
-@property (strong, nonatomic) UIImageView *settingsBarButtonItemImage;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *settingsBarButtonItem;
+@property (strong, nonatomic) AttachmentBarButtonItem *attachmentBarButtonItem;
+@property (strong, nonatomic) CameraBarButtonItem *cameraBarButtonItem;
+@property (strong, nonatomic) SettingsBarButtonItem *settingsBarButtonItem;
+@property (strong, nonatomic) UnsentBarButtonItem *unsentBarButtonItem;
 
 @property (strong, nonatomic) IBOutlet UINavigationItem *navBarTitle;
-
-@property (nonatomic) UIInterfaceOrientation orientation;
 @end
 
 @implementation ViewController
@@ -85,39 +82,54 @@
     return _attachmentCollectionView;
 }
 
-+ (ALAssetsLibrary *) defaultAssetsLibrary
-{
-    static dispatch_once_t pred = 0;
-    static ALAssetsLibrary *library = nil;
-    dispatch_once(&pred, ^{
-        library = [[ALAssetsLibrary alloc] init];
-    });
-    return library;
+- (AttachmentBarButtonItem *) attachmentBarButtonItem {
+    if (!_attachmentBarButtonItem) {
+        _attachmentBarButtonItem = [[AttachmentBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icon_add_attachment"]];
+    }
+    
+    return _attachmentBarButtonItem;
 }
 
-- (void) getPhotoLibrary {
-    if([ALAssetsLibrary authorizationStatus]) {
-        _assets = [@[] mutableCopy];
-        // 1
-        ALAssetsLibrary *assetsLibrary = [ViewController defaultAssetsLibrary];
-        // 2
-        [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
-            
-            [group enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *result, NSUInteger index, BOOL *innerStop) {
-                if(result)
-                {
-                    // 3
-                    [_assets addObject:result];
-                }
-            }];
-            [Radio postNotificationName:kEnumerateGroupCompleteNotification object:nil];
-        } failureBlock:^(NSError *error) {
-            NSLog(@"Error loading images %@", error);
-        }];
-    } else {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Permission Denied" message:@"Please allow the application to access your photo and videos in settings panel of your device" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles: nil];
-        [alertView show];
+- (CameraBarButtonItem *) cameraBarButtonItem {
+    if (!_cameraBarButtonItem) {
+        _cameraBarButtonItem = [[CameraBarButtonItem alloc] init];
     }
+    return _cameraBarButtonItem;
+}
+
+- (SettingsBarButtonItem *) settingsBarButtonItem {
+    if (!_settingsBarButtonItem) {
+        _settingsBarButtonItem = [[SettingsBarButtonItem alloc] init];
+    }
+    return _settingsBarButtonItem;
+}
+
+
+- (UnsentBarButtonItem *) unsentBarButtonItem {
+    if (!_unsentBarButtonItem) {
+        _unsentBarButtonItem = [[UnsentBarButtonItem alloc] init];
+    }
+    return _unsentBarButtonItem;
+}
+
+- (void) toggleAttachmentCollectionView {
+    [self.attachmentBarButtonItem toggle];
+    
+    if (self.attachmentBarButtonItem.attachmentBarOpen) {
+        [self hideAttachmentCollectionView];
+    } else {
+        [self showAttachmentCollectionView];
+    }
+}
+
+- (void) hideAttachmentCollectionView {
+    
+}
+
+- (void) showAttachmentCollectionView {
+    // noteview move down
+    // attachmentcollectionview show / move down
+    // Show camera button
 }
 
 - (void) viewDidLoad {
@@ -133,26 +145,30 @@
     
     [self.view addSubview:self.noteView];
     [self.view addSubview:self.attachmentCollectionView];
-    
-    // TODO: this is not ideal; should be encapsulated in attachmentCollectionView
-    [self.view addSubview:self.attachmentCollectionView];
     [self.view addSubview:self.statusView];
     [self.view addSubview:self.progressView];
     [self.view addSubview:self.leftRibbon];
     [self.view addSubview:self.rightRibbon];
+    
+    [self.attachmentBarButtonItem setAction:@selector(toggleAttachmentCollectionView) withTarget:self];
+    
+    [self.cameraBarButtonItem setAction:@selector(takePhoto:) withTarget:self];
+//    self.cameraBarButtonItem.customView.hidden = YES;
+    
+    // TODO: create unsent viewcontroller
+//    self.unsentBarButtonItem.customView.hidden = YES;
+    
+    [self.settingsBarButtonItem setAction:@selector(showSettings:) withTarget:self];
+    
+    SpacerBarButtonItem *spacer = [[SpacerBarButtonItem alloc] init];
+    [self.navigationItem setRightBarButtonItems:@[self.attachmentBarButtonItem, spacer, self.cameraBarButtonItem]];
+    [self.navigationItem setLeftBarButtonItems:@[self.settingsBarButtonItem, spacer, self.unsentBarButtonItem]];
     
     self.noteView.delegate = self;
     self.noteView.noteViewDelegate = self;
     
     self.attachmentCollectionView.dataSource = self;
     self.attachmentCollectionView.delegate = self;
-    
-    self.attachmentBarButtonItemImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon_add_attachment"]];
-
-    self.attachmentBarButtonItemImage.autoresizingMask = UIViewAutoresizingNone;
-    self.attachmentBarButtonItemImage.contentMode = UIViewContentModeCenter;
-    
-    [self resetAttachmentBarButtonItem];
     
     [Radio addObserver:self
               selector:@selector(keyboardWillShow:)
@@ -165,79 +181,34 @@
                 object:nil];
     
     [Radio addObserver:self
-              selector:@selector(keyboardIsUp:)
-                  name:UIKeyboardDidShowNotification
-                object:nil];
-    
-    [Radio addObserver:self
-              selector:@selector(keyboardWillHide:)
-                  name:UIKeyboardWillHideNotification
-                object:nil];
-    
-    [Radio addObserver:self
-              selector:@selector(sendSuccess:)
-                  name:kNoteSendSuccessNotification
-                object:nil];
-    
-    [Radio addObserver:self
-              selector:@selector(sendFailure:)
-                  name:kNoteSendFailNotification
-                object:nil];
-    
-    [Radio addObserver:self
               selector:@selector(reachabilityChanged:)
                   name:kReachabilityChangedNotification
                 object:nil];
     
     [Radio addObserver:self
-              selector:@selector(progressUpdated:)
-                  name:kStatusProgress
-                object:nil];
-    
-    [Radio addObserver:self
-              selector:@selector(reloadattachmentCollectionView:)
+              selector:@selector(reloadAttachmentCollectionView:)
                   name:kEnumerateGroupCompleteNotification
-                object:nil];
-    
-    [Radio addObserver:self
-              selector:@selector(insertIntoattachmentCollectionViewWithAsset:)
-                  name:UIApplicationUserDidTakeScreenshotNotification
                 object:nil];
 }
 
-- (void) reloadattachmentCollectionView:(NSNotification*) notification {
+- (void) showSettings:(UIButton *) sender {
+    
+    SettingsViewController *settings = [[SettingsViewController alloc] init];
+//    settings.delegate = self;
+//    settings.allowsEditing = YES;
+
+    [self.navigationController pushViewController:settings animated:YES];
+    
+//    [self presentViewController:settings animated:YES completion:^{
+//        
+//    }];
+}
+
+- (void) reloadAttachmentCollectionView:(NSNotification*) notification {
     
     // reloadData after receive the notification
     [_attachmentCollectionView reloadData];
 }
-
-- (void) insertIntoattachmentCollectionViewWithAsset:(NSNotification *) notification {
-    
-    ALAssetsLibrary *assetsLibrary = [ViewController defaultAssetsLibrary];
-    
-    [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
-        
-        [group enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *result, NSUInteger index, BOOL *innerStop) {
-            if(result)
-            {
-                // 3
-                [_assets insertObject:result atIndex:0];
-                
-                *stop = YES; *innerStop = YES;
-                ALog(@"");
-                
-                [self.attachmentCollectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:0]]];
-                
-                [self.attachmentCollectionView reloadData];
-            }
-        }];
-        
-        [_attachmentCollectionView reloadData];
-    } failureBlock:^(NSError *error) {
-        NSLog(@"Error loading images %@", error);
-    }];
-}
-
 - (void) onFirstLaunch {
     if([Utilities isFirstLaunch]) {
         self.noteView.text = [Utilities getFirstLaunchText];
@@ -298,28 +269,6 @@
     }
 }
 
-- (void) keyboardIsUp:(NSNotification *) notification {
-    NSDictionary *info = [notification userInfo];
-    CGRect keyboardRect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    keyboardRect = [self.view convertRect:keyboardRect fromView:nil];
-    
-    UIEdgeInsets inset = self.noteView.contentInset;
-    inset.bottom = keyboardRect.size.height;
-    if (self.statusView.hidden == NO) {
-        inset.bottom += kStatusViewHeight;
-    }
-    self.noteView.contentInset = inset;
-    self.noteView.scrollIndicatorInsets = inset;
-    
-    [self scrollToCaretInTextView:self.noteView animated:YES];
-}
-
-- (void) keyboardWillHide:(NSNotification *) notification {
-}
-
-- (void) keyboardDidHide:(NSNotification *) notification {
-}
-
 - (void) keyboardWillShow:(NSNotification *) notification {
     NSDictionary *info = [notification userInfo];
     CGRect keyboardRect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
@@ -334,18 +283,22 @@
     [self.progressView updateFrameToKeyboard:keyboardRect];
 }
 
-//-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-//                               duration:(NSTimeInterval)duration{
-//    
-//    self.orientation = toInterfaceOrientation;
-//    [self.attachmentCollectionView.collectionViewLayout invalidateLayout];
-//}
-
 - (void) keyboardDidShow:(NSNotification *) notification {
+    NSDictionary *info = [notification userInfo];
+    CGRect keyboardRect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    keyboardRect = [self.view convertRect:keyboardRect fromView:nil];
+    
     self.noteView.panGestureRecognizer.enabled = YES;
-//    if (self.attachmentCollectionView.hidden == NO) {
-//        [self.attachmentCollectionView hide];
-//    }
+    
+    UIEdgeInsets inset = self.noteView.contentInset;
+    inset.bottom = keyboardRect.size.height;
+    if (self.statusView.hidden == NO) {
+        inset.bottom += kStatusViewHeight;
+    }
+    self.noteView.contentInset = inset;
+    self.noteView.scrollIndicatorInsets = inset;
+    
+    [self scrollToCaretInTextView:self.noteView animated:YES];
 }
 
 - (void) didPan:(UIPanGestureRecognizer *) gestureRecognizer {
@@ -396,7 +349,7 @@
         
         if (self.imageAttachment) {
             note.image = self.imageAttachment;
-            [self resetAttachmentBarButtonItem];
+//            [self resetAttachmentBarButtonItem];
         }
         
         [note send];
@@ -405,53 +358,7 @@
     [self initNote];
 }
 
-- (void) resetAttachmentBarButtonItem {
-    self.imageAttachment = nil;
-    
-    [UIView animateWithDuration:0.25 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.navigationItem.rightBarButtonItem.customView.alpha = 0;
-    } completion:^(BOOL finished){
-        if (finished) {
-            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-            button.frame = CGRectMake(0, -1, 25, 25);
-            [button addSubview:self.attachmentBarButtonItemImage];
-            [button addTarget:self action:@selector(toggleattachmentCollectionView) forControlEvents:UIControlEventTouchUpInside];
-            
-            self.attachmentBarButtonItemImage.center = button.center;
-            self.attachmentBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-            
-            self.navigationItem.rightBarButtonItem.customView = button;
-        }
-        [UIView animateWithDuration:0.25 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-            self.navigationItem.rightBarButtonItem.customView.alpha = 1;
-        } completion:^(BOOL finished) {
-            [self.navigationItem setRightBarButtonItem:self.attachmentBarButtonItem];
-        }];
-    }];
-}
 
-- (void)setAttachmentBarButtonItem:(UIBarButtonItem *) attachmentBarButtonItem withImage:(UIImage *) image withAction:(SEL) action {
-    [UIView animateWithDuration:0.25 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.attachmentBarButtonItem.customView.alpha = 0;
-    } completion:^(BOOL finished){
-        if (finished) {
-            // TODO: refactor into Utilities
-            UIButton *imageattachmentCollectionView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
-            [imageattachmentCollectionView addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
-            [imageattachmentCollectionView setBackgroundImage:image forState:UIControlStateNormal];
-            
-            self.attachmentBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:imageattachmentCollectionView];
-            [self.navigationItem setRightBarButtonItems:@[self.attachmentBarButtonItem]];
-            self.navigationItem.rightBarButtonItem.customView.alpha = 0;
-            
-            [UIView animateWithDuration:0.25 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-                self.navigationItem.rightBarButtonItem.customView.alpha = 1;
-            } completion:^(BOOL finished) {
-                [self.navigationItem setRightBarButtonItem:self.attachmentBarButtonItem];
-            }];
-        }
-    }];
-}
 
 - (void) reachabilityChanged:(NSNotification *) notification {
     if ([State isReachable]) {
@@ -503,92 +410,11 @@
     [self dismissAutocorrectSuggestionForNoteView];
 
     if (self.attachmentCollectionView.hidden == YES) {
-        [self showattachmentCollectionView];
+//        [self showattachmentCollectionView];
     } else {
-        [self hideattachmentCollectionView];
+//        [self hideattachmentCollectionView];
     }
 }
-
-- (void) showattachmentCollectionView {
-    self.attachmentCollectionView.hidden = NO;
-    [self getPhotoLibrary];
-    
-    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
-    CGRect statusBarWindowRect = [self.view.window convertRect:statusBarFrame fromWindow: nil];
-    CGRect statusBarViewRect = [self.view convertRect:statusBarWindowRect fromView: nil];
-    
-    CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
-    
-    CGFloat shownattachmentCollectionViewHeight = statusBarViewRect.size.height + navBarHeight;
-    
-    UIImage *image = [UIImage imageNamed:@"icon_camera"];
-
-    UIButton *imageattachmentCollectionView = [UIButton buttonWithType:UIButtonTypeSystem];
-    
-    // The plus icon is 30 x 30, rotated as X is 30 / sqrt 2, which is ~22
-    // TODO: refactor into its own UIView
-    imageattachmentCollectionView.frame = CGRectMake(0, 0, 25, 25);
-    [imageattachmentCollectionView addTarget:self action:@selector(takePhoto:) forControlEvents:UIControlEventTouchUpInside];
-    [imageattachmentCollectionView setBackgroundImage:image forState:UIControlStateNormal];
-    
-    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:imageattachmentCollectionView];
-
-    UIButton *spacer = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 8, 25)];
-    UIBarButtonItem *spacerBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spacer];
-    
-    self.navigationItem.rightBarButtonItems = @[self.attachmentBarButtonItem, spacerBarButtonItem, barButtonItem];
-    ((UIBarButtonItem *)self.navigationItem.rightBarButtonItems[2]).customView.alpha = 0;
-    
-    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.attachmentBarButtonItemImage.transform = CGAffineTransformMakeRotation( 45 * M_PI  / 180);
-        
-        self.noteView.frame = CGRectMake(self.noteView.frame.origin.x,
-                                         kNoteAttachmentCollectionViewHeight,
-                                         self.noteView.frame.size.width,
-                                         self.noteView.frame.size.height);
-        
-        self.attachmentCollectionView.frame = CGRectMake(self.attachmentCollectionView.frame.origin.x,
-                                                              shownattachmentCollectionViewHeight,
-                                                              self.attachmentCollectionView.frame.size.width,
-                                                              self.attachmentCollectionView.frame.size.height);
-        
-        ((UIBarButtonItem *)self.navigationItem.rightBarButtonItems[2]).customView.alpha = 1;
-    } completion:^(BOOL finished) {
-        if (finished) {
-        }
-    }];
-}
-
-- (void) hideattachmentCollectionView {
-    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
-    CGRect statusBarWindowRect = [self.view.window convertRect:statusBarFrame fromWindow: nil];
-    CGRect statusBarViewRect = [self.view convertRect:statusBarWindowRect fromView: nil];
-    
-    CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
-    
-    CGFloat shownattachmentCollectionViewHeight = statusBarViewRect.size.height + navBarHeight;
-    CGFloat hiddenattachmentCollectionViewHeight = shownattachmentCollectionViewHeight - kNoteAttachmentCollectionViewHeight;
-    
-    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.attachmentBarButtonItemImage.transform = CGAffineTransformMakeRotation( 0  * M_PI  / 180);
-        self.noteView.frame = CGRectMake(self.noteView.frame.origin.x,
-                                         0,
-                                         self.noteView.frame.size.width,
-                                         self.noteView.frame.size.height);
-        self.attachmentCollectionView.frame = CGRectMake(self.attachmentCollectionView.frame.origin.x,
-                                                              hiddenattachmentCollectionViewHeight,
-                                                              self.attachmentCollectionView.frame.size.width,
-                                                              self.attachmentCollectionView.frame.size.height);
-        
-        ((UIBarButtonItem *)self.navigationItem.rightBarButtonItems[2]).customView.alpha = 0;
-    } completion:^(BOOL finished) {
-        if (finished) {
-            self.attachmentCollectionView.hidden = YES;
-            self.navigationItem.rightBarButtonItems = @[self.attachmentBarButtonItem];
-        }
-    }];
-}
-
 - (void) selectPhoto:(UIButton *) sender {
     
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
@@ -605,11 +431,11 @@
     self.imageAttachment = [Utilities compressImageWithImage:chosenImage];
     
     [picker dismissViewControllerAnimated:YES completion:^{
-        [self setAttachmentBarButtonItem:self.attachmentBarButtonItem
-                               withImage:self.imageAttachment
-                              withAction:@selector(showAttachmentAlertView:)];
+//        [self setAttachmentBarButtonItem:self.attachmentBarButtonItem
+//                               withImage:self.imageAttachment
+//                              withAction:@selector(showAttachmentAlertView:)];
         [self.noteView becomeFirstResponder];
-        [self hideattachmentCollectionView];
+//        [self hideattachmentCollectionView];
         NSLog(@"hello!");
     }];
 }
@@ -629,7 +455,7 @@
     if (buttonIndex == 0) {
         NSLog(@"user pressed Cancel");
     } else {
-        [self resetAttachmentBarButtonItem];
+//        [self resetAttachmentBarButtonItem];
     }
 }
 
@@ -647,12 +473,6 @@
     [[UINavigationBar appearance] setBarTintColor:primaryColor];
     navigationController.navigationBar.tintColor = [UIColor whiteColor];
     navigationController.navigationBar.translucent = NO;
-}
-
-- (void) progressUpdated:(NSNotification *) notification {
-    // Use actual upload progress
-    // NSDictionary *dict = [notification userInfo];
-    // [self.progressView setProgress:[[dict valueForKeyPath:kStatusProgress] floatValue] animated:YES];
 }
 
 - (NSInteger) numberOfSectionsInCollectionView:(UICollectionView *) collectionView {
@@ -689,9 +509,186 @@
     NotePhotoCell *cell = (NotePhotoCell *)[collectionView cellForItemAtIndexPath:indexPath];
     
     self.imageAttachment = [UIImage imageWithCGImage:[[cell.asset defaultRepresentation] fullScreenImage]];
-    [self setAttachmentBarButtonItem:self.attachmentBarButtonItem withImage:self.imageAttachment withAction:@selector(showAttachmentAlertView:)];
+//    [self setAttachmentBarButtonItem:self.attachmentBarButtonItem withImage:self.imageAttachment withAction:@selector(showAttachmentAlertView:)];
     
     [self toggleattachmentCollectionView];
 }
 
+- (void) getPhotoLibrary {
+    _assets = [@[] mutableCopy];
+    // 1
+    ALAssetsLibrary *assetsLibrary = [Utilities defaultAssetsLibrary];
+    // 2
+    [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
+        
+        [group enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *result, NSUInteger index, BOOL *innerStop) {
+            if(result)
+            {
+                // 3
+                [_assets addObject:result];
+            }
+        }];
+        [Radio postNotificationName:kEnumerateGroupCompleteNotification object:nil];
+    } failureBlock:^(NSError *error) {
+        NSLog(@"Error loading images %@", error);
+    }];
+}
+
 @end
+
+//- (void) resetAttachmentBarButtonItem {
+//    self.imageAttachment = nil;
+//
+//    [UIView animateWithDuration:0.25 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+//        self.navigationItem.rightBarButtonItem.customView.alpha = 0;
+//    } completion:^(BOOL finished){
+//        if (finished) {
+//            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+//            button.frame = CGRectMake(0, -1, 25, 25);
+//            [button addSubview:self.attachmentBarButtonItemImage];
+//            [button addTarget:self action:@selector(toggleattachmentCollectionView) forControlEvents:UIControlEventTouchUpInside];
+//
+//            self.attachmentBarButtonItemImage.center = button.center;
+//            self.attachmentBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+//
+//            self.navigationItem.rightBarButtonItem.customView = button;
+//        }
+//        [UIView animateWithDuration:0.25 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+//            self.navigationItem.rightBarButtonItem.customView.alpha = 1;
+//        } completion:^(BOOL finished) {
+//            [self.navigationItem setRightBarButtonItem:self.attachmentBarButtonItem];
+//        }];
+//    }];
+//}
+//
+//- (void)setAttachmentBarButtonItem:(UIBarButtonItem *) attachmentBarButtonItem withImage:(UIImage *) image withAction:(SEL) action {
+//    [UIView animateWithDuration:0.25 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+//        self.attachmentBarButtonItem.customView.alpha = 0;
+//    } completion:^(BOOL finished){
+//        if (finished) {
+//            // TODO: refactor into Utilities
+//            UIButton *imageattachmentCollectionView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
+//            [imageattachmentCollectionView addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
+//            [imageattachmentCollectionView setBackgroundImage:image forState:UIControlStateNormal];
+//
+//            self.attachmentBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:imageattachmentCollectionView];
+//            [self.navigationItem setRightBarButtonItems:@[self.attachmentBarButtonItem]];
+//            self.navigationItem.rightBarButtonItem.customView.alpha = 0;
+//
+//            [UIView animateWithDuration:0.25 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+//                self.navigationItem.rightBarButtonItem.customView.alpha = 1;
+//            } completion:^(BOOL finished) {
+//                [self.navigationItem setRightBarButtonItem:self.attachmentBarButtonItem];
+//            }];
+//        }
+//    }];
+//}
+
+//- (void) showattachmentCollectionView {
+//    self.attachmentCollectionView.hidden = NO;
+//    [self getPhotoLibrary];
+//
+//    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
+//    CGRect statusBarWindowRect = [self.view.window convertRect:statusBarFrame fromWindow: nil];
+//    CGRect statusBarViewRect = [self.view convertRect:statusBarWindowRect fromView: nil];
+//
+//    CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
+//
+//    CGFloat shownattachmentCollectionViewHeight = statusBarViewRect.size.height + navBarHeight;
+//
+//    UIImage *image = [UIImage imageNamed:@"icon_camera"];
+//
+//    UIButton *imageattachmentCollectionView = [UIButton buttonWithType:UIButtonTypeSystem];
+//
+//    // The plus icon is 30 x 30, rotated as X is 30 / sqrt 2, which is ~22
+//    // TODO: refactor into its own UIView
+//    imageattachmentCollectionView.frame = CGRectMake(0, 0, 25, 25);
+//    [imageattachmentCollectionView addTarget:self action:@selector(takePhoto:) forControlEvents:UIControlEventTouchUpInside];
+//    [imageattachmentCollectionView setBackgroundImage:image forState:UIControlStateNormal];
+//
+//    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:imageattachmentCollectionView];
+//
+//    UIButton *spacer = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 8, 25)];
+//    UIBarButtonItem *spacerBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spacer];
+//
+//    self.navigationItem.rightBarButtonItems = @[self.attachmentBarButtonItem, spacerBarButtonItem, barButtonItem];
+//    ((UIBarButtonItem *)self.navigationItem.rightBarButtonItems[2]).customView.alpha = 0;
+//
+//    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+//        self.attachmentBarButtonItemImage.transform = CGAffineTransformMakeRotation( 45 * M_PI  / 180);
+//
+//        self.noteView.frame = CGRectMake(self.noteView.frame.origin.x,
+//                                         kNoteAttachmentCollectionViewHeight,
+//                                         self.noteView.frame.size.width,
+//                                         self.noteView.frame.size.height);
+//
+//        self.attachmentCollectionView.frame = CGRectMake(self.attachmentCollectionView.frame.origin.x,
+//                                                              shownattachmentCollectionViewHeight,
+//                                                              self.attachmentCollectionView.frame.size.width,
+//                                                              self.attachmentCollectionView.frame.size.height);
+//
+//        ((UIBarButtonItem *)self.navigationItem.rightBarButtonItems[2]).customView.alpha = 1;
+//    } completion:^(BOOL finished) {
+//        if (finished) {
+//        }
+//    }];
+//}
+//
+//- (void) hideattachmentCollectionView {
+//    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
+//    CGRect statusBarWindowRect = [self.view.window convertRect:statusBarFrame fromWindow: nil];
+//    CGRect statusBarViewRect = [self.view convertRect:statusBarWindowRect fromView: nil];
+//
+//    CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
+//
+//    CGFloat shownattachmentCollectionViewHeight = statusBarViewRect.size.height + navBarHeight;
+//    CGFloat hiddenattachmentCollectionViewHeight = shownattachmentCollectionViewHeight - kNoteAttachmentCollectionViewHeight;
+//
+//    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+//        self.attachmentBarButtonItemImage.transform = CGAffineTransformMakeRotation( 0  * M_PI  / 180);
+//        self.noteView.frame = CGRectMake(self.noteView.frame.origin.x,
+//                                         0,
+//                                         self.noteView.frame.size.width,
+//                                         self.noteView.frame.size.height);
+//        self.attachmentCollectionView.frame = CGRectMake(self.attachmentCollectionView.frame.origin.x,
+//                                                              hiddenattachmentCollectionViewHeight,
+//                                                              self.attachmentCollectionView.frame.size.width,
+//                                                              self.attachmentCollectionView.frame.size.height);
+//
+//        ((UIBarButtonItem *)self.navigationItem.rightBarButtonItems[2]).customView.alpha = 0;
+//    } completion:^(BOOL finished) {
+//        if (finished) {
+//            self.attachmentCollectionView.hidden = YES;
+//            self.navigationItem.rightBarButtonItems = @[self.attachmentBarButtonItem];
+//        }
+//    }];
+//}
+
+//- (void) insertIntoattachmentCollectionViewWithAsset:(NSNotification *) notification {
+//
+//    ALAssetsLibrary *assetsLibrary = [ViewController defaultAssetsLibrary];
+//
+//    [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
+//
+//        [group enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *result, NSUInteger index, BOOL *innerStop) {
+//            if(result)
+//            {
+//                // 3
+//                [_assets insertObject:result atIndex:0];
+//
+//                *stop = YES; *innerStop = YES;
+//                ALog(@"");
+//
+//                [self.attachmentCollectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:0]]];
+//
+//                [self.attachmentCollectionView reloadData];
+//            }
+//        }];
+//
+//        [_attachmentCollectionView reloadData];
+//    } failureBlock:^(NSError *error) {
+//        NSLog(@"Error loading images %@", error);
+//    }];
+//}
+
+
