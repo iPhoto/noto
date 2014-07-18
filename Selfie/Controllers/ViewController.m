@@ -123,7 +123,8 @@
 }
 
 - (void) hideAttachmentCollectionView {
-    [UIView animateWithDuration:2.0 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveLinear animations:^{
+    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0 options:UIViewAnimationOptionCurveLinear animations:^{
+        self.attachmentBarButtonItem.toggleAnimationBlock();
         self.cameraBarButtonItem.hideAnimationBlock();
         self.unsentBarButtonItem.hideAnimationBlock();
     } completion:^(BOOL finished) {
@@ -136,7 +137,8 @@
     // noteview move down
     // attachmentcollectionview show / move down
     // Show camera button
-    [UIView animateWithDuration:2.0 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveLinear animations:^{
+    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0 options:UIViewAnimationOptionCurveLinear animations:^{
+        self.attachmentBarButtonItem.toggleAnimationBlock();
         self.cameraBarButtonItem.showAnimationBlock();
         self.unsentBarButtonItem.showAnimationBlock();
     } completion:nil];

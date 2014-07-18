@@ -26,13 +26,13 @@
     return self;
 }
 
-- (void) toggle {
+- (void(^)(void)) toggleAnimationBlock {
     CGFloat degreesToRotate = self.attachmentBarOpen == NO ? 45 : 0;
     self.attachmentBarOpen = !self.attachmentBarOpen;
     
-    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    return ^{
         self.imageView.transform = CGAffineTransformMakeRotation( degreesToRotate * M_PI  / 180);
-    } completion:nil];
+    };
 }
 
 @end

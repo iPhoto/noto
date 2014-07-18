@@ -13,5 +13,5 @@
 @property (nonatomic) BOOL attachmentBarOpen;
 @property (strong, nonatomic) UIImageView *imageView;
 
-- (void) toggle;
+- (void(^)(void)) toggleAnimationBlock;
 @end
