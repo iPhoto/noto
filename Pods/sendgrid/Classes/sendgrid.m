@@ -90,9 +90,14 @@ NSString * const sgEndpoint = @"api/mail.send.json";
         {
             UIImage *img = [self.imgs objectAtIndex:i];
             
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+            NSDate *date = [[NSDate alloc] init];
+            NSString *formattedDate = [dateFormatter stringFromDate:date];
+            
             // TODO: this is bad; we should not assume that there will be at most 1 image
-            NSString *filename = [NSString stringWithFormat:@"image.jpeg"];
-            NSString *name = [NSString stringWithFormat:@"files[image.jpeg]"];
+            NSString *filename = [NSString stringWithFormat:@"%@.jpeg", formattedDate];
+            NSString *name = [NSString stringWithFormat:@"files[%@.jpeg]", formattedDate];
             NSLog(@"name: %@, Filename: %@", name, filename);
             
             // TODO: this is bad; we shouldn't assume that users want their images compressed
