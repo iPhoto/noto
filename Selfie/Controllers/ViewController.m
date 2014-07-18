@@ -515,28 +515,23 @@
 }
 
 - (void) getPhotoLibrary {
-    if([ALAssetsLibrary authorizationStatus]) {
-        _assets = [@[] mutableCopy];
-        // 1
-        ALAssetsLibrary *assetsLibrary = [Utilities defaultAssetsLibrary];
-        // 2
-        [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
-            
-            [group enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *result, NSUInteger index, BOOL *innerStop) {
-                if(result)
-                {
-                    // 3
-                    [_assets addObject:result];
-                }
-            }];
-            [Radio postNotificationName:kEnumerateGroupCompleteNotification object:nil];
-        } failureBlock:^(NSError *error) {
-            NSLog(@"Error loading images %@", error);
+    _assets = [@[] mutableCopy];
+    // 1
+    ALAssetsLibrary *assetsLibrary = [Utilities defaultAssetsLibrary];
+    // 2
+    [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
+        
+        [group enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *result, NSUInteger index, BOOL *innerStop) {
+            if(result)
+            {
+                // 3
+                [_assets addObject:result];
+            }
         }];
-    } else {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Permission Denied" message:@"Please allow the application to access your photo and videos in settings panel of your device" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles: nil];
-        [alertView show];
-    }
+        [Radio postNotificationName:kEnumerateGroupCompleteNotification object:nil];
+    } failureBlock:^(NSError *error) {
+        NSLog(@"Error loading images %@", error);
+    }];
 }
 
 @end
