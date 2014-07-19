@@ -27,7 +27,7 @@
         
         self.backgroundColor = tertiaryColorLight;
         
-        self.hidden = YES;
+        self.isShown = NO;
     }
     return self;
 }
@@ -42,23 +42,9 @@
     return layout;
 }
 
-- (void) updateFrameToKeyboard:(CGRect) keyboardRect withNavBarHeight:(CGFloat) navBarHeight {
-    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
-    CGRect statusBarWindowRect = [self.superview.window convertRect:statusBarFrame fromWindow: nil];
-    CGRect statusBarViewRect = [self.superview convertRect:statusBarWindowRect fromView: nil];
-    
-    CGFloat heightOffset = self.hidden == YES ? kNoteAttachmentCollectionViewHeight : 0;
-    
-    self.frame = CGRectMake(0, statusBarViewRect.size.height + navBarHeight - heightOffset , keyboardRect.size.width, kNoteAttachmentCollectionViewHeight);
-    
-    CGFloat cellDim = kNoteAttachmentCollectionViewCellDim;
-    
-    [(UICollectionViewFlowLayout *) self.collectionViewLayout setItemSize:CGSizeMake(cellDim, cellDim)];
-}
-
 - (void(^)(void)) showAnimationBlock {
-    self.hidden = NO;
-    return ^ {
+    self.isShown = YES;
+    return ^{
         self.frame = CGRectOffset(self.frame, 0, kNoteAttachmentCollectionViewHeight);
     };
 }
@@ -70,16 +56,15 @@
 }
 
 - (void(^)(void)) hideAnimationBlock {
-    return ^ {
+    self.isShown = NO;
+    return ^{
         self.frame = CGRectOffset(self.frame, 0, -kNoteAttachmentCollectionViewHeight);
     };
 }
 
 - (void(^)(BOOL)) hideCompletionBlock {
     return ^(BOOL finished) {
-        if (finished) {
-            self.hidden = YES;
-        }
+
     };
 }
 

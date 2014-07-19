@@ -11,7 +11,8 @@
 #import "Utilities.h"
 
 @interface NoteAttachmentCollectionView : UICollectionView
-- (void) updateFrameToKeyboard:(CGRect) keyboardRect withNavBarHeight:(CGFloat) navBarHeight;
+
+@property (nonatomic) BOOL isShown;
 
 - (void(^)(void)) showAnimationBlock;
 - (void(^)(BOOL)) showCompletionBlock;

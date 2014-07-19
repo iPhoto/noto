@@ -14,7 +14,7 @@
 {
     self = [super init];
     if (self) {
-        
+        self.customView.alpha = 0;
     }
     return self;
 }

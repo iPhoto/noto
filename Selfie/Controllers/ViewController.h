@@ -22,6 +22,7 @@
 
 #import "AttachmentBarButtonItem.h"
 #import "CameraBarButtonItem.h"
+#import "ImageBarButtonItem.h"
 #import "SettingsBarButtonItem.h"
 #import "UnsentBarButtonItem.h"
 #import "SpacerBarButtonItem.h"

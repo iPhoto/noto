@@ -113,6 +113,7 @@
 }
 
 - (void) toggleAttachmentCollectionView {
+    
     if (self.attachmentBarButtonItem.attachmentBarOpen) {
         [self hideAttachmentCollectionView];
     } else {
@@ -124,7 +125,6 @@
     [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0 options:UIViewAnimationOptionCurveLinear animations:^{
         self.attachmentBarButtonItem.toggleAnimationBlock();
         self.cameraBarButtonItem.hideAnimationBlock();
-        self.unsentBarButtonItem.hideAnimationBlock();
         self.attachmentCollectionView.hideAnimationBlock();
         self.noteView.shiftUpAnimationBlock();
     } completion:^(BOOL finished) {
@@ -134,16 +134,48 @@
 }
 
 - (void) showAttachmentCollectionView {
-    // noteview move down
-    // attachmentcollectionview show / move down
-    // Show camera button
     [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0 options:UIViewAnimationOptionCurveLinear animations:^{
         self.attachmentBarButtonItem.toggleAnimationBlock();
         self.cameraBarButtonItem.showAnimationBlock();
-        self.unsentBarButtonItem.showAnimationBlock();
         self.attachmentCollectionView.showAnimationBlock();
         self.noteView.shiftDownAnimationBlock();
     } completion:nil];
+}
+
+- (void) resetAttachmentBarButtonItem {
+    [UIView animateWithDuration:0.25 animations:^{
+        ((ImageBarButtonItem *)self.navigationItem.rightBarButtonItems[0]).customView.alpha = 0;
+    } completion:^(BOOL finished) {
+        SpacerBarButtonItem *spacer = [[SpacerBarButtonItem alloc] init];
+        self.navigationItem.rightBarButtonItems = @[self.attachmentBarButtonItem, spacer, self.cameraBarButtonItem];
+        ((AttachmentBarButtonItem *)self.navigationItem.rightBarButtonItems[0]).customView.alpha = 0;
+        [UIView animateWithDuration:0.25 animations:^{
+            self.attachmentBarButtonItem.showAnimationBlock();
+        }];
+    }];
+}
+
+- (void) setImageBarButtonItemWithImage:(UIImage *) image withAction:(SEL) action {
+    [UIView animateWithDuration:0.25 animations:^{
+        self.attachmentBarButtonItem.hideAnimationBlock();
+        self.attachmentBarButtonItem.toggleAnimationBlock();
+        
+        self.cameraBarButtonItem.hideAnimationBlock();
+        self.unsentBarButtonItem.hideAnimationBlock();
+        self.attachmentCollectionView.hideAnimationBlock();
+        self.noteView.shiftUpAnimationBlock();
+    } completion:^(BOOL finished) {
+        self.cameraBarButtonItem.hideCompletionBlock(finished);
+        self.unsentBarButtonItem.hideCompletionBlock(finished);
+        ImageBarButtonItem *imageBarButtonItem = [[ImageBarButtonItem alloc] initWithImage:image];
+        [imageBarButtonItem setAction:action withTarget:self];
+        SpacerBarButtonItem *spacer = [[SpacerBarButtonItem alloc] init];
+        self.navigationItem.rightBarButtonItems = @[imageBarButtonItem, spacer, self.cameraBarButtonItem];
+        
+        [UIView animateWithDuration:0.25 animations:^{
+            imageBarButtonItem.showAnimationBlock();
+        }];
+    }];
 }
 
 - (void) viewDidLoad {
@@ -206,16 +238,8 @@
 }
 
 - (void) showSettings:(UIButton *) sender {
-    
     SettingsViewController *settings = [[SettingsViewController alloc] init];
-//    settings.delegate = self;
-//    settings.allowsEditing = YES;
-
     [self.navigationController pushViewController:settings animated:YES];
-    
-//    [self presentViewController:settings animated:YES completion:^{
-//        
-//    }];
 }
 
 - (void) reloadAttachmentCollectionView:(NSNotification*) notification {
@@ -292,9 +316,19 @@
     
     [self.leftRibbon updateFrameToKeyboard:keyboardRect];
     [self.rightRibbon updateFrameToKeyboard:keyboardRect];
-    [self.attachmentCollectionView updateFrameToKeyboard:keyboardRect withNavBarHeight:self.navigationController.navigationBar.frame.size.height];
     [self.statusView updateFrameToKeyboard:keyboardRect];
     [self.progressView updateFrameToKeyboard:keyboardRect];
+    
+    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
+    CGRect statusBarWindowRect = [self.view.window convertRect:statusBarFrame fromWindow: nil];
+    CGRect statusBarViewRect = [self.view convertRect:statusBarWindowRect fromView: nil];
+    CGFloat statusBarHeight = statusBarViewRect.size.height;
+    
+    CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
+    
+    CGFloat offset = self.attachmentCollectionView.isShown ? 0 : kNoteAttachmentCollectionViewHeight;
+    
+    self.attachmentCollectionView.frame = CGRectMake(0, statusBarHeight + navBarHeight - offset, keyboardRect.size.width, kNoteAttachmentCollectionViewHeight);
 }
 
 - (void) keyboardDidShow:(NSNotification *) notification {
@@ -363,7 +397,7 @@
         
         if (self.imageAttachment) {
             note.image = self.imageAttachment;
-//            [self resetAttachmentBarButtonItem];
+            [self resetAttachmentBarButtonItem];
         }
         
         [note send];
@@ -382,18 +416,6 @@
     }
 }
 
-- (void) takePhoto:(UIButton *) sender {
-    
-    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    picker.delegate = self;
-    picker.allowsEditing = YES;
-    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-    
-    [self presentViewController:picker animated:YES completion:^{
-        
-    }];
-}
-
 - (void)dismissAutocorrectSuggestionForNoteView {
     NSRange rangeCopy = self.noteView.selectedRange;
     NSString *textCopy = self.noteView.text.copy;
@@ -403,15 +425,12 @@
     [self.noteView setSelectedRange:rangeCopy];
 }
 
-- (void) selectPhoto:(UIButton *) sender {
-    
+- (void) takePhoto:(UIButton *) sender {
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-
     picker.delegate = self;
-    picker.allowsEditing = NO;
-    picker.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     
-    [self presentViewController:picker animated:YES completion:NULL];
+    [self presentViewController:picker animated:YES completion:nil];
 }
 
 - (void) imagePickerController:(UIImagePickerController *) picker didFinishPickingMediaWithInfo:(NSDictionary *) info {
@@ -419,12 +438,15 @@
     self.imageAttachment = [Utilities compressImageWithImage:chosenImage];
     
     [picker dismissViewControllerAnimated:YES completion:^{
-//        [self setAttachmentBarButtonItem:self.attachmentBarButtonItem
-//                               withImage:self.imageAttachment
-//                              withAction:@selector(showAttachmentAlertView:)];
+        [self setImageBarButtonItemWithImage:self.imageAttachment
+                                  withAction:@selector(showAttachmentAlertView:)];
         [self.noteView becomeFirstResponder];
-//        [self hideattachmentCollectionView];
-        NSLog(@"hello!");
+    }];
+}
+
+- (void) imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [picker dismissViewControllerAnimated:YES completion:^{
+        [self.noteView becomeFirstResponder];
     }];
 }
 
@@ -439,22 +461,15 @@
     [alert show];
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+- (void) alertView:(UIAlertView *) alertView clickedButtonAtIndex:(NSInteger) buttonIndex {
     if (buttonIndex == 0) {
         NSLog(@"user pressed Cancel");
     } else {
-//        [self resetAttachmentBarButtonItem];
+        [self resetAttachmentBarButtonItem];
     }
 }
 
-- (void) imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [picker dismissViewControllerAnimated:YES completion:^{
-        [self.noteView becomeFirstResponder];
-    }];
-}
-
-- (void) navigationController:(UINavigationController *) navigationController willShowViewController:(UIViewController *) viewController animated:(BOOL)animated
-{
+- (void) navigationController:(UINavigationController *) navigationController willShowViewController:(UIViewController *) viewController animated:(BOOL)animated {
     // TODO: refactor into utilities
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [[UINavigationBar appearance] setBarStyle:UIBarStyleBlack];
@@ -467,14 +482,16 @@
     return 1;
 }
 
-
 - (NSInteger) collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return self.assets.count;
 }
 
-- (UICollectionViewCell *) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGSize) collectionView:(UICollectionView *) collectionView layout:(UICollectionViewLayout*) collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *) indexPath {
+    return CGSizeMake(kNoteAttachmentCollectionViewCellDim, kNoteAttachmentCollectionViewCellDim);
+}
+
+- (UICollectionViewCell *) collectionView:(UICollectionView *) collectionView cellForItemAtIndexPath:(NSIndexPath *) indexPath {
     NotePhotoCell *cell = (NotePhotoCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"cellIdentifier" forIndexPath:indexPath];
 
     ALAsset *asset = self.assets[indexPath.row];
@@ -486,20 +503,17 @@
     return cell;
 }
 
-- (CGFloat) collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
-{
+- (CGFloat) collectionView:(UICollectionView *) collectionView layout:(UICollectionViewLayout *) collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger) section {
     return kNoteAttachmentCollectionViewBorder;
 }
                        
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     // If you need to use the touched cell, you can retrieve it like so
     NotePhotoCell *cell = (NotePhotoCell *)[collectionView cellForItemAtIndexPath:indexPath];
     
     self.imageAttachment = [UIImage imageWithCGImage:[[cell.asset defaultRepresentation] fullScreenImage]];
-//    [self setAttachmentBarButtonItem:self.attachmentBarButtonItem withImage:self.imageAttachment withAction:@selector(showAttachmentAlertView:)];
-    
-//    [self toggleattachmentCollectionView];
+    [self setImageBarButtonItemWithImage:self.imageAttachment
+                              withAction:@selector(showAttachmentAlertView:)];
 }
 
 - (void) getPhotoLibrary {
@@ -523,149 +537,3 @@
 }
 
 @end
-
-//- (void) resetAttachmentBarButtonItem {
-//    self.imageAttachment = nil;
-//
-//    [UIView animateWithDuration:0.25 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-//        self.navigationItem.rightBarButtonItem.customView.alpha = 0;
-//    } completion:^(BOOL finished){
-//        if (finished) {
-//            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-//            button.frame = CGRectMake(0, -1, 25, 25);
-//            [button addSubview:self.attachmentBarButtonItemImage];
-//            [button addTarget:self action:@selector(toggleattachmentCollectionView) forControlEvents:UIControlEventTouchUpInside];
-//
-//            self.attachmentBarButtonItemImage.center = button.center;
-//            self.attachmentBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-//
-//            self.navigationItem.rightBarButtonItem.customView = button;
-//        }
-//        [UIView animateWithDuration:0.25 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-//            self.navigationItem.rightBarButtonItem.customView.alpha = 1;
-//        } completion:^(BOOL finished) {
-//            [self.navigationItem setRightBarButtonItem:self.attachmentBarButtonItem];
-//        }];
-//    }];
-//}
-//
-//- (void)setAttachmentBarButtonItem:(UIBarButtonItem *) attachmentBarButtonItem withImage:(UIImage *) image withAction:(SEL) action {
-//    [UIView animateWithDuration:0.25 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-//        self.attachmentBarButtonItem.customView.alpha = 0;
-//    } completion:^(BOOL finished){
-//        if (finished) {
-//            // TODO: refactor into Utilities
-//            UIButton *imageattachmentCollectionView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
-//            [imageattachmentCollectionView addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
-//            [imageattachmentCollectionView setBackgroundImage:image forState:UIControlStateNormal];
-//
-//            self.attachmentBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:imageattachmentCollectionView];
-//            [self.navigationItem setRightBarButtonItems:@[self.attachmentBarButtonItem]];
-//            self.navigationItem.rightBarButtonItem.customView.alpha = 0;
-//
-//            [UIView animateWithDuration:0.25 delay:0 usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-//                self.navigationItem.rightBarButtonItem.customView.alpha = 1;
-//            } completion:^(BOOL finished) {
-//                [self.navigationItem setRightBarButtonItem:self.attachmentBarButtonItem];
-//            }];
-//        }
-//    }];
-//}
-
-//- (void) showattachmentCollectionView {
-//    self.attachmentCollectionView.hidden = NO;
-//    [self getPhotoLibrary];
-//
-//    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
-//    CGRect statusBarWindowRect = [self.view.window convertRect:statusBarFrame fromWindow: nil];
-//    CGRect statusBarViewRect = [self.view convertRect:statusBarWindowRect fromView: nil];
-//
-//    CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
-//
-//    CGFloat shownattachmentCollectionViewHeight = statusBarViewRect.size.height + navBarHeight;
-//
-//    UIImage *image = [UIImage imageNamed:@"icon_camera"];
-//
-//    UIButton *imageattachmentCollectionView = [UIButton buttonWithType:UIButtonTypeSystem];
-//
-//    // The plus icon is 30 x 30, rotated as X is 30 / sqrt 2, which is ~22
-//    // TODO: refactor into its own UIView
-//    imageattachmentCollectionView.frame = CGRectMake(0, 0, 25, 25);
-//    [imageattachmentCollectionView addTarget:self action:@selector(takePhoto:) forControlEvents:UIControlEventTouchUpInside];
-//    [imageattachmentCollectionView setBackgroundImage:image forState:UIControlStateNormal];
-//
-//    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:imageattachmentCollectionView];
-//
-//    UIButton *spacer = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 8, 25)];
-//    UIBarButtonItem *spacerBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spacer];
-//
-//    self.navigationItem.rightBarButtonItems = @[self.attachmentBarButtonItem, spacerBarButtonItem, barButtonItem];
-//    ((UIBarButtonItem *)self.navigationItem.rightBarButtonItems[2]).customView.alpha = 0;
-//
-//    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-//        self.attachmentBarButtonItemImage.transform = CGAffineTransformMakeRotation( 45 * M_PI  / 180);
-//
-//        self.noteView.frame = CGRectMake(self.noteView.frame.origin.x,
-//                                         kNoteAttachmentCollectionViewHeight,
-//                                         self.noteView.frame.size.width,
-//                                         self.noteView.frame.size.height);
-//
-//        self.attachmentCollectionView.frame = CGRectMake(self.attachmentCollectionView.frame.origin.x,
-//                                                              shownattachmentCollectionViewHeight,
-//                                                              self.attachmentCollectionView.frame.size.width,
-//                                                              self.attachmentCollectionView.frame.size.height);
-//
-//        ((UIBarButtonItem *)self.navigationItem.rightBarButtonItems[2]).customView.alpha = 1;
-//    } completion:^(BOOL finished) {
-//        if (finished) {
-//        }
-//    }];
-//}
-//
-//- (void) hideattachmentCollectionView {
-//
-//    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-//        self.attachmentBarButtonItemImage.transform = CGAffineTransformMakeRotation( 0  * M_PI  / 180);
-//        self.noteView.frame = CGRectMake(self.noteView.frame.origin.x,
-//                                         0,
-//                                         self.noteView.frame.size.width,
-//                                         self.noteView.frame.size.height);
-
-//
-//        ((UIBarButtonItem *)self.navigationItem.rightBarButtonItems[2]).customView.alpha = 0;
-//    } completion:^(BOOL finished) {
-//        if (finished) {
-//            self.attachmentCollectionView.hidden = YES;
-//            self.navigationItem.rightBarButtonItems = @[self.attachmentBarButtonItem];
-//        }
-//    }];
-//}
-
-//- (void) insertIntoattachmentCollectionViewWithAsset:(NSNotification *) notification {
-//
-//    ALAssetsLibrary *assetsLibrary = [ViewController defaultAssetsLibrary];
-//
-//    [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
-//
-//        [group enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *result, NSUInteger index, BOOL *innerStop) {
-//            if(result)
-//            {
-//                // 3
-//                [_assets insertObject:result atIndex:0];
-//
-//                *stop = YES; *innerStop = YES;
-//                ALog(@"");
-//
-//                [self.attachmentCollectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:0]]];
-//
-//                [self.attachmentCollectionView reloadData];
-//            }
-//        }];
-//
-//        [_attachmentCollectionView reloadData];
-//    } failureBlock:^(NSError *error) {
-//        NSLog(@"Error loading images %@", error);
-//    }];
-//}
-
-
