@@ -9,9 +9,6 @@
             <objects>
                 <viewController extendedLayoutIncludesOpaqueBars="YES" id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" title="New Note" id="QlS-Wp-MjW"/>
-                    <connections>
-                        <outlet property="navBarTitle" destination="QlS-Wp-MjW" id="5QB-F7-GbM"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>

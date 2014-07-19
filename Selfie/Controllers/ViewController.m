@@ -23,15 +23,13 @@
 @property (strong, nonatomic) CameraBarButtonItem *cameraBarButtonItem;
 @property (strong, nonatomic) SettingsBarButtonItem *settingsBarButtonItem;
 @property (strong, nonatomic) UnsentBarButtonItem *unsentBarButtonItem;
-
-@property (strong, nonatomic) IBOutlet UINavigationItem *navBarTitle;
 @end
 
 @implementation ViewController
 
 - (void) initNote {
     self.noteView.text = nil;
-    self.navBarTitle.title = kEmptyNoteSubject;
+    self.navigationItem.title = kEmptyNoteSubject;
 }
 
 - (NoteView *) noteView {
@@ -172,6 +170,7 @@
 }
 
 - (void) toggleAttachmentCollectionView {
+    [self dismissAutocorrectSuggestionForNoteView];
     
     if (self.attachmentBarButtonItem.attachmentBarOpen) {
         [self hideAttachmentCollectionView];
@@ -251,7 +250,7 @@
     if([Utilities isFirstLaunch]) {
         self.noteView.text = [Utilities getFirstLaunchText];
         
-        self.navBarTitle.title = kEmptyNoteSubject;
+        self.navigationItem.title = kEmptyNoteSubject;
         
         // Now that we've shown the first launch text,
         // save that they've launched before
@@ -299,10 +298,10 @@
     }
     
     if ([Utilities isEmptyString:self.noteView.text]) {
-        self.navBarTitle.title = kEmptyNoteSubject;
+        self.navigationItem.title = kEmptyNoteSubject;
         [Radio postNotificationName:kEmptyNoteNotification object:nil];
     } else {
-        self.navBarTitle.title = [Note getNoteSubject:self.noteView.text];
+        self.navigationItem.title = [Note getNoteSubject:self.noteView.text];
         [Radio postNotificationName:kUpdateSubjectNotification object:nil];
     }
 }
