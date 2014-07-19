@@ -112,6 +112,65 @@
     return _unsentBarButtonItem;
 }
 
+- (void) viewDidLoad {
+    [super viewDidLoad];
+    
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    [self onFirstLaunch];
+    
+    [self getPhotoLibrary];
+    
+    [self.noteView becomeFirstResponder];
+    
+    [self.view addSubview:self.noteView];
+    [self.view addSubview:self.attachmentCollectionView];
+    [self.view addSubview:self.statusView];
+    [self.view addSubview:self.progressView];
+    [self.view addSubview:self.leftRibbon];
+    [self.view addSubview:self.rightRibbon];
+    
+    [self.attachmentBarButtonItem setAction:@selector(toggleAttachmentCollectionView) withTarget:self];
+    
+    [self.cameraBarButtonItem setAction:@selector(takePhoto:) withTarget:self];
+    self.cameraBarButtonItem.customView.hidden = YES;
+    
+    // TODO: create unsent viewcontroller
+    self.unsentBarButtonItem.customView.hidden = YES;
+    
+    [self.settingsBarButtonItem setAction:@selector(showSettings:) withTarget:self];
+    
+    SpacerBarButtonItem *spacer = [[SpacerBarButtonItem alloc] init];
+    [self.navigationItem setRightBarButtonItems:@[self.attachmentBarButtonItem, spacer, self.cameraBarButtonItem]];
+    [self.navigationItem setLeftBarButtonItems:@[self.settingsBarButtonItem, spacer, self.unsentBarButtonItem]];
+    
+    self.noteView.delegate = self;
+    self.noteView.noteViewDelegate = self;
+    
+    self.attachmentCollectionView.dataSource = self;
+    self.attachmentCollectionView.delegate = self;
+    
+    [Radio addObserver:self
+              selector:@selector(keyboardWillShow:)
+                  name:UIKeyboardWillShowNotification
+                object:nil];
+    
+    [Radio addObserver:self
+              selector:@selector(keyboardDidShow:)
+                  name:UIKeyboardDidShowNotification
+                object:nil];
+    
+    [Radio addObserver:self
+              selector:@selector(reachabilityChanged:)
+                  name:kReachabilityChangedNotification
+                object:nil];
+    
+    [Radio addObserver:self
+              selector:@selector(reloadAttachmentCollectionView:)
+                  name:kEnumerateGroupCompleteNotification
+                object:nil];
+}
+
 - (void) toggleAttachmentCollectionView {
     
     if (self.attachmentBarButtonItem.attachmentBarOpen) {
@@ -176,65 +235,6 @@
             imageBarButtonItem.showAnimationBlock();
         }];
     }];
-}
-
-- (void) viewDidLoad {
-    [super viewDidLoad];
-    
-    self.view.backgroundColor = [UIColor whiteColor];
-    
-    [self onFirstLaunch];
-    
-    [self getPhotoLibrary];
-    
-    [self.noteView becomeFirstResponder];
-    
-    [self.view addSubview:self.noteView];
-    [self.view addSubview:self.attachmentCollectionView];
-    [self.view addSubview:self.statusView];
-    [self.view addSubview:self.progressView];
-    [self.view addSubview:self.leftRibbon];
-    [self.view addSubview:self.rightRibbon];
-    
-    [self.attachmentBarButtonItem setAction:@selector(toggleAttachmentCollectionView) withTarget:self];
-    
-    [self.cameraBarButtonItem setAction:@selector(takePhoto:) withTarget:self];
-    self.cameraBarButtonItem.customView.hidden = YES;
-    
-    // TODO: create unsent viewcontroller
-    self.unsentBarButtonItem.customView.hidden = YES;
-    
-    [self.settingsBarButtonItem setAction:@selector(showSettings:) withTarget:self];
-    
-    SpacerBarButtonItem *spacer = [[SpacerBarButtonItem alloc] init];
-    [self.navigationItem setRightBarButtonItems:@[self.attachmentBarButtonItem, spacer, self.cameraBarButtonItem]];
-    [self.navigationItem setLeftBarButtonItems:@[self.settingsBarButtonItem, spacer, self.unsentBarButtonItem]];
-    
-    self.noteView.delegate = self;
-    self.noteView.noteViewDelegate = self;
-    
-    self.attachmentCollectionView.dataSource = self;
-    self.attachmentCollectionView.delegate = self;
-    
-    [Radio addObserver:self
-              selector:@selector(keyboardWillShow:)
-                  name:UIKeyboardWillShowNotification
-                object:nil];
-    
-    [Radio addObserver:self
-              selector:@selector(keyboardDidShow:)
-                  name:UIKeyboardDidShowNotification
-                object:nil];
-    
-    [Radio addObserver:self
-              selector:@selector(reachabilityChanged:)
-                  name:kReachabilityChangedNotification
-                object:nil];
-    
-    [Radio addObserver:self
-              selector:@selector(reloadAttachmentCollectionView:)
-                  name:kEnumerateGroupCompleteNotification
-                object:nil];
 }
 
 - (void) showSettings:(UIButton *) sender {
@@ -397,6 +397,7 @@
         
         if (self.imageAttachment) {
             note.image = self.imageAttachment;
+            self.imageAttachment = nil;
             [self resetAttachmentBarButtonItem];
         }
         

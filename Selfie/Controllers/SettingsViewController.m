@@ -31,15 +31,7 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
-//    [super viewDidLoad];
-//    
-//    self.view.backgroundColor = [UIColor redColor];
-//    
-//    self.leftEmailTextField = [[UITextField alloc] initWithFrame:CGRectMake(10, 200, 300, 40)];
-//    self.leftEmailTextField.delegate = self;
-//    [self.view addSubview:self.leftEmailTextField];
+- (void) viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
@@ -65,13 +57,13 @@
         self.myTextField = [[UITextField alloc] initWithFrame:myFrame];
         //set the border style for the text view
 //        self.myTextField.borderStyle = UITextBorderStyleRoundedRect;
-        self.myTextField.layer.borderColor = [tertiaryColorLight CGColor];
+        self.myTextField.layer.borderColor = [tertiaryColor CGColor];
         self.myTextField.layer.cornerRadius=8.0f;
         UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 8)];
         self.myTextField.leftViewMode = UITextFieldViewModeAlways;
         self.myTextField.leftView = leftView;
         self.myTextField.layer.masksToBounds=YES;
-        self.myTextField.layer.borderWidth= 0.5f;
+        self.myTextField.layer.borderWidth = 1;
         
         [Radio addObserver:self
                   selector:@selector(textFieldDidChange:)
