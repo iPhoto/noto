@@ -56,31 +56,31 @@
     [(UICollectionViewFlowLayout *) self.collectionViewLayout setItemSize:CGSizeMake(cellDim, cellDim)];
 }
 
-- (void) show {
-    [self showWithDelay:0];
-}
-
-- (void) showWithDelay:(NSTimeInterval) delay {
+- (void(^)(void)) showAnimationBlock {
     self.hidden = NO;
-    [UIView animateWithDuration:0.5 delay:delay usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveLinear animations:^{
-        self.alpha = 1.0;
-    } completion:^(BOOL finished){
+    return ^ {
+        self.frame = CGRectOffset(self.frame, 0, kNoteAttachmentCollectionViewHeight);
+    };
+}
+
+- (void(^)(BOOL)) showCompletionBlock {
+    return ^(BOOL finished) {
         
-    }];
+    };
 }
 
-- (void) hide {
-    [self hideWithDelay:0];
+- (void(^)(void)) hideAnimationBlock {
+    return ^ {
+        self.frame = CGRectOffset(self.frame, 0, -kNoteAttachmentCollectionViewHeight);
+    };
 }
 
-- (void) hideWithDelay:(NSTimeInterval) delay {
-    [UIView animateWithDuration:0.5 delay:delay usingSpringWithDamping:1 initialSpringVelocity:0 options:UIViewAnimationOptionCurveLinear animations:^{
-        self.alpha = 0.0;
-    } completion:^(BOOL finished){
+- (void(^)(BOOL)) hideCompletionBlock {
+    return ^(BOOL finished) {
         if (finished) {
             self.hidden = YES;
         }
-    }];
+    };
 }
 
 @end

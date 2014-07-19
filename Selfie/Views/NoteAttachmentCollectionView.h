@@ -12,8 +12,9 @@
 
 @interface NoteAttachmentCollectionView : UICollectionView
 - (void) updateFrameToKeyboard:(CGRect) keyboardRect withNavBarHeight:(CGFloat) navBarHeight;
-//- (void) show;
-//- (void) showWithDelay:(NSTimeInterval) delay;
-//- (void) hide;
-//- (void) hideWithDelay:(NSTimeInterval) delay;
+
+- (void(^)(void)) showAnimationBlock;
+- (void(^)(BOOL)) showCompletionBlock;
+- (void(^)(void)) hideAnimationBlock;
+- (void(^)(BOOL)) hideCompletionBlock;
 @end

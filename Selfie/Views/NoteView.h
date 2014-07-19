@@ -19,4 +19,9 @@
 
 @interface NoteView : UITextView <UIGestureRecognizerDelegate>
 @property (nonatomic, assign) id <NoteViewDelegate> noteViewDelegate;
+
+- (void(^)(void)) shiftDownAnimationBlock;
+- (void(^)(BOOL)) shiftDownCompletionBlock;
+- (void(^)(void)) shiftUpAnimationBlock;
+- (void(^)(BOOL)) shiftUpCompletionBlock;
 @end

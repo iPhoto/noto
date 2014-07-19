@@ -42,4 +42,29 @@
     [noteViewDelegate didPan:gestureRecognizer];
 }
 
+- (void(^)(void)) shiftDownAnimationBlock {
+    return ^ {
+        self.frame = CGRectOffset(self.frame, 0, kNoteAttachmentCollectionViewHeight);
+    };
+}
+
+- (void(^)(BOOL)) shiftDownCompletionBlock {
+    return ^(BOOL finished) {
+        
+    };
+}
+
+- (void(^)(void)) shiftUpAnimationBlock {
+    return ^ {
+        self.frame = CGRectOffset(self.frame, 0, -kNoteAttachmentCollectionViewHeight);
+    };
+}
+
+- (void(^)(BOOL)) shiftUpCompletionBlock {
+    return ^(BOOL finished) {
+        if (finished) {
+        }
+    };
+}
+
 @end

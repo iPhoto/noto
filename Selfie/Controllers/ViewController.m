@@ -113,8 +113,6 @@
 }
 
 - (void) toggleAttachmentCollectionView {
-//    [self.attachmentBarButtonItem toggle];
-    
     if (self.attachmentBarButtonItem.attachmentBarOpen) {
         [self hideAttachmentCollectionView];
     } else {
@@ -127,6 +125,8 @@
         self.attachmentBarButtonItem.toggleAnimationBlock();
         self.cameraBarButtonItem.hideAnimationBlock();
         self.unsentBarButtonItem.hideAnimationBlock();
+        self.attachmentCollectionView.hideAnimationBlock();
+        self.noteView.shiftUpAnimationBlock();
     } completion:^(BOOL finished) {
         self.cameraBarButtonItem.hideCompletionBlock(finished);
         self.unsentBarButtonItem.hideCompletionBlock(finished);
@@ -141,6 +141,8 @@
         self.attachmentBarButtonItem.toggleAnimationBlock();
         self.cameraBarButtonItem.showAnimationBlock();
         self.unsentBarButtonItem.showAnimationBlock();
+        self.attachmentCollectionView.showAnimationBlock();
+        self.noteView.shiftDownAnimationBlock();
     } completion:nil];
 }
 
@@ -370,8 +372,6 @@
     [self initNote];
 }
 
-
-
 - (void) reachabilityChanged:(NSNotification *) notification {
     if ([State isReachable]) {
         [self.statusView hide];
@@ -380,19 +380,6 @@
         self.statusView.text = kStatusNoConnection;
         [self.statusView show];
     }
-}
-
-- (void) sendSuccess:(NSNotification *) notification {
-}
-
-- (void) sendFailure:(NSNotification *) notification {
-    // TODO: refactor as [self.statusView flashWithMessage:(NSString *) message withColor:(UIColor *) color];
-//    if ([State isReachable]) {
-//        self.statusView.hidden = NO;
-//        self.statusView.backgroundColor = secondaryColor;
-//        self.statusView.text = @"Failure!";
-//        [self.statusView hideWithDelay:0.5];
-//    }
 }
 
 - (void) takePhoto:(UIButton *) sender {
@@ -636,14 +623,6 @@
 //}
 //
 //- (void) hideattachmentCollectionView {
-//    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
-//    CGRect statusBarWindowRect = [self.view.window convertRect:statusBarFrame fromWindow: nil];
-//    CGRect statusBarViewRect = [self.view convertRect:statusBarWindowRect fromView: nil];
-//
-//    CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
-//
-//    CGFloat shownattachmentCollectionViewHeight = statusBarViewRect.size.height + navBarHeight;
-//    CGFloat hiddenattachmentCollectionViewHeight = shownattachmentCollectionViewHeight - kNoteAttachmentCollectionViewHeight;
 //
 //    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
 //        self.attachmentBarButtonItemImage.transform = CGAffineTransformMakeRotation( 0  * M_PI  / 180);
@@ -651,10 +630,7 @@
 //                                         0,
 //                                         self.noteView.frame.size.width,
 //                                         self.noteView.frame.size.height);
-//        self.attachmentCollectionView.frame = CGRectMake(self.attachmentCollectionView.frame.origin.x,
-//                                                              hiddenattachmentCollectionViewHeight,
-//                                                              self.attachmentCollectionView.frame.size.width,
-//                                                              self.attachmentCollectionView.frame.size.height);
+
 //
 //        ((UIBarButtonItem *)self.navigationItem.rightBarButtonItems[2]).customView.alpha = 0;
 //    } completion:^(BOOL finished) {
