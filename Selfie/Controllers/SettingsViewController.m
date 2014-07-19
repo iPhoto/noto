@@ -13,7 +13,7 @@
 #define numberOfSections 2
 
 @interface SettingsViewController ()
-@property (strong, nonatomic) UITableView *tableView;
+//@property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) UITextFieldLabel *leftEmailTextFieldLabel;
 @property (strong, nonatomic) UITextField *leftEmailTextField;
 @property (strong, nonatomic) UITextFieldLabel *rightEmailTextFieldLabel;
@@ -31,30 +31,16 @@
 
 @implementation SettingsViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void) viewDidLoad {
     [super viewDidLoad];
     
     self.bugs = @[@"Spider",@"Ladybug",@"Firefly"];
     self.animals = @[@"Cat",@"Dog",@"Bigfoot"];
     
-    // Do any additional setup after loading the view, typically from a nib.
-    
     self.title = @"Settings";
     self.tableView = [[UITableView alloc] initWithFrame:self.view.frame];
     [self.tableView registerClass:[SettingsTextFieldCell class] forCellReuseIdentifier:@"settingsCellIdentifier"];
-//    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-//    self.tableView.
-    
-    [self.view addSubview:self.tableView];
+//    [self.view addSubview:self.tableView];
 
 //    self.view.backgroundColor = [UIColor whiteColor];
     
