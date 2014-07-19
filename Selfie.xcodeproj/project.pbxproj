@@ -7,18 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4F1F9263196B25C500EAD653 /* NoteRibbonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1F9262196B25C500EAD653 /* NoteRibbonView.m */; };
-		4F372AAA19787A9F009F485A /* NotoBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F372AA919787A9F009F485A /* NotoBarButtonItem.m */; };
-		4F372AAD1978AF27009F485A /* ImageBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F372AAC1978AF27009F485A /* ImageBarButtonItem.m */; };
-		4F372AB01978C972009F485A /* CameraBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F372AAF1978C972009F485A /* CameraBarButtonItem.m */; };
-		4F372AB319798BDC009F485A /* SpacerBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F372AB219798BDC009F485A /* SpacerBarButtonItem.m */; };
-		4F372AB619799F79009F485A /* UnsentBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F372AB519799F79009F485A /* UnsentBarButtonItem.m */; };
 		4F372AB91979A692009F485A /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F372AB81979A692009F485A /* SettingsViewController.m */; };
+		4F372ADA197ACA81009F485A /* AttachmentBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F372ABF197ACA81009F485A /* AttachmentBarButtonItem.m */; };
+		4F372ADB197ACA81009F485A /* CameraBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F372AC1197ACA81009F485A /* CameraBarButtonItem.m */; };
+		4F372ADC197ACA81009F485A /* ImageBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F372AC3197ACA81009F485A /* ImageBarButtonItem.m */; };
+		4F372ADD197ACA81009F485A /* NotoBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F372AC5197ACA81009F485A /* NotoBarButtonItem.m */; };
+		4F372ADE197ACA81009F485A /* SettingsBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F372AC7197ACA81009F485A /* SettingsBarButtonItem.m */; };
+		4F372ADF197ACA81009F485A /* SpacerBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F372AC9197ACA81009F485A /* SpacerBarButtonItem.m */; };
+		4F372AE0197ACA81009F485A /* UnsentBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F372ACB197ACA81009F485A /* UnsentBarButtonItem.m */; };
+		4F372AE1197ACA81009F485A /* NoteAttachmentCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F372ACE197ACA81009F485A /* NoteAttachmentCollectionView.m */; };
+		4F372AE2197ACA81009F485A /* NotePhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F372AD0197ACA81009F485A /* NotePhotoCell.m */; };
+		4F372AE3197ACA81009F485A /* NoteProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F372AD2197ACA81009F485A /* NoteProgressView.m */; };
+		4F372AE4197ACA81009F485A /* NoteRibbonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F372AD4197ACA81009F485A /* NoteRibbonView.m */; };
+		4F372AE5197ACA81009F485A /* NoteStatusView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F372AD6197ACA81009F485A /* NoteStatusView.m */; };
+		4F372AE6197ACA81009F485A /* NoteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F372AD8197ACA81009F485A /* NoteView.m */; };
+		4F372AE9197ACF3C009F485A /* SettingsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F372AE8197ACF3C009F485A /* SettingsTableViewCell.m */; };
 		4F531FFD195F3B3600F4ABAE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F531FFC195F3B3600F4ABAE /* AudioToolbox.framework */; };
-		4F56592B1974CB02006E7A24 /* NotePhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F56592A1974CB02006E7A24 /* NotePhotoCell.m */; };
 		4F56592D1974D17C006E7A24 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F56592C1974D17C006E7A24 /* AssetsLibrary.framework */; };
-		4F58C4E519709BA00054CE12 /* NoteAttachmentCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F58C4E419709BA00054CE12 /* NoteAttachmentCollectionView.m */; };
-		4F58C4E819735FC00054CE12 /* NoteProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F58C4E719735FC00054CE12 /* NoteProgressView.m */; };
 		4F59863F196C71BA006D969E /* State.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F59863E196C71BA006D969E /* State.m */; };
 		4F6E3A2319687F1D00E7A0A8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6E3A0F19687F1D00E7A0A8 /* AppDelegate.m */; };
 		4F6E3A2419687F1D00E7A0A8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6E3A1219687F1D00E7A0A8 /* ViewController.m */; };
@@ -32,11 +37,7 @@
 		4F6E3A2D19687F1D00E7A0A8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F6E3A2219687F1D00E7A0A8 /* Main.storyboard */; };
 		4F8D540D196D7BF000FF1BE8 /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8D540C196D7BF000FF1BE8 /* Tests.m */; };
 		4F8D544C196DBAA700FF1BE8 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F8D544B196DBAA700FF1BE8 /* Crashlytics.framework */; };
-		4F8D5454196E44F600FF1BE8 /* NoteStatusView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8D5453196E44F600FF1BE8 /* NoteStatusView.m */; };
 		4F953A94194E7F9E00F67A0A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F953A93194E7F9E00F67A0A /* Foundation.framework */; };
-		4FB649891968D9A200CF3ED8 /* NoteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB649881968D9A200CF3ED8 /* NoteView.m */; };
-		4FD826E919775D0700FBC201 /* SettingsBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD826E819775D0700FBC201 /* SettingsBarButtonItem.m */; };
-		4FD826EC19775D5300FBC201 /* AttachmentBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD826EB19775D5300FBC201 /* AttachmentBarButtonItem.m */; };
 		4FF87437194A83F600787DE0 /* SelfieTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF87436194A83F600787DE0 /* SelfieTests.m */; };
 		6CE63EEB8D4349A48F08C6F4 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E77200C5C3C411893448E4A /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -52,28 +53,38 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4F1F9261196B25C500EAD653 /* NoteRibbonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteRibbonView.h; sourceTree = "<group>"; };
-		4F1F9262196B25C500EAD653 /* NoteRibbonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteRibbonView.m; sourceTree = "<group>"; };
-		4F372AA819787A9F009F485A /* NotoBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotoBarButtonItem.h; path = Buttons/NotoBarButtonItem.h; sourceTree = "<group>"; };
-		4F372AA919787A9F009F485A /* NotoBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotoBarButtonItem.m; path = Buttons/NotoBarButtonItem.m; sourceTree = "<group>"; };
-		4F372AAB1978AF27009F485A /* ImageBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageBarButtonItem.h; path = Buttons/ImageBarButtonItem.h; sourceTree = "<group>"; };
-		4F372AAC1978AF27009F485A /* ImageBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageBarButtonItem.m; path = Buttons/ImageBarButtonItem.m; sourceTree = "<group>"; };
-		4F372AAE1978C972009F485A /* CameraBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CameraBarButtonItem.h; path = Buttons/CameraBarButtonItem.h; sourceTree = "<group>"; };
-		4F372AAF1978C972009F485A /* CameraBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CameraBarButtonItem.m; path = Buttons/CameraBarButtonItem.m; sourceTree = "<group>"; };
-		4F372AB119798BDC009F485A /* SpacerBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpacerBarButtonItem.h; path = Buttons/SpacerBarButtonItem.h; sourceTree = "<group>"; };
-		4F372AB219798BDC009F485A /* SpacerBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpacerBarButtonItem.m; path = Buttons/SpacerBarButtonItem.m; sourceTree = "<group>"; };
-		4F372AB419799F79009F485A /* UnsentBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UnsentBarButtonItem.h; path = Buttons/UnsentBarButtonItem.h; sourceTree = "<group>"; };
-		4F372AB519799F79009F485A /* UnsentBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UnsentBarButtonItem.m; path = Buttons/UnsentBarButtonItem.m; sourceTree = "<group>"; };
 		4F372AB71979A692009F485A /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		4F372AB81979A692009F485A /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		4F372ABE197ACA81009F485A /* AttachmentBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttachmentBarButtonItem.h; sourceTree = "<group>"; };
+		4F372ABF197ACA81009F485A /* AttachmentBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttachmentBarButtonItem.m; sourceTree = "<group>"; };
+		4F372AC0197ACA81009F485A /* CameraBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraBarButtonItem.h; sourceTree = "<group>"; };
+		4F372AC1197ACA81009F485A /* CameraBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraBarButtonItem.m; sourceTree = "<group>"; };
+		4F372AC2197ACA81009F485A /* ImageBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageBarButtonItem.h; sourceTree = "<group>"; };
+		4F372AC3197ACA81009F485A /* ImageBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageBarButtonItem.m; sourceTree = "<group>"; };
+		4F372AC4197ACA81009F485A /* NotoBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotoBarButtonItem.h; sourceTree = "<group>"; };
+		4F372AC5197ACA81009F485A /* NotoBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotoBarButtonItem.m; sourceTree = "<group>"; };
+		4F372AC6197ACA81009F485A /* SettingsBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsBarButtonItem.h; sourceTree = "<group>"; };
+		4F372AC7197ACA81009F485A /* SettingsBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsBarButtonItem.m; sourceTree = "<group>"; };
+		4F372AC8197ACA81009F485A /* SpacerBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpacerBarButtonItem.h; sourceTree = "<group>"; };
+		4F372AC9197ACA81009F485A /* SpacerBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpacerBarButtonItem.m; sourceTree = "<group>"; };
+		4F372ACA197ACA81009F485A /* UnsentBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnsentBarButtonItem.h; sourceTree = "<group>"; };
+		4F372ACB197ACA81009F485A /* UnsentBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnsentBarButtonItem.m; sourceTree = "<group>"; };
+		4F372ACD197ACA81009F485A /* NoteAttachmentCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteAttachmentCollectionView.h; sourceTree = "<group>"; };
+		4F372ACE197ACA81009F485A /* NoteAttachmentCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteAttachmentCollectionView.m; sourceTree = "<group>"; };
+		4F372ACF197ACA81009F485A /* NotePhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotePhotoCell.h; sourceTree = "<group>"; };
+		4F372AD0197ACA81009F485A /* NotePhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotePhotoCell.m; sourceTree = "<group>"; };
+		4F372AD1197ACA81009F485A /* NoteProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteProgressView.h; sourceTree = "<group>"; };
+		4F372AD2197ACA81009F485A /* NoteProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteProgressView.m; sourceTree = "<group>"; };
+		4F372AD3197ACA81009F485A /* NoteRibbonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteRibbonView.h; sourceTree = "<group>"; };
+		4F372AD4197ACA81009F485A /* NoteRibbonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteRibbonView.m; sourceTree = "<group>"; };
+		4F372AD5197ACA81009F485A /* NoteStatusView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteStatusView.h; sourceTree = "<group>"; };
+		4F372AD6197ACA81009F485A /* NoteStatusView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteStatusView.m; sourceTree = "<group>"; };
+		4F372AD7197ACA81009F485A /* NoteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteView.h; sourceTree = "<group>"; };
+		4F372AD8197ACA81009F485A /* NoteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteView.m; sourceTree = "<group>"; };
+		4F372AE7197ACF3C009F485A /* SettingsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewCell.h; sourceTree = "<group>"; };
+		4F372AE8197ACF3C009F485A /* SettingsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewCell.m; sourceTree = "<group>"; };
 		4F531FFC195F3B3600F4ABAE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		4F5659291974CB02006E7A24 /* NotePhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotePhotoCell.h; sourceTree = "<group>"; };
-		4F56592A1974CB02006E7A24 /* NotePhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotePhotoCell.m; sourceTree = "<group>"; };
 		4F56592C1974D17C006E7A24 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
-		4F58C4E319709BA00054CE12 /* NoteAttachmentCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteAttachmentCollectionView.h; sourceTree = "<group>"; };
-		4F58C4E419709BA00054CE12 /* NoteAttachmentCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteAttachmentCollectionView.m; sourceTree = "<group>"; };
-		4F58C4E619735FC00054CE12 /* NoteProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteProgressView.h; sourceTree = "<group>"; };
-		4F58C4E719735FC00054CE12 /* NoteProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteProgressView.m; sourceTree = "<group>"; };
 		4F598638196C4BF9006D969E /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		4F59863D196C71BA006D969E /* State.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = State.h; sourceTree = "<group>"; };
 		4F59863E196C71BA006D969E /* State.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = State.m; sourceTree = "<group>"; };
@@ -97,16 +108,8 @@
 		4F8D540C196D7BF000FF1BE8 /* Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
 		4F8D5449196DB9ED00FF1BE8 /* libPods-CrashlyticsFramework.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-CrashlyticsFramework.a"; path = "Pods/build/Debug-iphoneos/libPods-CrashlyticsFramework.a"; sourceTree = "<group>"; };
 		4F8D544B196DBAA700FF1BE8 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = Pods/CrashlyticsFramework/Crashlytics.framework; sourceTree = "<group>"; };
-		4F8D5452196E44F600FF1BE8 /* NoteStatusView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteStatusView.h; sourceTree = "<group>"; };
-		4F8D5453196E44F600FF1BE8 /* NoteStatusView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteStatusView.m; sourceTree = "<group>"; };
 		4F953A93194E7F9E00F67A0A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		4FB649871968D9A200CF3ED8 /* NoteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteView.h; sourceTree = "<group>"; };
-		4FB649881968D9A200CF3ED8 /* NoteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteView.m; sourceTree = "<group>"; };
 		4FD7A01F194E3F3700906537 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
-		4FD826E719775D0700FBC201 /* SettingsBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsBarButtonItem.h; path = Buttons/SettingsBarButtonItem.h; sourceTree = "<group>"; };
-		4FD826E819775D0700FBC201 /* SettingsBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsBarButtonItem.m; path = Buttons/SettingsBarButtonItem.m; sourceTree = "<group>"; };
-		4FD826EA19775D5300FBC201 /* AttachmentBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AttachmentBarButtonItem.h; path = Buttons/AttachmentBarButtonItem.h; sourceTree = "<group>"; };
-		4FD826EB19775D5300FBC201 /* AttachmentBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AttachmentBarButtonItem.m; path = Buttons/AttachmentBarButtonItem.m; sourceTree = "<group>"; };
 		4FF87417194A83F600787DE0 /* Selfie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Selfie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FF87430194A83F600787DE0 /* SelfieTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SelfieTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FF87435194A83F600787DE0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -154,6 +157,62 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		4F372ABC197ACA81009F485A /* ArchiveView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ArchiveView;
+			sourceTree = "<group>";
+		};
+		4F372ABD197ACA81009F485A /* NavigationBarButtonItems */ = {
+			isa = PBXGroup;
+			children = (
+				4F372ABE197ACA81009F485A /* AttachmentBarButtonItem.h */,
+				4F372ABF197ACA81009F485A /* AttachmentBarButtonItem.m */,
+				4F372AC0197ACA81009F485A /* CameraBarButtonItem.h */,
+				4F372AC1197ACA81009F485A /* CameraBarButtonItem.m */,
+				4F372AC2197ACA81009F485A /* ImageBarButtonItem.h */,
+				4F372AC3197ACA81009F485A /* ImageBarButtonItem.m */,
+				4F372AC4197ACA81009F485A /* NotoBarButtonItem.h */,
+				4F372AC5197ACA81009F485A /* NotoBarButtonItem.m */,
+				4F372AC6197ACA81009F485A /* SettingsBarButtonItem.h */,
+				4F372AC7197ACA81009F485A /* SettingsBarButtonItem.m */,
+				4F372AC8197ACA81009F485A /* SpacerBarButtonItem.h */,
+				4F372AC9197ACA81009F485A /* SpacerBarButtonItem.m */,
+				4F372ACA197ACA81009F485A /* UnsentBarButtonItem.h */,
+				4F372ACB197ACA81009F485A /* UnsentBarButtonItem.m */,
+			);
+			path = NavigationBarButtonItems;
+			sourceTree = "<group>";
+		};
+		4F372ACC197ACA81009F485A /* NoteView */ = {
+			isa = PBXGroup;
+			children = (
+				4F372ACD197ACA81009F485A /* NoteAttachmentCollectionView.h */,
+				4F372ACE197ACA81009F485A /* NoteAttachmentCollectionView.m */,
+				4F372ACF197ACA81009F485A /* NotePhotoCell.h */,
+				4F372AD0197ACA81009F485A /* NotePhotoCell.m */,
+				4F372AD1197ACA81009F485A /* NoteProgressView.h */,
+				4F372AD2197ACA81009F485A /* NoteProgressView.m */,
+				4F372AD3197ACA81009F485A /* NoteRibbonView.h */,
+				4F372AD4197ACA81009F485A /* NoteRibbonView.m */,
+				4F372AD5197ACA81009F485A /* NoteStatusView.h */,
+				4F372AD6197ACA81009F485A /* NoteStatusView.m */,
+				4F372AD7197ACA81009F485A /* NoteView.h */,
+				4F372AD8197ACA81009F485A /* NoteView.m */,
+			);
+			path = NoteView;
+			sourceTree = "<group>";
+		};
+		4F372AD9197ACA81009F485A /* SettingsView */ = {
+			isa = PBXGroup;
+			children = (
+				4F372AE7197ACF3C009F485A /* SettingsTableViewCell.h */,
+				4F372AE8197ACF3C009F485A /* SettingsTableViewCell.m */,
+			);
+			path = SettingsView;
+			sourceTree = "<group>";
+		};
 		4F6E3A1019687F1D00E7A0A8 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -190,43 +249,13 @@
 		4F6E3A2119687F1D00E7A0A8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				4FD826E619775C4500FBC201 /* Buttons */,
+				4F372ABC197ACA81009F485A /* ArchiveView */,
+				4F372ABD197ACA81009F485A /* NavigationBarButtonItems */,
+				4F372ACC197ACA81009F485A /* NoteView */,
+				4F372AD9197ACA81009F485A /* SettingsView */,
 				4F6E3A2219687F1D00E7A0A8 /* Main.storyboard */,
-				4FB649871968D9A200CF3ED8 /* NoteView.h */,
-				4FB649881968D9A200CF3ED8 /* NoteView.m */,
-				4F58C4E319709BA00054CE12 /* NoteAttachmentCollectionView.h */,
-				4F58C4E419709BA00054CE12 /* NoteAttachmentCollectionView.m */,
-				4F1F9261196B25C500EAD653 /* NoteRibbonView.h */,
-				4F1F9262196B25C500EAD653 /* NoteRibbonView.m */,
-				4F8D5452196E44F600FF1BE8 /* NoteStatusView.h */,
-				4F8D5453196E44F600FF1BE8 /* NoteStatusView.m */,
-				4F58C4E619735FC00054CE12 /* NoteProgressView.h */,
-				4F58C4E719735FC00054CE12 /* NoteProgressView.m */,
-				4F5659291974CB02006E7A24 /* NotePhotoCell.h */,
-				4F56592A1974CB02006E7A24 /* NotePhotoCell.m */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		4FD826E619775C4500FBC201 /* Buttons */ = {
-			isa = PBXGroup;
-			children = (
-				4FD826EA19775D5300FBC201 /* AttachmentBarButtonItem.h */,
-				4FD826EB19775D5300FBC201 /* AttachmentBarButtonItem.m */,
-				4F372AAB1978AF27009F485A /* ImageBarButtonItem.h */,
-				4F372AAC1978AF27009F485A /* ImageBarButtonItem.m */,
-				4F372AAE1978C972009F485A /* CameraBarButtonItem.h */,
-				4F372AAF1978C972009F485A /* CameraBarButtonItem.m */,
-				4FD826E719775D0700FBC201 /* SettingsBarButtonItem.h */,
-				4FD826E819775D0700FBC201 /* SettingsBarButtonItem.m */,
-				4F372AB119798BDC009F485A /* SpacerBarButtonItem.h */,
-				4F372AB219798BDC009F485A /* SpacerBarButtonItem.m */,
-				4F372AB419799F79009F485A /* UnsentBarButtonItem.h */,
-				4F372AB519799F79009F485A /* UnsentBarButtonItem.m */,
-				4F372AA819787A9F009F485A /* NotoBarButtonItem.h */,
-				4F372AA919787A9F009F485A /* NotoBarButtonItem.m */,
-			);
-			name = Buttons;
 			sourceTree = "<group>";
 		};
 		4FF8740E194A83F600787DE0 = {
@@ -440,28 +469,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F56592B1974CB02006E7A24 /* NotePhotoCell.m in Sources */,
 				4F6E3A2A19687F1D00E7A0A8 /* Selfie.xcdatamodeld in Sources */,
-				4FD826EC19775D5300FBC201 /* AttachmentBarButtonItem.m in Sources */,
-				4F372AB01978C972009F485A /* CameraBarButtonItem.m in Sources */,
 				4F6E3A2819687F1D00E7A0A8 /* Note.m in Sources */,
 				4F6E3A2C19687F1D00E7A0A8 /* Utilities.m in Sources */,
-				4F372AB319798BDC009F485A /* SpacerBarButtonItem.m in Sources */,
 				4F59863F196C71BA006D969E /* State.m in Sources */,
-				4F372AAD1978AF27009F485A /* ImageBarButtonItem.m in Sources */,
 				4F6E3A2419687F1D00E7A0A8 /* ViewController.m in Sources */,
-				4F8D5454196E44F600FF1BE8 /* NoteStatusView.m in Sources */,
+				4F372ADA197ACA81009F485A /* AttachmentBarButtonItem.m in Sources */,
+				4F372ADC197ACA81009F485A /* ImageBarButtonItem.m in Sources */,
+				4F372AE5197ACA81009F485A /* NoteStatusView.m in Sources */,
+				4F372AE6197ACA81009F485A /* NoteView.m in Sources */,
 				4F6E3A2319687F1D00E7A0A8 /* AppDelegate.m in Sources */,
-				4F58C4E819735FC00054CE12 /* NoteProgressView.m in Sources */,
-				4FD826E919775D0700FBC201 /* SettingsBarButtonItem.m in Sources */,
+				4F372AE2197ACA81009F485A /* NotePhotoCell.m in Sources */,
 				4F6E3A2919687F1D00E7A0A8 /* Queue.m in Sources */,
-				4F372AAA19787A9F009F485A /* NotoBarButtonItem.m in Sources */,
-				4FB649891968D9A200CF3ED8 /* NoteView.m in Sources */,
-				4F58C4E519709BA00054CE12 /* NoteAttachmentCollectionView.m in Sources */,
-				4F1F9263196B25C500EAD653 /* NoteRibbonView.m in Sources */,
+				4F372AE1197ACA81009F485A /* NoteAttachmentCollectionView.m in Sources */,
+				4F372ADB197ACA81009F485A /* CameraBarButtonItem.m in Sources */,
+				4F372ADD197ACA81009F485A /* NotoBarButtonItem.m in Sources */,
+				4F372AE9197ACF3C009F485A /* SettingsTableViewCell.m in Sources */,
+				4F372ADF197ACA81009F485A /* SpacerBarButtonItem.m in Sources */,
+				4F372ADE197ACA81009F485A /* SettingsBarButtonItem.m in Sources */,
+				4F372AE0197ACA81009F485A /* UnsentBarButtonItem.m in Sources */,
+				4F372AE4197ACA81009F485A /* NoteRibbonView.m in Sources */,
 				4F372AB91979A692009F485A /* SettingsViewController.m in Sources */,
 				4F6E3A2719687F1D00E7A0A8 /* main.m in Sources */,
-				4F372AB619799F79009F485A /* UnsentBarButtonItem.m in Sources */,
+				4F372AE3197ACA81009F485A /* NoteProgressView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -192,6 +192,8 @@
 }
 
 - (void) showAttachmentCollectionView {
+    [self getPhotoLibrary];
+    
     [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0 options:UIViewAnimationOptionCurveLinear animations:^{
         self.attachmentBarButtonItem.toggleAnimationBlock();
         self.cameraBarButtonItem.showAnimationBlock();

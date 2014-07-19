@@ -9,6 +9,7 @@
 #import "SettingsViewController.h"
 
 @interface SettingsViewController ()
+@property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) UITextFieldLabel *leftEmailTextFieldLabel;
 @property (strong, nonatomic) UITextField *leftEmailTextField;
 @property (strong, nonatomic) UITextFieldLabel *rightEmailTextFieldLabel;
@@ -36,9 +37,14 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     self.title = @"Settings";
-    self.view = [[UIScrollView alloc] init];
-    ((UIScrollView *)self.view).contentSize = CGSizeMake(320, 1000);
+    self.tableView = [[UITableView alloc] initWithFrame:self.view.frame];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    [self.view addSubview:self.tableView];
+
     self.view.backgroundColor = [UIColor whiteColor];
+    
+//    UITableViewCellSeparatorStyleNone
     
     //create a label to display current user interaction with our editable text views
     CGRect myFrame = CGRectMake(10.0f, 10.0f, 250.0f, 40.0f);
@@ -46,7 +52,7 @@
     self.myLabel.text = @"Credits: LAC, RRE";
     self.myLabel.font = [UIFont boldSystemFontOfSize:18.0f];
     self.myLabel.textAlignment =  NSTextAlignmentLeft;
-    [self.view addSubview:self.myLabel];
+//    [self.view addSubview:self.myLabel];
     
     //lets create 3 UITextViews on the screen
     for (NSInteger i=1; i<20; i++) {
@@ -57,7 +63,7 @@
         self.myTextField = [[UITextField alloc] initWithFrame:myFrame];
         //set the border style for the text view
 //        self.myTextField.borderStyle = UITextBorderStyleRoundedRect;
-        self.myTextField.layer.borderColor = [tertiaryColor CGColor];
+        self.myTextField.layer.borderColor = [tertiaryColorLight CGColor];
         self.myTextField.layer.cornerRadius=8.0f;
         UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 8)];
         self.myTextField.leftViewMode = UITextFieldViewModeAlways;
@@ -112,10 +118,24 @@
         //set the delegate for the text field to the view controller so that it can listen for events
         self.myTextField.delegate = self;
         //add the text field to the current view
-        [self.view addSubview:self.myTextField];
+//        [self.view addSubview:self.myTextField];
     }
     
 }
+
+- (NSInteger) tableView:(UITableView *) tableView numberOfRowsInSection:(NSInteger) section {
+    return 3;
+}
+
+// Row display. Implementers should *always* try to reuse cells by setting each     cell's reuseIdentifier and querying for available reusable cells with   dequeueReusableCellWithIdentifier:
+// Cell gets various attributes set automatically based on table (separators)   and data source (accessory views, editing controls)
+
+- (UITableViewCell *) tableView:(UITableView *) tableView cellForRowAtIndexPath:(NSIndexPath *) indexPath {
+    UITableViewCell *cell = [[UITableViewCell alloc] init];
+
+    return cell;
+}
+
 
 - (void) textFieldDidChange:(NSNotification *) notification {
     UITextField *textField = (UITextField *) notification.object;
