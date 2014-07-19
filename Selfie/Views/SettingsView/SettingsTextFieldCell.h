@@ -1,5 +1,5 @@
 //
-//  SettingsTableViewCell.h
+//  SettingsTextFieldCell.h
 //  Selfie
 //
 //  Created by Daniel Suo on 7/19/14.

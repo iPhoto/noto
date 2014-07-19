@@ -21,7 +21,7 @@
 		4F372AE4197ACA81009F485A /* NoteRibbonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F372AD4197ACA81009F485A /* NoteRibbonView.m */; };
 		4F372AE5197ACA81009F485A /* NoteStatusView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F372AD6197ACA81009F485A /* NoteStatusView.m */; };
 		4F372AE6197ACA81009F485A /* NoteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F372AD8197ACA81009F485A /* NoteView.m */; };
-		4F372AE9197ACF3C009F485A /* SettingsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F372AE8197ACF3C009F485A /* SettingsTableViewCell.m */; };
+		4F372AE9197ACF3C009F485A /* SettingsTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F372AE8197ACF3C009F485A /* SettingsTextFieldCell.m */; };
 		4F531FFD195F3B3600F4ABAE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F531FFC195F3B3600F4ABAE /* AudioToolbox.framework */; };
 		4F56592D1974D17C006E7A24 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F56592C1974D17C006E7A24 /* AssetsLibrary.framework */; };
 		4F59863F196C71BA006D969E /* State.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F59863E196C71BA006D969E /* State.m */; };
@@ -81,8 +81,8 @@
 		4F372AD6197ACA81009F485A /* NoteStatusView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteStatusView.m; sourceTree = "<group>"; };
 		4F372AD7197ACA81009F485A /* NoteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteView.h; sourceTree = "<group>"; };
 		4F372AD8197ACA81009F485A /* NoteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteView.m; sourceTree = "<group>"; };
-		4F372AE7197ACF3C009F485A /* SettingsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewCell.h; sourceTree = "<group>"; };
-		4F372AE8197ACF3C009F485A /* SettingsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewCell.m; sourceTree = "<group>"; };
+		4F372AE7197ACF3C009F485A /* SettingsTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTextFieldCell.h; sourceTree = "<group>"; };
+		4F372AE8197ACF3C009F485A /* SettingsTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTextFieldCell.m; sourceTree = "<group>"; };
 		4F531FFC195F3B3600F4ABAE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		4F56592C1974D17C006E7A24 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		4F598638196C4BF9006D969E /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -207,8 +207,8 @@
 		4F372AD9197ACA81009F485A /* SettingsView */ = {
 			isa = PBXGroup;
 			children = (
-				4F372AE7197ACF3C009F485A /* SettingsTableViewCell.h */,
-				4F372AE8197ACF3C009F485A /* SettingsTableViewCell.m */,
+				4F372AE7197ACF3C009F485A /* SettingsTextFieldCell.h */,
+				4F372AE8197ACF3C009F485A /* SettingsTextFieldCell.m */,
 			);
 			path = SettingsView;
 			sourceTree = "<group>";
@@ -484,7 +484,7 @@
 				4F372AE1197ACA81009F485A /* NoteAttachmentCollectionView.m in Sources */,
 				4F372ADB197ACA81009F485A /* CameraBarButtonItem.m in Sources */,
 				4F372ADD197ACA81009F485A /* NotoBarButtonItem.m in Sources */,
-				4F372AE9197ACF3C009F485A /* SettingsTableViewCell.m in Sources */,
+				4F372AE9197ACF3C009F485A /* SettingsTextFieldCell.m in Sources */,
 				4F372ADF197ACA81009F485A /* SpacerBarButtonItem.m in Sources */,
 				4F372ADE197ACA81009F485A /* SettingsBarButtonItem.m in Sources */,
 				4F372AE0197ACA81009F485A /* UnsentBarButtonItem.m in Sources */,

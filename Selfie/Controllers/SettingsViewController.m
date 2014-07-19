@@ -8,6 +8,10 @@
 
 #import "SettingsViewController.h"
 
+#define bugsSection 0
+#define animalsSection 1
+#define numberOfSections 2
+
 @interface SettingsViewController ()
 @property (strong, nonatomic) UITableView *tableView;
 @property (strong, nonatomic) UITextFieldLabel *leftEmailTextFieldLabel;
@@ -16,6 +20,10 @@
 @property (strong, nonatomic) UITextField *rightEmailTextField;
 @property (nonatomic, strong) UITextField *myTextField;
 @property (nonatomic, strong) UILabel *myLabel;
+
+
+@property (strong, nonatomic) NSArray *bugs;
+@property (strong, nonatomic) NSArray *animals;
 
 @end
 
@@ -34,17 +42,21 @@
 
 - (void) viewDidLoad {
     [super viewDidLoad];
+    
+    self.bugs = @[@"Spider",@"Ladybug",@"Firefly"];
+    self.animals = @[@"Cat",@"Dog",@"Bigfoot"];
+    
     // Do any additional setup after loading the view, typically from a nib.
     
     self.title = @"Settings";
     self.tableView = [[UITableView alloc] initWithFrame:self.view.frame];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.tableView registerClass:[SettingsTextFieldCell class] forCellReuseIdentifier:@"settingsCellIdentifier"];
+//    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    self.tableView.
     
     [self.view addSubview:self.tableView];
 
-    self.view.backgroundColor = [UIColor whiteColor];
-    
-//    UITableViewCellSeparatorStyleNone
+//    self.view.backgroundColor = [UIColor whiteColor];
     
     //create a label to display current user interaction with our editable text views
     CGRect myFrame = CGRectMake(10.0f, 10.0f, 250.0f, 40.0f);
@@ -123,19 +135,72 @@
     
 }
 
-- (NSInteger) tableView:(UITableView *) tableView numberOfRowsInSection:(NSInteger) section {
-    return 3;
+- (NSInteger) numberOfSectionsInTableView:(UITableView *) tableView {
+    return numberOfSections;
 }
 
-// Row display. Implementers should *always* try to reuse cells by setting each     cell's reuseIdentifier and querying for available reusable cells with   dequeueReusableCellWithIdentifier:
-// Cell gets various attributes set automatically based on table (separators)   and data source (accessory views, editing controls)
+- (NSInteger) tableView:(UITableView *) tableView numberOfRowsInSection:(NSInteger) section {
+//    return 3;
+    switch (section){
+        case bugsSection:
+            return [self.bugs count];
+            break;
+        case animalsSection:
+            return [self.animals count];
+            break;
+        default:
+            return 0;
+    }
+}
 
 - (UITableViewCell *) tableView:(UITableView *) tableView cellForRowAtIndexPath:(NSIndexPath *) indexPath {
-    UITableViewCell *cell = [[UITableViewCell alloc] init];
-
+//    SettingsTextFieldCell *cell = [tableView dequeueReusableCellWithIdentifier:@"settingsCellIdentifier"];
+//
+//    cell.leftLabel.text = @"test";
+//    cell.rightTextField.placeholder = @"you@example.com";
+//    
+//    return cell;
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"settingsCellIdentifier"];
+    
+    switch (indexPath.section)
+    {
+            
+        case bugsSection:
+            cell.textLabel.text = [self.bugs    objectAtIndex:indexPath.row];
+            break;
+        case animalsSection:
+            cell.textLabel.text = [self.animals     objectAtIndex:indexPath.row];
+            break;
+        default:
+            cell.textLabel.text = @"Not Found";
+            
+    }
+    
     return cell;
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    switch (section){
+        case bugsSection:
+            return @"Bugs";
+            break;
+        case animalsSection:
+            return @"Animals";
+            break;
+        default:
+            return 0;
+    }
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return NO;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    return NO;
+}
 
 - (void) textFieldDidChange:(NSNotification *) notification {
     UITextField *textField = (UITextField *) notification.object;

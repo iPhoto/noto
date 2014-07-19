@@ -1,12 +1,12 @@
 //
-//  SettingsTableViewCell.m
+//  SettingsTextFieldCell.m
 //  Selfie
 //
 //  Created by Daniel Suo on 7/19/14.
 //  Copyright (c) 2014 The Leather Apron Club. All rights reserved.
 //
 
-#import "SettingsTableViewCell.h"
+#import "SettingsTextFieldCell.h"
 
 #pragma mark SettingsInsetTextField
 
@@ -41,14 +41,14 @@
 		self.leftLabel = [[UILabel alloc] initWithFrame:CGRectZero];
 		self.leftLabel.backgroundColor = [UIColor clearColor];
         self.leftLabel.textAlignment = NSTextAlignmentRight;
-		[self addSubview:_leftLabel];
+		[self.contentView addSubview:_leftLabel];
 		
 		self.rightTextField = [[SettingsInsetTextField alloc] initWithFrame:CGRectZero];
 		self.rightTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 		self.rightTextField.delegate = self;
         //Use Done for all of them.
 		self.rightTextField.returnKeyType = UIReturnKeyDone;
-        [self addSubview:_rightTextField];
+        [self.contentView addSubview:_rightTextField];
         
         //Try to mimic the style of UITableViewCellStyleValue2 if inited with that style
         if (style == UITableViewCellStyleValue2) {

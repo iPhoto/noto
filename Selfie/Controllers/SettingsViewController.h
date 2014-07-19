@@ -10,6 +10,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import "Utilities.h"
 
-@interface SettingsViewController : UIViewController <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
+#import "SettingsTextFieldCell.h"
+
+@interface SettingsViewController : UIViewController <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, SettingsTextFieldDelegate>
 
 @end
