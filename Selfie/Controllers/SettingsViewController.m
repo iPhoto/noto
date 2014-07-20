@@ -27,7 +27,6 @@
 @property (strong, nonatomic) UITextField *signatureTextField;
 
 @property (nonatomic) CGPoint scrollViewOffset;
-@property (nonatomic) BOOL validSettings;
 
 @end
 
@@ -38,7 +37,6 @@
     
     self.title = @"Settings";
     self.view = [[UIScrollView alloc] initWithFrame:self.view.frame];
-    self.validSettings = YES;
 
     self.view.backgroundColor = [UIColor whiteColor];
     ((UIScrollView *) self.view).contentSize = CGSizeMake(self.view.frame.size.width, 1000);
@@ -138,14 +136,12 @@
 }
 
 - (void) didCompleteSettingsView {
-    if (self.validSettings) {
-        [Utilities setSettingsValue:self.rightEmailTextField.text forKey:kSettingsSwipeRightToEmailKey];
-        [Utilities setSettingsValue:self.leftEmailTextField.text forKey:kSettingsSwipeLeftToEmailKey];
-        [Utilities setSettingsValue:self.subjectPrefixTextField.text forKey:kSettingsSubjectPrefixKey];
-        [Utilities setSettingsValue:self.signatureTextField.text forKey:kSettingsSignatureKey];
-        
-        [self.navigationController popViewControllerAnimated:YES];
-    }
+    [Utilities setSettingsValue:self.rightEmailTextField.text forKey:kSettingsSwipeRightToEmailKey];
+    [Utilities setSettingsValue:self.leftEmailTextField.text forKey:kSettingsSwipeLeftToEmailKey];
+    [Utilities setSettingsValue:self.subjectPrefixTextField.text forKey:kSettingsSubjectPrefixKey];
+    [Utilities setSettingsValue:self.signatureTextField.text forKey:kSettingsSignatureKey];
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 //- (void) keyboardDidShow:(NSNotification *) notification {
@@ -326,12 +322,11 @@
     
     if ([Utilities isValidEmailString:textField.text] || [textField.text isEqualToString:@""] || textField.keyboardType != UIKeyboardTypeEmailAddress) {
         textField.layer.borderColor = [tertiaryColorLight CGColor];
-        self.validSettings = YES;
+        self.navigationItem.rightBarButtonItem.enabled = YES;
         NSLog(@"valid");
     } else {
         textField.layer.borderColor = [secondaryColor CGColor];
-        self.validSettings = NO;
-        self.navigationItem.rightBarButtonItem.customView.alpha = 0.2;
+        self.navigationItem.rightBarButtonItem.enabled = NO;
         NSLog(@"invalid");
     }
 }
