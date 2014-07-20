@@ -334,17 +334,17 @@
     if ([Utilities isValidEmailString:textField.text] || [textField.text isEqualToString:@""] || textField.keyboardType != UIKeyboardTypeEmailAddress) {
         textField.layer.borderColor = [tertiaryColorLight CGColor];
         self.navigationItem.rightBarButtonItem.enabled = YES;
-        [UIView animateWithDuration:5 animations:^{
-            textField.textColor = [UIColor blackColor];
-        }];
+//        [UIView animateWithDuration:5 animations:^{
+//            textField.textColor = [UIColor blackColor];
+//        }];
         
         NSLog(@"valid");
     } else {
         textField.layer.borderColor = [secondaryColor CGColor];
         self.navigationItem.rightBarButtonItem.enabled = NO;
-        [UIView animateWithDuration:5 animations:^{
-            textField.textColor = secondaryColor;
-        }];
+//        [UIView animateWithDuration:5 animations:^{
+//            textField.textColor = secondaryColor;
+//        }];
         NSLog(@"invalid");
     }
 }
