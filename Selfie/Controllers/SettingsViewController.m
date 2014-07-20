@@ -27,6 +27,7 @@
 @property (strong, nonatomic) UITextField *signatureTextField;
 
 @property (nonatomic) CGPoint scrollViewOffset;
+@property (nonatomic) CGFloat contentHeight;
 
 @end
 
@@ -39,22 +40,11 @@
     self.view = [[UIScrollView alloc] initWithFrame:self.view.frame];
 
     self.view.backgroundColor = [UIColor whiteColor];
-    ((UIScrollView *) self.view).contentSize = CGSizeMake(self.view.frame.size.width, 1000);
     [self constructSettingsView:[[UIScreen mainScreen] bounds].size];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(didCompleteSettingsView)];
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(didCancelSettingsView)];
-
-//    [Radio addObserver:self
-//              selector:@selector(keyboardDidShow:)
-//                  name:UIKeyboardDidShowNotification
-//                object:nil];
-//    
-//    [Radio addObserver:self
-//              selector:@selector(keyboardDidHide:)
-//                  name:UIKeyboardDidHideNotification
-//                object:nil];
     
     [Radio addObserver:self
               selector:@selector(textFieldDidChange:)
@@ -64,71 +54,14 @@
               selector:@selector(textFieldDidEndEditing:)
                   name:UITextFieldTextDidEndEditingNotification
                 object:nil];
-    
-    //lets create 3 UITextViews on the screen
-//    for (NSInteger i=1; i<20; i++) {
-//        
-//        //set the origin of the frame reference
-//        myFrame.origin.y += myFrame.size.height + 10.0f;
-//        //create the text field
-//        self.myTextField = [[UITextField alloc] initWithFrame:myFrame];
-//        //set the border style for the text view
-////        self.myTextField.borderStyle = UITextBorderStyleRoundedRect;
-//        self.myTextField.layer.borderColor = [tertiaryColorLight CGColor];
-//        self.myTextField.layer.cornerRadius=8.0f;
-//        UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 8)];
-//        self.myTextField.leftViewMode = UITextFieldViewModeAlways;
-//        self.myTextField.leftView = leftView;
-//        self.myTextField.layer.masksToBounds=YES;
-//        self.myTextField.layer.borderWidth = 1;
-//        
-//        
-//        
-//        switch (i) {
-//                
-//            case 1:
-//                //the vertical alignment of text within the frame, set this to center
-//                self.myTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-//                //the horizontal alignment of the text
-//                self.myTextField.textAlignment = NSTextAlignmentLeft;
-//                //set the type of the keyboard to display
-//                self.myTextField.keyboardType = UIKeyboardTypeEmailAddress;
-////                self.myTextField.leftViewMode = UITextFieldViewModeAlways;
-//                self.myTextField.placeholder = @"you@example.com";
-//                break;
-//                
-//            case 2:
-//                self.myTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-//                self.myTextField.textAlignment = NSTextAlignmentLeft;
-//                self.myTextField.keyboardType = UIKeyboardTypeEmailAddress;
-//                self.myTextField.placeholder = @"you@example.com";
-//                break;
-//            case 3:
-//                self.myTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-//                self.myTextField.textAlignment = NSTextAlignmentLeft;
-//                self.myTextField.keyboardType = UIKeyboardTypeDefault;
-//                break;
-//                
-//            default:
-//                self.myTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-//                self.myTextField.textAlignment = NSTextAlignmentLeft;
-//                break;
-//        }
-//        
-//        //display hint for the user data entry when the field is empty
-//        
-//        //add tag to identify your text views
-//        self.myTextField.tag = i;
-//        //display the clear button on the text field
-//        self.myTextField.clearButtonMode = UITextFieldViewModeAlways;
-//        //change the return key text to "Done"
-//        self.myTextField.returnKeyType = UIReturnKeyDone;
-//        //set the delegate for the text field to the view controller so that it can listen for events
-//        self.myTextField.delegate = self;
-        //add the text field to the current view
-//        [self.view addSubview:self.myTextField];
-//    }
-    
+    [Radio addObserver:self
+              selector:@selector(keyboardDidShow:)
+                  name:UIKeyboardDidShowNotification
+                object:nil];
+    [Radio addObserver:self
+              selector:@selector(keyboardDidHide:)
+                  name:UIKeyboardDidHideNotification
+                object:nil];
 }
 
 - (void) didCancelSettingsView {
@@ -144,17 +77,21 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-//- (void) keyboardDidShow:(NSNotification *) notification {
-//    NSDictionary *info = [notification userInfo];
-//    CGRect keyboardRect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-//    keyboardRect = [self.view convertRect:keyboardRect fromView:nil];
-//    
-//    ((UIScrollView *)self.view).contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height - keyboardRect.size.height);
-//}
-//
-//- (void) keyboardDidHide:(NSNotification *) notification {
-//    ((UIScrollView *)self.view).contentSize = self.view.frame.size;
-//}
+- (void) keyboardDidShow:(NSNotification *) notification {
+    NSDictionary *info = [notification userInfo];
+    CGRect keyboardRect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    keyboardRect = [self.view convertRect:keyboardRect fromView:nil];
+    
+    ((UIScrollView *)self.view).contentSize = CGSizeMake(keyboardRect.size.width, self.contentHeight + keyboardRect.size.height);
+}
+
+- (void) keyboardDidHide:(NSNotification *) notification {
+    NSDictionary *info = [notification userInfo];
+    CGRect keyboardRect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    keyboardRect = [self.view convertRect:keyboardRect fromView:nil];
+    
+    ((UIScrollView *)self.view).contentSize = CGSizeMake(keyboardRect.size.width, self.contentHeight);
+}
 
 - (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation) toInterfaceOrientation duration:(NSTimeInterval) duration {
     CGRect screenRect = [[UIScreen mainScreen] bounds];
@@ -171,49 +108,55 @@
     NSLog(@"%f %f", size.width, size.height);
     
     UIView *view;
-    CGFloat nextHeight = 0;
+    self.contentHeight = 0;
+    [[self.view subviews]
+     makeObjectsPerformSelector:@selector(removeFromSuperview)];
 
-    view = [self constructSectionHeaderWithFrame:CGRectMake(0, nextHeight, size.width, 40) withHeaderText:@"Swipe Right Action"];
+    view = [self constructSectionHeaderWithFrame:CGRectMake(0, self.contentHeight, size.width, 40) withHeaderText:@"Swipe Right Action"];
     [self.view addSubview:view];
     
-    nextHeight += view.frame.size.height;
+    self.contentHeight += view.frame.size.height;
     
-    view = [self constructSectionRowWithFrame:CGRectMake(0, nextHeight, size.width, 40) withLabel:@"Mail to:" withDefaultText:[Utilities getSettingsValue:kSettingsSwipeRightToEmailKey] withPlaceholder:@"you@sendwithnoto.com" withKeyboardType:
+    view = [self constructSectionRowWithFrame:CGRectMake(0, self.contentHeight, size.width, 40) withLabel:@"Mail to:" withDefaultText:[Utilities getSettingsValue:kSettingsSwipeRightToEmailKey] withPlaceholder:@"you@sendwithnoto.com" withKeyboardType:
             UIKeyboardTypeEmailAddress withTag:rightActionEmail];
     [self.view addSubview:view];
     
-    nextHeight += view.frame.size.height;
+    self.contentHeight += view.frame.size.height;
     
-    view = [self constructSectionHeaderWithFrame:CGRectMake(0, nextHeight, size.width, 40) withHeaderText:@"Swipe Left Action"];
+    view = [self constructSectionHeaderWithFrame:CGRectMake(0, self.contentHeight, size.width, 40) withHeaderText:@"Swipe Left Action"];
     [self.view addSubview:view];
     
-    nextHeight += view.frame.size.height;
+    self.contentHeight += view.frame.size.height;
     
-    view = [self constructSectionRowWithFrame:CGRectMake(0, nextHeight, size.width, 40) withLabel:@"Mail to:" withDefaultText:[Utilities getSettingsValue:kSettingsSwipeLeftToEmailKey] withPlaceholder:@"you@sendwithnoto.com" withKeyboardType:
+    view = [self constructSectionRowWithFrame:CGRectMake(0, self.contentHeight, size.width, 40) withLabel:@"Mail to:" withDefaultText:[Utilities getSettingsValue:kSettingsSwipeLeftToEmailKey] withPlaceholder:@"you@sendwithnoto.com" withKeyboardType:
                                      UIKeyboardTypeEmailAddress withTag:leftActionEmail];
     [self.view addSubview:view];
     
-    nextHeight += view.frame.size.height;
+    self.contentHeight += view.frame.size.height;
     
-    view = [self constructSectionHeaderWithFrame:CGRectMake(0, nextHeight, size.width, 40) withHeaderText:@"Other Settings"];
+    view = [self constructSectionHeaderWithFrame:CGRectMake(0, self.contentHeight, size.width, 40) withHeaderText:@"Other Settings"];
     [self.view addSubview:view];
     
-    nextHeight += view.frame.size.height;
+    self.contentHeight += view.frame.size.height;
     
-    view = [self constructSectionRowWithFrame:CGRectMake(0, nextHeight, size.width, 40) withLabel:@"Subj. Prefix:" withDefaultText:[Utilities getSettingsValue:kSettingsSubjectPrefixKey] withPlaceholder:nil withKeyboardType:
+    view = [self constructSectionRowWithFrame:CGRectMake(0, self.contentHeight, size.width, 40) withLabel:@"Subj. Prefix:" withDefaultText:[Utilities getSettingsValue:kSettingsSubjectPrefixKey] withPlaceholder:nil withKeyboardType:
             UIKeyboardTypeDefault withTag:subjectPrefix];
     [self.view addSubview:view];
     
-    nextHeight += view.frame.size.height;
+    self.contentHeight += view.frame.size.height;
     
-    view = [self constructSectionRowWithFrame:CGRectMake(0, nextHeight, size.width, 40) withLabel:@"Signature" withDefaultText:[Utilities getSettingsValue:kSettingsSignatureKey] withPlaceholder:nil withKeyboardType:
+    view = [self constructSectionRowWithFrame:CGRectMake(0, self.contentHeight, size.width, 40) withLabel:@"Signature" withDefaultText:[Utilities getSettingsValue:kSettingsSignatureKey] withPlaceholder:nil withKeyboardType:
                  UIKeyboardTypeDefault withTag:signature];
     [self.view addSubview:view];
     
-    nextHeight += view.frame.size.height;
+    self.contentHeight += view.frame.size.height;
     
-    view = [self constructSectionHeaderWithFrame:CGRectMake(0, nextHeight, size.width, 40) withHeaderText:@"Made by the Leather Apron Club"];
+    view = [self constructSectionHeaderWithFrame:CGRectMake(0, self.contentHeight, size.width, 40) withHeaderText:@"Made by the Leather Apron Club"];
     [self.view addSubview:view];
+    
+    self.contentHeight += view.frame.size.height;
+    
+    ((UIScrollView *) self.view).contentSize = CGSizeMake(size.width, self.contentHeight);
 }
 
 - (UIView *) constructSectionRowWithFrame:(CGRect) frame
