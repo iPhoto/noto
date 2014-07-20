@@ -14,7 +14,7 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-InAppSettingsKit.xcscheme</key>
+		<key>Pods-Firebase.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -37,57 +37,32 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>03D61B1D062B4207BA19CB56</key>
+		<key>2B5FAA3C0D114AF2B8C79EDA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>13E9BDDFF8AB48ECAAD52950</key>
+		<key>4160605D12414EFE9E99FF0B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>266A562082A048C1979ECAAA</key>
+		<key>820903879EB24FA794814BE8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4D99303871884547A52C7121</key>
+		<key>84CD700C14E6464ABCBBADC8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>55D7F44E7BC745199F2054F1</key>
+		<key>ADC6085D5F4C442EABBBB880</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5C55830DC33A454C8C867EB1</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>625102F890B74BCF958C5BCF</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>7EE206BC11E24A7EA2E39592</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>84F74671DC574538A5B20832</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>EF9C0158404D454B8914FA6C</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F21D2777B3F1447D80F24E68</key>
+		<key>D13A33F0588B42439A4DCE83</key>
 		<dict>
 			<key>primary</key>
 			<true/>

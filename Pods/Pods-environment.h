@@ -54,6 +54,12 @@
 #define COCOAPODS_VERSION_MINOR_CrashlyticsFramework 2
 #define COCOAPODS_VERSION_PATCH_CrashlyticsFramework 1
 
+// Firebase
+#define COCOAPODS_POD_AVAILABLE_Firebase
+#define COCOAPODS_VERSION_MAJOR_Firebase 1
+#define COCOAPODS_VERSION_MINOR_Firebase 0
+#define COCOAPODS_VERSION_PATCH_Firebase 9
+
 // Reachability
 #define COCOAPODS_POD_AVAILABLE_Reachability
 #define COCOAPODS_VERSION_MAJOR_Reachability 3

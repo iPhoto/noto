@@ -6,15 +6,6 @@
 //  Copyright (c) 2014 The Leather Apron Club. All rights reserved.
 //
 
-// TODO: Link to NSUserDefaults
-// TODO: Add cancel button
-// TODO: Add validate button
-// TODO: Remove back button
-// TODO: Add settings validity
-// TODO: Email red outline
-// TODO: Add autoscroll
-// TODO: Improve layout (e.g., layout, text colors, etc)
-
 #import "SettingsViewController.h"
 
 #define rightActionSetting 0
@@ -30,21 +21,13 @@
 #define numberOfSections 3
 
 @interface SettingsViewController ()
-//@property (strong, nonatomic) UITableView *tableView;
-@property (strong, nonatomic) UITextFieldLabel *leftEmailTextFieldLabel;
 @property (strong, nonatomic) UITextField *leftEmailTextField;
-@property (strong, nonatomic) UITextFieldLabel *rightEmailTextFieldLabel;
 @property (strong, nonatomic) UITextField *rightEmailTextField;
-@property (nonatomic, strong) UITextField *myTextField;
-@property (nonatomic, strong) UILabel *myLabel;
-
+@property (strong, nonatomic) UITextField *subjectPrefixTextField;
+@property (strong, nonatomic) UITextField *signatureTextField;
 
 @property (nonatomic) CGPoint scrollViewOffset;
-
-@property (strong, nonatomic) NSArray *bugs;
-@property (strong, nonatomic) NSArray *animals;
-
-@property (strong, nonatomic) NSArray *sectionHeaders;
+@property (nonatomic) BOOL validSettings;
 
 @end
 
@@ -53,20 +36,15 @@
 - (void) viewDidLoad {
     [super viewDidLoad];
     
-    self.bugs = @[@"Spider",@"Ladybug",@"Firefly"];
-    self.animals = @[@"Cat",@"Dog",@"Bigfoot"];
-    
     self.title = @"Settings";
     self.view = [[UIScrollView alloc] initWithFrame:self.view.frame];
-    
-//    [self.tableView registerClass:[SettingsTextFieldCell class] forCellReuseIdentifier:@"settingsCellIdentifier"];
-//    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-//    [self.view addSubview:self.tableView];
 
     self.view.backgroundColor = [UIColor whiteColor];
     ((UIScrollView *) self.view).contentSize = CGSizeMake(self.view.frame.size.width, 1000);
     [self constructSettingsView:[[UIScreen mainScreen] bounds].size];
     
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(didCompleteSettingsView)];
+
 //    [Radio addObserver:self
 //              selector:@selector(keyboardDidShow:)
 //                  name:UIKeyboardDidShowNotification
@@ -153,14 +131,12 @@
 }
 
 - (void) didCompleteSettingsView {
-    if ([self validateSettings]) {
-//        Utilities setSettingsValue:kSettingsSwipeRightToEmailKey forKey:<#(NSString *)#>
+    if (self.validSettings) {
+        [Utilities setSettingsValue:self.rightEmailTextField.text forKey:kSettingsSwipeRightToEmailKey];
+        [Utilities setSettingsValue:self.leftEmailTextField.text forKey:kSettingsSwipeLeftToEmailKey];
+        [Utilities setSettingsValue:self.subjectPrefixTextField.text forKey:kSettingsSubjectPrefixKey];
+        [Utilities setSettingsValue:self.signatureTextField.text forKey:kSettingsSignatureKey];
     }
-}
-
-- (BOOL) validateSettings {
-    
-    return YES;
 }
 
 //- (void) keyboardDidShow:(NSNotification *) notification {
@@ -184,15 +160,6 @@
     } else {
         [self constructSettingsView:CGSizeMake(screenRect.size.height, screenRect.size.width)];
     }
-    
-//    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
-//    CGRect statusBarWindowRect = [self.view.window convertRect:statusBarFrame fromWindow: nil];
-//    CGRect statusBarViewRect = [self.view convertRect:statusBarWindowRect fromView: nil];
-//    CGFloat statusBarHeight = statusBarViewRect.size.height;
-//    
-//    CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
-//    
-//    
 }
 
 - (void) constructSettingsView:(CGSize) size {
@@ -201,22 +168,24 @@
     UIView *view;
     CGFloat nextHeight = 0;
 
-    view = [self constructSectionHeaderWithFrame:CGRectMake(0, nextHeight, size.width, 40) withHeaderText:@"Swipe Left Action"];
-    [self.view addSubview:view];
-    
-    nextHeight += view.frame.size.height;
-    
-    view = [self constructSectionRowWithFrame:CGRectMake(0, nextHeight, size.width, 40) withLabel:@"Mail to:" withDefaultText:nil withPlaceholder:@"you@sendwithnoto.com" withTag:rightActionEmail];
-    [self.view addSubview:view];
-    
-    nextHeight += view.frame.size.height;
-    
     view = [self constructSectionHeaderWithFrame:CGRectMake(0, nextHeight, size.width, 40) withHeaderText:@"Swipe Right Action"];
     [self.view addSubview:view];
     
     nextHeight += view.frame.size.height;
     
-    view = [self constructSectionRowWithFrame:CGRectMake(0, nextHeight, size.width, 40) withLabel:@"Mail to:" withDefaultText:nil withPlaceholder:@"you@sendwithnoto.com" withTag:leftActionEmail];
+    view = [self constructSectionRowWithFrame:CGRectMake(0, nextHeight, size.width, 40) withLabel:@"Mail to:" withDefaultText:[Utilities getSettingsValue:kSettingsSwipeRightToEmailKey] withPlaceholder:@"you@sendwithnoto.com" withKeyboardType:
+            UIKeyboardTypeEmailAddress withTag:rightActionEmail];
+    [self.view addSubview:view];
+    
+    nextHeight += view.frame.size.height;
+    
+    view = [self constructSectionHeaderWithFrame:CGRectMake(0, nextHeight, size.width, 40) withHeaderText:@"Swipe Left Action"];
+    [self.view addSubview:view];
+    
+    nextHeight += view.frame.size.height;
+    
+    view = [self constructSectionRowWithFrame:CGRectMake(0, nextHeight, size.width, 40) withLabel:@"Mail to:" withDefaultText:[Utilities getSettingsValue:kSettingsSwipeLeftToEmailKey] withPlaceholder:@"you@sendwithnoto.com" withKeyboardType:
+                                     UIKeyboardTypeEmailAddress withTag:leftActionEmail];
     [self.view addSubview:view];
     
     nextHeight += view.frame.size.height;
@@ -226,12 +195,14 @@
     
     nextHeight += view.frame.size.height;
     
-    view = [self constructSectionRowWithFrame:CGRectMake(0, nextHeight, size.width, 40) withLabel:@"Subj. Prefix:" withDefaultText:@"[Noto]" withPlaceholder:nil withTag:subjectPrefix];
+    view = [self constructSectionRowWithFrame:CGRectMake(0, nextHeight, size.width, 40) withLabel:@"Subj. Prefix:" withDefaultText:[Utilities getSettingsValue:kSettingsSubjectPrefixKey] withPlaceholder:nil withKeyboardType:
+            UIKeyboardTypeDefault withTag:subjectPrefix];
     [self.view addSubview:view];
     
     nextHeight += view.frame.size.height;
     
-    view = [self constructSectionRowWithFrame:CGRectMake(0, nextHeight, size.width, 40) withLabel:@"Signature" withDefaultText:@"Sent with Noto" withPlaceholder:nil withTag:signature];
+    view = [self constructSectionRowWithFrame:CGRectMake(0, nextHeight, size.width, 40) withLabel:@"Signature" withDefaultText:[Utilities getSettingsValue:kSettingsSignatureKey] withPlaceholder:nil withKeyboardType:
+                 UIKeyboardTypeDefault withTag:signature];
     [self.view addSubview:view];
     
     nextHeight += view.frame.size.height;
@@ -244,6 +215,7 @@
                                 withLabel:(NSString *) labelText
                           withDefaultText:(NSString *) defaultText
                           withPlaceholder:(NSString *) placeholder
+                         withKeyboardType:(UIKeyboardType) keyboardType
                                   withTag:(NSInteger) tag {
     CGFloat rowLabelInset = 10;
     CGFloat rowLabelWidth = 100;
@@ -259,12 +231,26 @@
     
     textField.placeholder = placeholder;
     textField.text = defaultText;
-    textField.keyboardType = UIKeyboardTypeEmailAddress;
     textField.returnKeyType = UIReturnKeyDone;
+    textField.keyboardType = keyboardType;
     textField.tag = tag;
-//    [textField addTarget:self
-//                       action:@selector(textFieldDidChange:)
-//             forControlEvents:UIControlEventEditingDidEndOnExit];
+    
+    switch (textField.tag) {
+        case rightActionEmail:
+            self.rightEmailTextField = textField;
+            break;
+        case leftActionEmail:
+            self.leftEmailTextField = textField;
+            break;
+        case subjectPrefix:
+            self.subjectPrefixTextField = textField;
+            break;
+        case signature:
+            self.signatureTextField = textField;
+            break;
+        default:
+            break;
+    }
     
     [view addSubview:label];
     [view addSubview:textField];
@@ -322,150 +308,17 @@
     return YES;
 }
 
-- (NSInteger) numberOfSectionsInTableView:(UITableView *) tableView {
-    return numberOfSections;
-}
-
-- (NSInteger) tableView:(UITableView *) tableView numberOfRowsInSection:(NSInteger) section {
-//    return 3;
-    switch (section){
-        case rightActionSetting:
-            return 1;
-            break;
-        case leftActionSetting:
-            return 1;
-            break;
-        case otherSettings:
-            return 2;
-            break;
-        default:
-            return 0;
-            break;
-    }
-}
-
-//- (UITableViewCell *) tableView:(UITableView *) tableView cellForRowAtIndexPath:(NSIndexPath *) indexPath {
-//    SettingsTextFieldCell *cell = [tableView dequeueReusableCellWithIdentifier:@"settingsCellIdentifier"];
-//
-//    switch (indexPath.section) {
-//        case rightActionSetting:
-//            cell.leftLabel.text = @"Mail to:";
-//            cell.rightTextField.placeholder = @"you@sendwithnoto.com";
-//            cell.rightTextField.tag = rightActionEmail;
-//            break;
-//        case leftActionSetting:
-//            cell.leftLabel.text = @"Mail to:";
-//            cell.rightTextField.placeholder = @"you@sendwithnoto.com";
-//            cell.rightTextField.tag = leftActionEmail;
-//            break;
-//        case otherSettings:
-//            switch (indexPath.row) {
-//                case subjectPrefix:
-//                    cell.leftLabel.text = @"Subj. Prefix:";
-//                    cell.rightTextField.text = @"[Noto]";
-//                    cell.rightTextField.tag = subjectPrefix;
-//                    break;
-//                case signature:
-//                    cell.leftLabel.text = @"Signature:";
-//                    cell.rightTextField.text = @"Sent with Noto";
-//                    cell.rightTextField.tag = signature;
-//                    break;
-//                default:
-//                    break;
-//            }
-//            break;
-//        default:
-//            return cell;
-//            break;
-//    }
-//    
-//    return cell;
-//}
-
-//- (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger) section {
-//    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0,tableView.frame.size.width,20)];
-//    
-//    UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, headerView.frame.size.width, headerView.frame.size.height)];
-//    
-//    headerLabel.textAlignment = NSTextAlignmentLeft;
-//    
-//    headerLabel.textColor = [UIColor lightGrayColor];
-//    headerLabel.font = [UIFont systemFontOfSize:14];
-//    
-//    switch (section){
-//        case rightActionSetting:
-//            headerLabel.text = @"Swipe right action";
-//            break;
-//        case leftActionSetting:
-//            headerLabel.text = @"Swipe left action";
-//            break;
-//        case otherSettings:
-//            headerLabel.text = @"Other settings";
-//            break;
-//        default:
-//            headerLabel.text = @"";
-//            break;
-//    }
-//    headerLabel.backgroundColor = [UIColor whiteColor];
-//    
-//    CALayer *bottomBorder = [CALayer layer];
-//    
-//    bottomBorder.frame = CGRectMake(0.0f, headerView.frame.size.height, headerView.frame.size.width, 0.5f);
-//    
-//    bottomBorder.backgroundColor = [UIColor colorWithWhite:0.8f
-//                                                     alpha:1.0f].CGColor;
-//    
-//    [headerView.layer addSublayer:bottomBorder];
-//    
-//    [headerView addSubview:headerLabel];
-//    
-//    return headerView;
-//}
-
-//- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-//    
-//}
-
-//- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-//    return 40;
-//}
-
-//- (NSString *)tableView:(UITableView *) tableView titleForHeaderInSection:(NSInteger) section {
-//    switch (section){
-//        case rightActionSetting:
-//            return @"Swipe right action";
-//            break;
-//        case leftActionSetting:
-//            return @"Swipe left action";
-//            break;
-//        case otherSettings:
-//            return @"Other settings";
-//            break;
-//        default:
-//            return 0;
-//            break;
-//    }
-//}
-
-//- (NSString *)tableView:(UITableView *) tableView titleForFooterInSection:(NSInteger) section {
-//    return @"Footer";
-//}
-
-//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-//    return NO;
-//}
-//
-//- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-//    return NO;
-//}
-
 - (void) textFieldDidChange:(NSNotification *) notification {
     UITextField *textField = (UITextField *) notification.object;
     
     if ([Utilities isValidEmailString:textField.text] || [textField.text isEqualToString:@""] || textField.keyboardType != UIKeyboardTypeEmailAddress) {
         textField.layer.borderColor = [tertiaryColorLight CGColor];
+        self.validSettings = YES;
+        NSLog(@"valid");
     } else {
         textField.layer.borderColor = [secondaryColor CGColor];
+        self.validSettings = NO;
+        NSLog(@"invalid");
     }
 }
 
@@ -493,8 +346,6 @@
 - (void) textFieldDidEndEditing:(NSNotification *) notification {
     
     UITextField *textField = (UITextField *) notification.object;
-    
-    NSLog(@"finished %i", textField.tag);
     
     switch (textField.tag) {
         case rightActionEmail:
