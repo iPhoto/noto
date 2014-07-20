@@ -152,6 +152,17 @@
     
 }
 
+- (void) didCompleteSettingsView {
+    if ([self validateSettings]) {
+//        Utilities setSettingsValue:kSettingsSwipeRightToEmailKey forKey:<#(NSString *)#>
+    }
+}
+
+- (BOOL) validateSettings {
+    
+    return YES;
+}
+
 //- (void) keyboardDidShow:(NSNotification *) notification {
 //    NSDictionary *info = [notification userInfo];
 //    CGRect keyboardRect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
