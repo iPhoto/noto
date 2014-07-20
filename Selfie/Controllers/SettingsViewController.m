@@ -8,9 +8,17 @@
 
 #import "SettingsViewController.h"
 
-#define bugsSection 0
-#define animalsSection 1
-#define numberOfSections 2
+#define rightActionSetting 0
+#define leftActionSetting 1
+#define otherSettings 2
+
+#define rightActionEmail 0
+#define leftActionEmail 0
+
+#define subjectPrefix 0
+#define signature 1
+
+#define numberOfSections 3
 
 @interface SettingsViewController ()
 //@property (strong, nonatomic) UITableView *tableView;
@@ -24,6 +32,8 @@
 
 @property (strong, nonatomic) NSArray *bugs;
 @property (strong, nonatomic) NSArray *animals;
+
+@property (strong, nonatomic) NSArray *sectionHeaders;
 
 @end
 
@@ -40,6 +50,7 @@
     self.title = @"Settings";
     self.tableView = [[UITableView alloc] initWithFrame:self.view.frame];
     [self.tableView registerClass:[SettingsTextFieldCell class] forCellReuseIdentifier:@"settingsCellIdentifier"];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 //    [self.view addSubview:self.tableView];
 
 //    self.view.backgroundColor = [UIColor whiteColor];
@@ -128,57 +139,127 @@
 - (NSInteger) tableView:(UITableView *) tableView numberOfRowsInSection:(NSInteger) section {
 //    return 3;
     switch (section){
-        case bugsSection:
-            return [self.bugs count];
+        case rightActionSetting:
+            return 1;
             break;
-        case animalsSection:
-            return [self.animals count];
+        case leftActionSetting:
+            return 1;
+            break;
+        case otherSettings:
+            return 2;
             break;
         default:
             return 0;
+            break;
     }
 }
 
 - (UITableViewCell *) tableView:(UITableView *) tableView cellForRowAtIndexPath:(NSIndexPath *) indexPath {
-//    SettingsTextFieldCell *cell = [tableView dequeueReusableCellWithIdentifier:@"settingsCellIdentifier"];
-//
-//    cell.leftLabel.text = @"test";
-//    cell.rightTextField.placeholder = @"you@example.com";
-//    
-//    return cell;
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"settingsCellIdentifier"];
-    
-    switch (indexPath.section)
-    {
-            
-        case bugsSection:
-            cell.textLabel.text = [self.bugs    objectAtIndex:indexPath.row];
+    SettingsTextFieldCell *cell = [tableView dequeueReusableCellWithIdentifier:@"settingsCellIdentifier"];
+
+    switch (indexPath.section) {
+        case rightActionSetting:
+            cell.leftLabel.text = @"Mail to:";
+            cell.rightTextField.placeholder = @"you@sendwithnoto.com";
+            cell.rightTextField.tag = rightActionEmail;
             break;
-        case animalsSection:
-            cell.textLabel.text = [self.animals     objectAtIndex:indexPath.row];
+        case leftActionSetting:
+            cell.leftLabel.text = @"Mail to:";
+            cell.rightTextField.placeholder = @"you@sendwithnoto.com";
+            cell.rightTextField.tag = leftActionEmail;
+            break;
+        case otherSettings:
+            switch (indexPath.row) {
+                case subjectPrefix:
+                    cell.leftLabel.text = @"Subj. Prefix:";
+                    cell.rightTextField.text = @"[Noto]";
+                    cell.rightTextField.tag = subjectPrefix;
+                    break;
+                case signature:
+                    cell.leftLabel.text = @"Signature:";
+                    cell.rightTextField.text = @"Sent with Noto";
+                    cell.rightTextField.tag = signature;
+                    break;
+                default:
+                    break;
+            }
             break;
         default:
-            cell.textLabel.text = @"Not Found";
-            
+            return cell;
+            break;
     }
     
     return cell;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0,tableView.frame.size.width,20)];
+    
+    UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, headerView.frame.size.width, headerView.frame.size.height)];
+    
+    headerLabel.textAlignment = NSTextAlignmentLeft;
+    
+    headerLabel.textColor = [UIColor lightGrayColor];
+    headerLabel.font = [UIFont systemFontOfSize:14];
+    
     switch (section){
-        case bugsSection:
-            return @"Bugs";
+        case rightActionSetting:
+            headerLabel.text = @"Swipe right action";
             break;
-        case animalsSection:
-            return @"Animals";
+        case leftActionSetting:
+            headerLabel.text = @"Swipe left action";
+            break;
+        case otherSettings:
+            headerLabel.text = @"Other settings";
             break;
         default:
-            return 0;
+            headerLabel.text = @"";
+            break;
     }
+    headerLabel.backgroundColor = [UIColor whiteColor];
+    
+    CALayer *bottomBorder = [CALayer layer];
+    
+    bottomBorder.frame = CGRectMake(0.0f, headerView.frame.size.height, headerView.frame.size.width, 0.5f);
+    
+    bottomBorder.backgroundColor = [UIColor colorWithWhite:0.8f
+                                                     alpha:1.0f].CGColor;
+    
+    [headerView.layer addSublayer:bottomBorder];
+    
+    [headerView addSubview:headerLabel];
+    
+    return headerView;
 }
+
+//- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+//    
+//}
+
+//- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+//    return 40;
+//}
+
+//- (NSString *)tableView:(UITableView *) tableView titleForHeaderInSection:(NSInteger) section {
+//    switch (section){
+//        case rightActionSetting:
+//            return @"Swipe right action";
+//            break;
+//        case leftActionSetting:
+//            return @"Swipe left action";
+//            break;
+//        case otherSettings:
+//            return @"Other settings";
+//            break;
+//        default:
+//            return 0;
+//            break;
+//    }
+//}
+
+//- (NSString *)tableView:(UITableView *) tableView titleForFooterInSection:(NSInteger) section {
+//    return @"Footer";
+//}
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     return NO;
