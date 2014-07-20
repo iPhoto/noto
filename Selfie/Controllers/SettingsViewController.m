@@ -162,7 +162,7 @@
     
     self.contentHeight += view.frame.size.height;
     
-    ((UIScrollView *) self.view).contentSize = CGSizeMake(size.width, size.height);
+    ((UIScrollView *) self.view).contentSize = CGSizeMake(size.width, self.contentHeight);
 }
 
 - (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {
