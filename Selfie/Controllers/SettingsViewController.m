@@ -38,12 +38,15 @@
     
     self.title = @"Settings";
     self.view = [[UIScrollView alloc] initWithFrame:self.view.frame];
+    self.validSettings = YES;
 
     self.view.backgroundColor = [UIColor whiteColor];
     ((UIScrollView *) self.view).contentSize = CGSizeMake(self.view.frame.size.width, 1000);
     [self constructSettingsView:[[UIScreen mainScreen] bounds].size];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(didCompleteSettingsView)];
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(didCancelSettingsView)];
 
 //    [Radio addObserver:self
 //              selector:@selector(keyboardDidShow:)
@@ -130,12 +133,18 @@
     
 }
 
+- (void) didCancelSettingsView {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void) didCompleteSettingsView {
     if (self.validSettings) {
         [Utilities setSettingsValue:self.rightEmailTextField.text forKey:kSettingsSwipeRightToEmailKey];
         [Utilities setSettingsValue:self.leftEmailTextField.text forKey:kSettingsSwipeLeftToEmailKey];
         [Utilities setSettingsValue:self.subjectPrefixTextField.text forKey:kSettingsSubjectPrefixKey];
         [Utilities setSettingsValue:self.signatureTextField.text forKey:kSettingsSignatureKey];
+        
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 
@@ -238,9 +247,13 @@
     switch (textField.tag) {
         case rightActionEmail:
             self.rightEmailTextField = textField;
+            textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+            textField.autocorrectionType = UITextAutocorrectionTypeNo;
             break;
         case leftActionEmail:
             self.leftEmailTextField = textField;
+            textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+            textField.autocorrectionType = UITextAutocorrectionTypeNo;
             break;
         case subjectPrefix:
             self.subjectPrefixTextField = textField;
@@ -318,6 +331,7 @@
     } else {
         textField.layer.borderColor = [secondaryColor CGColor];
         self.validSettings = NO;
+        self.navigationItem.rightBarButtonItem.customView.alpha = 0.2;
         NSLog(@"invalid");
     }
 }
