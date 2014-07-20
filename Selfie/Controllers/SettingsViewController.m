@@ -6,6 +6,14 @@
 //  Copyright (c) 2014 The Leather Apron Club. All rights reserved.
 //
 
+// TODO: Link to NSUserDefaults
+// TODO: Add cancel button
+// TODO: Add validate button
+// TODO: Remove back button
+// TODO: Add settings validity
+// TODO: Email red outline
+// TODO: Improve layout (e.g., layout, text colors, etc)
+
 #import "SettingsViewController.h"
 
 #define rightActionSetting 0
@@ -38,8 +46,6 @@
 @property (strong, nonatomic) NSArray *sectionHeaders;
 
 @end
-
-// TODO: Add settings validity
 
 @implementation SettingsViewController
 
