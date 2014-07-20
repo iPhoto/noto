@@ -52,6 +52,7 @@ static NSString * const kSettingsSwipeLeftToEmailKey = @"swipeLeftTo";
 static NSString * const kSettingsSwipeRightToEmailKey = @"swipeRightTo";
 static NSString * const kSettingsSubjectPrefixKey = @"subjectPrefix";
 static NSString * const kSettingsSignatureKey = @"signature";
+static NSString * const kSettingsUserName = @"username";
 
 // Queue data
 static NSString * const kQueueKey = @"noteQueue";
