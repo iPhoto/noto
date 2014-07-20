@@ -38,6 +38,7 @@
 		4F8D540D196D7BF000FF1BE8 /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8D540C196D7BF000FF1BE8 /* Tests.m */; };
 		4F8D544C196DBAA700FF1BE8 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F8D544B196DBAA700FF1BE8 /* Crashlytics.framework */; };
 		4F953A94194E7F9E00F67A0A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F953A93194E7F9E00F67A0A /* Foundation.framework */; };
+		4FDC73B1197B8A86003BCC8E /* ArchiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FDC73B0197B8A86003BCC8E /* ArchiveViewController.m */; };
 		4FF87437194A83F600787DE0 /* SelfieTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF87436194A83F600787DE0 /* SelfieTests.m */; };
 		6CE63EEB8D4349A48F08C6F4 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E77200C5C3C411893448E4A /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -110,6 +111,8 @@
 		4F8D544B196DBAA700FF1BE8 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = Pods/CrashlyticsFramework/Crashlytics.framework; sourceTree = "<group>"; };
 		4F953A93194E7F9E00F67A0A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4FD7A01F194E3F3700906537 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		4FDC73AF197B8A86003BCC8E /* ArchiveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArchiveViewController.h; sourceTree = "<group>"; };
+		4FDC73B0197B8A86003BCC8E /* ArchiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArchiveViewController.m; sourceTree = "<group>"; };
 		4FF87417194A83F600787DE0 /* Selfie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Selfie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FF87430194A83F600787DE0 /* SelfieTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SelfieTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FF87435194A83F600787DE0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -216,6 +219,8 @@
 		4F6E3A1019687F1D00E7A0A8 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				4FDC73AF197B8A86003BCC8E /* ArchiveViewController.h */,
+				4FDC73B0197B8A86003BCC8E /* ArchiveViewController.m */,
 				4F372AB71979A692009F485A /* SettingsViewController.h */,
 				4F372AB81979A692009F485A /* SettingsViewController.m */,
 				4F6E3A1119687F1D00E7A0A8 /* ViewController.h */,
@@ -488,6 +493,7 @@
 				4F372ADF197ACA81009F485A /* SpacerBarButtonItem.m in Sources */,
 				4F372ADE197ACA81009F485A /* SettingsBarButtonItem.m in Sources */,
 				4F372AE0197ACA81009F485A /* UnsentBarButtonItem.m in Sources */,
+				4FDC73B1197B8A86003BCC8E /* ArchiveViewController.m in Sources */,
 				4F372AE4197ACA81009F485A /* NoteRibbonView.m in Sources */,
 				4F372AB91979A692009F485A /* SettingsViewController.m in Sources */,
 				4F6E3A2719687F1D00E7A0A8 /* main.m in Sources */,
