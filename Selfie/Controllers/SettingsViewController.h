@@ -12,6 +12,6 @@
 
 #import "SettingsTextFieldCell.h"
 
-@interface SettingsViewController : UITableViewController <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, SettingsTextFieldDelegate>
+@interface SettingsViewController : UITableViewController <UITextFieldDelegate>
 
 @end

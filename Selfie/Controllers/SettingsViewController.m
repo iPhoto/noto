@@ -30,6 +30,8 @@
 @property (nonatomic, strong) UILabel *myLabel;
 
 
+@property (nonatomic) CGPoint scrollViewOffset;
+
 @property (strong, nonatomic) NSArray *bugs;
 @property (strong, nonatomic) NSArray *animals;
 
@@ -48,88 +50,249 @@
     self.animals = @[@"Cat",@"Dog",@"Bigfoot"];
     
     self.title = @"Settings";
-    self.tableView = [[UITableView alloc] initWithFrame:self.view.frame];
-    [self.tableView registerClass:[SettingsTextFieldCell class] forCellReuseIdentifier:@"settingsCellIdentifier"];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.view = [[UIScrollView alloc] initWithFrame:self.view.frame];
+    
+//    [self.tableView registerClass:[SettingsTextFieldCell class] forCellReuseIdentifier:@"settingsCellIdentifier"];
+//    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 //    [self.view addSubview:self.tableView];
 
-//    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor whiteColor];
+    ((UIScrollView *) self.view).contentSize = CGSizeMake(self.view.frame.size.width, 1000);
+    [self constructSettingsView:[[UIScreen mainScreen] bounds].size];
     
-    //create a label to display current user interaction with our editable text views
-    CGRect myFrame = CGRectMake(10.0f, 10.0f, 250.0f, 40.0f);
-    self.myLabel = [[UILabel alloc] initWithFrame:myFrame];
-    self.myLabel.text = @"Credits: LAC, RRE";
-    self.myLabel.font = [UIFont boldSystemFontOfSize:18.0f];
-    self.myLabel.textAlignment =  NSTextAlignmentLeft;
-//    [self.view addSubview:self.myLabel];
+//    [Radio addObserver:self
+//              selector:@selector(keyboardDidShow:)
+//                  name:UIKeyboardDidShowNotification
+//                object:nil];
+//    
+//    [Radio addObserver:self
+//              selector:@selector(keyboardDidHide:)
+//                  name:UIKeyboardDidHideNotification
+//                object:nil];
+    
+    [Radio addObserver:self
+              selector:@selector(textFieldDidChange:)
+                  name:UITextFieldTextDidChangeNotification
+                object:nil];
     
     //lets create 3 UITextViews on the screen
-    for (NSInteger i=1; i<20; i++) {
-        
-        //set the origin of the frame reference
-        myFrame.origin.y += myFrame.size.height + 10.0f;
-        //create the text field
-        self.myTextField = [[UITextField alloc] initWithFrame:myFrame];
-        //set the border style for the text view
-//        self.myTextField.borderStyle = UITextBorderStyleRoundedRect;
-        self.myTextField.layer.borderColor = [tertiaryColorLight CGColor];
-        self.myTextField.layer.cornerRadius=8.0f;
-        UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 8)];
-        self.myTextField.leftViewMode = UITextFieldViewModeAlways;
-        self.myTextField.leftView = leftView;
-        self.myTextField.layer.masksToBounds=YES;
-        self.myTextField.layer.borderWidth = 1;
-        
-        [Radio addObserver:self
-                  selector:@selector(textFieldDidChange:)
-                      name:UITextFieldTextDidChangeNotification
-                    object:nil];
-        
-        switch (i) {
-                
-            case 1:
-                //the vertical alignment of text within the frame, set this to center
-                self.myTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-                //the horizontal alignment of the text
-                self.myTextField.textAlignment = NSTextAlignmentLeft;
-                //set the type of the keyboard to display
-                self.myTextField.keyboardType = UIKeyboardTypeEmailAddress;
-//                self.myTextField.leftViewMode = UITextFieldViewModeAlways;
-                self.myTextField.placeholder = @"you@example.com";
-                break;
-                
-            case 2:
-                self.myTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-                self.myTextField.textAlignment = NSTextAlignmentLeft;
-                self.myTextField.keyboardType = UIKeyboardTypeEmailAddress;
-                self.myTextField.placeholder = @"you@example.com";
-                break;
-            case 3:
-                self.myTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-                self.myTextField.textAlignment = NSTextAlignmentLeft;
-                self.myTextField.keyboardType = UIKeyboardTypeDefault;
-                break;
-                
-            default:
-                self.myTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-                self.myTextField.textAlignment = NSTextAlignmentLeft;
-                break;
-        }
-        
-        //display hint for the user data entry when the field is empty
-        
-        //add tag to identify your text views
-        self.myTextField.tag = i;
-        //display the clear button on the text field
-        self.myTextField.clearButtonMode = UITextFieldViewModeAlways;
-        //change the return key text to "Done"
-        self.myTextField.returnKeyType = UIReturnKeyDone;
-        //set the delegate for the text field to the view controller so that it can listen for events
-        self.myTextField.delegate = self;
+//    for (NSInteger i=1; i<20; i++) {
+//        
+//        //set the origin of the frame reference
+//        myFrame.origin.y += myFrame.size.height + 10.0f;
+//        //create the text field
+//        self.myTextField = [[UITextField alloc] initWithFrame:myFrame];
+//        //set the border style for the text view
+////        self.myTextField.borderStyle = UITextBorderStyleRoundedRect;
+//        self.myTextField.layer.borderColor = [tertiaryColorLight CGColor];
+//        self.myTextField.layer.cornerRadius=8.0f;
+//        UIView *leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 8)];
+//        self.myTextField.leftViewMode = UITextFieldViewModeAlways;
+//        self.myTextField.leftView = leftView;
+//        self.myTextField.layer.masksToBounds=YES;
+//        self.myTextField.layer.borderWidth = 1;
+//        
+//        
+//        
+//        switch (i) {
+//                
+//            case 1:
+//                //the vertical alignment of text within the frame, set this to center
+//                self.myTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+//                //the horizontal alignment of the text
+//                self.myTextField.textAlignment = NSTextAlignmentLeft;
+//                //set the type of the keyboard to display
+//                self.myTextField.keyboardType = UIKeyboardTypeEmailAddress;
+////                self.myTextField.leftViewMode = UITextFieldViewModeAlways;
+//                self.myTextField.placeholder = @"you@example.com";
+//                break;
+//                
+//            case 2:
+//                self.myTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+//                self.myTextField.textAlignment = NSTextAlignmentLeft;
+//                self.myTextField.keyboardType = UIKeyboardTypeEmailAddress;
+//                self.myTextField.placeholder = @"you@example.com";
+//                break;
+//            case 3:
+//                self.myTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+//                self.myTextField.textAlignment = NSTextAlignmentLeft;
+//                self.myTextField.keyboardType = UIKeyboardTypeDefault;
+//                break;
+//                
+//            default:
+//                self.myTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+//                self.myTextField.textAlignment = NSTextAlignmentLeft;
+//                break;
+//        }
+//        
+//        //display hint for the user data entry when the field is empty
+//        
+//        //add tag to identify your text views
+//        self.myTextField.tag = i;
+//        //display the clear button on the text field
+//        self.myTextField.clearButtonMode = UITextFieldViewModeAlways;
+//        //change the return key text to "Done"
+//        self.myTextField.returnKeyType = UIReturnKeyDone;
+//        //set the delegate for the text field to the view controller so that it can listen for events
+//        self.myTextField.delegate = self;
         //add the text field to the current view
 //        [self.view addSubview:self.myTextField];
+//    }
+    
+}
+
+//- (void) keyboardDidShow:(NSNotification *) notification {
+//    NSDictionary *info = [notification userInfo];
+//    CGRect keyboardRect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+//    keyboardRect = [self.view convertRect:keyboardRect fromView:nil];
+//    
+//    ((UIScrollView *)self.view).contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height - keyboardRect.size.height);
+//}
+//
+//- (void) keyboardDidHide:(NSNotification *) notification {
+//    ((UIScrollView *)self.view).contentSize = self.view.frame.size;
+//}
+
+- (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation) toInterfaceOrientation duration:(NSTimeInterval) duration {
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    
+    if (UIDeviceOrientationIsPortrait(toInterfaceOrientation))
+    {
+        [self constructSettingsView:screenRect.size];
+    } else {
+        [self constructSettingsView:CGSizeMake(screenRect.size.height, screenRect.size.width)];
     }
     
+//    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
+//    CGRect statusBarWindowRect = [self.view.window convertRect:statusBarFrame fromWindow: nil];
+//    CGRect statusBarViewRect = [self.view convertRect:statusBarWindowRect fromView: nil];
+//    CGFloat statusBarHeight = statusBarViewRect.size.height;
+//    
+//    CGFloat navBarHeight = self.navigationController.navigationBar.frame.size.height;
+//    
+//    
+}
+
+- (void) constructSettingsView:(CGSize) size {
+    NSLog(@"%f %f", size.width, size.height);
+    
+    UIView *view;
+    CGFloat nextHeight = 0;
+
+    view = [self constructSectionHeaderWithFrame:CGRectMake(0, nextHeight, size.width, 40) withHeaderText:@"Swipe Left Action"];
+    [self.view addSubview:view];
+    
+    nextHeight += view.frame.size.height;
+    
+    view = [self constructSectionRowWithFrame:CGRectMake(0, nextHeight, size.width, 40) withLabel:@"Mail to:" withDefaultText:nil withPlaceholder:@"you@sendwithnoto.com" withTag:rightActionEmail];
+    [self.view addSubview:view];
+    
+    nextHeight += view.frame.size.height;
+    
+    view = [self constructSectionHeaderWithFrame:CGRectMake(0, nextHeight, size.width, 40) withHeaderText:@"Swipe Right Action"];
+    [self.view addSubview:view];
+    
+    nextHeight += view.frame.size.height;
+    
+    view = [self constructSectionRowWithFrame:CGRectMake(0, nextHeight, size.width, 40) withLabel:@"Mail to:" withDefaultText:nil withPlaceholder:@"you@sendwithnoto.com" withTag:leftActionEmail];
+    [self.view addSubview:view];
+    
+    nextHeight += view.frame.size.height;
+    
+    view = [self constructSectionHeaderWithFrame:CGRectMake(0, nextHeight, size.width, 40) withHeaderText:@"Other Settings"];
+    [self.view addSubview:view];
+    
+    nextHeight += view.frame.size.height;
+    
+    view = [self constructSectionRowWithFrame:CGRectMake(0, nextHeight, size.width, 40) withLabel:@"Subj. Prefix:" withDefaultText:@"[Noto]" withPlaceholder:nil withTag:subjectPrefix];
+    [self.view addSubview:view];
+    
+    nextHeight += view.frame.size.height;
+    
+    view = [self constructSectionRowWithFrame:CGRectMake(0, nextHeight, size.width, 40) withLabel:@"Signature" withDefaultText:@"Sent with Noto" withPlaceholder:nil withTag:signature];
+    [self.view addSubview:view];
+    
+    nextHeight += view.frame.size.height;
+    
+    view = [self constructSectionHeaderWithFrame:CGRectMake(0, nextHeight, size.width, 40) withHeaderText:@"Made by the Leather Apron Club"];
+    [self.view addSubview:view];
+}
+
+- (UIView *) constructSectionRowWithFrame:(CGRect) frame
+                                withLabel:(NSString *) labelText
+                          withDefaultText:(NSString *) defaultText
+                          withPlaceholder:(NSString *) placeholder
+                                  withTag:(NSInteger) tag {
+    CGFloat rowLabelInset = 10;
+    CGFloat rowLabelWidth = 100;
+    
+    UIView *view = [[UIView alloc] initWithFrame: frame];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(rowLabelInset, 0, rowLabelWidth, frame.size.height)];
+    
+    label.text = labelText;
+    label.textAlignment = NSTextAlignmentLeft;
+    
+    UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(rowLabelWidth + rowLabelInset, 0, frame.size.width - rowLabelWidth - rowLabelInset, frame.size.height)];
+    
+    textField.placeholder = placeholder;
+    
+    textField.text = defaultText;
+    
+    [view addSubview:label];
+    [view addSubview:textField];
+    
+    return view;
+}
+
+- (UIView *) constructSectionHeaderWithFrame:(CGRect) frame withHeaderText:(NSString *) headerText {
+    CGFloat headerLabelInset = 10;
+    
+    UIView *view = [[UIView alloc] initWithFrame:frame];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(headerLabelInset, 0, frame.size.width - headerLabelInset, frame.size.height)];
+    
+    label.text = headerText;
+    label.textAlignment = NSTextAlignmentLeft;
+    
+    CALayer *topBorder = [CALayer layer];
+    topBorder.frame = CGRectMake(0, 0, view.frame.size.width, 0.5f);
+    topBorder.backgroundColor = [UIColor colorWithWhite:0.8f
+                                                     alpha:1.0f].CGColor;
+    
+    CALayer *bottomBorder = [CALayer layer];
+    bottomBorder.frame = CGRectMake(0, view.frame.size.height, view.frame.size.width, 0.5f);
+    bottomBorder.backgroundColor = [UIColor colorWithWhite:0.8f
+                                                     alpha:1.0f].CGColor;
+    
+    [view addSubview:label];
+    [view.layer addSublayer:topBorder];
+    [view.layer addSublayer:bottomBorder];
+    
+//    CGRect myFrame = CGRectMake(0, 10.0f, size.width, 40.0f);
+//    self.myLabel = [[UILabel alloc] initWithFrame:myFrame];
+//    self.myLabel.text = @"Credits: LAC, RRE";
+//    self.myLabel.font = [UIFont boldSystemFontOfSize:18.0f];
+//    self.myLabel.textAlignment =  NSTextAlignmentLeft;
+    
+    return view;
+}
+
+- (void) textFieldDidBeginEditing:(UITextField *) textField {
+    self.scrollViewOffset = ((UIScrollView *) self.view).contentOffset;
+    CGPoint pt;
+    CGRect rc = [textField bounds];
+    rc = [textField convertRect:rc toView:((UIScrollView *) self.view)];
+    pt = rc.origin;
+    pt.x = 0;
+    pt.y -= 0   ;//textField.frame.size.height;
+    [((UIScrollView *) self.view) setContentOffset:pt animated:YES];
+}
+
+- (BOOL) textFieldShouldReturn:(UITextField *) textField {
+    [((UIScrollView *) self.view) setContentOffset:self.scrollViewOffset animated:YES];
+    [textField resignFirstResponder];
+    return YES;
 }
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *) tableView {
@@ -192,7 +355,7 @@
     return cell;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+- (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger) section {
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0,tableView.frame.size.width,20)];
     
     UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, headerView.frame.size.width, headerView.frame.size.height)];
@@ -286,12 +449,12 @@
 }
 
 //Tells the delegate that editing began for the specified text field.
-- (void)textFieldDidBeginEditing:(UITextField *)textField{
-    
+//- (void)textFieldDidBeginEditing:(UITextField *)textField{
+
 //    NSInteger i = textField.tag;
 //    self.myLabel.text = [NSString stringWithFormat:@"Begin editing Text field %i", i];
     
-}
+//}
 
 //Asks the delegate if editing should stop in the specified text field.
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField{
@@ -336,13 +499,13 @@ replacementString:(NSString *)string{
 }
 
 //Asks the delegate if the text field should process the pressing of the return button.
-- (BOOL)textFieldShouldReturn:(UITextField *)textField{
-    
-    //Notifies the receiver that it has been asked to relinquish
-    //its status as first responder in its window.
-    [textField resignFirstResponder];
-    return YES;
-}
+//- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+//    
+//    //Notifies the receiver that it has been asked to relinquish
+//    //its status as first responder in its window.
+//    [textField resignFirstResponder];
+//    return YES;
+//}
 
 
 
