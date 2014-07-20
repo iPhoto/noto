@@ -157,7 +157,6 @@
     
     self.contentHeight += view.frame.size.height + spacer * 3;
     
-    
     view = [self constructFeedback:CGRectMake(0, self.contentHeight, size.width, 40)];
     [self.view addSubview:view];
     
@@ -176,8 +175,7 @@
     UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
 
     textView.editable = NO;
-//    textView.selectable = NO;
-//    textView.font = [UIFont systemFontOfSize:14];
+    textView.scrollEnabled = NO;
     
     NSString *text = @"Please send all feedback to @sendwithnoto!\nMade by the Leather Apron Club";
     NSMutableAttributedString *link = [[NSMutableAttributedString alloc] initWithString:text];
@@ -243,7 +241,9 @@
     textField.font = [UIFont systemFontOfSize:18];
     textField.returnKeyType = UIReturnKeyDone;
     textField.keyboardType = keyboardType;
+    textField.clearButtonMode = UITextFieldViewModeWhileEditing;
     textField.tag = tag;
+    textField.delegate = self;
     
     switch (textField.tag) {
         case rightActionEmail:
@@ -303,19 +303,28 @@
 }
 
 - (void) textFieldDidBeginEditing:(UITextField *) textField {
-    self.scrollViewOffset = ((UIScrollView *) self.view).contentOffset;
-    CGPoint pt;
-    CGRect rc = [textField bounds];
-    rc = [textField convertRect:rc toView:((UIScrollView *) self.view)];
-    pt = rc.origin;
-    pt.x = 0;
-    pt.y -= 0   ;//textField.frame.size.height;
-    [((UIScrollView *) self.view) setContentOffset:pt animated:YES];
+//    self.scrollViewOffset = ((UIScrollView *) self.view).contentOffset;
+//    CGPoint pt;
+//    CGRect rc = [textField bounds];
+//    rc = [textField convertRect:rc toView:((UIScrollView *) self.view)];
+//    pt = rc.origin;
+//    pt.x = 0;
+//    pt.y -= 0   ;//textField.frame.size.height;
+//    [((UIScrollView *) self.view) setContentOffset:pt animated:YES];
+}
+
+- (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *) event{
+    //hides keyboard when another part of layout was touched
+    NSLog(@"touched");
+    [self.view endEditing:YES];
+    [super touchesBegan:touches withEvent:event];
 }
 
 - (BOOL) textFieldShouldReturn:(UITextField *) textField {
-    [((UIScrollView *) self.view) setContentOffset:self.scrollViewOffset animated:YES];
-    [textField resignFirstResponder];
+//    [((UIScrollView *) self.view) setContentOffset:self.scrollViewOffset animated:YES];
+    if ([textField isFirstResponder]) {
+        [textField resignFirstResponder];
+    }
     return YES;
 }
 
@@ -363,24 +372,24 @@
 //Tells the delegate that editing stopped for the specified text field.
 - (void) textFieldDidEndEditing:(NSNotification *) notification {
     
-    UITextField *textField = (UITextField *) notification.object;
-    
-    switch (textField.tag) {
-        case rightActionEmail:
-            NSLog(@"finished right");
-            break;
-        case leftActionEmail:
-            NSLog(@"finished left");
-            break;
-        case subjectPrefix:
-            NSLog(@"finished subj");
-            break;
-        case signature:
-            NSLog(@"finished sig");
-            break;
-        default:
-            break;
-    }
+//    UITextField *textField = (UITextField *) notification.object;
+//    
+//    switch (textField.tag) {
+//        case rightActionEmail:
+//            NSLog(@"finished right");
+//            break;
+//        case leftActionEmail:
+//            NSLog(@"finished left");
+//            break;
+//        case subjectPrefix:
+//            NSLog(@"finished subj");
+//            break;
+//        case signature:
+//            NSLog(@"finished sig");
+//            break;
+//        default:
+//            break;
+//    }
 //    NSInteger i = textField.tag;
 //    self.myLabel.text = [NSString stringWithFormat:@"Editing done for Text field %i", i];
     
