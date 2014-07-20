@@ -38,7 +38,13 @@
 		4F8D540D196D7BF000FF1BE8 /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8D540C196D7BF000FF1BE8 /* Tests.m */; };
 		4F8D544C196DBAA700FF1BE8 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F8D544B196DBAA700FF1BE8 /* Crashlytics.framework */; };
 		4F953A94194E7F9E00F67A0A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F953A93194E7F9E00F67A0A /* Foundation.framework */; };
+		4FBC1D8A197C7FBB0062C1CA /* Firebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FBC1D89197C7FBB0062C1CA /* Firebase.framework */; };
 		4FDC73B1197B8A86003BCC8E /* ArchiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FDC73B0197B8A86003BCC8E /* ArchiveViewController.m */; };
+		4FF1A030197C71B30009BA5B /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF1A02F197C71B30009BA5B /* libicucore.dylib */; };
+		4FF1A033197C71C30009BA5B /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FD7A01F194E3F3700906537 /* CFNetwork.framework */; };
+		4FF1A035197C71CA0009BA5B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF1A034197C71CA0009BA5B /* Security.framework */; };
+		4FF1A037197C71D10009BA5B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF1A036197C71D10009BA5B /* SystemConfiguration.framework */; };
+		4FF1A03A197C7E560009BA5B /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF1A031197C71BC0009BA5B /* libc++.dylib */; };
 		4FF87437194A83F600787DE0 /* SelfieTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF87436194A83F600787DE0 /* SelfieTests.m */; };
 		6CE63EEB8D4349A48F08C6F4 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E77200C5C3C411893448E4A /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -110,9 +116,16 @@
 		4F8D5449196DB9ED00FF1BE8 /* libPods-CrashlyticsFramework.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-CrashlyticsFramework.a"; path = "Pods/build/Debug-iphoneos/libPods-CrashlyticsFramework.a"; sourceTree = "<group>"; };
 		4F8D544B196DBAA700FF1BE8 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = Pods/CrashlyticsFramework/Crashlytics.framework; sourceTree = "<group>"; };
 		4F953A93194E7F9E00F67A0A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		4FBC1D89197C7FBB0062C1CA /* Firebase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Firebase.framework; path = ../Downloads/Firebase.framework; sourceTree = "<group>"; };
 		4FD7A01F194E3F3700906537 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		4FDC73AF197B8A86003BCC8E /* ArchiveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArchiveViewController.h; sourceTree = "<group>"; };
 		4FDC73B0197B8A86003BCC8E /* ArchiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArchiveViewController.m; sourceTree = "<group>"; };
+		4FF1A02F197C71B30009BA5B /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		4FF1A031197C71BC0009BA5B /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		4FF1A034197C71CA0009BA5B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		4FF1A036197C71D10009BA5B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		4FF1A038197C7E320009BA5B /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
+		4FF1A03B197C7EDA0009BA5B /* libPods-Firebase.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-Firebase.a"; path = "Pods/build/Release-iphoneos/libPods-Firebase.a"; sourceTree = "<group>"; };
 		4FF87417194A83F600787DE0 /* Selfie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Selfie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FF87430194A83F600787DE0 /* SelfieTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SelfieTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FF87435194A83F600787DE0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -126,6 +139,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FF1A03A197C7E560009BA5B /* libc++.dylib in Frameworks */,
+				4FF1A037197C71D10009BA5B /* SystemConfiguration.framework in Frameworks */,
+				4FF1A035197C71CA0009BA5B /* Security.framework in Frameworks */,
+				4FF1A033197C71C30009BA5B /* CFNetwork.framework in Frameworks */,
+				4FBC1D8A197C7FBB0062C1CA /* Firebase.framework in Frameworks */,
+				4FF1A030197C71B30009BA5B /* libicucore.dylib in Frameworks */,
 				4F56592D1974D17C006E7A24 /* AssetsLibrary.framework in Frameworks */,
 				4F8D544C196DBAA700FF1BE8 /* Crashlytics.framework in Frameworks */,
 				4F531FFD195F3B3600F4ABAE /* AudioToolbox.framework in Frameworks */,
@@ -147,6 +166,13 @@
 		49A85F4260824FD59E33F5C0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4FBC1D89197C7FBB0062C1CA /* Firebase.framework */,
+				4FF1A03B197C7EDA0009BA5B /* libPods-Firebase.a */,
+				4FF1A038197C7E320009BA5B /* libstdc++.dylib */,
+				4FF1A036197C71D10009BA5B /* SystemConfiguration.framework */,
+				4FF1A034197C71CA0009BA5B /* Security.framework */,
+				4FF1A031197C71BC0009BA5B /* libc++.dylib */,
+				4FF1A02F197C71B30009BA5B /* libicucore.dylib */,
 				4F56592C1974D17C006E7A24 /* AssetsLibrary.framework */,
 				4F8D544B196DBAA700FF1BE8 /* Crashlytics.framework */,
 				4F8D5449196DB9ED00FF1BE8 /* libPods-CrashlyticsFramework.a */,
@@ -611,6 +637,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Pods/CrashlyticsFramework",
+					/Users/danielsuo/Downloads,
 				);
 				INFOPLIST_FILE = Selfie/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -618,6 +645,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/Pods/build/Release-iphoneos",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
@@ -644,6 +672,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Pods/CrashlyticsFramework",
+					/Users/danielsuo/Downloads,
 				);
 				INFOPLIST_FILE = Selfie/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -651,6 +680,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/Pods/build/Release-iphoneos",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "820903879EB24FA794814BE8"
+               BlueprintIdentifier = "A83FA7CB6D544210A593463C"
                BuildableName = "libPods-sendgrid.a"
                BlueprintName = "Pods-sendgrid"
                ReferencedContainer = "container:Pods.xcodeproj">

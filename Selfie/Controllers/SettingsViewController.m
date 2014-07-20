@@ -74,6 +74,17 @@
     [Utilities setSettingsValue:self.subjectPrefixTextField.text forKey:kSettingsSubjectPrefixKey];
     [Utilities setSettingsValue:self.signatureTextField.text forKey:kSettingsSignatureKey];
     
+    // TODO: this is all wrong, but just collecting some info for now. This duplicates every time
+    // a user hits 'Done' in settings.
+    NSString *firebaseURL = [NSString stringWithFormat:@"%@%@", firebaseBaseURL, @"/signups"];
+    Firebase *ref = [[Firebase alloc] initWithUrl:firebaseURL];
+    Firebase *newRef = [ref childByAutoId];
+    
+    [newRef setValue:@{@"email": self.rightEmailTextField.text, @"created_at": [NSString stringWithFormat:@"%@", [NSDate date]]}];
+    
+    newRef = [ref childByAutoId];
+    [newRef setValue:@{@"email": self.leftEmailTextField.text, @"created_at": [NSString stringWithFormat:@"%@", [NSDate date]]}];
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 

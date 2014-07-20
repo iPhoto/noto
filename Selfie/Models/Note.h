@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <AudioToolbox/AudioToolbox.h>
+#import <Firebase/Firebase.h>
 
 #import "sendgrid.h"
 #import "Queue.h"

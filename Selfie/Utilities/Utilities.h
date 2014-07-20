@@ -36,6 +36,7 @@ static NSString * const kHasLaunchedBeforeKey = @"selfieHasLaunchedBefore";
 static NSString * const SGUsername = @"danielsuo";
 static NSString * const SGPassword = @"TheLAC41988";
 static NSString * const CrashlyticsAPIKey = @"7052c7c0dfa3dc8a01de1c9fadf87a6abec3d33a";
+static NSString * const firebaseBaseURL = @"https://thelac-selfie.firebaseio.com";
 
 // Note default copy
 static NSString * const kEmptyNoteSubject = @"New Note";

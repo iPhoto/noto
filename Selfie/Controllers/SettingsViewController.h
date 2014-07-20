@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 #import <CoreText/CoreText.h>
+#import <Firebase/Firebase.h>
+
 #import "Utilities.h"
 
 #import "SettingsTextFieldCell.h"
