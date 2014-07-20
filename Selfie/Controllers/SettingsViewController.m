@@ -12,6 +12,7 @@
 // TODO: Remove back button
 // TODO: Add settings validity
 // TODO: Email red outline
+// TODO: Add autoscroll
 // TODO: Improve layout (e.g., layout, text colors, etc)
 
 #import "SettingsViewController.h"
@@ -21,10 +22,10 @@
 #define otherSettings 2
 
 #define rightActionEmail 0
-#define leftActionEmail 0
+#define leftActionEmail 1
 
-#define subjectPrefix 0
-#define signature 1
+#define subjectPrefix 2
+#define signature 3
 
 #define numberOfSections 3
 
@@ -79,6 +80,10 @@
     [Radio addObserver:self
               selector:@selector(textFieldDidChange:)
                   name:UITextFieldTextDidChangeNotification
+                object:nil];
+    [Radio addObserver:self
+              selector:@selector(textFieldDidEndEditing:)
+                  name:UITextFieldTextDidEndEditingNotification
                 object:nil];
     
     //lets create 3 UITextViews on the screen
@@ -242,8 +247,13 @@
     UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(rowLabelWidth + rowLabelInset, 0, frame.size.width - rowLabelWidth - rowLabelInset, frame.size.height)];
     
     textField.placeholder = placeholder;
-    
     textField.text = defaultText;
+    textField.keyboardType = UIKeyboardTypeEmailAddress;
+    textField.returnKeyType = UIReturnKeyDone;
+    textField.tag = tag;
+//    [textField addTarget:self
+//                       action:@selector(textFieldDidChange:)
+//             forControlEvents:UIControlEventEditingDidEndOnExit];
     
     [view addSubview:label];
     [view addSubview:textField];
@@ -323,83 +333,83 @@
     }
 }
 
-- (UITableViewCell *) tableView:(UITableView *) tableView cellForRowAtIndexPath:(NSIndexPath *) indexPath {
-    SettingsTextFieldCell *cell = [tableView dequeueReusableCellWithIdentifier:@"settingsCellIdentifier"];
+//- (UITableViewCell *) tableView:(UITableView *) tableView cellForRowAtIndexPath:(NSIndexPath *) indexPath {
+//    SettingsTextFieldCell *cell = [tableView dequeueReusableCellWithIdentifier:@"settingsCellIdentifier"];
+//
+//    switch (indexPath.section) {
+//        case rightActionSetting:
+//            cell.leftLabel.text = @"Mail to:";
+//            cell.rightTextField.placeholder = @"you@sendwithnoto.com";
+//            cell.rightTextField.tag = rightActionEmail;
+//            break;
+//        case leftActionSetting:
+//            cell.leftLabel.text = @"Mail to:";
+//            cell.rightTextField.placeholder = @"you@sendwithnoto.com";
+//            cell.rightTextField.tag = leftActionEmail;
+//            break;
+//        case otherSettings:
+//            switch (indexPath.row) {
+//                case subjectPrefix:
+//                    cell.leftLabel.text = @"Subj. Prefix:";
+//                    cell.rightTextField.text = @"[Noto]";
+//                    cell.rightTextField.tag = subjectPrefix;
+//                    break;
+//                case signature:
+//                    cell.leftLabel.text = @"Signature:";
+//                    cell.rightTextField.text = @"Sent with Noto";
+//                    cell.rightTextField.tag = signature;
+//                    break;
+//                default:
+//                    break;
+//            }
+//            break;
+//        default:
+//            return cell;
+//            break;
+//    }
+//    
+//    return cell;
+//}
 
-    switch (indexPath.section) {
-        case rightActionSetting:
-            cell.leftLabel.text = @"Mail to:";
-            cell.rightTextField.placeholder = @"you@sendwithnoto.com";
-            cell.rightTextField.tag = rightActionEmail;
-            break;
-        case leftActionSetting:
-            cell.leftLabel.text = @"Mail to:";
-            cell.rightTextField.placeholder = @"you@sendwithnoto.com";
-            cell.rightTextField.tag = leftActionEmail;
-            break;
-        case otherSettings:
-            switch (indexPath.row) {
-                case subjectPrefix:
-                    cell.leftLabel.text = @"Subj. Prefix:";
-                    cell.rightTextField.text = @"[Noto]";
-                    cell.rightTextField.tag = subjectPrefix;
-                    break;
-                case signature:
-                    cell.leftLabel.text = @"Signature:";
-                    cell.rightTextField.text = @"Sent with Noto";
-                    cell.rightTextField.tag = signature;
-                    break;
-                default:
-                    break;
-            }
-            break;
-        default:
-            return cell;
-            break;
-    }
-    
-    return cell;
-}
-
-- (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger) section {
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0,tableView.frame.size.width,20)];
-    
-    UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, headerView.frame.size.width, headerView.frame.size.height)];
-    
-    headerLabel.textAlignment = NSTextAlignmentLeft;
-    
-    headerLabel.textColor = [UIColor lightGrayColor];
-    headerLabel.font = [UIFont systemFontOfSize:14];
-    
-    switch (section){
-        case rightActionSetting:
-            headerLabel.text = @"Swipe right action";
-            break;
-        case leftActionSetting:
-            headerLabel.text = @"Swipe left action";
-            break;
-        case otherSettings:
-            headerLabel.text = @"Other settings";
-            break;
-        default:
-            headerLabel.text = @"";
-            break;
-    }
-    headerLabel.backgroundColor = [UIColor whiteColor];
-    
-    CALayer *bottomBorder = [CALayer layer];
-    
-    bottomBorder.frame = CGRectMake(0.0f, headerView.frame.size.height, headerView.frame.size.width, 0.5f);
-    
-    bottomBorder.backgroundColor = [UIColor colorWithWhite:0.8f
-                                                     alpha:1.0f].CGColor;
-    
-    [headerView.layer addSublayer:bottomBorder];
-    
-    [headerView addSubview:headerLabel];
-    
-    return headerView;
-}
+//- (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger) section {
+//    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0,tableView.frame.size.width,20)];
+//    
+//    UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, headerView.frame.size.width, headerView.frame.size.height)];
+//    
+//    headerLabel.textAlignment = NSTextAlignmentLeft;
+//    
+//    headerLabel.textColor = [UIColor lightGrayColor];
+//    headerLabel.font = [UIFont systemFontOfSize:14];
+//    
+//    switch (section){
+//        case rightActionSetting:
+//            headerLabel.text = @"Swipe right action";
+//            break;
+//        case leftActionSetting:
+//            headerLabel.text = @"Swipe left action";
+//            break;
+//        case otherSettings:
+//            headerLabel.text = @"Other settings";
+//            break;
+//        default:
+//            headerLabel.text = @"";
+//            break;
+//    }
+//    headerLabel.backgroundColor = [UIColor whiteColor];
+//    
+//    CALayer *bottomBorder = [CALayer layer];
+//    
+//    bottomBorder.frame = CGRectMake(0.0f, headerView.frame.size.height, headerView.frame.size.width, 0.5f);
+//    
+//    bottomBorder.backgroundColor = [UIColor colorWithWhite:0.8f
+//                                                     alpha:1.0f].CGColor;
+//    
+//    [headerView.layer addSublayer:bottomBorder];
+//    
+//    [headerView addSubview:headerLabel];
+//    
+//    return headerView;
+//}
 
 //- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
 //    
@@ -430,13 +440,13 @@
 //    return @"Footer";
 //}
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return NO;
-}
-
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    return NO;
-}
+//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+//    return NO;
+//}
+//
+//- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+//    return NO;
+//}
 
 - (void) textFieldDidChange:(NSNotification *) notification {
     UITextField *textField = (UITextField *) notification.object;
@@ -469,8 +479,28 @@
 }
 
 //Tells the delegate that editing stopped for the specified text field.
-- (void)textFieldDidEndEditing:(UITextField *)textField{
+- (void) textFieldDidEndEditing:(NSNotification *) notification {
     
+    UITextField *textField = (UITextField *) notification.object;
+    
+    NSLog(@"finished %i", textField.tag);
+    
+    switch (textField.tag) {
+        case rightActionEmail:
+            NSLog(@"finished right");
+            break;
+        case leftActionEmail:
+            NSLog(@"finished left");
+            break;
+        case subjectPrefix:
+            NSLog(@"finished subj");
+            break;
+        case signature:
+            NSLog(@"finished sig");
+            break;
+        default:
+            break;
+    }
 //    NSInteger i = textField.tag;
 //    self.myLabel.text = [NSString stringWithFormat:@"Editing done for Text field %i", i];
     
@@ -478,9 +508,9 @@
 
 
 //Asks the delegate if the specified text should be changed.
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range
-replacementString:(NSString *)string{
-    
+//- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range
+//replacementString:(NSString *)string{
+
     //get the current data strsing inside the text field
 //    NSString *myTextData = [textField.text stringByReplacingCharactersInRange:range
 //                                                                   withString:string];
@@ -492,8 +522,8 @@ replacementString:(NSString *)string{
 //    //set the display label value with the current data in the text field
 //    self.myLabel.text = [NSString stringWithFormat:@"Data: %@", textField.text];
 
-    return YES;
-}
+//    return YES;
+//}
 
 //Asks the delegate if the text field’s current contents should be removed.
 - (BOOL)textFieldShouldClear:(UITextField *)textField{
