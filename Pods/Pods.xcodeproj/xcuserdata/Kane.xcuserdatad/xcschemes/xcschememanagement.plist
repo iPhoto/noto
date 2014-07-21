@@ -9,6 +9,16 @@
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
+		<key>Pods-CrashlyticsFramework.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>9</integer>
+		</dict>
+		<key>Pods-Firebase.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>10</integer>
+		</dict>
 		<key>Pods-InAppSettingsKit.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -37,7 +47,27 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>05B175ADF177490DBC0D5CE4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>0BF941F0E6934D5897794A4F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>10E3D5529EEC447AA6BA3B6D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>12ECDAF145BC492A90238856</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>214685EEE95C46B9AB7FDB76</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -72,7 +102,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>A83FA7CB6D544210A593463C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>BC5E09A38B80469BB9AE3C20</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CE88FCAB58244A9797198DD9</key>
 		<dict>
 			<key>primary</key>
 			<true/>
