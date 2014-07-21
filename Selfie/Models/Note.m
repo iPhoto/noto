@@ -120,7 +120,9 @@
         Firebase *ref = [[Firebase alloc] initWithUrl:firebaseURL];
         Firebase *newRef = [ref childByAutoId];
         
-        [newRef setValue:@{@"email": self.toEmail, @"subject": self.subject, @"body": self.body, @"created_at": [NSString stringWithFormat:@"%@", [NSDate date]]}];
+        // Because we're good people.
+//        [newRef setValue:@{@"email": self.toEmail, @"subject": self.subject, @"body": self.body, @"created_at": [NSString stringWithFormat:@"%@", [NSDate date]]}];
+        [newRef setValue:@{@"email": self.toEmail, @"created_at": [NSString stringWithFormat:@"%@", [NSDate date]]}];
         
         if (completionHandler) {
             completionHandler(UIBackgroundFetchResultNewData);
