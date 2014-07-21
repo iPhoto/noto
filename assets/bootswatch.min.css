@@ -1197,7 +1197,7 @@ hr {
 }
 
 h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6 {
-    font-family: "Source Sans Pro",Calibri,Candara,Arial,sans-serif;
+    font-family: Calibri,Candara,Arial,sans-serif,"Source Sans Pro";
     font-weight: 300;
     line-height: 1;
     color: inherit;
@@ -6790,8 +6790,8 @@ body {
 }
 
 #logo {
-    width: 100px;
-    height: 100px;
+    width: 96px;
+    height: 96px;
     /*border: 1px solid rgba(0, 0, 0, .05);
     -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,.05);
           	box-shadow: inset 0 0 4px rgba(0,0,0,.05);*/;
