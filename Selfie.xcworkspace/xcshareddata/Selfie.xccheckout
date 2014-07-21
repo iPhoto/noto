@@ -5,34 +5,34 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>4E41AFCE-6D74-480D-9B2D-3E3A9D8388E4</string>
+	<string>8C6BF68C-15CB-4946-8E5B-AB84F4DE5204</string>
 	<key>IDESourceControlProjectName</key>
 	<string>Selfie</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>A5CFC32A-67A5-4BA1-BC5D-50F777920CD7</key>
-		<string>https://github.com/thelac/selfie</string>
+		<key>CF54B6A5-2A5C-4A43-BB85-B32BFAE209E2</key>
+		<string>https://github.com/thelac/selfie.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Selfie.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>A5CFC32A-67A5-4BA1-BC5D-50F777920CD7</key>
+		<key>CF54B6A5-2A5C-4A43-BB85-B32BFAE209E2</key>
 		<string>..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/thelac/selfie</string>
+	<string>https://github.com/thelac/selfie.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>A5CFC32A-67A5-4BA1-BC5D-50F777920CD7</string>
+	<string>CF54B6A5-2A5C-4A43-BB85-B32BFAE209E2</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>A5CFC32A-67A5-4BA1-BC5D-50F777920CD7</string>
+			<string>CF54B6A5-2A5C-4A43-BB85-B32BFAE209E2</string>
 			<key>IDESourceControlWCCName</key>
 			<string>selfie</string>
 		</dict>
