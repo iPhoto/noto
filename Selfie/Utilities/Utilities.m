@@ -11,7 +11,8 @@
 @implementation Utilities
 
 + (NSString *) appName {
-    return [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
+//    return [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
+    return @"Noto";
 }
 
 // Convenience methods to help get / set values / objects
