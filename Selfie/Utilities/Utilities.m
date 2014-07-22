@@ -100,7 +100,7 @@
 
 + (void) setDefaultSettings {
     [Utilities setSettingsValue:[NSString stringWithFormat:@"[%@]", [Utilities appName]] forKey:kSettingsSubjectPrefixKey];
-    [Utilities setSettingsValue:[NSString stringWithFormat:@"Sent with %@", [Utilities appName]] forKey:kSettingsSignatureKey];
+    [Utilities setSettingsValue:[NSString stringWithFormat:@"via SendWithNoto.com"] forKey:kSettingsSignatureKey];
 }
 
 + (NSString *) getFirstLaunchText {

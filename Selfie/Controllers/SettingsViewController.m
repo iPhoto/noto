@@ -190,7 +190,7 @@
     
     NSString *text = @"Please send all feedback to @sendwithnoto!\nMade by The Leather Apron Club.";
     NSMutableAttributedString *link = [[NSMutableAttributedString alloc] initWithString:text];
-    NSRange range = [text rangeOfString:@"@sendwithnoto"];
+    NSRange range = [text rangeOfString:@"@SendWithNoto"];
     [link addAttribute:NSLinkAttributeName value:@"twitter://user?screen_name=SendWithNoto" range:range];
     [link addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithWhite:0.8 alpha:1.0] range:NSMakeRange(0, link.length)];
     
