@@ -20,7 +20,7 @@
 
 4. Push files
 ```
-> git push origin [USERNAME]/[FEATURE]
+> git push -u origin [USERNAME]/[FEATURE]
 ```
 
 5. Create pull request on GitHub
