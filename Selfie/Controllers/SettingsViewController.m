@@ -188,7 +188,7 @@
     textView.editable = NO;
     textView.scrollEnabled = NO;
     
-    NSString *text = @"Please send all feedback to @sendwithnoto!\nMade by The Leather Apron Club.";
+    NSString *text = @"Please send all feedback to @SendWithNoto!\nMade by The Leather Apron Club.";
     NSMutableAttributedString *link = [[NSMutableAttributedString alloc] initWithString:text];
     NSRange range = [text rangeOfString:@"@SendWithNoto"];
     [link addAttribute:NSLinkAttributeName value:@"twitter://user?screen_name=SendWithNoto" range:range];
