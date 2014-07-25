@@ -62,6 +62,15 @@
               selector:@selector(keyboardDidHide:)
                   name:UIKeyboardDidHideNotification
                 object:nil];
+    
+    [Radio addObserver:self
+              selector:@selector(updateTwitter)
+                  name:checkTwitterAvailability
+                object:nil];
+}
+
+-(void) updateTwitter {
+    [self constructSettingsView:[[UIScreen mainScreen] bounds].size];
 }
 
 - (void) didCancelSettingsView {
@@ -191,7 +200,11 @@
     NSString *text = @"Please send all feedback to @SendWithNoto!\nMade by The Leather Apron Club.";
     NSMutableAttributedString *link = [[NSMutableAttributedString alloc] initWithString:text];
     NSRange range = [text rangeOfString:@"@SendWithNoto"];
-    [link addAttribute:NSLinkAttributeName value:@"twitter://user?screen_name=SendWithNoto" range:range];
+    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"twitter://user?screen_name=SendWithNoto"]]) {
+        [link addAttribute:NSLinkAttributeName value:@"twitter://user?screen_name=SendWithNoto" range:range];
+    } else {
+        [link addAttribute:NSLinkAttributeName value:@"https://twitter.com/SendWithNoto" range:range];
+    }
     [link addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithWhite:0.8 alpha:1.0] range:NSMakeRange(0, link.length)];
     
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
