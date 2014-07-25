@@ -167,6 +167,12 @@
               selector:@selector(reloadAttachmentCollectionView:)
                   name:kEnumerateGroupCompleteNotification
                 object:nil];
+    
+    [Radio addObserver:self
+              selector:@selector(resetRibbons)
+                  name:kRibbonChangeInBackGroundNotification
+                object:nil];
+    
 }
 
 - (void) toggleAttachmentCollectionView {
@@ -248,6 +254,12 @@
     // reloadData after receive the notification
     [_attachmentCollectionView reloadData];
 }
+
+-(void)resetRibbons {
+    self.leftRibbon.hidden = YES;
+    self.rightRibbon.hidden = YES;
+}
+
 - (void) onFirstLaunch {
     if([Utilities isFirstLaunch]) {
         self.noteView.text = [Utilities getFirstLaunchText];
@@ -352,6 +364,8 @@
 
 - (void) didPan:(UIPanGestureRecognizer *) gestureRecognizer {
     // TODO: Refactor and delegate to viewcontroller
+    self.leftRibbon.hidden = NO;
+    self.rightRibbon.hidden = NO;
     NoteView *noteView = (NoteView *) gestureRecognizer.view;
     CGPoint translation = [gestureRecognizer translationInView:noteView];
 

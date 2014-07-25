@@ -94,6 +94,7 @@ static NSString * const kUpdateSubjectNotification = @"updateSubjectNotification
 static NSString * const kNoteSendSuccessNotification = @"noteSendSuccessNotification";
 static NSString * const kNoteSendFailNotification = @"noteSendFailNotification";
 static NSString * const kEnumerateGroupCompleteNotification = @"enumerateGroupCompletionNotification";
+static NSString * const kRibbonChangeInBackGroundNotification = @"ribbontChangeInBackGroundNotification";
 
 @interface Utilities : NSObject
 
