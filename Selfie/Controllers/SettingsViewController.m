@@ -40,7 +40,7 @@
     self.view = [[UIScrollView alloc] initWithFrame:self.view.frame];
 
     self.view.backgroundColor = [UIColor whiteColor];
-    [self constructSettingsView:[[UIScreen mainScreen] bounds].size];
+    [self constructSettingsView];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(didCompleteSettingsView)];
     
@@ -61,6 +61,11 @@
     [Radio addObserver:self
               selector:@selector(keyboardDidHide:)
                   name:UIKeyboardDidHideNotification
+                object:nil];
+    
+    [Radio addObserver:self
+              selector:@selector(constructSettingsView)
+                  name:kSettingsViewNeedsUpdateNotification
                 object:nil];
 }
 
@@ -105,29 +110,25 @@
 }
 
 - (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation) toInterfaceOrientation duration:(NSTimeInterval) duration {
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    
-    if (UIDeviceOrientationIsPortrait(toInterfaceOrientation))
-    {
-        [self constructSettingsView:screenRect.size];
-    } else {
-        [self constructSettingsView:CGSizeMake(screenRect.size.height, self.contentHeight)];
-    }
+    [self constructSettingsView];
 }
 
-- (void) constructSettingsView:(CGSize) size {
+- (void) constructSettingsView {
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGSize size;
+    
+    if (UIDeviceOrientationIsPortrait(self.interfaceOrientation)) {
+        size = screenRect.size;
+    } else {
+        size = CGSizeMake(screenRect.size.height, self.contentHeight);
+    }
+    
     CGFloat spacer = 10;
     
     UIView *view;
     self.contentHeight = 0;
     [[self.view subviews]
      makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    
-//    view = [self constructSectionRowWithFrame:CGRectMake(0, self.contentHeight, size.width, 40) withLabel:@"Name:" withDefaultText:[Utilities getSettingsValue:kSettingsUserName] withPlaceholder:nil withKeyboardType:
-//            UIKeyboardTypeDefault withTag:rightActionEmail];
-//    [self.view addSubview:view];
-//
-//    self.contentHeight += view.frame.size.height + spacer;
     
     view = [self constructSectionHeaderWithFrame:CGRectMake(0, self.contentHeight, size.width, 25) withHeaderText:@"Swipe Right Action"];
     [self.view addSubview:view];
@@ -188,10 +189,14 @@
     textView.editable = NO;
     textView.scrollEnabled = NO;
     
-    NSString *text = @"Please send all feedback to @sendwithnoto!\nMade by The Leather Apron Club.";
+    NSString *text = @"Please send all feedback to @SendWithNoto!\nMade by The Leather Apron Club.";
     NSMutableAttributedString *link = [[NSMutableAttributedString alloc] initWithString:text];
     NSRange range = [text rangeOfString:@"@SendWithNoto"];
-    [link addAttribute:NSLinkAttributeName value:@"twitter://user?screen_name=SendWithNoto" range:range];
+    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"twitter://user?screen_name=SendWithNoto"]]) {
+        [link addAttribute:NSLinkAttributeName value:@"twitter://user?screen_name=SendWithNoto" range:range];
+    } else {
+        [link addAttribute:NSLinkAttributeName value:@"https://twitter.com/SendWithNoto" range:range];
+    }
     [link addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithWhite:0.8 alpha:1.0] range:NSMakeRange(0, link.length)];
     
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];

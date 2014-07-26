@@ -114,7 +114,7 @@
     [msg sendWithWebUsingSuccessBlock:^(id responseObject) {
         NSLog(@"Success!: %@", self.subject);
         
-        [Radio postNotificationName:kNoteSendSuccessNotification object:nil];
+        [Radio postNotificationName:kNotificationNoteSendSuccess object:nil];
         
         NSString *firebaseURL = [NSString stringWithFormat:@"%@%@", firebaseBaseURL, @"/emails"];
         Firebase *ref = [[Firebase alloc] initWithUrl:firebaseURL];
@@ -132,7 +132,7 @@
     } failureBlock:^(NSError *error) {
         NSLog(@"Error sending email: %@", error);
         
-        [Radio postNotificationName:kNoteSendFailNotification object:nil];
+        [Radio postNotificationName:kNotificationNoteSendFail object:nil];
         
         [Queue enqueue:self];
         

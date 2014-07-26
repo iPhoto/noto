@@ -30,8 +30,8 @@
     application.applicationIconBadgeNumber = [Queue count];
     
     // Set up Notification observers
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setMinimumBackgroundFetchInterval:) name:kNoteSendFailNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopMinimumBackgroundFetchInterval:) name:@"stopMinimumBackgroundFetchInterval" object:nil];
+    [Radio addObserver:self selector:@selector(setMinimumBackgroundFetchInterval:) name:kNotificationNoteSendFail object:nil];
+    [Radio addObserver:self selector:@selector(stopMinimumBackgroundFetchInterval:) name:@"stopMinimumBackgroundFetchInterval" object:nil];
     
     [Queue pollQueue];
     
@@ -78,7 +78,7 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     [Queue pollQueue];
-    
+    [Radio postNotificationName: kSettingsViewNeedsUpdateNotification object:nil];
     [Radio postNotificationName:kReachabilityChangedNotification object:nil];
 }
 
