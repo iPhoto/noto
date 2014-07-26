@@ -40,7 +40,7 @@
     self.view = [[UIScrollView alloc] initWithFrame:self.view.frame];
 
     self.view.backgroundColor = [UIColor whiteColor];
-    [self constructSettingsView:[[UIScreen mainScreen] bounds].size];
+    [self constructSettingsView];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(didCompleteSettingsView)];
     
@@ -64,13 +64,9 @@
                 object:nil];
     
     [Radio addObserver:self
-              selector:@selector(updateTwitter)
-                  name:checkTwitterAvailability
+              selector:@selector(constructSettingsView)
+                  name:kSettingsViewNeedsUpdateNotification
                 object:nil];
-}
-
--(void) updateTwitter {
-    [self constructSettingsView:[[UIScreen mainScreen] bounds].size];
 }
 
 - (void) didCancelSettingsView {
@@ -114,29 +110,25 @@
 }
 
 - (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation) toInterfaceOrientation duration:(NSTimeInterval) duration {
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    
-    if (UIDeviceOrientationIsPortrait(toInterfaceOrientation))
-    {
-        [self constructSettingsView:screenRect.size];
-    } else {
-        [self constructSettingsView:CGSizeMake(screenRect.size.height, self.contentHeight)];
-    }
+    [self constructSettingsView];
 }
 
-- (void) constructSettingsView:(CGSize) size {
+- (void) constructSettingsView {
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGSize size;
+    
+    if (UIDeviceOrientationIsPortrait(self.interfaceOrientation)) {
+        size = screenRect.size;
+    } else {
+        size = CGSizeMake(screenRect.size.height, self.contentHeight);
+    }
+    
     CGFloat spacer = 10;
     
     UIView *view;
     self.contentHeight = 0;
     [[self.view subviews]
      makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    
-//    view = [self constructSectionRowWithFrame:CGRectMake(0, self.contentHeight, size.width, 40) withLabel:@"Name:" withDefaultText:[Utilities getSettingsValue:kSettingsUserName] withPlaceholder:nil withKeyboardType:
-//            UIKeyboardTypeDefault withTag:rightActionEmail];
-//    [self.view addSubview:view];
-//
-//    self.contentHeight += view.frame.size.height + spacer;
     
     view = [self constructSectionHeaderWithFrame:CGRectMake(0, self.contentHeight, size.width, 25) withHeaderText:@"Swipe Right Action"];
     [self.view addSubview:view];

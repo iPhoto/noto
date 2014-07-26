@@ -122,7 +122,7 @@
         });
         
         // Listen for empty note
-        [Radio addObserverForName:kEmptyNoteNotification object:nil queue:nil usingBlock:^(NSNotification *notification) {
+        [Radio addObserverForName:kNotificationEmptyNote object:nil queue:nil usingBlock:^(NSNotification *notification) {
             self.noteTitle = kEmptyNoteSubject;
         }];
     }

@@ -165,7 +165,7 @@
     
     [Radio addObserver:self
               selector:@selector(reloadAttachmentCollectionView:)
-                  name:kEnumerateGroupCompleteNotification
+                  name:kNotificationEnumerateGroupComplete
                 object:nil];
 }
 
@@ -301,10 +301,10 @@
     
     if ([Utilities isEmptyString:self.noteView.text]) {
         self.navigationItem.title = kEmptyNoteSubject;
-        [Radio postNotificationName:kEmptyNoteNotification object:nil];
+        [Radio postNotificationName:kNotificationEmptyNote object:nil];
     } else {
         self.navigationItem.title = [Note getNoteSubject:self.noteView.text];
-        [Radio postNotificationName:kUpdateSubjectNotification object:nil];
+        [Radio postNotificationName:kNotificationUpdateSubject object:nil];
     }
 }
 
@@ -532,7 +532,7 @@
                 [_assets addObject:result];
             }
         }];
-        [Radio postNotificationName:kEnumerateGroupCompleteNotification object:nil];
+        [Radio postNotificationName:kNotificationEnumerateGroupComplete object:nil];
     } failureBlock:^(NSError *error) {
         NSLog(@"Error loading images %@", error);
     }];

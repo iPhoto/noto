@@ -89,12 +89,12 @@ static NSInteger const kIconDim = 30;
 static NSInteger const kIconSpacing = 10;
 
 // Notification names
-static NSString * const kEmptyNoteNotification = @"emptyNoteNotification";
-static NSString * const kUpdateSubjectNotification = @"updateSubjectNotification";
-static NSString * const kNoteSendSuccessNotification = @"noteSendSuccessNotification";
-static NSString * const kNoteSendFailNotification = @"noteSendFailNotification";
-static NSString * const kEnumerateGroupCompleteNotification = @"enumerateGroupCompletionNotification";
-static NSString * const checkTwitterAvailability = @"checkTwitterAvailability";
+static NSString * const kNotificationEmptyNote = @"emptyNoteNotification";
+static NSString * const kNotificationUpdateSubject = @"updateSubjectNotification";
+static NSString * const kNotificationNoteSendSuccess = @"noteSendSuccessNotification";
+static NSString * const kNotificationNoteSendFail = @"noteSendFailNotification";
+static NSString * const kNotificationEnumerateGroupComplete = @"enumerateGroupCompletionNotification";
+static NSString * const kSettingsViewNeedsUpdateNotification = @"settingsViewNeedsUpdateNotification";
 
 @interface Utilities : NSObject
 
